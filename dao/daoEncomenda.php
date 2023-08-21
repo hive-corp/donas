@@ -4,7 +4,7 @@
 
     class daoCategoria {
         
-        public static function cadastrar($Encomenda){
+        public static function criar($Encomenda){
             $connection = Conexao::conectar();
 
             $queryInsert = "INSERT tbEncomenda(idEncomenda, statusEncomenda, valorEncomenda, dataEncomenda, idAnuncio, idCliente)
