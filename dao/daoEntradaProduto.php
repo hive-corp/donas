@@ -1,10 +1,8 @@
 <?php
 
 
-    include_once "<div class="">
-    <model>Conexao.php";
-    include_once "<div class="">
-    <model>EntradaProduto.php";
+    include_once "./model/Conexao.php";
+    include_once "./model/EntradaProduto.php";
 
     class daoEntradaProduto{
         public static function listar(){
