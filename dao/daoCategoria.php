@@ -12,7 +12,7 @@
 
             $prepareStatement = $connection->prepare($queryInsert);
 
-            $prepareStatement->bindValue(2, $Categoria->getNomeCategoria());
+            $prepareStatement->bindValue(1, $Categoria->getNomeCategoria());
 
             $prepareStatement->execute();
         }
