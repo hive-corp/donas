@@ -1,7 +1,7 @@
 <?php
 
-    include_once "./Conexao.php";
-    include_once "./Anuncio.php";
+    include_once "./model/Conexao.php";
+    include_once "./model/Anuncio.php";
 
     class daoAnuncio{
 

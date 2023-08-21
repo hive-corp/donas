@@ -1,8 +1,8 @@
 <?php
 
 
-    include_once "./Conexao.php";
-    include_once "./EntradaProduto.php";
+    include_once "./model/Conexao.php";
+    include_once "./model/EntradaProduto.php";
 
     class daoEntradaProduto{
         public static function listar(){
