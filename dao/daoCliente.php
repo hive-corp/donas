@@ -73,7 +73,7 @@
                             SET fotoCliente = ?
                             WHERE idCliente = ?";
             
-            $prepareStatement = $conexao->prepare($queryInsert);
+            $prepareStatement = $connection->prepare($queryInsert);
             
             $prepareStatement->bindValue(1, $Cliente->getFotoCliente());
             $prepareStatement->bindValue(2, $Cliente->getIdCliente());
@@ -85,7 +85,7 @@
             $connection = Conexao::conectar();
 
             $querySelect = "SELECT * FROM tbCliente";
-            $resultado = $conexao->query($querySelect);
+            $resultado = $connection->query($querySelect);
             $lista = $resultado->fetchAll();
             return $lista;
         }
