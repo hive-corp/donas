@@ -175,7 +175,7 @@
                 for (i = 0; i < radio.length; i++) {
                     if (radio[i].checked && radio[i].value == 1) {
 
-                        fetch('api/cliente/verifica-cliente.php', {
+                        fetch('api/cliente/verifica.php', {
                             method: 'POST',
                             header: {
                                 'Accept': 'application/json',
