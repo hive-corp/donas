@@ -99,7 +99,7 @@
                         </div>
                     </div>
                     <div class="input">
-                        <label for="password" class="form-label">Senha</label>
+                        <label for="pass" class="form-label">Senha</label>
                         <div class="input-wrapper">
                             <input type="password" name="pass" id="pass" required>
                             <button id="hide-show-pass" type="button">
