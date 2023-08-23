@@ -12,9 +12,6 @@ require_once "validador.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notificações</title>
-
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/styles.css">
@@ -49,7 +46,7 @@ require_once "validador.php";
                     </span>
                 </a>
                 <a href="configuracoes.php" class="nav-link">
-                    <img src="" id="foto-usuario">
+                    <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-usuario" />
                     <i class="bi bi-person"></i>
                     <span>
                         Configurações
@@ -74,7 +71,7 @@ require_once "validador.php";
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
                         <li>
-                        <a class="dropdown-item" href="../logout.php">
+                            <a class="dropdown-item" href="../logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 Sair
                             </a>
@@ -105,23 +102,6 @@ require_once "validador.php";
         crossorigin="anonymous"></script> -->
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
-    <script>
-        var configuracoes = document.querySelectorAll('.nav-link')[4],
-            configIcon = document.querySelectorAll('.nav-link i')[4],
-            fotoUsuario = document.querySelector('#foto-usuario')
-        if (localStorage.getItem('theme') == 'dark') {
-            html.classList.add('dark')
-        }
-
-        window.onload = () => {
-            if (localStorage.getItem('imagemPerfil') === null) {
-                configIcon.style.display = 'inline-block'
-                fotoUsuario.style.display = "none"
-            } else {
-                fotoUsuario.src = localStorage.getItem('imagemPerfil')
-            }
-        }
-    </script>
 </body>
 
 </html>
