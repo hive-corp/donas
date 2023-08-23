@@ -15,6 +15,7 @@
         private $numeroCliente;
         private $complementoCliente;
         private $cepCliente;
+        private $cpfCliente;
 
         
         public function getIdCliente() {
@@ -59,6 +60,9 @@
         public function getCepCliente() {
             return $this->cepCliente;
         }
+        public function getCpfCliente() {
+            return $this->cpfCliente;
+        }
         public function setIdCliente($idCliente) {
             $this->idCliente=$idCliente;
         }
@@ -100,6 +104,9 @@
         }
         public function setCepCliente($cepCliente) {
             $this->cepCliente=$cepCliente;
+        }
+        public function setCpfCliente($cpfCliente) {
+            $this->cpfCliente=$cpfCliente;
         }
     }
     ?>
