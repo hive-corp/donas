@@ -41,7 +41,7 @@
                 </div>
                 <div class="modal-body d-flex flex-column text-center">
                     <i class="bi bi-x-circle"></i>
-                    Não conseguimos encontrar uma conta cliente associada a esse e-mail. Você já criou uma conta?
+                    Não conseguimos encontrar uma conta cliente associada a esse e-mail e senha.
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button" data-bs-dismiss="modal">OK</button>
@@ -54,11 +54,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Vendedora não encontrado!</h1>
+                    <h1 class="modal-title fs-5">Vendedora não encontrada!</h1>
                 </div>
                 <div class="modal-body d-flex flex-column text-center">
                     <i class="bi bi-x-circle"></i>
-                    Não conseguimos encontrar uma conta de empreendedora associada a esse e-mail. Você já criou uma conta?
+                    Não conseguimos encontrar uma conta de empreendedora associada a esse e-mail e senha.
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button" data-bs-dismiss="modal">OK</button>
@@ -73,7 +73,7 @@
         </div>
         <div id="login-cadastro">
             <img src="assets/img/rosas.svg" class="rosa-fundo">
-            <form class="form-box needs-validation" id="login-box" method="post" novalidate>
+            <form class="form-box needs-validation" action="authenticate-session.php" id="login-box" method="post" novalidate>
                 <div class="form-title">
                     Login
                     <p>Entre para continuar!</p>
@@ -223,7 +223,9 @@
                             .then(data => {
                                 if (data == 1) {
                                     form.submit()
-                                } else {
+                                } else if(data == 2) {
+                                    new bootstrap.Modal('#modal-revisao').toggle()
+                                }else{
                                     new bootstrap.Modal('#modal-erro-vendedora').toggle()
                                 }
                             })
