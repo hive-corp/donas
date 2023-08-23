@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -53,14 +59,15 @@
 			</div>
 			<div id="user-info">
 				<a href="../">
-					<img src="../assets/img/users/clientes/default-user.jpg" id="foto-info">
+					<img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
 				</a>
 				<div id="info-user">
 					<div id="nome-user">
-						Cliente
+						<?php echo $_SESSION['nome'] ?>
 					</div>
 					<div id="nick-user">
-						@cliente
+						@<?php echo $_SESSION['username'] ?>
+
 					</div>
 				</div>
 
@@ -70,7 +77,7 @@
 					</button>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
 						<li>
-							<a class="dropdown-item" href="../">
+						<a class="dropdown-item" href="../logout.php">
 								<i class="bi bi-box-arrow-right"></i>
 								Sair
 							</a>

@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -51,38 +57,37 @@
                 </a>
             </div>
             <div id="user-info">
-				<a href="../">
-					<img src="../assets/img/users/clientes/default-user.jpg" id="foto-info">
-				</a>
-				<div id="info-user">
-					<div id="nome-user">
-						Cliente
-					</div>
-					<div id="nick-user">
-						@cliente
-					</div>
-				</div>
-
-				<div class="dropup-center dropup">
-					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
+                <a href="../">
+                    <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
+                </a>
+                <div id="info-user">
+                    <div id="nome-user">
+                        <?php echo $_SESSION['nome'] ?>
+                    </div>
+                    <div id="nick-user">
+                        @<?php echo $_SESSION['username'] ?>
+                    </div>
+                </div>
+                <div class="dropup-center dropup">
+                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                        <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
         <main id="main">
             <div id="pesquisa">
@@ -667,7 +672,7 @@
         var configuracoes = document.querySelectorAll('.nav-link')[4],
             configIcon = document.querySelectorAll('.nav-link i')[4],
             fotoUsuario = document.querySelector('#foto-usuario')
-       
+
         window.onload = () => {
             if (localStorage.getItem('imagemPerfil') === null) {
                 configIcon.style.display = 'inline-block'

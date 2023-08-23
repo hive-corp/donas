@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -52,24 +58,23 @@
             </div>
             <div id="user-info">
                 <a href="../">
-                    <img src="../assets/img/users/clientes/default-user.jpg" id="foto-info">
+                    <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
                     <div id="nome-user">
-                        Cliente
+                        <?php echo $_SESSION['nome'] ?>
                     </div>
                     <div id="nick-user">
-                        @cliente
+                        @<?php echo $_SESSION['username'] ?>
                     </div>
                 </div>
-
                 <div class="dropup-center dropup">
                     <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
                         <li>
-                            <a class="dropdown-item" href="../">
+                        <a class="dropdown-item" href="../logout.php">
                                 <i class="bi bi-box-arrow-right"></i>
                                 Sair
                             </a>
@@ -202,8 +207,7 @@
                     </div>
                     <div class="crop-send">
                         <div class="message-container" id="crop-message-container">
-                            <input type="text" placeholder="Escreva uma mensagem" class="message-field"
-                                id="crop-message-field" autofocus>
+                            <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="crop-message-field" autofocus>
                             <button class="message-button" id="crop-message-button" type="button">
                                 <i class="bi bi-send"></i>
                             </button>
@@ -226,8 +230,7 @@
                             <input type="file" id="message-photo" accept="image/*">
                         </label>
                     </div>
-                    <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="main-message-field"
-                        autofocus>
+                    <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="main-message-field" autofocus>
                     <button class="message-button" id="main-message-button" type="button">
                         <i class="bi bi-send"></i>
                     </button>
@@ -325,7 +328,7 @@
                 reader.readAsDataURL(e.target.files[0]);
             }
 
-            messagePhoto.value=''
+            messagePhoto.value = ''
         });
 
         const enviarMensagem = () => {
@@ -339,7 +342,11 @@
                 msg.innerHTML = textoMensagem
 
                 let hora = new Date()
-                let horaMin = hora.getHours().toLocaleString(undefined, { minimumIntegerDigits: 2 }) + ":" + hora.getMinutes().toLocaleString(undefined, { minimumIntegerDigits: 2 })
+                let horaMin = hora.getHours().toLocaleString(undefined, {
+                    minimumIntegerDigits: 2
+                }) + ":" + hora.getMinutes().toLocaleString(undefined, {
+                    minimumIntegerDigits: 2
+                })
                 let horaMsg = document.createElement('span')
                 horaMsg.setAttribute('class', 'time')
                 horaMsg.innerHTML = horaMin
@@ -347,7 +354,10 @@
                 msg.append(horaMsg)
                 chat.append(msg)
 
-                chat.scroll({ top: chat.scrollHeight, behavior: "smooth" })
+                chat.scroll({
+                    top: chat.scrollHeight,
+                    behavior: "smooth"
+                })
             }
         }
 
@@ -359,12 +369,12 @@
 
             let imgSrc = cropper.getCroppedCanvas({
                 maxWidth: 1024,
-                fillColor:'white'
+                fillColor: 'white'
             }).toDataURL('image/jpeg');
 
             let img = document.createElement('img')
             img.src = imgSrc
-            
+
             msg.append(img)
 
             if (textoMensagem != '') {
@@ -374,7 +384,11 @@
             }
 
             let hora = new Date()
-            let horaMin = hora.getHours().toLocaleString(undefined, { minimumIntegerDigits: 2 }) + ":" + hora.getMinutes().toLocaleString(undefined, { minimumIntegerDigits: 2 })
+            let horaMin = hora.getHours().toLocaleString(undefined, {
+                minimumIntegerDigits: 2
+            }) + ":" + hora.getMinutes().toLocaleString(undefined, {
+                minimumIntegerDigits: 2
+            })
             let horaMsg = document.createElement('span')
             horaMsg.setAttribute('class', 'time')
             horaMsg.innerHTML = horaMin
@@ -382,7 +396,10 @@
             msg.append(horaMsg)
 
             chat.append(msg)
-            chat.scroll({ top: chat.scrollHeight, behavior: "smooth" })
+            chat.scroll({
+                top: chat.scrollHeight,
+                behavior: "smooth"
+            })
 
             cropImage.classList.toggle('hide')
         }
@@ -407,7 +424,10 @@
         }
 
         desceChat.addEventListener('click', () => {
-            chat.scroll({ top: chat.scrollHeight, behavior: "smooth" })
+            chat.scroll({
+                top: chat.scrollHeight,
+                behavior: "smooth"
+            })
         })
 
         chat.addEventListener('scroll', showScrollDown)
