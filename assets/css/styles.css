@@ -141,12 +141,14 @@ svg {
 }
 
 #modal-erro i,
+#modal-erro-vendedora i,
 #modal-sucesso i,
 #modal-revisao i {
     font-size: 48px;
 }
 
-#modal-erro i {
+#modal-erro i,
+#modal-erro-vendedora i {
     color: #d50000;
 }
 
