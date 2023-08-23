@@ -19,6 +19,11 @@ unset($_SESSION['bairro']);
 unset($_SESSION['num']);
 unset($_SESSION['comp']);
 unset($_SESSION['cep']);
+unset($_SESSION['nome-empresa']);
+unset($_SESSION['foto-empresa']);
+unset($_SESSION['cnpj']);
+unset($_SESSION['nivel-vendedora']);
+unset($_SESSION['categoria-id']);
 
 //a preencher
 
