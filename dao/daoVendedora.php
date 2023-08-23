@@ -8,7 +8,7 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "INSERT tbVendedora(nomeVendedora, emailVendedora, senhaVendedora, dataNascVendedora, statusVendedora, nomeNegocioVendedora,
+        $queryInsert = "INSERT tbVendedora(nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
                             nomeUsuarioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                             bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
                             nivelNegocioVendedora, idCategoria)
@@ -54,7 +54,7 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbVendedora
-                            SET nomeVendedora = ?, emailVendedora = ?, senhaVendedora = ?, dataNascVendedora = ?, statusVendedora = ?, nomeNegocioVendedora = ?,
+                            SET nomeVendedora = ?, emailVendedora = ?, senhaVendedora = ?, dtNascVendedora = ?, statusVendedora = ?, nomeNegocioVendedora = ?,
                             nomeUsuarioNegocioVendedora = ?, logNegocioVendedora = ?, cidadeNegocioVendedora = ?, estadoNegocioVendedora = ?,
                             bairroNegocioVendedora = ?, numNegocioVendedora = ?, compNegocioVendedora = ?, cepNegocioVendedora = ?, cnpjNegocioVendedora = ?,
                             nivelNegocioVendedora = ?, idCategoria = ?
@@ -167,5 +167,27 @@ class daoVendedora
         $status = $stmt->fetch()[0];
 
         return $status;
+    }
+
+    public static function consultaLogin($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
+                                    nomeUsuarioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
+                                    bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
+                                    nivelNegocioVendedora, idCategoria FROM tbVendedora
+                                    WHERE emailVendedora = ? AND senhaVendedora = ?');
+        $stmt->bindValue(1, $Vendedora->getEmailVendedora());
+        $stmt->bindValue(2, $Vendedora->getSenhaVendedora());
+        $stmt->execute();
+
+        $dados = $stmt->fetchAll();
+
+        $n = count($dados);
+        if ($n == 1)
+            return $dados[0];   
+        else
+            return 0;
     }
 }
