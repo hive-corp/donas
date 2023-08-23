@@ -34,7 +34,38 @@ if($tipoLogin==1){
         header("Location: user/");
     }
 }else{
-    //a preencher
+    $vendedora = new Vendedora();
+    $vendedora->setEmailVendedora($_POST['email']);
+    $vendedora->setSenhaVendedora($_POST['pass']);
+
+    $consultaVendedora = daoVendedora::consultaLogin($vendedora);
+    if($consultaVendedora == 0){
+        header("Location: login.php");
+    }else{
+        session_start();
+
+        $_SESSION['id']=$consultaVendedora['idVendedora'];
+        $_SESSION['nome']=$consultaVendedora['nomeVendedora'];
+        $_SESSION['email']=$consultaVendedora['emailVendedora'];
+        $_SESSION['senha']=$consultaVendedora['senhaVendedora'];
+        $_SESSION['data-nasc']=$consultaVendedora['dtNascVendedora'];
+        $_SESSION['foto']=$consultaVendedora['fotoVendedora'];
+        $_SESSION['nome-empresa']=$consultaVendedora['nomeNegocioVendedora'];
+        $_SESSION['username']=$consultaVendedora['nomeUsuarioNegocioVendedora'];
+        $_SESSION['foto-empresa']=$consultaVendedora['fotoNegocioVendedora'];
+        $_SESSION['cidade']=$consultaVendedora['cidadeNegocioVendedora'];
+        $_SESSION['estado']=$consultaVendedora['estadoNegocioVendedora'];
+        $_SESSION['log']=$consultaVendedora['logNegocioVendedora'];
+        $_SESSION['bairro']=$consultaVendedora['bairroNegocioVendedora'];
+        $_SESSION['num']=$consultaVendedora['numNegocioVendedora'];
+        $_SESSION['comp']=$consultaVendedora['compNegocioVendedora'];
+        $_SESSION['cep']=$consultaVendedora['cepNegocioVendedora'];
+        $_SESSION['cnpj']=$consultaVendedora['cnpjNegocioVendedora'];
+        $_SESSION['nivel-vendedora']=$consultaVendedora['nivelNegocioVendedora'];
+        $_SESSION['categoria-id']=$consultaVendedora['idCategoria'];
+
+        header("Location: dona/");
+    }
 }
 
 ?>
