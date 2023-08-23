@@ -122,4 +122,25 @@ class daoCliente
 
         return $count;
     }
+
+    public static function consultaLogin($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT idCliente, nomeCliente, nomeUsuarioCliente, emailCliente, senhaCliente,
+                                    dtNascCliente, fotoCliente, cidadeCliente, estadoCliente, logradouroCliente, bairroCliente, numeroCliente,
+                                    complementoCliente, cepCliente, cpfCliente FROM tbCliente
+                                    WHERE emailCliente = ? AND senhaCliente = ?');
+        $stmt->bindValue(1, $cliente->getEmailCliente());
+        $stmt->bindValue(2, $cliente->getSenhaCliente());
+        $stmt->execute();
+
+        $dados = $stmt->fetchAll();
+
+        $n = count($dados);
+        if ($n == 1)
+            return $dados[0];   
+        else
+            return 0;
+    }
 }
