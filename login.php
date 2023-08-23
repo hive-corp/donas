@@ -11,7 +11,7 @@
     <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
-   
+
 </head>
 
 <body>
@@ -42,6 +42,23 @@
                 <div class="modal-body d-flex flex-column text-center">
                     <i class="bi bi-x-circle"></i>
                     Não conseguimos encontrar uma conta cliente associada a esse e-mail. Você já criou uma conta?
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="button" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal pop" id="modal-erro-vendedora" tabindex="-1" aria-labelledby="modal-erro-vendedora" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Vendedora não encontrado!</h1>
+                </div>
+                <div class="modal-body d-flex flex-column text-center">
+                    <i class="bi bi-x-circle"></i>
+                    Não conseguimos encontrar uma conta de empreendedora associada a esse e-mail. Você já criou uma conta?
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button" data-bs-dismiss="modal">OK</button>
@@ -140,7 +157,7 @@
             form = document.querySelector('#login-box'),
             loginNew = document.getElementById('login-new'),
             escolhaNew = document.getElementById('escolha-new')
-            
+
         loginNew.addEventListener('click', () => {
             document.getElementById('login').classList.add('register')
             document.getElementById('login-box').classList.add('hide-top')
@@ -153,14 +170,14 @@
         })
 
         campoEmail.addEventListener('input', e => {
-                if (!campoEmail.checkValidity()) {
-                    campoEmail.classList.add('is-invalid')
-                    campoEmail.classList.remove('is-valid')
-                } else {
-                    campoEmail.classList.add('is-valid')
-                    campoEmail.classList.remove('is-invalid')
-                }
-            })
+            if (!campoEmail.checkValidity()) {
+                campoEmail.classList.add('is-invalid')
+                campoEmail.classList.remove('is-valid')
+            } else {
+                campoEmail.classList.add('is-valid')
+                campoEmail.classList.remove('is-invalid')
+            }
+        })
 
         form.addEventListener('submit', event => {
             event.preventDefault()
@@ -176,24 +193,40 @@
                     if (radio[i].checked && radio[i].value == 1) {
 
                         fetch('api/cliente/verifica.php', {
-                            method: 'POST',
-                            header: {
-                                'Accept': 'application/json',
-                                'Content-type': 'application/json'
-                            },
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(data => {
-                            if(data==1){
-                                form.submit()
-                            }else{
-                                new bootstrap.Modal('#modal-erro').toggle()
-                            }
-                        })
+                                method: 'POST',
+                                header: {
+                                    'Accept': 'application/json',
+                                    'Content-type': 'application/json'
+                                },
+                                body: formData
+                            })
+                            .then(response => response.text())
+                            .then(data => {
+                                if (data == 1) {
+                                    form.submit()
+                                } else {
+                                    new bootstrap.Modal('#modal-erro').toggle()
+                                }
+                            })
 
-                    } if (radio[i].checked && radio[i].value == 2) {
-                        new bootstrap.Modal('#modal-revisao').toggle()
+                    }
+                    if (radio[i].checked && radio[i].value == 2) {
+                        fetch('api/dona/verifica.php', {
+                                method: 'POST',
+                                header: {
+                                    'Accept': 'application/json',
+                                    'Content-type': 'application/json'
+                                },
+                                body: formData
+                            })
+                            .then(response => response.text())
+                            .then(data => {
+                                if (data == 1) {
+                                    form.submit()
+                                } else {
+                                    new bootstrap.Modal('#modal-erro-vendedora').toggle()
+                                }
+                            })
                     }
                 }
             }
@@ -210,7 +243,6 @@
                 iconBtnSenha.classList.add('bi-eye-slash')
             }
         })
-
     </script>
 
 </body>
