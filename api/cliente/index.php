@@ -21,13 +21,7 @@ $cliente->setNumeroCliente($_POST['num']);
 
 daoCliente::cadastrar($cliente);
 
-$conexao = Conexao::conectar();
-
-$stmt = $conexao->prepare('SELECT idCliente FROM tbCliente
-                            WHERE emailCliente = ?');
-$stmt->bindValue(1, $cliente->getEmailCliente());
-$stmt->execute();
-$id = $stmt->fetch()[0];
+$id = daoCliente::consultarIdPorEmail($cliente);
 
 $nomeimagem = $_FILES['foto']['name'];
 $tipo = $_FILES['foto']['type'];
