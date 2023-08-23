@@ -308,10 +308,6 @@
                             <label class="form-label" for="categoria">Categoria<span>*</span></label>
                             <div class="input-wrapper">
                                 <select name="categoria" id="categoria">
-                                    <option value="1">Artesanato</option>
-                                    <option value="2">Culinária</option>
-                                    <option value="3">Roupas</option>
-                                    <option value="4">Manicure</option>
                                 </select>
                             </div>
                             <div class="invalid-feedback">
@@ -533,6 +529,21 @@
                 confirmarFotoEmpresa = document.querySelector('#confirmar-foto-empresa'),
                 confirmarCadastro = document.querySelector('#cadastrar')
 
+            window.addEventListener('DOMContentLoaded', async () => {
+                const response = await fetch('./api/categoria')
+                const data = await response.json()
+
+                let selectCategoria = document.querySelector('#categoria')
+
+                data.forEach(item => {
+                    let option = document.createElement('option')
+                    option.setAttribute('value', item.idCategoria)
+                    option.innerText = item.nomeCategoria
+
+                    selectCategoria.append(option)
+                })
+            })
+
             form.addEventListener('submit', event => {
                 event.preventDefault()
                 event.stopPropagation()
@@ -587,9 +598,55 @@
                     enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
 
                     confirmarCadastro.addEventListener('click', () => {
-                        new bootstrap.Modal('#modal-sucesso').toggle()
+                        let canvasVendedora = cropperVendedora.getCroppedCanvas({
+                            width: 512,
+                            height: 512
+                        })
 
-                        setTimeout(() => location.replace('./login.php'), 2500)
+                        let canvasEmpresa = cropperEmpresa.getCroppedCanvas({
+                            width: 512,
+                            height: 512
+                        })
+
+                        canvasVendedora.toBlob(function(blobVendedora) {
+                            canvasEmpresa.toBlob(function(blobEmpresa) {
+
+                                let formData = new FormData()
+
+                                formData.append('foto-vendedora', blobVendedora, 'photo-vendedora.png')
+                                formData.append('foto-empresa', blobEmpresa, 'photo-empresa.png')
+                                formData.append('nome', document.getElementById('nome').value)
+                                formData.append('email', document.getElementById('email').value)
+                                formData.append('pass', campoSenha.value)
+                                formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
+                                formData.append('nome-empresa', document.getElementById('nome-empresa').value)
+                                formData.append('username-empresa', document.getElementById('username-empresa').value)
+                                formData.append('log', logradouro)
+                                formData.append('num', numero)
+                                formData.append('bairro', bairro)
+                                formData.append('cidade', cidade)
+                                formData.append('uf', uf)
+                                formData.append('cep', cep)
+                                formData.append('comp', complemento)
+                                formData.append('cnpj', campoCnpj.value)
+                                formData.append('nivel', plano)
+                                formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
+
+                                fetch('api/dona/index.php', {
+                                    method: 'POST',
+                                    header: {
+                                        'Accept': 'application/json',
+                                        'Content-type': 'application/json'
+                                    },
+                                    body: formData
+                                }).then(() => {
+                                    new bootstrap.Modal('#modal-sucesso').toggle()
+                                    setTimeout(() => location.replace('./login.php'), 2500)
+                                })
+
+                            })
+
+                        })
                     })
                 }
             }, false)
@@ -702,7 +759,7 @@
                             resultUser.innerHTML = '';
                             resultUser.appendChild(img);
 
-                            cropper = new Cropper(img, {
+                            cropperVendedora = new Cropper(img, {
                                 aspectRatio: 1 / 1,
                                 dragMode: 'move',
                                 guides: false,
@@ -718,7 +775,7 @@
 
             confirmarFotoUser.addEventListener('click', e => {
                 e.preventDefault();
-                let imgSrc = cropper.getCroppedCanvas({
+                let imgSrc = cropperVendedora.getCroppedCanvas({
                     maxWidth: 1024,
                     fillColor: 'white'
                 }).toDataURL('image/jpeg');
@@ -740,7 +797,7 @@
                             resultEmpresa.innerHTML = '';
                             resultEmpresa.appendChild(img);
 
-                            cropper = new Cropper(img, {
+                            cropperEmpresa = new Cropper(img, {
                                 aspectRatio: 1 / 1,
                                 dragMode: 'move',
                                 guides: false,
@@ -756,7 +813,7 @@
 
             confirmarFotoEmpresa.addEventListener('click', e => {
                 e.preventDefault();
-                let imgSrc = cropper.getCroppedCanvas({
+                let imgSrc = cropperEmpresa.getCroppedCanvas({
                     maxWidth: 1024,
                     fillColor: 'white'
                 }).toDataURL('image/jpeg');
