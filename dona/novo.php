@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,9 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo produto/serviço</title>
-
-        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
+    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
@@ -42,7 +46,7 @@
                     </span>
                 </a>
                 <a href="configuracoes.php" class="nav-link">
-                    <img src="" id="foto-usuario">
+                    <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-usuario">
                     <i class="bi bi-person"></i>
                     <span>
                         Configurações
@@ -54,24 +58,24 @@
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-                <a href="../">
-                    <img src="../assets/img/users/donas/acucarcanela.png" id="foto-info">
-                </a>
-                <div id="info-user">
-                    <div id="nome-user">
-                        Açúcar e Canela
-                    </div>
-                    <div id="nick-user">
-                        @acucarcanela
-                    </div>
-                </div>
+				<a href="../">
+					<img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
+				</a>
+				<div id="info-user">
+					<div id="nome-user">
+						<?php echo $_SESSION['nome-empresa'] ?>
+					</div>
+					<div id="nick-user">
+						@<?php echo $_SESSION['username'] ?>
+					</div>
+				</div>
                 <div class="dropup-center dropup">
 					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<i class="bi bi-three-dots-vertical"></i>
 					</button>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
 						<li>
-							<a class="dropdown-item" href="../">
+                        <a class="dropdown-item" href="../logout.php">
 								<i class="bi bi-box-arrow-right"></i>
 								Sair
 							</a>

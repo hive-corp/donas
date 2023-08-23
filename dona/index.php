@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,9 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
+    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/flickity.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
@@ -43,7 +47,7 @@
                     </span>
                 </a>
                 <a href="configuracoes.php" class="nav-link">
-                    <img src="" id="foto-usuario">
+                    <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-usuario">
                     <i class="bi bi-person"></i>
                     <span>
                         Configurações
@@ -56,24 +60,24 @@
             </a>
 
             <div id="user-info">
-                <a href="../">
-                    <img src="../assets/img/users/donas/acucarcanela.png" id="foto-info">
-                </a>
-                <div id="info-user">
-                    <div id="nome-user">
-                        Açúcar e Canela
-                    </div>
-                    <div id="nick-user">
-                        @acucarcanela
-                    </div>
-                </div>
+				<a href="../">
+					<img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
+				</a>
+				<div id="info-user">
+					<div id="nome-user">
+						<?php echo $_SESSION['nome-empresa'] ?>
+					</div>
+					<div id="nick-user">
+						@<?php echo $_SESSION['username'] ?>
+					</div>
+				</div>
                 <div class="dropup-center dropup">
 					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<i class="bi bi-three-dots-vertical"></i>
 					</button>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
 						<li>
-							<a class="dropdown-item" href="../">
+							<a class="dropdown-item" href="../logout.php">
 								<i class="bi bi-box-arrow-right"></i>
 								Sair
 							</a>
@@ -112,52 +116,6 @@
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/flickity.pkgd.min.js"></script>
     <script src="../assets/js/script.js"></script>
-
-    <script>
-        var configuracoes = document.querySelectorAll('.nav-link')[4],
-            configIcon = document.querySelectorAll('.nav-link i')[4],
-            fotoUsuario = document.querySelector('#foto-usuario'),
-            elem = document.querySelectorAll('.carrossel-cards'),
-            loadingElements = document.querySelectorAll('.load'),
-            placeholderElements = document.querySelectorAll('.placeholder-element'),
-            html = document.querySelector('html')
-
-if (localStorage.getItem('theme') == 'dark') {
-    html.classList.add('dark')
-}
-
-        window.addEventListener('DOMContentLoaded',
-            () => {
-                elem.forEach(item => {
-                    new Flickity(item, {
-                        cellAlign: 'left',
-                        prevNextButtons: false,
-                        pageDots: false,
-                        resize: false,
-                        contain: true
-                    })
-                })
-                setTimeout(() => {
-                    loadingElements.forEach(item => {
-                        item.classList.remove('load')
-                    })
-                    placeholderElements.forEach(item => {
-                        item.remove()
-                    })
-                }, 1000)
-            }
-        )
-
-        window.onload = () => {
-            if (localStorage.getItem('imagemPerfil') === null) {
-                configIcon.style.display = 'inline-block'
-                fotoUsuario.style.display = "none"
-            } else {
-                fotoUsuario.src = localStorage.getItem('imagemPerfil')
-            }
-        }
-
-    </script>
 </body>
 
 </html>

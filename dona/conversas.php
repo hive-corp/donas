@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,13 +12,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversas</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
-        <link rel='stylesheet' href='../assets/css/cropper.css'>
-        <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="../assets/css/styles.css">
-        <link rel="stylesheet" href="../assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel='stylesheet' href='../assets/css/cropper.css'>
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -43,7 +47,7 @@
                     </span>
                 </a>
                 <a href="configuracoes.php" class="nav-link">
-                    <img src="" id="foto-usuario">
+                    <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-usuario">
                     <i class="bi bi-person"></i>
                     <span>
                         Configurações
@@ -54,37 +58,38 @@
                 <i class="bi bi-plus-lg"></i>
                 <span>Criar novo anúncio</span>
             </a>
+
             <div id="user-info">
                 <a href="../">
-                    <img src="../assets/img/users/donas/acucarcanela.png" id="foto-info">
+                    <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
                     <div id="nome-user">
-                        Açúcar e Canela
+                        <?php echo $_SESSION['nome-empresa'] ?>
                     </div>
                     <div id="nick-user">
-                        @acucarcanela
+                        @<?php echo $_SESSION['username'] ?>
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -192,8 +197,7 @@
                     </div>
                     <div class="crop-send">
                         <div class="message-container" id="crop-message-container">
-                            <input type="text" placeholder="Escreva uma mensagem" class="message-field"
-                                id="crop-message-field" autofocus>
+                            <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="crop-message-field" autofocus>
                             <button class="message-button" id="crop-message-button" type="button">
                                 <i class="bi bi-send"></i>
                             </button>
@@ -216,8 +220,7 @@
                             <input type="file" id="message-photo" accept="image/*">
                         </label>
                     </div>
-                    <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="main-message-field"
-                        autofocus>
+                    <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="main-message-field" autofocus>
                     <button class="message-button" id="main-message-button" type="button">
                         <i class="bi bi-send"></i>
                     </button>
@@ -315,7 +318,7 @@
                 reader.readAsDataURL(e.target.files[0]);
             }
 
-            messagePhoto.value=''
+            messagePhoto.value = ''
         });
 
         const enviarMensagem = () => {
@@ -329,7 +332,11 @@
                 msg.innerHTML = textoMensagem
 
                 let hora = new Date()
-                let horaMin = hora.getHours().toLocaleString(undefined, { minimumIntegerDigits: 2 }) + ":" + hora.getMinutes().toLocaleString(undefined, { minimumIntegerDigits: 2 })
+                let horaMin = hora.getHours().toLocaleString(undefined, {
+                    minimumIntegerDigits: 2
+                }) + ":" + hora.getMinutes().toLocaleString(undefined, {
+                    minimumIntegerDigits: 2
+                })
                 let horaMsg = document.createElement('span')
                 horaMsg.setAttribute('class', 'time')
                 horaMsg.innerHTML = horaMin
@@ -337,7 +344,10 @@
                 msg.append(horaMsg)
                 chat.append(msg)
 
-                chat.scroll({ top: chat.scrollHeight, behavior: "smooth" })
+                chat.scroll({
+                    top: chat.scrollHeight,
+                    behavior: "smooth"
+                })
             }
         }
 
@@ -349,12 +359,12 @@
 
             let imgSrc = cropper.getCroppedCanvas({
                 maxWidth: 1024,
-                fillColor:'white'
+                fillColor: 'white'
             }).toDataURL('image/jpeg');
 
             let img = document.createElement('img')
             img.src = imgSrc
-            
+
             msg.append(img)
 
             if (textoMensagem != '') {
@@ -364,7 +374,11 @@
             }
 
             let hora = new Date()
-            let horaMin = hora.getHours().toLocaleString(undefined, { minimumIntegerDigits: 2 }) + ":" + hora.getMinutes().toLocaleString(undefined, { minimumIntegerDigits: 2 })
+            let horaMin = hora.getHours().toLocaleString(undefined, {
+                minimumIntegerDigits: 2
+            }) + ":" + hora.getMinutes().toLocaleString(undefined, {
+                minimumIntegerDigits: 2
+            })
             let horaMsg = document.createElement('span')
             horaMsg.setAttribute('class', 'time')
             horaMsg.innerHTML = horaMin
@@ -372,7 +386,10 @@
             msg.append(horaMsg)
 
             chat.append(msg)
-            chat.scroll({ top: chat.scrollHeight, behavior: "smooth" })
+            chat.scroll({
+                top: chat.scrollHeight,
+                behavior: "smooth"
+            })
 
             cropImage.classList.toggle('hide')
         }
@@ -397,7 +414,10 @@
         }
 
         desceChat.addEventListener('click', () => {
-            chat.scroll({ top: chat.scrollHeight, behavior: "smooth" })
+            chat.scroll({
+                top: chat.scrollHeight,
+                behavior: "smooth"
+            })
         })
 
         chat.addEventListener('scroll', showScrollDown)
