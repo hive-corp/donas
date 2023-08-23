@@ -1,91 +1,125 @@
 <?php
-    require_once "global.php";
+require_once "global.php";
 
-    class daoCliente{
+class daoCliente
+{
 
-        public static function cadastrar($Cliente){
-            $connection = Conexao::conectar();
+    public static function cadastrar($Cliente)
+    {
+        $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbCliente(nomeCliente, nomeUsuarioCliente, emailCliente, senhaCliente, dtNascCliente, cidadeCliente, estadoCliente, logradouroCliente, bairroCliente, numeroCliente, complementoCliente, cepCliente)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $queryInsert = "INSERT tbCliente(nomeCliente, nomeUsuarioCliente, emailCliente, senhaCliente, dtNascCliente, cidadeCliente, estadoCliente, logradouroCliente, bairroCliente, numeroCliente, complementoCliente, cepCliente, cpfCliente)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            $prepareStatement = $connection->prepare($queryInsert);
+        $prepareStatement = $connection->prepare($queryInsert);
 
-            $prepareStatement->bindvalue(1, $Cliente->getNomeCliente());
-            $prepareStatement->bindvalue(2, $Cliente->getNomeUsuarioCliente());
-            $prepareStatement->bindvalue(3, $Cliente->getEmailCliente());
-            $prepareStatement->bindvalue(4, $Cliente->getSenhaCliente());
-            $prepareStatement->bindvalue(5, $Cliente->getDtNascCliente());
-            $prepareStatement->bindvalue(6, $Cliente->getCidadeCliente());
-            $prepareStatement->bindvalue(7, $Cliente->getEstadoCliente());
-            $prepareStatement->bindvalue(8, $Cliente->getLogradouroCliente());
-            $prepareStatement->bindvalue(9, $Cliente->getBairroCliente());
-            $prepareStatement->bindvalue(10, $Cliente->getNumeroCliente());
-            $prepareStatement->bindvalue(11, $Cliente->getComplementoCliente());
-            $prepareStatement->bindvalue(12, $Cliente->getCepCliente());
+        $prepareStatement->bindvalue(1, $Cliente->getNomeCliente());
+        $prepareStatement->bindvalue(2, $Cliente->getNomeUsuarioCliente());
+        $prepareStatement->bindvalue(3, $Cliente->getEmailCliente());
+        $prepareStatement->bindvalue(4, $Cliente->getSenhaCliente());
+        $prepareStatement->bindvalue(5, $Cliente->getDtNascCliente());
+        $prepareStatement->bindvalue(6, $Cliente->getCidadeCliente());
+        $prepareStatement->bindvalue(7, $Cliente->getEstadoCliente());
+        $prepareStatement->bindvalue(8, $Cliente->getLogradouroCliente());
+        $prepareStatement->bindvalue(9, $Cliente->getBairroCliente());
+        $prepareStatement->bindvalue(10, $Cliente->getNumeroCliente());
+        $prepareStatement->bindvalue(11, $Cliente->getComplementoCliente());
+        $prepareStatement->bindvalue(12, $Cliente->getCepCliente());
+        $prepareStatement->bindvalue(13, $Cliente->getCpfCliente());
 
-            $prepareStatement->execute();
-        }
+        $prepareStatement->execute();
+    }
 
-        public static function deletar($Cliente){
-            $connection = Conexao::conectar();
+    public static function deletar($Cliente)
+    {
+        $connection = Conexao::conectar();
 
-            $queryInsert = "DELETE tbCliente WHERE idCliente = ?";
+        $queryInsert = "DELETE tbCliente WHERE idCliente = ?";
 
-            $prepareStatement = $connection->prepare($queryInsert);
-            $prepareStatement->bindvalue(1, $Cliente->getIdCliente());
+        $prepareStatement = $connection->prepare($queryInsert);
+        $prepareStatement->bindvalue(1, $Cliente->getIdCliente());
 
-            $prepareStatement->execute();
-        }
+        $prepareStatement->execute();
+    }
 
-        public static function editar($Cliente){
-            $connection = Conexao::conectar();
+    public static function editar($Cliente)
+    {
+        $connection = Conexao::conectar();
 
-            $queryInsert = "UPDATE tbCliente
-                            SET nomeCliente = ?, nomeUsuarioCliente = ?, emailCliente = ?, senhaCliente = ?, dtNascCliente = ?, cidadeCliente = ?, estadoCliente = ?, logradouroCliente = ?, bairroCliente = ?, numeroCliente = ?, complementoCliente = ?, cepCliente = ?
+        $queryInsert = "UPDATE tbCliente
+                            SET nomeCliente = ?, nomeUsuarioCliente = ?, emailCliente = ?, senhaCliente = ?, dtNascCliente = ?, cidadeCliente = ?, estadoCliente = ?, logradouroCliente = ?, bairroCliente = ?, numeroCliente = ?, complementoCliente = ?, cepCliente = ?, cpfCliente = ?,
                             WHERE idCliente = ?";
 
-            $prepareStatement = $connection->prepare($queryInsert);
+        $prepareStatement = $connection->prepare($queryInsert);
 
-            $prepareStatement->bindvalue(1, $Cliente->getNomeCliente());
-            $prepareStatement->bindvalue(2, $Cliente->getNomeUsuarioCliente());
-            $prepareStatement->bindvalue(3, $Cliente->getEmailCliente());
-            $prepareStatement->bindvalue(4, $Cliente->getSenhaCliente());
-            $prepareStatement->bindvalue(5, $Cliente->getDtNascCliente());
-            $prepareStatement->bindvalue(6, $Cliente->getCidadeCliente());
-            $prepareStatement->bindvalue(7, $Cliente->getEstadoCliente());
-            $prepareStatement->bindvalue(8, $Cliente->getLogradouroCliente());
-            $prepareStatement->bindvalue(9, $Cliente->getBairroCliente());
-            $prepareStatement->bindvalue(10, $Cliente->getNumeroCliente());
-            $prepareStatement->bindvalue(11, $Cliente->getComplementoCliente());
-            $prepareStatement->bindvalue(12, $Cliente->getCepCliente());
-            $prepareStatement->bindvalue(13, $Cliente->getIdCliente());
+        $prepareStatement->bindvalue(1, $Cliente->getNomeCliente());
+        $prepareStatement->bindvalue(2, $Cliente->getNomeUsuarioCliente());
+        $prepareStatement->bindvalue(3, $Cliente->getEmailCliente());
+        $prepareStatement->bindvalue(4, $Cliente->getSenhaCliente());
+        $prepareStatement->bindvalue(5, $Cliente->getDtNascCliente());
+        $prepareStatement->bindvalue(6, $Cliente->getCidadeCliente());
+        $prepareStatement->bindvalue(7, $Cliente->getEstadoCliente());
+        $prepareStatement->bindvalue(8, $Cliente->getLogradouroCliente());
+        $prepareStatement->bindvalue(9, $Cliente->getBairroCliente());
+        $prepareStatement->bindvalue(10, $Cliente->getNumeroCliente());
+        $prepareStatement->bindvalue(11, $Cliente->getComplementoCliente());
+        $prepareStatement->bindvalue(12, $Cliente->getCepCliente());
+        $prepareStatement->bindvalue(13, $Cliente->getIdCliente());
 
-            $prepareStatement->execute();
-        }
+        $prepareStatement->execute();
+    }
 
-        public static function editarFoto($Cliente){
-            $connection = Conexao::conectar();
+    public static function editarFoto($Cliente)
+    {
+        $connection = Conexao::conectar();
 
-            $queryInsert = "UPDATE tbCliente
+        $queryInsert = "UPDATE tbCliente
                             SET fotoCliente = ?
                             WHERE idCliente = ?";
-            
-            $prepareStatement = $connection->prepare($queryInsert);
-            
-            $prepareStatement->bindValue(1, $Cliente->getFotoCliente());
-            $prepareStatement->bindValue(2, $Cliente->getIdCliente());
 
-            $prepareStatement->execute();
-        }
+        $prepareStatement = $connection->prepare($queryInsert);
 
-        public static function listar(){
-            $connection = Conexao::conectar();
+        $prepareStatement->bindValue(1, $Cliente->getFotoCliente());
+        $prepareStatement->bindValue(2, $Cliente->getIdCliente());
 
-            $querySelect = "SELECT * FROM tbCliente";
-            $resultado = $connection->query($querySelect);
-            $lista = $resultado->fetchAll();
-            return $lista;
-        }
+        $prepareStatement->execute();
     }
-?>
+
+    public static function listar()
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT * FROM tbCliente";
+        $resultado = $connection->query($querySelect);
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
+    public static function consultarIdPorEmail($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT idCliente FROM tbCliente
+                            WHERE emailCliente = ?');
+        $stmt->bindValue(1, $cliente->getEmailCliente());
+        $stmt->execute();
+        $id = $stmt->fetch()[0];
+
+        return $id;
+    }
+
+    public static function verificaLogin($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT COUNT(idCliente) FROM tbCliente
+                            WHERE emailCliente = ? AND senhaCliente = ?');
+        $stmt->bindValue(1, $cliente->getEmailCliente());
+        $stmt->bindValue(2, $cliente->getSenhaCliente());
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
+}
