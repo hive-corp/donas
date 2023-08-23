@@ -174,7 +174,7 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare('SELECT nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
-                                    nomeUsuarioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
+                                    nomeUsuarioNegocioVendedora, fotoNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                                     bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
                                     nivelNegocioVendedora, idCategoria FROM tbVendedora
                                     WHERE emailVendedora = ? AND senhaVendedora = ?');
