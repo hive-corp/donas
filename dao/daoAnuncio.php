@@ -1,7 +1,5 @@
 <?php
-
-    include_once "./model/Conexao.php";
-    include_once "./model/Anuncio.php";
+    require_once "global.php";
 
     class daoAnuncio{
 

@@ -1,6 +1,5 @@
 <?php
-    include_once "model/Negocio.php";
-    include_once "model/Conexao.php";
+    require_once "global.php";
 
     class daoCategoria {
         

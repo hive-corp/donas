@@ -1,6 +1,5 @@
 <?php
-    include_once "model/Categoria.php";
-    include_once "model/Conexao.php";
+    require_once "global.php";
 
     class daoCategoria {
         
@@ -65,6 +64,7 @@
             $querySelect = "SELECT * FROM tbCategoria";
 
             $resultado = $connection->prepare($querySelect);
+            $resultado->execute();
             $lista = $resultado->fetchAll();
             return $lista;
 

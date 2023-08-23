@@ -1,8 +1,6 @@
 <?php
 
-
-    include_once "./model/Conexao.php";
-    include_once "./model/EntradaProduto.php";
+    require_once "global.php";
 
     class daoEntradaProduto{
         public static function listar(){
@@ -14,5 +12,3 @@
             return $lista;
         }
     }
-
-?>

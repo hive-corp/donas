@@ -1,7 +1,5 @@
 <?php
-
-    include_once "./model/Vendedora.php";
-    include_once "./model/Conexao.php";
+    require_once "global.php";
 
     class daoVendedora{
 
