@@ -395,7 +395,7 @@
                         formData.append('username', document.getElementById('username').value)
                         formData.append('email', document.getElementById('email').value)
                         formData.append('pass', campoSenha.value)
-                        formData.append('cpf', campoCpf.value)
+                        formData.append('cpf', campoCpf.value.replace(/\D/g, ''))
                         formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
                         formData.append('log', logradouro)
                         formData.append('num', numero)

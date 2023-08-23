@@ -628,7 +628,7 @@
                                 formData.append('uf', uf)
                                 formData.append('cep', cep)
                                 formData.append('comp', complemento)
-                                formData.append('cnpj', campoCnpj.value)
+                                formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
                                 formData.append('nivel', plano)
                                 formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
 
