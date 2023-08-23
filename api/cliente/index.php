@@ -11,6 +11,10 @@ $cliente->setEmailCliente($_POST['email']);
 $cliente->setNomeUsuarioCliente($_POST['username']);
 $cliente->setSenhaCliente($_POST['pass']);
 $cliente->setCepCliente($_POST['cep']);
+
+$cpf = str_replace('.', '', $_POST['cpf']);
+$cliente->setCpfCliente($cpf);
+
 $cliente->setDtNascCliente($_POST['nasc']);
 $cliente->setLogradouroCliente($_POST['log']);
 $cliente->setBairroCliente($_POST['bairro']);
