@@ -6,7 +6,7 @@
         private $conteudoMensagem ;
         private $horaMensagem ;
         private $lidoEmMensagem ;
-
+       
         private $Cliente ;
         public function __construct()
         {
@@ -20,6 +20,7 @@
         }
 
         private $origemMensagem;
+        private $imagemMensagem;
 
         public function getIdMensagem() {
             return $this->idMensagem;
@@ -42,6 +43,9 @@
         public function getOrigemMensagem() {
             return $this->origemMensagem;
         }
+        public function getImagemMensagem() {
+            return $this->imagemMensagem;
+        }
         public function setIdMensagem($idMensagem) {
             $this->idMensagem=$idMensagem;
         }
@@ -62,6 +66,9 @@
         }
         public function setOrigemMensagem($origemMensagem) {
             $this->origemMensagem=$origemMensagem;
+        }
+        public function setImagemMensagem($imagemMensagem) {
+            $this->imagemMensagem=$imagemMensagem;
         }
     }
 
