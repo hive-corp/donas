@@ -139,8 +139,45 @@ class daoCliente
 
         $n = count($dados);
         if ($n == 1)
-            return $dados[0];   
+            return $dados[0];
         else
             return 0;
+    }
+
+    public static function verificaCpf($cpf)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idCliente) FROM tbCliente WHERE cpfCliente LIKE ?");
+        $stmt->bindValue(1, $cpf);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
+    public static function verificaEmail($email)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idCliente) FROM tbCliente WHERE emailCliente LIKE ?");
+        $stmt->bindValue(1, $email);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
+    public static function verificaNomeUsuario($username)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idCliente) FROM tbCliente WHERE nomeUsuarioCliente LIKE ?");
+        $stmt->bindValue(1, $username);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
     }
 }

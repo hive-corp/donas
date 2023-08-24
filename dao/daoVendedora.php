@@ -190,4 +190,41 @@ class daoVendedora
         else
             return 0;
     }
+
+    public static function verificaCnpj($cnpj)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE cnpjNegocioVendedora LIKE ?");
+        $stmt->bindValue(1, $cnpj);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
+    public static function verificaEmail($email)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE emailVendedora LIKE ?");
+        $stmt->bindValue(1, $email);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
+    public static function verificaNomeUsuario($username)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE nomeUsuarioNegocioVendedora LIKE ?");
+        $stmt->bindValue(1, $username);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
 }
