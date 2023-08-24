@@ -3,10 +3,10 @@ class NotifcCliente {
     private $idNotifcCliente ;
     private $statusPedido ;
 
-    private $Negocio ;
+    private $Vendedora ;
     public function __construct()
     {
-        $Negocio = new Negocio();
+        $Vendedora = new Vendedora();
     }
 
     private $Cliente ;
@@ -21,8 +21,8 @@ class NotifcCliente {
     public function getStatusPedido() {
         return $this->statusPedido;
     }
-    public function getNegocio() {
-        return $this->Negocio;
+    public function getVendedora() {
+        return $this->Vendedora;
     }
     public function getCliente() {
         return $this->Cliente;
@@ -33,8 +33,8 @@ class NotifcCliente {
     public function setStatusPedido($statusPedido) {
         $this->statusPedido=$statusPedido;
     }
-    public function setNegocio($Negocio) {
-        $this->Negocio=$Negocio;
+    public function setVendedora($Vendedora) {
+        $this->Vendedora=$Vendedora;
     }
     public function setCliente($Cliente) {
         $this->Cliente=$Cliente;
