@@ -9,11 +9,12 @@
         private $estrelasAnuncio ;
         private $imagemPrincipalAnuncio ;
         private $tipoAnuncio ;
-        
-        private $Negocio;
+        private $qtdProduto ;
+
+        private $Vendedora;
         public function __construct()
         {
-            $Negocio = new Negocio();
+            $Vendedora = new Vendedora();
         }
 
         public function getIdAnuncio() {
@@ -37,8 +38,11 @@
         public function getTipoAnuncio() {
             return $this->tipoAnuncio;
         }
-        public function getNegocio() {
-            return $this->Negocio;
+        public function getQtdProduto() {
+            return $this->qtdProduto;
+        }
+        public function getVendedora() {
+            return $this->Vendedora;
         }
         public function setIdAnuncio($idAnuncio) {
             $this->idAnuncio = $idAnuncio;
@@ -61,8 +65,11 @@
         public function setTipoAnuncio($tipoAnuncio) {
             $this->tipoAnuncio = $tipoAnuncio;
         }
-        public function setNegocio($Negocio) {
-            $this->Negocio = $Negocio;
+        public function setQtdProduto($qtdProduto) {
+            $this->qtdProduto = $qtdProduto;
+        }
+        public function setVendedora($Vendedora) {
+            $this->Vendedora = $Vendedora;
         }
     }
 
