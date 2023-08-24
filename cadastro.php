@@ -139,7 +139,7 @@
                             <div class="input-wrapper">
                                 <input type="text" name="username" id="username" autocomplete required>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="username-feedback">
                                 Insira um nome de usuário válido.
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                             <div class="input-wrapper">
                                 <input type="text" name="cpf" id="cpf" maxlength="14" required>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="cpf-feedback">
                                 Insira um CPF válido.
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                             <div class="input-wrapper">
                                 <input type="email" name="email" id="email" autocomplete="email" required>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="email-feedback">
                                 Insira um e-mail válido.
                             </div>
                         </div>
@@ -324,6 +324,7 @@
             campoConfirm = document.querySelector('#confirm-pass'),
             campoCpf = document.querySelector('#cpf'),
             campoEmail = document.querySelector('#email'),
+            campoUsername = document.querySelector("#username"),
             avancar = document.querySelectorAll('[data-register-target]'),
             boxes = document.querySelectorAll('.form-box'),
             campoCep = document.querySelector('#cep'),
@@ -349,6 +350,40 @@
             }
         })
 
+        campoUsername.addEventListener('blur', e => {
+            let username = e.target.value
+
+            fetch(`api/cliente/?username=${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data == 1) {
+                        document.querySelector('#username-feedback').innerText = "Esse nome de usuário já está sendo utilizado"
+                        campoUsername.classList.add('is-invalid')
+                        campoUsername.classList.remove('is-valid')
+                    } else {
+                        campoUsername.classList.add('is-valid')
+                        campoUsername.classList.remove('is-invalid')
+                    }
+                })
+        })
+
+        campoEmail.addEventListener('blur', e => {
+            let email = e.target.value
+
+            fetch(`api/cliente/?email=${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data == 1) {
+                        document.querySelector('#email-feedback').innerText = "Esse e-mail já está sendo utilizado"
+                        campoEmail.classList.add('is-invalid')
+                        campoEmail.classList.remove('is-valid')
+                    } else {
+                        campoEmail.classList.add('is-valid')
+                        campoEmail.classList.remove('is-invalid')
+                    }
+                })
+        })
+
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
@@ -362,8 +397,8 @@
                     emailModal = document.querySelector('.email-modal .input-wrapper'),
                     nascModal = document.querySelector('.nasc-modal .input-wrapper'),
                     cpfModal = document.querySelector('.cpf-modal .input-wrapper'),
-                    usernameModal = document.querySelector('.username-modal .input-wrapper')
-                enderecoModal = document.querySelector('.endereco-modal .input-wrapper'),
+                    usernameModal = document.querySelector('.username-modal .input-wrapper'),
+                    enderecoModal = document.querySelector('.endereco-modal .input-wrapper'),
                     logradouro = document.getElementById('log').value,
                     bairro = document.getElementById('bairro').value,
                     cidade = document.getElementById('cidade').value,
@@ -421,8 +456,8 @@
             }
         })
 
-        function maskCPF(event) {
-            const input = event.target;
+        function maskCPF(e) {
+            const input = e.target;
             const value = input.value.replace(/\D/g, '');
 
             let formattedValue = '';
@@ -445,8 +480,8 @@
             input.value = formattedValue
         }
 
-        function maskCep(event) {
-            const input = event.target;
+        function maskCep(e) {
+            const input = e.target;
             const value = input.value.replace(/\D/g, '');
 
             let formattedValue = '';
@@ -512,9 +547,20 @@
                 return false
             }
 
-            campoCpf.classList.add('is-valid')
-            return false
+            fetch(`api/cliente/?cpf=${cpf}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data == 1) {
+                        document.querySelector('#cpf-feedback').innerText = "Esse CPF já está sendo utilizado"
+                        campoCpf.classList.add('is-invalid')
+                        campoCpf.classList.remove('is-valid')
+                    } else {
+                        campoCpf.classList.add('is-valid')
+                        campoCpf.classList.remove('is-invalid')
+                    }
+                })
         })
+
         campoCep.addEventListener('input', maskCep)
 
         fotoInput.addEventListener('change', e => {

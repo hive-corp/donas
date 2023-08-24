@@ -195,7 +195,7 @@
                             <div class="input-wrapper">
                                 <input type="email" name="email" id="email" autocomplete="email" required>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="email-feedback">
                                 Insira um e-mail válido.
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                             <div class="input-wrapper">
                                 <input type="text" name="username-empresa" id="username-empresa" autocomplete required>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="username-feedback">
                                 Insira um nome de usuário válido.
                             </div>
                         </div>
@@ -300,7 +300,7 @@
                             <div class="input-wrapper">
                                 <input type="text" name="cnpj" id="cnpj" required>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="cnpj-feedback">
                                 Insira um CNPJ válido.
                             </div>
                         </div>
@@ -507,6 +507,7 @@
             let btnSenha = document.querySelector('#hide-show-pass'),
                 iconBtnSenha = document.querySelector('#hide-show-pass i'),
                 campoEmail = document.querySelector('#email'),
+                campoUsername = document.querySelector("#username-empresa"),
                 campoSenha = document.querySelector('#password'),
                 campoConfirm = document.querySelector('#confirm-pass'),
                 campoCnpj = document.querySelector('#cnpj'),
@@ -577,7 +578,7 @@
                     emailModal.innerText = document.getElementById('email').value
                     nascModal.innerText = document.getElementById('date').value.replaceAll('-', '/')
                     nomeNegocioModal.innerText = document.getElementById('nome-empresa').value
-                    usernameNegocioModal.innerText = document.getElementById('username-empresa').value
+                    usernameNegocioModal.innerText = campoUsername.value
                     categoriaNegocioModal.innerText = document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].text
 
                     let plano;
@@ -620,7 +621,7 @@
                                 formData.append('pass', campoSenha.value)
                                 formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
                                 formData.append('nome-empresa', document.getElementById('nome-empresa').value)
-                                formData.append('username-empresa', document.getElementById('username-empresa').value)
+                                formData.append('username-empresa', campoUsername.value)
                                 formData.append('log', logradouro)
                                 formData.append('num', numero)
                                 formData.append('bairro', bairro)
@@ -669,6 +670,41 @@
                     campoEmail.classList.add('is-valid')
                     campoEmail.classList.remove('is-invalid')
                 }
+            })
+
+
+            campoUsername.addEventListener('blur', e => {
+                let username = e.target.value
+
+                fetch(`api/dona/?username=${username}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data == 1) {
+                            document.querySelector('#username-feedback').innerText = "Esse nome de usuário já está sendo utilizado"
+                            campoUsername.classList.add('is-invalid')
+                            campoUsername.classList.remove('is-valid')
+                        } else {
+                            campoUsername.classList.add('is-valid')
+                            campoUsername.classList.remove('is-invalid')
+                        }
+                    })
+            })
+
+            campoEmail.addEventListener('blur', e => {
+                let email = e.target.value
+
+                fetch(`api/dona/?email=${email}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data == 1) {
+                            document.querySelector('#email-feedback').innerText = "Esse e-mail já está sendo utilizado"
+                            campoEmail.classList.add('is-invalid')
+                            campoEmail.classList.remove('is-valid')
+                        } else {
+                            campoEmail.classList.add('is-valid')
+                            campoEmail.classList.remove('is-invalid')
+                        }
+                    })
             })
 
             function maskCNPJ(event) {
@@ -743,6 +779,23 @@
             }
 
             campoCnpj.addEventListener('input', maskCNPJ)
+            campoCnpj.addEventListener('blur', e => {
+
+                let cnpj = e.target.value.replace(/\D/g, '')
+
+                fetch(`api/dona/?cnpj=${cnpj}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data == 1) {
+                        document.querySelector('#cnpj-feedback').innerText = "Esse CNPJ já está sendo utilizado"
+                        campoCnpj.classList.add('is-invalid')
+                        campoCnpj.classList.remove('is-valid')
+                    } else {
+                        campoCnpj.classList.add('is-valid')
+                        campoCnpj.classList.remove('is-invalid')
+                    }
+                })
+            })
             campoCep.addEventListener('input', maskCep)
             campoTel.addEventListener('input', maskTel)
 
