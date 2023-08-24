@@ -1,44 +1,79 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
 
 require_once('../global.php');
 
-$cliente = new Cliente();
+if (isset($_GET['cpf'])) {
+    $cpf = $_GET["cpf"];
+    $count = daoCliente::verificaCpf($cpf);
+    echo json_encode($count);
+} else if (isset($_GET['username'])) {
+    $username = $_GET["username"];
+    $count = daoCliente::verificaNomeUsuario($username);
+    echo json_encode($count);
 
-$cliente->setNomeCliente($_POST['nome']);
-$cliente->setEmailCliente($_POST['email']);
-$cliente->setNomeUsuarioCliente($_POST['username']);
-$cliente->setSenhaCliente($_POST['pass']);
-$cliente->setCepCliente($_POST['cep']);
+} else if (isset($_GET['email'])) {
+    $email = $_GET["email"];
+    $count = daoCliente::verificaEmail($email);
+    echo json_encode($count);
+}
 
-$cpf = str_replace('.', '', $_POST['cpf']);
-$cliente->setCpfCliente($cpf);
+$method = $_SERVER['REQUEST_METHOD'];
 
-$cliente->setDtNascCliente($_POST['nasc']);
-$cliente->setLogradouroCliente($_POST['log']);
-$cliente->setBairroCliente($_POST['bairro']);
-$cliente->setCidadeCliente($_POST['cidade']);
-$cliente->setEstadoCliente($_POST['uf']);
-$cliente->setComplementoCliente($_POST['comp']);
-$cliente->setNumeroCliente($_POST['num']);
+switch ($method) {
+    case "POST":
 
-daoCliente::cadastrar($cliente);
+        $cliente = new Cliente();
 
-$id = daoCliente::consultarIdPorEmail($cliente);
+        $cliente->setNomeCliente($_POST['nome']);
+        $cliente->setEmailCliente($_POST['email']);
+        $cliente->setNomeUsuarioCliente($_POST['username']);
+        $cliente->setSenhaCliente($_POST['pass']);
+        $cliente->setCepCliente($_POST['cep']);
 
-$nomeimagem = $_FILES['foto']['name'];
-$tipo = $_FILES['foto']['type'];
+        $cpf = str_replace('.', '', $_POST['cpf']);
+        $cliente->setCpfCliente($cpf);
 
-$extensao = substr($nomeimagem, -4);
-$extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
+        $cliente->setDtNascCliente($_POST['nasc']);
+        $cliente->setLogradouroCliente($_POST['log']);
+        $cliente->setBairroCliente($_POST['bairro']);
+        $cliente->setCidadeCliente($_POST['cidade']);
+        $cliente->setEstadoCliente($_POST['uf']);
+        $cliente->setComplementoCliente($_POST['comp']);
+        $cliente->setNumeroCliente($_POST['num']);
 
-$arquivo = "assets/img/users/clientes/" . $id . $extensao;
+        daoCliente::cadastrar($cliente);
 
-move_uploaded_file($_FILES['foto']['tmp_name'], "../../".$arquivo);
+        $id = daoCliente::consultarIdPorEmail($cliente);
 
-$cliente->setIdCliente($id);
-$cliente->setFotoCliente($arquivo);
+        $nomeimagem = $_FILES['foto']['name'];
+        $tipo = $_FILES['foto']['type'];
 
-daoCliente::editarFoto($cliente);
+        $extensao = substr($nomeimagem, -4);
+        $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
+        $arquivo = "assets/img/users/clientes/" . $id . $extensao;
+
+        move_uploaded_file($_FILES['foto']['tmp_name'], "../../" . $arquivo);
+
+        $cliente->setIdCliente($id);
+        $cliente->setFotoCliente($arquivo);
+
+        daoCliente::editarFoto($cliente);
+        break;
+
+    case "PUT":
+
+        //a acrescentar...
+
+        break;
+
+    case "DELETE":
+
+        //a acrescentar...
+
+        break;
+}

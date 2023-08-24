@@ -1,62 +1,97 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
+
 require_once('../global.php');
 
-$vendedora = new Vendedora();
+if (isset($_GET['cnpj'])) {
+    $cnpj = $_GET["cnpj"];
+    $count = daoVendedora::verificaCnpj($cnpj);
+    echo json_encode($count);
+} else if (isset($_GET['username'])) {
+    $username = $_GET["username"];
+    $count = daoVendedora::verificaNomeUsuario($username);
+    echo json_encode($count);
+} else if (isset($_GET['email'])) {
+    $email = $_GET["email"];
+    $count = daoVendedora::verificaEmail($email);
+    echo json_encode($count);
+}
 
-$vendedora->setNomeVendedora($_POST['nome']);
-$vendedora->setEmailVendedora($_POST['email']);
-$vendedora->setSenhaVendedora($_POST['pass']);
-$vendedora->setDtNascVendedora($_POST['nasc']);
-$vendedora->setStatusVendedora(0);
-$vendedora->setNomeNegocioVendedora($_POST['nome-empresa']);
-$vendedora->setNomeUsuarioNegocioVendedora($_POST['username-empresa']);
-$vendedora->setLogNegocio($_POST['log']);
-$vendedora->setCidadeNegocioVendedora($_POST['cidade']);
-$vendedora->setEstadoNegocioVendedora($_POST['uf']);
-$vendedora->setBairroNegocioVendedora($_POST['bairro']);
-$vendedora->setNumNegocioVendedora($_POST['num']);
-$vendedora->setCompNegocioVendedora($_POST['comp']);
-$vendedora->setCepNegocioVendedora($_POST['cep']);
-$vendedora->setCnpjNegocioVendedora($_POST['cnpj']);
-$vendedora->setNivelNegocioVendedora($_POST['nivel'] == "Premium" ? 1 : 0);
+$method = $_SERVER['REQUEST_METHOD'];
 
-$categoria = new Categoria();
+switch ($method) {
+    case "POST":
+        $vendedora = new Vendedora();
 
-$categoria->setIdCategoria($_POST['categoria']);
+        $vendedora->setNomeVendedora($_POST['nome']);
+        $vendedora->setEmailVendedora($_POST['email']);
+        $vendedora->setSenhaVendedora($_POST['pass']);
+        $vendedora->setDtNascVendedora($_POST['nasc']);
+        $vendedora->setStatusVendedora(0);
+        $vendedora->setNomeNegocioVendedora($_POST['nome-empresa']);
+        $vendedora->setNomeUsuarioNegocioVendedora($_POST['username-empresa']);
+        $vendedora->setLogNegocio($_POST['log']);
+        $vendedora->setCidadeNegocioVendedora($_POST['cidade']);
+        $vendedora->setEstadoNegocioVendedora($_POST['uf']);
+        $vendedora->setBairroNegocioVendedora($_POST['bairro']);
+        $vendedora->setNumNegocioVendedora($_POST['num']);
+        $vendedora->setCompNegocioVendedora($_POST['comp']);
+        $vendedora->setCepNegocioVendedora($_POST['cep']);
+        $vendedora->setCnpjNegocioVendedora($_POST['cnpj']);
+        $vendedora->setNivelNegocioVendedora($_POST['nivel'] == "Premium" ? 1 : 0);
 
-$vendedora->setCategoria($categoria);
+        $categoria = new Categoria();
 
-daoVendedora::cadastrar($vendedora);
+        $categoria->setIdCategoria($_POST['categoria']);
 
-$id = daoVendedora::consultarIdPorEmail($vendedora);
-$vendedora->setIdVendedora($id);
+        $vendedora->setCategoria($categoria);
 
-$nomeimagem = $_FILES['foto-vendedora']['name'];
-$tipo = $_FILES['foto-vendedora']['type'];
+        daoVendedora::cadastrar($vendedora);
 
-$extensao = substr($nomeimagem, -4);
-$extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
+        $id = daoVendedora::consultarIdPorEmail($vendedora);
+        $vendedora->setIdVendedora($id);
 
-$arquivo = "assets/img/users/donas/" . $id . $extensao;
+        $nomeimagem = $_FILES['foto-vendedora']['name'];
+        $tipo = $_FILES['foto-vendedora']['type'];
 
-move_uploaded_file($_FILES['foto-vendedora']['tmp_name'], "../../".$arquivo);
+        $extensao = substr($nomeimagem, -4);
+        $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
-$vendedora->setFotoVendedora($arquivo);
+        $arquivo = "assets/img/users/donas/" . $id . $extensao;
 
-daoVendedora::editarFoto($vendedora);
+        move_uploaded_file($_FILES['foto-vendedora']['tmp_name'], "../../" . $arquivo);
 
-$nomeimagem = $_FILES['foto-empresa']['name'];
-$tipo = $_FILES['foto-empresa']['type'];
+        $vendedora->setFotoVendedora($arquivo);
 
-$extensao = substr($nomeimagem, -4);
-$extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
+        daoVendedora::editarFoto($vendedora);
 
-$arquivo = "assets/img/users/negocios/" . $id . $extensao;
+        $nomeimagem = $_FILES['foto-empresa']['name'];
+        $tipo = $_FILES['foto-empresa']['type'];
 
-move_uploaded_file($_FILES['foto-empresa']['tmp_name'], "../../".$arquivo);
+        $extensao = substr($nomeimagem, -4);
+        $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
-$vendedora->setFotoNegocioVendedora($arquivo);
+        $arquivo = "assets/img/users/negocios/" . $id . $extensao;
 
-daoVendedora::editarFotoNegocio($vendedora);
-?>
+        move_uploaded_file($_FILES['foto-empresa']['tmp_name'], "../../" . $arquivo);
+
+        $vendedora->setFotoNegocioVendedora($arquivo);
+
+        daoVendedora::editarFotoNegocio($vendedora);
+        break;
+
+    case "PUT":
+
+        //a acrescentar...
+
+        break;
+
+    case "DELETE":
+
+        //a acrescentar...
+
+        break;
+}
