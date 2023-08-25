@@ -6,7 +6,7 @@
         public static function cadastrar($Anuncio){
             $connection = Conexao::conectar();
 
-            $queryInsert="INSERT tbAnuncio(nomeAnuncio, descricaoAnuncio, valorAnuncio, estrelasAnuncio, tipoAnuncio, idNegocio)
+            $queryInsert="INSERT tbAnuncio(nomeAnuncio, descricaoAnuncio, valorAnuncio, estrelasAnuncio, tipoAnuncio, qtdAnuncio, idNegocio)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
@@ -16,6 +16,7 @@
             $prepareStatement->bindvalue(3, $Anuncio->getValorAnuncio());
             $prepareStatement->bindvalue(4, $Anuncio->getEstrelasAnuncio());
             $prepareStatement->bindvalue(5, $Anuncio->getTipoAnuncio());
+            $prepareStatement->bindvalue(5, $Anuncio->getQtdoAnuncio());
             $prepareStatement->bindvalue(6, $Anuncio->getNegocio()->getIdNegocio());
 
             $prepareStatement->execute();
@@ -36,7 +37,7 @@
             $connection = Conexao::conectar();
 
             $queryInsert = "UPDATE tbAnuncio
-                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, estrelasAnuncio = ?, tipoAnuncio = ?, idNegocio = ?
+                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, estrelasAnuncio = ?, tipoAnuncio = ?, qtdAnuncio = ?, idNegocio = ?
                             WHERE idAnuncio = ?";
 
             
@@ -47,6 +48,7 @@
             $prepareStatement->bindValue(3, $Anuncio->getValorAnuncio());
             $prepareStatement->bindValue(4, $Anuncio->getEstrelasAnuncio());
             $prepareStatement->bindValue(5, $Anuncio->getTipoAnuncio());
+            $prepareStatement->bindvalue(5, $Anuncio->getQtdAnuncio());
             $prepareStatement->bindValue(6, $Anuncio->getNegocio()->getIdNegocio());
             $prepareStatement->bindValue(7, $Anuncio->getIdAnuncio());
 
