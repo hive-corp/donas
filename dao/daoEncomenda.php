@@ -59,6 +59,7 @@
             $querySelect = "SELECT * FROM tbEncomenda";
 
             $resultado = $connection->prepare($querySelect);
+            $resultado->execute();
             $lista = $resultado->fetchAll();
             return $lista;
 
