@@ -6,7 +6,9 @@
             $connection = Conexao::conectar();
 
             $querySelect = "SELECT * FROM tbSaidaProduto";
-            $resultado = $connection->query($querySelect);
+            
+            $resultado = $connection->prepare($querySelect);
+            $resultado->execute();
             $lista = $resultado->fetchAll();
             return $lista;
         }
