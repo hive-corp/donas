@@ -90,7 +90,8 @@ class daoCliente
         $connection = Conexao::conectar();
 
         $querySelect = "SELECT * FROM tbCliente";
-        $resultado = $connection->query($querySelect);
+        $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
     }
