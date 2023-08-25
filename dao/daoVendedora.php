@@ -122,7 +122,8 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $querySelect = "SELECT * FROM tbVendedora";
-        $resultado = $connection->query($querySelect);
+        $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
     }
