@@ -74,7 +74,9 @@
             $connection = Conexao::conectar();
 
             $querySelect = "SELECT * FROM tbAnuncio";
-            $resultado = $connection->query($querySelect);
+            
+            $resultado = $connection->prepare($querySelect);
+            $resultado->execute();
             $lista = $resultado->fetchAll();
             return $lista;
         }
