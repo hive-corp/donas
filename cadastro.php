@@ -126,7 +126,7 @@
                     </div>
                     <div class="form">
                         <div class="input input-nome">
-                            <label class="form-label" for="nome">Nome<span><span>*</span></label>
+                            <label class="form-label" for="nome">Nome<span>*</span></label>
                             <div class="input-wrapper">
                                 <input type="text" name="nome" id="nome" autocomplete required>
                             </div>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="input input-user">
-                            <label class="form-label" for="username">Nome de usuário<span><span>*</span></label>
+                            <label class="form-label" for="username">Nome de usuário<span>*</span></label>
                             <div class="input-wrapper">
                                 <input type="text" name="username" id="username" autocomplete required>
                             </div>

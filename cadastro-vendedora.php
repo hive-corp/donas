@@ -182,7 +182,7 @@
                     </div>
                     <div class="form">
                         <div class="input input-nome">
-                            <label class="form-label" for="nome">Nome<span><span>*</span></label>
+                            <label class="form-label" for="nome">Nome<span>*</span></label>
                             <div class="input-wrapper">
                                 <input type="text" name="nome" id="nome" autocomplete required>
                             </div>
@@ -278,7 +278,7 @@
                     </div>
                     <div class="form">
                         <div class="input input-nome">
-                            <label class="form-label" for="nome-empresa">Nome<span><span>*</span></label>
+                            <label class="form-label" for="nome-empresa">Nome<span>*</span></label>
                             <div class="input-wrapper">
                                 <input type="text" name="nome-empresa" id="nome-empresa" required>
                             </div>
@@ -287,7 +287,7 @@
                             </div>
                         </div>
                         <div class="input input-username">
-                            <label class="form-label" for="username-empresa">Nome de usuário<span><span>*</span></label>
+                            <label class="form-label" for="username-empresa">Nome de usuário<span>*</span></label>
                             <div class="input-wrapper">
                                 <input type="text" name="username-empresa" id="username-empresa" autocomplete required>
                             </div>
