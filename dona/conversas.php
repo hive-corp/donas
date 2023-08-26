@@ -20,6 +20,28 @@ require_once "validador.php";
 </head>
 
 <body>
+    <div class="modal pop" id="modal-pesquisa" tabindex="-1" aria-labelledby="modal-pesquisa" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Pesquisar clientes</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="search-container">
+                        <input type="text" name="pesquisar-cliente" id="pesquisar-cliente" class="search-field" placeholder="Digite o nome de um cliente">
+                        <button class="search-button"><i class="bi bi-search"></i></button>
+                    </div>
+                    <div id="search-results">
+
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="button" data-bs-dismiss="modal">Sair</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="user-chats">
         <nav id="nav">
             <div id="nav-list">
@@ -97,6 +119,14 @@ require_once "validador.php";
             <div id="conversas-title">
                 Conversas
             </div>
+            <div id="search-chats">
+                <div class="search-container">
+                    <input type="text" role="search" class="search-field">
+                    <button type="button" class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
             <div id="list-chats">
                 <div class="chat-item placeholder-element">
                     <div class="chat-foto placeholder-glow">
@@ -154,34 +184,41 @@ require_once "validador.php";
                         <span class="placeholder col-4"></span>
                     </div>
                 </div>
-
-                <div class="chat-item load">
-                    <div class="chat-foto">
-                        <img src="../assets/img/users/donas/acucarcanela.png" alt="" />
-                    </div>
-                    <div class="chat-name">Açúcar e Canela</div>
-                    <div class="chat-username">@acucarcanela</div>
-                    <div class="chat-message">Beleza!</div>
-                </div>
-                <div class="chat-item load">
-                    <div class="chat-foto">
-                        <img src="../assets/img/users/donas/grifecoracao.png" alt="" />
-                    </div>
-                    <div class="chat-name">Grife do Coração</div>
-                    <div class="chat-username">@grifecoracao</div>
-                    <div class="chat-message">Entendido!</div>
-                </div>
             </div>
-            <button id="new-chat" type="button">
-                <i class="bi bi-plus-lg"></i>
-            </button>
+            <div class="dropup-center dropup" id="new-chat-dropup">
+                <button id="new-chat" type="button" data-bs-toggle="modal" data-bs-target="#modal-pesquisa">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
         </div>
         <main id="main" class="hide">
             <div id="main-title">
                 <button class="voltar" id="voltar-chat">
                     <i class="bi bi-arrow-left"></i>
                 </button>
+                <a id="link-destino" class="hide">
+                    <img src="../assets/img/foto.png" alt="" id="foto-chat">
+                </a>
                 <div>Escolha uma conversa ao lado</div>
+                <div class="dropdown-start dropdown d-flex justify-content-end" id="config-chat">
+                    <button class="hide" id="options-chat" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="product.php">
+                                <i class="bi bi-person"></i>
+                                Acessar perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">
+                                <i class="bi bi-x"></i>
+                                Excluir conversa
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div id="content">
                 <img src="../assets/img/rosas.svg" class="rosa-fundo">
@@ -238,189 +275,17 @@ require_once "validador.php";
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src='../assets/js/cropper.js'></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/chat.js"></script>
     <script>
-        //o código aqui é só pra bobagem, mesmo.
+        type = 1
+   
+        var searchField = document.querySelector('#pesquisar-cliente'),
+            searchResults = document.querySelector("#search-results")
 
-        var mainMessageButton = document.querySelector('#main-message-button'),
-            mainMessageField = document.querySelector('#main-message-field'),
-            mainMessageContainer = document.querySelector('#main-message-container'),
-            chat = document.querySelector('#chat'),
-            newChat = document.querySelector('#new-chat'),
-            main = document.querySelector('#main'),
-            conversas = document.querySelector('#conversas'),
-            configuracoes = document.querySelectorAll('.nav-link')[4],
-            configIcon = document.querySelectorAll('.nav-link i')[4],
-            fotoUsuario = document.querySelector('#foto-usuario'),
-            desceChat = document.querySelector('#desce-chat'),
-            abraConversa = document.getElementById('abra-conversa'),
-            voltarChat = document.querySelector('#voltar-chat'),
-            voltarCrop = document.querySelector('#voltar-crop'),
-            messagePhoto = document.querySelector('#message-photo'),
-            cropImage = document.querySelector('#crop-image'),
-            result = document.querySelector('.result-crop'),
-            cropMessageButton = document.querySelector('#crop-message-button'),
-            cropMessageField = document.querySelector('#crop-message-field'),
-            cropMessageContainer = document.querySelector('#crop-message-container')
-
-
-        document.querySelectorAll('.chat-item.load').forEach(item => {
-            item.addEventListener('click', () => {
-                abraConversa.classList.add('hide')
-                mainMessageContainer.classList.remove('hide')
-                conversas.classList.toggle('hide')
-                main.classList.toggle('hide')
-
-                let nome = item.querySelector('.chat-name').innerText
-
-                document.querySelector('#main-title div').innerText = nome
-            })
-        })
-
-        voltarChat.addEventListener('click', () => {
-            conversas.classList.toggle('hide')
-            main.classList.toggle('hide')
-        })
-
-        voltarCrop.addEventListener('click', () => {
-            cropImage.classList.toggle('hide')
-        })
-
-        window.onload = () => {
-            if (localStorage.getItem('imagemPerfil') === null) {
-                configIcon.style.display = 'inline-block'
-                fotoUsuario.style.display = "none"
-            } else {
-                fotoUsuario.src = localStorage.getItem('imagemPerfil')
-            }
-        }
-
-        messagePhoto.addEventListener('change', e => {
-
-            cropImage.classList.remove('hide')
-
-            if (e.target.files.length) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    if (e.target.result) {
-                        let img = document.createElement('img');
-                        img.id = 'image';
-                        img.src = e.target.result;
-                        result.innerHTML = '';
-                        result.appendChild(img);
-
-                        cropper = new Cropper(img, {
-                            dragMode: 'move',
-                            guides: false,
-                            viewMode: 1,
-                        });
-                    }
-                };
-                reader.readAsDataURL(e.target.files[0]);
-            }
-
-            messagePhoto.value = ''
-        });
-
-        const enviarMensagem = () => {
-            let textoMensagem = mainMessageField.value.trim();
-
-            if (textoMensagem != '') {
-                mainMessageField.value = ''
-
-                let msg = document.createElement('div')
-                msg.setAttribute('class', 'message-myself')
-                msg.innerHTML = textoMensagem
-
-                let hora = new Date()
-                let horaMin = hora.getHours().toLocaleString(undefined, {
-                    minimumIntegerDigits: 2
-                }) + ":" + hora.getMinutes().toLocaleString(undefined, {
-                    minimumIntegerDigits: 2
+        searchField.addEventListener('keyup',
+                async e => {
+                    preencherLista(`../api/cliente/?search=${e.target.value}`, searchResults)
                 })
-                let horaMsg = document.createElement('span')
-                horaMsg.setAttribute('class', 'time')
-                horaMsg.innerHTML = horaMin
-
-                msg.append(horaMsg)
-                chat.append(msg)
-
-                chat.scroll({
-                    top: chat.scrollHeight,
-                    behavior: "smooth"
-                })
-            }
-        }
-
-        const enviarMensagemCrop = () => {
-            let textoMensagem = cropMessageField.value.trim();
-
-            let msg = document.createElement('div')
-            msg.setAttribute('class', 'message-myself')
-
-            let imgSrc = cropper.getCroppedCanvas({
-                maxWidth: 1024,
-                fillColor: 'white'
-            }).toDataURL('image/jpeg');
-
-            let img = document.createElement('img')
-            img.src = imgSrc
-
-            msg.append(img)
-
-            if (textoMensagem != '') {
-                cropMessageField.value = ''
-
-                msg.append(textoMensagem)
-            }
-
-            let hora = new Date()
-            let horaMin = hora.getHours().toLocaleString(undefined, {
-                minimumIntegerDigits: 2
-            }) + ":" + hora.getMinutes().toLocaleString(undefined, {
-                minimumIntegerDigits: 2
-            })
-            let horaMsg = document.createElement('span')
-            horaMsg.setAttribute('class', 'time')
-            horaMsg.innerHTML = horaMin
-
-            msg.append(horaMsg)
-
-            chat.append(msg)
-            chat.scroll({
-                top: chat.scrollHeight,
-                behavior: "smooth"
-            })
-
-            cropImage.classList.toggle('hide')
-        }
-
-        cropMessageButton.addEventListener('click', enviarMensagemCrop)
-
-        mainMessageButton.addEventListener('click', enviarMensagem)
-        mainMessageField.addEventListener('keypress', (event) => {
-            if (event.keyCode == 13) {
-                enviarMensagem()
-            }
-        })
-
-        const showScrollDown = () => {
-            let maxScrollTop = chat.scrollHeight - chat.clientHeight
-
-            if (chat.scrollTop < maxScrollTop - 50) {
-                desceChat.classList.remove('hide')
-            } else {
-                desceChat.classList.add('hide')
-            }
-        }
-
-        desceChat.addEventListener('click', () => {
-            chat.scroll({
-                top: chat.scrollHeight,
-                behavior: "smooth"
-            })
-        })
-
-        chat.addEventListener('scroll', showScrollDown)
     </script>
 </body>
 
