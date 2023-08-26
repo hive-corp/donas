@@ -656,13 +656,17 @@ input:checked+.tipo-login:hover {
 }
 
 .was-validated .input-wrapper:has(input:invalid),
-.input-wrapper:has(input.is-invalid) {
+.was-validated .input-wrapper:has(textarea:invalid),
+.input-wrapper:has(input.is-invalid),
+.input-wrapper:has(textarea.is-invalid) {
     background-color: #fff1f3;
     border-bottom: 1px solid red;
 }
 
 .was-validated .input-wrapper:has(input:valid),
-.input-wrapper:has(input.is-valid) {
+.was-validated .input-wrapper:has(textarea:valid),
+.input-wrapper:has(input.is-valid),
+.input-wrapper:has(textarea.is-valid) {
     background-color: #f2fff1;
     border-bottom: 1px solid green;
 }
@@ -670,7 +674,11 @@ input:checked+.tipo-login:hover {
 .was-validated .input:has(input:invalid) .invalid-feedback,
 .was-validated .input:has(input:valid) .valid-feedback,
 .input:has(input.is-invalid) .invalid-feedback,
-.input:has(input.is-valid) .valid-feedback {
+.input:has(input.is-valid) .valid-feedback,
+.was-validated .input:has(textarea:invalid) .invalid-feedback,
+.was-validated .input:has(textarea:valid) .valid-feedback,
+.input:has(textarea.is-invalid) .invalid-feedback,
+.input:has(textarea.is-valid) .valid-feedback {
     display: block;
 }
 
@@ -810,7 +818,8 @@ a.create-new:hover {
     border: 8px solid #f0bbff;
     overflow: hidden;
     cursor: pointer;
-    position: relative
+    position: relative;
+    transition: box-shadow .3s;
 }
 
 .foto-circulo::before {
@@ -828,6 +837,10 @@ a.create-new:hover {
     font-weight: bold;
     opacity: 0;
     transition: opacity .3s;
+}
+
+.foto-circulo:hover{
+    box-shadow: 0 0 0 6px #f0bbff33;
 }
 
 .foto-circulo:hover::before {
@@ -1027,7 +1040,8 @@ a.create-new:hover {
 #user-product,
 #user-notifications,
 #user-new,
-#user-profile {
+#user-profile,
+#user-encomenda {
     height: 100dvh;
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -1181,30 +1195,26 @@ a.create-new:hover {
 }
 
 #sair-user,
-#options-user {
-    font-size: 1.3em;
+#options-user,
+#options-chat {
+    font-size: 1.1em;
     margin-right: 16px;
     color: gray;
     background: transparent;
     aspect-ratio: 1/1;
-    height: 1.6em;
     display: grid;
     place-items: center;
+    height: 1.4em;
     border-radius: 50%;
     transition: 0.2s background-color ease-in-out;
     cursor: pointer;
 }
 
 #sair-user:hover,
-#options-user:hover {
+#options-user:hover,
+#options-chat:hover {
     background: #CB6CE633;
     color: #CB6CE6
-}
-
-#options-user:focus+.dropdown-box {
-    opacity: 1;
-    pointer-events: all;
-    scale: 1;
 }
 
 .dropdown-menu {
@@ -1523,13 +1533,12 @@ a.veja-mais {
 .negocio-card {
     grid-area: negocio;
     color: lightslategray;
-
 }
 
 .rosa-fundo {
     position: absolute;
     bottom: -60px;
-    width: 200px;
+    width: 220px;
     user-select: none;
     -webkit-user-drag: none;
     z-index: 0;
@@ -1605,6 +1614,16 @@ a.veja-mais {
     color: white;
 }
 
+#modal-pesquisa .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#search-results .chat-item {
+    border-color: transparent;
+}
+
 #new-chat {
     position: absolute;
     bottom: 20px;
@@ -1616,7 +1635,7 @@ a.veja-mais {
     border-radius: 50%;
     display: grid;
     place-items: center;
-    transition: background-position .2s, scale .2s, box-shadow .2s, rotate .4s;
+    transition: background-position .2s, scale .2s, box-shadow .2s, transform .4s;
 }
 
 #new-chat i {
@@ -1629,12 +1648,13 @@ a.veja-mais {
     background-position: right;
     scale: 1.1;
     box-shadow: 0 0 0 4px #CB6CE6;
-    rotate: -135deg
+    transform: rotate(-135deg);
 }
 
 #user-notifications #main,
 #user-new #main,
-#user-profile #main {
+#user-profile #main,
+#user-encomenda #main {
     display: grid;
     grid-template-rows: 80px 1fr;
     grid-template-columns: 1fr;
@@ -1690,21 +1710,29 @@ a.veja-mais {
     overflow: auto;
 }
 
+#user-new #content{
+    padding: 0;
+}
+
 #new-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto 1fr auto;
     grid-template-areas:
+        "titulo titulo"
         "imagens info"
         "salvar salvar";
-    gap: 24px;
+    gap: 12px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
     height: 100%;
+    padding: 16px;
 }
 
 #imagens-form {
     grid-area: imagens;
     display: grid;
-    grid-template-rows: 420px auto;
     gap: 24px;
 }
 
@@ -1712,11 +1740,48 @@ a.veja-mais {
     display: none;
 }
 
-#preview-foto {
+#foto-anuncio {
+    place-self: center;
+    width: min-content;
+    position: relative;
+    overflow: hidden;
+    border: 6px solid #971881;
     border-radius: 12px;
     width: 420px;
-    border: 4px solid #971881;
     aspect-ratio: 1/1;
+    cursor: pointer;
+    transition: box-shadow .3s;
+}
+
+#foto-anuncio::before {
+    content: 'ESCOLHER';
+    position: absolute;
+    background: #420C3388;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: grid;
+    place-items: center;
+    z-index: 1;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+#foto-anuncio:hover{
+    box-shadow: 0 0 0 6px #97188133;
+}
+
+#foto-anuncio:hover::before{
+    opacity: 1;
+}
+
+#preview-foto{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .foto {
@@ -1737,11 +1802,13 @@ a.veja-mais {
     grid-template-columns: 1fr 1fr;
     height: fit-content;
     grid-template-areas:
-        "nome nome"
-        "tipo preco"
-        "categorias categorias"
+        "titulo titulo"
+        "nome tipo"
+        "preco estoque"
         "descricao descricao";
     gap: 12px;
+    align-self: center;
+
 }
 
 #info-form .input:nth-child(1) {
@@ -1752,26 +1819,21 @@ a.veja-mais {
     grid-area: tipo;
 }
 
-#info-form .input:nth-child(2) .input-wrapper {
-    border: none;
-}
-
 #info-form .input:nth-child(3) {
     grid-area: preco;
 }
 
 #info-form .input:nth-child(4) {
-    grid-area: categorias;
+    grid-area: estoque;
+    display: none;
+}
+
+#info-form .input:nth-child(4).show {
+    display: block;
 }
 
 #info-form .input:nth-child(5) {
     grid-area: descricao;
-}
-
-#categorias-new {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: flex-start;
 }
 
 #fotos-new {
@@ -1786,8 +1848,7 @@ a.veja-mais {
     place-items: center;
 }
 
-#fotos,
-#categorias {
+#fotos {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
@@ -1904,7 +1965,7 @@ a.veja-mais {
     border-bottom: 1px solid var(--bd-color);
     padding: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .negocio-information {
@@ -2042,6 +2103,30 @@ a.config-item {
     transform: translateX(calc(1.2em - 0.1em));
 }
 
+#options-chat.hide{
+    display: none;
+}
+
+#config-chat{
+    position: absolute;
+    right: 0;
+}
+
+#link-destino.hide {
+    display: none;
+}
+
+#foto-chat {
+    width: 50px;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+}
+
+#foto-chat.hide {
+    display: none;
+}
 
 #search-chats {
     grid-area: search;
@@ -2214,7 +2299,7 @@ a.config-item {
     max-width: 50%;
     display: flex;
     flex-direction: column;
-    padding: 8px;
+    padding: 12px;
     overflow-wrap: break-word;
     border-radius: 6px;
     position: relative;
@@ -2474,11 +2559,6 @@ a.config-item {
 
 #categoria-produto {
     grid-area: categoria;
-    display: flex;
-    gap: 4px;
-}
-
-.categoria {
     background: var(--select-bg);
     padding: 4px 16px;
     border-radius: 4px;
@@ -2489,7 +2569,7 @@ a.config-item {
     width: fit-content;
 }
 
-.categoria:hover {
+#categoria-produto:hover {
     background: #8f95a3;
 }
 
