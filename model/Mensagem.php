@@ -6,21 +6,17 @@
         private $conteudoMensagem ;
         private $horaMensagem ;
         private $lidoEmMensagem ;
-       
-        private $Cliente ;
-        public function __construct()
-        {
-            $Cliente = new Cliente();
-        }
-
-        private $Vendedora ;
-        public function __construct()
-        {
-            $Vendedora = new Vendedora();
-        }
-
         private $origemMensagem;
         private $imagemMensagem;
+        private $Cliente ;
+        private $Vendedora ;
+ 
+        public function __construct()
+        {
+            $this->Cliente = new Cliente();
+            $this->Vendedora = new Vendedora();
+        }
+      
 
         public function getIdMensagem() {
             return $this->idMensagem;
