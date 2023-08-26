@@ -19,7 +19,7 @@ require_once "validador.php";
 </head>
 
 <body>
-    <div id="user-new">
+    <div id="user-encomenda">
         <nav id="nav">
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
