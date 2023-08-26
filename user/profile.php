@@ -12,11 +12,10 @@ require_once "validador.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grife do Coração</title>
-    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../assets/css/flickity.css" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="../assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
 </head>
 
 <body>
@@ -254,11 +253,7 @@ require_once "validador.php";
         </main>
     </div>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script> -->
     <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/flickity.pkgd.min.js"></script>
     <script src="../assets/js/script.js"></script>
 </body>
 

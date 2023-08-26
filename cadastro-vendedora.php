@@ -8,10 +8,10 @@
     <title>Cadastro de vendedora</title>
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 
-    <link rel='stylesheet' href='assets/css/cropper.css'>
-    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='assets/vendor/cropperjs/css/cropper.css'>
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -501,8 +501,8 @@
             <img src="assets/img/rosas.svg" class="rosa-fundo">
         </div>
 
-        <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src='assets/js/cropper.js'></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src='assets/vendor/cropperjs/js/cropper.js'></script>
         <script>
             let btnSenha = document.querySelector('#hide-show-pass'),
                 iconBtnSenha = document.querySelector('#hide-show-pass i'),

@@ -8,9 +8,9 @@
     <title>Login</title>
 
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
 
 </head>
 
@@ -148,7 +148,7 @@
         </div>
     </div>
 
-    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
         let btnSenha = document.querySelector('#hide-show-pass'),
             iconBtnSenha = document.querySelector('#hide-show-pass i'),
