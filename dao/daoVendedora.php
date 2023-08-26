@@ -141,6 +141,19 @@ class daoVendedora
         return $id;
     }
 
+    public static function consultarIdPorNomeUsuario($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT idVendedora FROM tbVendedora
+                            WHERE nomeUsuarioNegocioVendedora = ?');
+        $stmt->bindValue(1, $Vendedora->getNomeUsuarioNegocioVendedora());
+        $stmt->execute();
+        $id = $stmt->fetch()[0];
+
+        return $id;
+    }
+
     public static function verificaLogin($Vendedora)
     {
         $connection = Conexao::conectar();
@@ -174,7 +187,7 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare('SELECT nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
+        $stmt = $connection->prepare('SELECT idVendedora, nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
                                     nomeUsuarioNegocioVendedora, fotoNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                                     bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
                                     nivelNegocioVendedora, idCategoria FROM tbVendedora
@@ -227,5 +240,21 @@ class daoVendedora
         $count = $stmt->fetch()[0];
 
         return $count;
+    }
+
+    public static function pesquisaVendedora($search)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT nomeNegocioVendedora as name, fotoNegocioVendedora as foto, nomeUsuarioNegocioVendedora as username FROM tbVendedora
+                                    WHERE nomeUsuarioNegocioVendedora LIKE ? OR nomeNegocioVendedora LIKE ?
+                                    LIMIT 5");
+        $stmt->bindValue(1, '%'.$search.'%');
+        $stmt->bindValue(2, '%'.$search.'%');
+        $stmt->execute();
+
+        $dados = $stmt->fetchAll();
+
+        return $dados;
     }
 }

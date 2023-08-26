@@ -6,19 +6,16 @@
         public static function criar($Mensagem){
             $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbMensagem(idMensagem, conteudoMensagem, imagemMensagem, horaMensagem, lidoEmMensagem,
+            $queryInsert = "INSERT tbMensagem(conteudoMensagem,
                             origemMensagem, idCliente, idVendedora)
-                            VALUES (?,?,?,?,?,?,?,?)";
+                            VALUES (?,?,?,?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
-            $prepareStatement->bindValue(1, $Mensagem->getContudoMensagem());
-            $prepareStatement->bindValue(2, $Mensagem->getImagemMensagem());
-            $prepareStatement->bindValue(3, $Mensagem->getHoraMensagem());
-            $prepareStatement->bindValue(4, $Mensagem->getLidoEmMensagem());
-            $prepareStatement->bindValue(5, $Mensagem->getOrigemMensagem());
-            $prepareStatement->bindValue(6, $Mensagem->getCliente()->getIdCliente());
-            $prepareStatement->bindValue(7, $Mensagem->getVendedora()->getIdVendedora());
+            $prepareStatement->bindValue(1, $Mensagem->getConteudoMensagem());
+            $prepareStatement->bindValue(2, $Mensagem->getOrigemMensagem());
+            $prepareStatement->bindValue(3, $Mensagem->getCliente()->getIdCliente());
+            $prepareStatement->bindValue(4, $Mensagem->getVendedora()->getIdVendedora());
             
             $prepareStatement->execute();
         }
@@ -45,7 +42,7 @@
 
             $prepareStatement = $connection->prepare($queryInsert);
 
-            $prepareStatement->bindValue(1, $Mensagem->getContudoMensagem());
+            $prepareStatement->bindValue(1, $Mensagem->getConteudoMensagem());
             $prepareStatement->bindValue(2, $Mensagem->getImagemMensagem());
             $prepareStatement->bindValue(3, $Mensagem->getHoraMensagem());
             $prepareStatement->bindValue(4, $Mensagem->getLidoEmMensagem());
@@ -54,6 +51,21 @@
             $prepareStatement->bindValue(7, $Mensagem->getVendedora()->getIdVendedora());
             $prepareStatement->bindValue(8, $Mensagem->getIdMensagem()); 
 
+            $prepareStatement->execute();
+        }
+
+        public static function editarFoto($Mensagem){
+            $connection = Conexao::conectar();
+
+            $queryInsert = "UPDATE tbMensagem
+                            SET imagemMensagem = ?
+                            WHERE idMensagem = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $Mensagem->getImagemMensagem());
+            $prepareStatement->bindValue(2, $Mensagem->getIdMensagem());
+           
             $prepareStatement->execute();
         }
 
@@ -66,7 +78,70 @@
             $resultado->execute();
             $lista = $resultado->fetchAll();
             return $lista;
+        }
 
+        public static function listarConversa($conversa){
+            $connection = Conexao::conectar();
+
+            $querySelect = "SELECT * FROM tbMensagem
+                            WHERE idCliente = ? AND idVendedora = ?";
+
+            $prepareStatement = $connection->prepare($querySelect);
+            $prepareStatement->bindValue(1, $conversa->getCliente()->getIdCliente());
+            $prepareStatement->bindValue(2, $conversa->getVendedora()->getIdVendedora());
+            $prepareStatement->execute();
+
+            $lista = $prepareStatement->fetchAll();
+
+            return $lista;
+        }
+
+        public static function listarConversasCliente($conversas){
+            $connection = Conexao::conectar();
+
+            $querySelect = "SELECT DISTINCT tbVendedora.idVendedora as id, nomeNegocioVendedora as name, fotoNegocioVendedora as foto, nomeUsuarioNegocioVendedora as username FROM tbMensagem
+                            INNER JOIN tbVendedora ON tbMensagem.idVendedora = tbVendedora.idVendedora
+                            WHERE idCliente=?";
+
+            $prepareStatement = $connection->prepare($querySelect);
+            $prepareStatement->bindValue(1, $conversas->getCliente()->getIdCliente());
+            $prepareStatement->execute();
+
+            $lista = $prepareStatement->fetchAll();
+
+            return $lista;
+        }
+
+        public static function listarConversasVendedora($conversas){
+            $connection = Conexao::conectar();
+
+            $querySelect = "SELECT DISTINCT tbCliente.idCliente as id, nomeCliente as name, fotoCliente as foto, nomeUsuarioCliente as username FROM tbMensagem
+                            INNER JOIN tbCliente ON tbCliente.idCliente = tbCliente.idCliente
+                            WHERE idVendedora=?";
+
+            $prepareStatement = $connection->prepare($querySelect);
+            $prepareStatement->bindValue(1, $conversas->getVendedora()->getIdVendedora());
+            $prepareStatement->execute();
+
+            $lista = $prepareStatement->fetchAll();
+
+            return $lista;
+        }
+
+        public static function consultaIdUltimaMensagem($mensagem){
+            $connection = Conexao::conectar();
+
+            $stmt = $connection->prepare('SELECT MAX(idMensagem) FROM tbMensagem
+                                        WHERE conteudoMensagem LIKE ? AND origemMensagem = ? AND idCliente = ? AND idVendedora = ?');
+            $stmt->bindValue(1, $mensagem->getConteudoMensagem());
+            $stmt->bindValue(2, $mensagem->getOrigemMensagem());
+            $stmt->bindValue(3, $mensagem->getCliente()->getIdCliente());
+            $stmt->bindValue(4, $mensagem->getVendedora()->getIdVendedora());
+            $stmt->execute();
+
+            $id = $stmt->fetch()[0];
+
+            return $id;
         }
     }
 ?>

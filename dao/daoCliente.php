@@ -109,6 +109,20 @@ class daoCliente
         return $id;
     }
 
+    public static function consultarIdPorNomeUsuario($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT idCliente FROM tbCliente
+                                    WHERE nomeUsuarioCliente = ?
+                                    LIMIT 1');
+        $stmt->bindValue(1, $cliente->getNomeUsuarioCliente());
+        $stmt->execute();
+        $id = $stmt->fetch()[0];
+
+        return $id;
+    }
+
     public static function verificaLogin($cliente)
     {
         $connection = Conexao::conectar();
@@ -180,5 +194,21 @@ class daoCliente
         $count = $stmt->fetch()[0];
 
         return $count;
+    }
+
+    public static function pesquisaCliente($search)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT nomeCliente as name, fotoCliente as foto, nomeUsuarioCliente as username FROM tbCliente
+                                    WHERE nomeUsuarioCliente LIKE ? OR nomeCliente LIKE ?
+                                    LIMIT 5");
+        $stmt->bindValue(1, '%'.$search.'%');
+        $stmt->bindValue(2, '%'.$search.'%');
+        $stmt->execute();
+
+        $dados = $stmt->fetchAll();
+
+        return $dados;
     }
 }
