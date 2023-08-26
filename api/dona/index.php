@@ -18,6 +18,10 @@ if (isset($_GET['cnpj'])) {
     $email = $_GET["email"];
     $count = daoVendedora::verificaEmail($email);
     echo json_encode($count);
+}else if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $result = daoVendedora::pesquisaVendedora($search);
+    echo json_encode($result);
 }
 
 $method = $_SERVER['REQUEST_METHOD'];

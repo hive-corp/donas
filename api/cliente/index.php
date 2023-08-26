@@ -14,11 +14,14 @@ if (isset($_GET['cpf'])) {
     $username = $_GET["username"];
     $count = daoCliente::verificaNomeUsuario($username);
     echo json_encode($count);
-
 } else if (isset($_GET['email'])) {
     $email = $_GET["email"];
     $count = daoCliente::verificaEmail($email);
     echo json_encode($count);
+}else if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $result = daoCliente::pesquisaCliente($search);
+    echo json_encode($result);
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
