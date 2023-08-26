@@ -123,37 +123,41 @@ require_once "validador.php";
                         <span>9</span> Produtos
                     </div>
                     <div class="negocio-information">
+                        <i class="bi bi-grid"></i>
+                        <span>14</span> Serviços
+                    </div>
+                    <div class="negocio-information">
                         <i class="bi bi-people"></i>
                         <span>9</span> Seguidores
                     </div>
                 </div>
                 <div id="bio-products">
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/bolo-chocolate.jpg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/bolo-laranja.jpg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/cadernos-artesanais.jpg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/conjunto-de-velas.jpg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/francesinha.jpeg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/pano-de-prato.jpg" alt="">
                     </a>
-                    <a class="bio-product" href="../products/produto.php">
+                    <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/sabonetes.jpg" alt="">
                     </a>
 
-                    <!-- <div class="card-produto" href="../products/produto.php" aria-hidden="true">
+                    <!-- <div class="card-produto" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -176,7 +180,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="../products/produto.php" aria-hidden="true">
+                    <div class="card-produto" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -199,7 +203,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="../products/produto.php" aria-hidden="true">
+                    <div class="card-produto" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -222,7 +226,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="../products/produto.php" aria-hidden="true">
+                    <div class="card-produto" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>

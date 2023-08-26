@@ -224,7 +224,7 @@ require_once "validador.php";
 					</span>
 					<a href="pesquisa.php" class="veja-mais load"> veja mais </a>
 					<div class="carrossel-cards placeholder-element">
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -247,7 +247,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -270,7 +270,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -293,7 +293,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -316,7 +316,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -339,7 +339,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -362,7 +362,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -387,7 +387,7 @@ require_once "validador.php";
 						</div>
 					</div>
 					<div class="carrossel-cards load">
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/cadernos-artesanais.jpg" />
 							</div>
@@ -405,7 +405,7 @@ require_once "validador.php";
 								<div class="negocio-card">Cantinho da Arte</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/francesinha.jpeg" />
 							</div>
@@ -423,7 +423,7 @@ require_once "validador.php";
 								<div class="negocio-card">Mulher Maravilha</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/bolo-laranja.jpg" />
 							</div>
@@ -441,7 +441,7 @@ require_once "validador.php";
 								<div class="negocio-card">Açúcar e Canela</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/bolo-chocolate.jpg" />
 							</div>
@@ -459,7 +459,7 @@ require_once "validador.php";
 								<div class="negocio-card">Açúcar e Canela</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/sabonetes.jpg" />
 							</div>
@@ -477,7 +477,7 @@ require_once "validador.php";
 								<div class="negocio-card">Ana Rodrigues</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/pano-de-prato.jpg" />
 							</div>
@@ -495,7 +495,7 @@ require_once "validador.php";
 								<div class="negocio-card">Maria Santos</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/conjunto-de-velas.jpg" />
 							</div>
@@ -513,7 +513,7 @@ require_once "validador.php";
 								<div class="negocio-card">Isabella Silva</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg" />
 							</div>
@@ -545,7 +545,7 @@ require_once "validador.php";
 					</span>
 					<a href="pesquisa.php" class="veja-mais load"> veja mais </a>
 					<div class="carrossel-cards placeholder-element">
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -568,7 +568,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -591,7 +591,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -614,7 +614,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -637,7 +637,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -660,7 +660,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -683,7 +683,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="../products/produto.php" aria-hidden="true">
+						<div class="card-produto" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -708,7 +708,7 @@ require_once "validador.php";
 						</div>
 					</div>
 					<div class="carrossel-cards load">
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/cadernos-artesanais.jpg" />
 							</div>
@@ -726,7 +726,7 @@ require_once "validador.php";
 								<div class="negocio-card">Cantinho da Arte</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/francesinha.jpeg" />
 							</div>
@@ -744,7 +744,7 @@ require_once "validador.php";
 								<div class="negocio-card">Mulher Maravilha</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/bolo-laranja.jpg" />
 							</div>
@@ -762,7 +762,7 @@ require_once "validador.php";
 								<div class="negocio-card">Açúcar e Canela</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/bolo-chocolate.jpg" />
 							</div>
@@ -780,7 +780,7 @@ require_once "validador.php";
 								<div class="negocio-card">Açúcar e Canela</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/sabonetes.jpg" />
 							</div>
@@ -798,7 +798,7 @@ require_once "validador.php";
 								<div class="negocio-card">Ana Rodrigues</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/pano-de-prato.jpg" />
 							</div>
@@ -816,7 +816,7 @@ require_once "validador.php";
 								<div class="negocio-card">Maria Santos</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/conjunto-de-velas.jpg" />
 							</div>
@@ -834,7 +834,7 @@ require_once "validador.php";
 								<div class="negocio-card">Isabella Silva</div>
 							</div>
 						</a>
-						<a class="card-produto" href="../products/produto.php">
+						<a class="card-produto" href="produto.php">
 							<div class="img-card">
 								<img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg" />
 							</div>
