@@ -272,14 +272,16 @@ require_once "validador.php";
         type = 0
 
         <?php
-        if(isset($_GET['username'])){
+        if (isset($_GET['username'])) {
             $vendedora = new Vendedora();
             $vendedora->setNomeUsuarioNegocioVendedora($_GET['username']);
             $dados = daoVendedora::consultarPorNomeUsuario($vendedora);
 
-            ?>
-            resgatarMensagens('<?php echo $dados['nomeNegocioVendedora']?>','<?php echo $dados['fotoNegocioVendedora']?>','<?php echo $dados['nomeUsuarioNegocioVendedora']?>')
-            <?php
+            if (!empty($dados)) {
+        ?>
+                resgatarMensagens('<?php echo $dados['nomeNegocioVendedora'] ?>', '<?php echo $dados['fotoNegocioVendedora'] ?>', '<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>')
+        <?php
+            }
         }
         ?>
 

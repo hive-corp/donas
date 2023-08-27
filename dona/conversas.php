@@ -276,24 +276,26 @@ require_once "validador.php";
         type = 1
 
         <?php
-        if(isset($_GET['username'])){
+        if (isset($_GET['username'])) {
             $cliente = new Cliente();
             $cliente->setNomeUsuarioCliente($_GET['username']);
             $dados = daoCliente::consultarPorNomeUsuario($cliente);
-
-            ?>
-            resgatarMensagens('<?php echo $dados['nomeCliente']?>','<?php echo $dados['fotoCliente']?>','<?php echo $dados['nomeUsuarioCliente']?>')
-            <?php
+            
+            if (!empty($dados)) {
+        ?>
+                resgatarMensagens('<?php echo $dados['nomeCliente'] ?>', '<?php echo $dados['fotoCliente'] ?>', '<?php echo $dados['nomeUsuarioCliente'] ?>')
+        <?php
+            }
         }
         ?>
-   
+
         var searchField = document.querySelector('#pesquisar-cliente'),
             searchResults = document.querySelector("#search-results")
 
         searchField.addEventListener('keyup',
-                async e => {
-                    preencherLista(`../api/cliente/?search=${e.target.value}`, searchResults)
-                })
+            async e => {
+                preencherLista(`../api/cliente/?search=${e.target.value}`, searchResults)
+            })
     </script>
 </body>
 
