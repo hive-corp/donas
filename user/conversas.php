@@ -246,7 +246,7 @@ require_once "validador.php";
 
                 </div>
 
-                <div class="message-container" id="main-message-container">
+                <div class="message-container hide" id="main-message-container">
                     <div class="message-embeds">
                         <label for="message-photo">
                             <i class="bi bi-image"></i>
