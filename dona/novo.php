@@ -14,10 +14,10 @@ require_once "validador.php";
     <title>Novo produto/serviço</title>
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
 
-    <link rel='stylesheet' href='../assets/css/cropper.css'>
-    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -28,7 +28,7 @@ require_once "validador.php";
                     <h1 class="modal-title fs-5">Recorte da foto</h1>
                 </div>
                 <div class="modal-body">
-                    <div class="result-crop"></div>
+                    <div class="result-crop new-ad"></div>
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -177,9 +177,9 @@ require_once "validador.php";
             </div>
         </main>
     </div>
-    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
-    <script src='../assets/js/cropper.js'></script>
+    <script src='../assets/vendor/cropperjs/js/cropper.js'></script>
 
     <script>
         var tipoAnuncio = document.querySelector('#tipo-new'),
