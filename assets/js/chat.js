@@ -270,6 +270,9 @@ desceChat.addEventListener('click', () => {
 
 chat.addEventListener('scroll', showScrollDown)
 
-window.onload = async () => {
-    await preencherLista('../api/chat/?type=chats', listaConversas)
+window.onload = () => {
+    setTimeout(async () => {
+        await preencherLista('../api/chat/?type=chats', listaConversas)
+
+    }, 750)
 }
