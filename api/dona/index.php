@@ -43,8 +43,15 @@ switch ($method) {
         $vendedora->setBairroNegocioVendedora($_POST['bairro']);
         $vendedora->setNumNegocioVendedora($_POST['num']);
         $vendedora->setCompNegocioVendedora($_POST['comp']);
-        $vendedora->setCepNegocioVendedora($_POST['cep']);
-        $vendedora->setCnpjNegocioVendedora($_POST['cnpj']);
+
+        $cep = str_replace('-', '', $_POST['cep']);
+        $vendedora->setCepNegocioVendedora($cep);
+
+        $cnpj = str_replace('-', '', $_POST['cnpj']);
+        $cnpj = str_replace('.', '', $cnpj);
+        $cnpj = str_replace('/', '', $cnpj);
+        $vendedora->setCnpjNegocioVendedora($cnpj);
+
         $vendedora->setNivelNegocioVendedora($_POST['nivel'] == "Premium" ? 1 : 0);
 
         $categoria = new Categoria();

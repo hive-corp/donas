@@ -35,9 +35,12 @@ switch ($method) {
         $cliente->setEmailCliente($_POST['email']);
         $cliente->setNomeUsuarioCliente($_POST['username']);
         $cliente->setSenhaCliente($_POST['pass']);
-        $cliente->setCepCliente($_POST['cep']);
+
+        $cep = str_replace('-', '', $_POST['cep']);
+        $cliente->setCepCliente($cep);
 
         $cpf = str_replace('.', '', $_POST['cpf']);
+        $cpf = str_replace('-', '', $cpf);
         $cliente->setCpfCliente($cpf);
 
         $cliente->setDtNascCliente($_POST['nasc']);

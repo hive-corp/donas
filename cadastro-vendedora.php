@@ -627,7 +627,7 @@
                                 formData.append('bairro', bairro)
                                 formData.append('cidade', cidade)
                                 formData.append('uf', uf)
-                                formData.append('cep', cep)
+                                formData.append('cep', cep.replace(/\D/g, ''))
                                 formData.append('comp', complemento)
                                 formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
                                 formData.append('nivel', plano)
