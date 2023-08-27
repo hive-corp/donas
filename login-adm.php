@@ -19,7 +19,7 @@
             <div id="linha-vertical"></div>
 		</div>
 		<div class="login-content">
-			<form action="authenticate-session-adm.php" method="">
+			<form action="authenticate-session-adm.php" method="post">
 				<h2 class="title">Bem-Vindo</h2>
            		<div class="input-div one">
            		   <div class="i">
@@ -40,7 +40,7 @@
             	   </div>
             	</div>
             	<br>
-            	<a href="dashboard.html"><input type="submit" class="btn" value="Login"></a>
+            	<input type="submit" class="btn" value="Login">
                 <a href="">DONAS</a>
             </form>
         </div>
