@@ -19,7 +19,7 @@
             <div id="linha-vertical"></div>
 		</div>
 		<div class="login-content">
-			<form action="area-restrita-adm/dashboard.php" method="">
+			<form action="authenticate-session-adm.php" method="">
 				<h2 class="title">Bem-Vindo</h2>
            		<div class="input-div one">
            		   <div class="i">
@@ -27,7 +27,7 @@
            		   </div>
            		   <div class="div">
            		   		<h5>Login</h5>
-           		   		<input type="text" class="input">
+           		   		<input type="text" name="txtlogin" class="input">
            		   </div>
            		</div>
            		<div class="input-div pass">
@@ -36,7 +36,7 @@
            		   </div>
            		   <div class="div">
            		    	<h5>Senha</h5>
-           		    	<input type="password" class="input">
+           		    	<input type="password" name="txtsenha" class="input">
             	   </div>
             	</div>
             	<br>
