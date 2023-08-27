@@ -857,7 +857,7 @@ require_once "validador.php";
 					</div>
 				</div>
 			</div>
-			<img src="../assets/img/rosas.svg" class="rosa-fundo">
+			<!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
 		</main>
 	</div>
 
