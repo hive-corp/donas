@@ -128,7 +128,15 @@ svg {
     position: relative;
     overflow: hidden;
 }
-
+.modal-title{
+    color: var(--text-color);
+}
+.modal-content{
+    background: var(--input-bg);
+}
+.modal-header, .modal-footer{
+    border-color: var(--bd-color);
+}
 .modal.pop .modal-dialog {
     transform: scale(0.9);
     opacity: 0;
@@ -2712,6 +2720,7 @@ a.config-item {
 }
 
 #welcome{
+    background: var(--bg-color);
     padding: 24px;
 }
 
@@ -2726,6 +2735,7 @@ a.config-item {
 
 #stats{
     grid-area: stats;
+    background: var(--bg-color);
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -2734,8 +2744,8 @@ a.config-item {
 
 .stats-box{
     border-radius: 8px;
-    background: white;
-    border: 1px solid lightgray;
+    background: var(--input-bg);
+    border: 1px solid var(--bd-color);
     transition: .3s box-shadow, .3s border-color;
     position: relative;
     display: grid;
@@ -2783,7 +2793,7 @@ a.config-item {
 
 .stats-header{
     grid-area: header;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--bd-color);
     padding: 16px;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -2847,7 +2857,7 @@ a.config-item {
 
 .stats-footer{
     grid-area: footer;
-    border-top: 1px solid lightgray;
+    border-top: 1px solid var(--bd-color);
     padding: 16px;
 }
 

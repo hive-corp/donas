@@ -593,7 +593,7 @@ require_once "validador.php";
                         </div>
                         <div class="row">
                             <div class="col">
-                                Seu anúncio melhor avaliado é:
+                                Seu anúncio melhor avaliado:
                             </div>
                             <div class="col highlight">
                                 Cadernos Artesanais
