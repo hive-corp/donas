@@ -100,7 +100,28 @@ require_once "validador.php";
                         <img src="../assets/img/users/donas/grifecoracao.png" alt="">
                     </div>
                     <div id="bio-info">
-                        <div id="bio-name">Grife do Coração</div>
+                        <div id="bio-name" class="d-flex justify-content-between">
+                            Grife do Coração
+                            <div class="dropdown-start dropdown">
+                                <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-start dropdown-sobe">
+                                    <li>
+                                        <a class="dropdown-item" href="product.php">
+                                            <i class="bi bi-exclamation-triangle"></i>
+                                            Denunciar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="conversas.php?username=bolinhos">
+                                            <i class="bi bi-chat"></i>
+                                            Iniciar conversa
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <div id="bio-username">@grifecoracao</div>
                         <div id="bio-desc">
                             bla bla bla grife do coração bla bla 2020
@@ -253,7 +274,7 @@ require_once "validador.php";
         </main>
     </div>
 
-    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
 </body>
 

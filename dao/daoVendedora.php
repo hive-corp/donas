@@ -154,6 +154,19 @@ class daoVendedora
         return $id;
     }
 
+    public static function consultarPorNomeUsuario($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT * FROM tbVendedora
+                            WHERE nomeUsuarioNegocioVendedora = ?');
+        $stmt->bindValue(1, $Vendedora->getNomeUsuarioNegocioVendedora());
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
     public static function verificaLogin($Vendedora)
     {
         $connection = Conexao::conectar();

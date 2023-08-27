@@ -237,15 +237,16 @@ require_once "validador.php";
                     </div>
                 </div>
 
-                <p id="abra-conversa">Abra uma conversa</p>
+                <p id="abra-conversa" class="hide">Abra uma conversa</p>
                 <button id="desce-chat" class="hide">
                     <i class="bi bi-arrow-down"></i>
                 </button>
 
                 <div id="chat">
+
                 </div>
 
-                <div class="message-container hide" id="main-message-container">
+                <div class="message-container" id="main-message-container">
                     <div class="message-embeds">
                         <label for="message-photo">
                             <i class="bi bi-image"></i>
@@ -269,6 +270,18 @@ require_once "validador.php";
     <script src="../assets/js/chat.js"></script>
     <script>
         type = 0
+
+        <?php
+        if(isset($_GET['username'])){
+            $vendedora = new Vendedora();
+            $vendedora->setNomeUsuarioNegocioVendedora($_GET['username']);
+            $dados = daoVendedora::consultarPorNomeUsuario($vendedora);
+
+            ?>
+            resgatarMensagens('<?php echo $dados['nomeNegocioVendedora']?>','<?php echo $dados['fotoNegocioVendedora']?>','<?php echo $dados['nomeUsuarioNegocioVendedora']?>')
+            <?php
+        }
+        ?>
 
         var searchField = document.querySelector('#pesquisar-vendedora'),
             searchResults = document.querySelector("#search-results")
