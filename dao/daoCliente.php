@@ -123,6 +123,19 @@ class daoCliente
         return $id;
     }
 
+    public static function consultarPorNomeUsuario($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT * FROM tbCliente
+                            WHERE nomeUsuarioCliente = ?');
+        $stmt->bindValue(1, $cliente->getNomeUsuarioCliente());
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
     public static function verificaLogin($cliente)
     {
         $connection = Conexao::conectar();

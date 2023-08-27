@@ -274,6 +274,18 @@ require_once "validador.php";
     <script src="../assets/js/chat.js"></script>
     <script>
         type = 1
+
+        <?php
+        if(isset($_GET['username'])){
+            $cliente = new Cliente();
+            $cliente->setNomeUsuarioCliente($_GET['username']);
+            $dados = daoCliente::consultarPorNomeUsuario($cliente);
+
+            ?>
+            resgatarMensagens('<?php echo $dados['nomeCliente']?>','<?php echo $dados['fotoCliente']?>','<?php echo $dados['nomeUsuarioCliente']?>')
+            <?php
+        }
+        ?>
    
         var searchField = document.querySelector('#pesquisar-cliente'),
             searchResults = document.querySelector("#search-results")
