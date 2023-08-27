@@ -1322,6 +1322,7 @@ a.dropdown-item {
 }
 
 .search-field {
+    color: var(--text-color);
     padding-left: 24px;
     flex-grow: 1;
 }
