@@ -341,7 +341,7 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="produtos load">
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/cadernos-artesanais.jpg">
                         </div>
@@ -367,7 +367,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/francesinha.jpeg">
                         </div>
@@ -393,7 +393,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/bolo-laranja.jpg">
                         </div>
@@ -419,7 +419,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/bolo-chocolate.jpg">
                         </div>
@@ -446,7 +446,7 @@ require_once "validador.php";
 
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/sabonetes.jpg">
                         </div>
@@ -472,7 +472,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/pano-de-prato.jpg">
                         </div>
@@ -498,7 +498,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/conjunto-de-velas.jpg">
                         </div>
@@ -524,7 +524,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     </a>
-                    <a class="card-produto" href="../produto.php">
+                    <a class="card-produto" href="produto.php">
                         <div class="img-card">
                             <img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg">
                         </div>
@@ -591,12 +591,22 @@ require_once "validador.php";
                                 Neste mês: <span class="highlight">56 encomendas</span>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                Seu anúncio melhor avaliado:
+                        <div class="stats-carousel">
+                            <div class="row">
+                                <div class="col">
+                                    Seu anúncio melhor avaliado:
+                                </div>
+                                <a class="col highlight" href="produto.php">
+                                    Cadernos Artesanais
+                                </a>
                             </div>
-                            <div class="col highlight">
-                                Cadernos Artesanais
+                            <div class="row">
+                                <div class="col">
+                                    Seu anúncio mais encomendado:
+                                </div>
+                                <a class="col highlight" href="produto.php">
+                                    Bolo de Chocolate
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -613,7 +623,7 @@ require_once "validador.php";
                         <span class="veja-mais placeholder-element placeholder-glow">
                             <span class="placeholder col-4"></span>
                         </span>
-                        <a href="#" class="veja-mais load"> veja mais </a>
+                        <a href="encomendas.php" class="veja-mais load"> veja mais </a>
                     </div>
                     <div class="stats-body placeholder-element">
                         <div class="stats-item">
@@ -770,6 +780,17 @@ require_once "validador.php";
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
     <script src="../assets/js/script.js"></script>
+    <script>
+        var elem = document.querySelector(".stats-carousel")
+
+        new Flickity(elem, {
+            prevNextButtons: false,
+            pageDots: false,
+            resize: false,
+            autoPlay: 2500,
+            wrapAround: true
+        });
+    </script>
 </body>
 
 </html>
