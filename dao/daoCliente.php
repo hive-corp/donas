@@ -225,7 +225,7 @@ class daoCliente
         return $dados;
     }
 
-        public static function contarCliente($Cliente)
+    public static function contarCliente($Cliente)
     {
         $connection = Conexao::conectar();
 
