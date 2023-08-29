@@ -69,5 +69,17 @@
             return $lista;
 
         }
+
+        public static function contarCategoria($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idCategoria) FROM tbCategoria WHERE nomeCategoria = ?");
+        $stmt->execute();
+
+        $countCategoria = $stmt->fetchAll();
+
+        return $countCategoria;
+    }
     }
 ?>
