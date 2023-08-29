@@ -1,3 +1,9 @@
+<?php
+
+require_once "validador.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
