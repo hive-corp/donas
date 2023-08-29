@@ -5,15 +5,12 @@ class NotifcVendedora {
     private $descPedido ;
 
     private $Vendedora ;
-    public function __construct()
-    {
-        $Vendedora = new Vendedora();
-    }
-
     private $Encomenda ;
+    
     public function __construct()
     {
-        $Encomenda = new Encomenda();
+        $this->Vendedora = new Vendedora();
+        $this->Encomenda = new Encomenda();
     }
 
     public function getIdNotifcVendedora() {
