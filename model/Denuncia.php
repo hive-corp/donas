@@ -6,21 +6,14 @@ class Denuncia {
     private $descricaoDenuncia;
 
     private $Cliente ;
-    public function __construct()
-    {
-        $Cliente = new Cliente();
-    }
-
     private $Vendedora ;
-    public function __construct()
-    {
-        $Vendedora = new Vendedora();
-    }
-
     private $Negocio ;
+    
     public function __construct()
     {
-        $Negocio = new Negocio();
+        $this->Cliente = new Cliente();
+        $this->Vendedora = new Vendedora();
+        $this->Negocio = new Negocio();
     }
 
     public function getIdDenuncia() {

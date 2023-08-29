@@ -4,9 +4,10 @@ class ImagemAnuncio {
     private $enderecoImagem ;
    
     private $Anuncio ;
+    
     public function __construct()
     {
-        $Anuncio = new Anuncio();
+        $this->Anuncio = new Anuncio();
     }
 
     public function getIdImagemAnuncio () {
