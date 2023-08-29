@@ -270,4 +270,28 @@ class daoVendedora
 
         return $dados;
     }
+
+    public static function contarVendedora($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora");
+        $stmt->execute();
+
+        $countVendedora = $stmt->fetchAll();
+
+        return $countVendedora;
+    }
+
+    public static function contarVendBloq($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE statusVendedora = 2");
+        $stmt->execute();
+
+        $countVendBloq = $stmt->fetchAll();
+
+        return $countVendBloq;
+    }
 }
