@@ -185,6 +185,18 @@ svg {
     gap: 16px
 }
 
+#modal-anuncio .modal-body{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "foto foto"
+        "nome tipo"
+        "preco estoque"
+        "desc desc";
+    gap: 16px
+}
+
 .foto-modal {
     grid-area: foto;
     width: 250px;
@@ -193,8 +205,28 @@ svg {
     justify-self: center;
 }
 
+#modal-anuncio .foto-modal{
+    border-radius: 12px;
+}
+
 .nome-modal {
     grid-area: nome;
+}
+
+.tipo-modal{
+    grid-area: tipo;
+}
+
+.preco-modal{
+    grid-area: preco;
+}
+
+.estoque-modal{
+    grid-area: estoque;
+}
+
+.desc-modal{
+    grid-area: desc;
 }
 
 .username-modal {
