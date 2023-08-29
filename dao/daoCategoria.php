@@ -74,7 +74,7 @@
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare("SELECT COUNT(idCategoria) FROM tbCategoria WHERE nomeCategoria = ?");
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbCategoria WHERE nomeCategoria = ?");
         $stmt->execute();
 
         $countCategoria = $stmt->fetchAll();
