@@ -14,7 +14,7 @@
         private $Vendedora;
         public function __construct()
         {
-            $Vendedora = new Vendedora();
+            $this->Vendedora = new Vendedora();
         }
 
         public function getIdAnuncio() {
