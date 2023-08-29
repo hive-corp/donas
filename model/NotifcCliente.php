@@ -4,15 +4,12 @@ class NotifcCliente {
     private $statusPedido ;
 
     private $Vendedora ;
-    public function __construct()
-    {
-        $Vendedora = new Vendedora();
-    }
-
     private $Cliente ;
+    
     public function __construct()
     {
-        $Cliente = new Cliente();
+        $this->Vendedora = new Vendedora();
+        $this->Cliente = new Cliente();
     }
 
     public function getIdNotifcCliente() {
