@@ -5,9 +5,10 @@ class SaidaProduto {
     private $qtdSaidaProduto ;
 
     private $Anuncio ;
+    
     public function __construct()
     {
-        $Anuncio = new Anuncio();
+        $this->Anuncio = new Anuncio();
     }
 
     public function getIdSaidaProduto () {
