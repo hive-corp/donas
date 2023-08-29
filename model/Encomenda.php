@@ -7,15 +7,12 @@ class Encomenda {
     private $dataEncomenda;
 
     private $Anuncio ;
-    public function __construct()
-    {
-        $Anuncio = new Anuncio();
-    }
-
     private $Cliente ;
+    
     public function __construct()
     {
-        $Cliente = new Cliente();
+        $this->Anuncio = new Anuncio();
+        $this->Cliente = new Cliente();
     }
 
     public function getIdEncomenda() {
