@@ -100,4 +100,52 @@ class daoAnuncio
 
         return $id;
     }
+
+    public static function contarAnuncio($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio");
+        $stmt->execute();
+
+        $countAnuncio = $stmt->fetchAll();
+
+        return $countAnuncio;
+    }
+
+    public static function contarAnuncioProduto($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendededora = ? AND tipoAnuncio = 1");
+        $stmt->execute();
+
+        $countAnuncioProduto = $stmt->fetchAll();
+
+        return $countAnuncioProduto;
+    }
+
+    public static function contarAnuncioServico($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendededora = ? AND tipoAnuncio = 2");
+        $stmt->execute();
+
+        $countAnuncioServico = $stmt->fetchAll();
+
+        return $countAnuncioServico;
+    }
+
+    public static function contarAnuncioGeral($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendededora = ?");
+        $stmt->execute();
+
+        $countAnuncioGeral = $stmt->fetchAll();
+
+        return $countAnuncioGeral;
+    }
 }
