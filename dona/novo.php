@@ -21,6 +21,40 @@ require_once "validador.php";
 </head>
 
 <body>
+    <div class="modal pop" id="modal-sucesso" tabindex="-1" aria-labelledby="modal-sucesso" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Anúncio cadastrado com sucesso!</h1>
+                </div>
+                <div class="modal-body d-flex flex-column text-center">
+                    <i class="bi bi-check-circle"></i>
+                    Cadastro do anúncio feito com sucesso!
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal pop" id="modal-erro" tabindex="-1" aria-labelledby="modal-erro" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">OPS!</h1>
+                </div>
+                <div class="modal-body d-flex flex-column text-center">
+                    <i class="bi bi-x-circle"></i>
+                    Ocorreu algum erro ao cadastrar. Verifique se todos os campos do formulário foram preenchidos
+                    corretamente.
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="button" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal pop" id="modal-foto" tabindex="-1" aria-labelledby="modal-foto" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -33,6 +67,49 @@ require_once "validador.php";
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="button" data-bs-dismiss="modal" id="confirmar-foto">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal pop" id="modal-anuncio" tabindex="-1" aria-labelledby="modal-canuncioonfirma" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Informações do anúncio</h1>
+                </div>
+                <div class="modal-body">
+                    <img src="assets/img/foto.png" alt="" class="foto-modal">
+                    <div class="nome-modal">
+                        <div class="form-label">Nome</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
+                    <div class="tipo-modal">
+                        <div class="form-label">Tipo</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
+                    <div class="preco-modal">
+                        <div class="form-label">Preço</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
+                    <div class="estoque-modal">
+                        <div class="form-label">Estoque</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
+                    <div class="desc-modal">
+                        <div class="form-label">Descrição</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="button button-secondary" data-bs-dismiss="modal">Voltar</button>
+                    <button type="button" class="button" data-bs-dismiss="modal" id="cadastrar">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -111,7 +188,7 @@ require_once "validador.php";
         </nav>
         <main id="main">
             <div id="main-title">
-                Novo produto ou serviço
+                Novo anúncio
             </div>
             <div id="content">
                 <form class="needs-validation" action="/" method='post' id="new-form" novalidate>
@@ -119,8 +196,11 @@ require_once "validador.php";
                     <div id="imagens-form">
                         <label for="foto-principal" id="foto-anuncio">
                             <img src="../assets/img/foto.png" id="preview-foto">
-                            <input type="file" name="foto-principal" id="foto-principal">
                         </label>
+                        <input type="file" accept="image/*" name="foto-principal" id="foto-principal" required>
+                        <div class="invalid-feedback">
+                            Insira uma foto
+                        </div>
                     </div>
                     <div id="info-form">
                         <div class="input">
@@ -153,16 +233,16 @@ require_once "validador.php";
                         <div class="input" id="qtd-produto">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="text" name="estoque" id="estoque">
+                                <input type="text" name="estoque" id="estoque" value="0">
                             </div>
                             <div class="invalid-feedback">
                                 Informe um valor inicial de estoque
                             </div>
                         </div>
                         <div class="input">
-                            <label class="form-label" for="email">Descrição<span>*</span></label>
+                            <label class="form-label" for="desc">Descrição<span>*</span></label>
                             <div class="input-wrapper">
-                                <textarea name="" id="" cols="30" rows="6" required></textarea>
+                                <textarea name="desc" id="desc" cols="30" rows="6" required></textarea>
                             </div>
                             <div class="invalid-feedback">
                                 Insira a descrição do seu anúncio
@@ -188,15 +268,59 @@ require_once "validador.php";
             fotoInput = document.querySelector('#foto-principal'),
             result = document.querySelector('.result-crop'),
             confirmarFoto = document.querySelector('#confirmar-foto'),
-            fotoPreview = document.querySelector('#preview-foto')
+            fotoPreview = document.querySelector('#preview-foto'),
+            confirmarCadastro = document.querySelector('#cadastrar')
 
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
             if (!form.checkValidity()) {
+                new bootstrap.Modal('#modal-erro').toggle()
                 form.classList.add('was-validated')
             } else {
-                form.submit()
+                new bootstrap.Modal('#modal-anuncio').toggle()
+
+                const nomeModal = document.querySelector('.nome-modal .input-wrapper'),
+                    precoModal = document.querySelector('.preco-modal .input-wrapper'),
+                    tipoModal = document.querySelector('.tipo-modal .input-wrapper'),
+                    estoqueModal = document.querySelector('.estoque-modal .input-wrapper'),
+                    descModal = document.querySelector('.desc-modal .input-wrapper')
+
+                nomeModal.innerText = document.getElementById('nome-anuncio').value
+                precoModal.innerText = document.getElementById('preco').value
+                tipoModal.innerText = document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].text
+                estoqueModal.innerText = document.getElementById('estoque').value
+                descModal.innerText = document.getElementById('desc').value
+
+                confirmarCadastro.addEventListener('click', () => {
+                    let canvas = cropper.getCroppedCanvas({
+                        width: 512,
+                        height: 512
+                    })
+
+                    canvas.toBlob(function(blob) {
+                        let formData = new FormData()
+
+                        formData.append('foto', blob, 'photo.png')
+                        formData.append('nome', document.getElementById('nome-anuncio').value)
+                        formData.append('desc', document.getElementById('desc').value)
+                        formData.append('valor', document.getElementById('preco').value)
+                        formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
+                        formData.append('qtd', document.getElementById('estoque').value)
+
+                        fetch('../api/anuncio/', {
+                            method: 'POST',
+                            header: {
+                                'Accept': 'application/json',
+                                'Content-type': 'application/json'
+                            },
+                            body: formData
+                        }).then(() => {
+                            new bootstrap.Modal('#modal-sucesso').toggle()
+                            setTimeout(() => location.reload(), 1500)
+                        })
+                    })
+                })
             }
         })
 
@@ -246,6 +370,7 @@ require_once "validador.php";
             }).toDataURL('image/jpeg');
 
             fotoPreview.src = imgSrc;
+            document.querySelector('.foto-modal').src = imgSrc
         });
     </script>
 </body>
