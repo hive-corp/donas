@@ -42,11 +42,9 @@ const mostrarMensagens = (dados) => {
 
         msg.append(item.conteudoMensagem)
 
-        let hora = item.horaMensagem
-        hora = hora.slice(0, -3)
         let horaMsg = document.createElement('span')
         horaMsg.setAttribute('class', 'time')
-        horaMsg.innerText = hora
+        horaMsg.innerText = item.horaMensagem
 
         msg.append(horaMsg)
         chat.append(msg)
@@ -54,7 +52,6 @@ const mostrarMensagens = (dados) => {
 }
 
 const consultaMensagens = async (apelido) => {
-
     const response = await fetch(`../api/chat/?type=messages&username=${apelido}`)
     const data = await response.json()
 

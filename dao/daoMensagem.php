@@ -83,8 +83,8 @@
         public static function listarConversa($conversa){
             $connection = Conexao::conectar();
 
-            $querySelect = "SELECT * FROM tbMensagem
-                            WHERE idCliente = ? AND idVendedora = ?";
+            $querySelect = 'SELECT conteudoMensagem, imagemMensagem, TIME_FORMAT(horaMensagem, "%H:%i") as horaMensagem, lidoEmMensagem, origemMensagem FROM tbMensagem
+                            WHERE idCliente = ? AND idVendedora = ?';
 
             $prepareStatement = $connection->prepare($querySelect);
             $prepareStatement->bindValue(1, $conversa->getCliente()->getIdCliente());
