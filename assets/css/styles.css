@@ -348,6 +348,10 @@ svg {
     color: #CB6CE6;
 }
 
+.voltar.hide{
+    display: none;
+}
+
 #register-box .form {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -853,6 +857,15 @@ input:checked+.tipo-login:hover {
     color: white;
 }
 
+.button-red{
+    background-color: red;
+    border-color: red;
+}
+
+.button-red:hover, .button-red:focus{
+    background-color: #890000;
+    border-color: #890000;
+}
 .create-new,
 a.create-new {
     text-align: center;
@@ -2183,6 +2196,19 @@ a.config-item {
 
 .switch input:checked+.slider:before {
     transform: translateX(calc(1.2em - 0.1em));
+}
+
+#user-config #content{
+    padding: 0;
+}
+
+.config-box{
+    width: 100%;
+    height: 100%;
+}
+
+.config-box.hide{
+    display: none;
 }
 
 #options-chat.hide {

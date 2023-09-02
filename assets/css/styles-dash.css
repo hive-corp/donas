@@ -4698,9 +4698,9 @@ a:focus {
     width: 250px;
 }
 
-#linha-modal {
+.linha-modal {
     border: 1px solid rgba(0, 0, 0, 0.062);
-    width: 200px;
+    width: 100%;
 }
 
 #linhaG{
@@ -4802,20 +4802,33 @@ a:focus {
    #modal-confirma .modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
-        "foto foto"
-        "nome-empresa nome"
-        "cat plano";
+        "foto-dona foto-negocio"
+        "id nome"
+        "nome-empresa cat"
+        "plano plano";
     gap: 16px
 }
 
-.foto-modal {
-    grid-area: foto;
-    width: 250px;
+.foto-modal-dona {
+    grid-area: foto-dona;
+    width: 200px;
     border-radius: 50%;
     border: 8px solid #f0bbff;
     justify-self: center;
+}
+
+.foto-modal-negocio {
+    grid-area: foto-negocio;
+    width: 200px;
+    border-radius: 50%;
+    border: 8px solid #f0bbff;
+    justify-self: center;
+}
+
+.plano-modal{
+    grid-area: plano;
 }
 
 .botao{
