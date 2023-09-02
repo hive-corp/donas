@@ -86,6 +86,22 @@ class daoAnuncio
         return $lista;
     }
 
+    public static function listarAnunciosVendedora($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT *, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbAnuncio.idVendedora = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
     public static function consultarId($Anuncio)
     {
         $connection = Conexao::conectar();
@@ -113,23 +129,11 @@ class daoAnuncio
         return $countAnuncio;
     }
 
-    public static function contarAnuncioProduto($Anuncio)
-    {
-        $connection = Conexao::conectar();
-
-        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendededora = ? AND tipoAnuncio = 1");
-        $stmt->execute();
-
-        $countAnuncioProduto = $stmt->fetchAll();
-
-        return $countAnuncioProduto;
-    }
-
     public static function contarAnuncioServico($Anuncio)
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendededora = ? AND tipoAnuncio = 2");
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ? AND tipoAnuncio = 1");
         $stmt->execute();
 
         $countAnuncioServico = $stmt->fetchAll();
@@ -137,11 +141,23 @@ class daoAnuncio
         return $countAnuncioServico;
     }
 
+    public static function contarAnuncioProduto($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ? AND tipoAnuncio = 2");
+        $stmt->execute();
+
+        $countAnuncioProduto = $stmt->fetchAll();
+
+        return $countAnuncioProduto;
+    }
+
     public static function contarAnuncioGeral($Anuncio)
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendededora = ?");
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ?");
         $stmt->execute();
 
         $countAnuncioGeral = $stmt->fetchAll();

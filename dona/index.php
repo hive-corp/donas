@@ -1,7 +1,7 @@
 <?php
 
 require_once "validador.php";
-
+require_once "global.php";
 ?>
 
 <!DOCTYPE html>
@@ -341,215 +341,42 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="produtos load">
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/cadernos-artesanais.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Cadernos artesanais
-                            </div>
-                            <div class="preco-card">
-                                R$25,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Artesanato
-                            </div>
-                            <div class="negocio-card">
-                                Cantinho da Arte
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/francesinha.jpeg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Francesinha
-                            </div>
-                            <div class="preco-card">
-                                R$20,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Manicure
-                            </div>
-                            <div class="negocio-card">
-                                Mulher Maravilha
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/bolo-laranja.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Bolo de Laranja
-                            </div>
-                            <div class="preco-card">
-                                R$15,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Culinária
-                            </div>
-                            <div class="negocio-card">
-                                Açúcar e Canela
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/bolo-chocolate.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Bolo de Chocolate
-                            </div>
-                            <div class="preco-card">
-                                R$25,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Culinária
-                            </div>
-                            <div class="negocio-card">
-                                Açúcar e Canela
-                            </div>
 
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/sabonetes.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Sabonetes Artesanais de Lavanda
+                    <?php
+                    foreach (daoAnuncio::listarAnunciosVendedora($_SESSION['id']) as $a) {
+                    ?>
+                        <a class="card-produto" href="produto.php">
+                            <div class="img-card">
+                                <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>">
                             </div>
-                            <div class="preco-card">
-                                R$12,00
+                            <div class="info-card">
+                                <div class="nome-card">
+                                    <?php echo $a['nomeAnuncio'] ?>
+                                </div>
+                                <div class="preco-card">
+                                    R$<?php echo number_format($a['valorAnuncio'], 2, ',', ' ')  ?>
+                                </div>
+                                <div class="avaliacao-card">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                                <div class="categoria-card">
+                                    <?php echo $a['nomeCategoria'] ?>
+                                </div>
+                                <div class="negocio-card">
+                                    <?php echo $a['nomeNegocioVendedora'] ?>
+                                </div>
                             </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Beleza
-                            </div>
-                            <div class="negocio-card">
-                                Ana Rodrigues
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/pano-de-prato.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Pano de Prato Bordado
-                            </div>
-                            <div class="preco-card">
-                                R$25,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Artesanato
-                            </div>
-                            <div class="negocio-card">
-                                Maria Santos
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/conjunto-de-velas.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Conjunto de Velas Perfumadas
-                            </div>
-                            <div class="preco-card">
-                                R$35,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Decoração
-                            </div>
-                            <div class="negocio-card">
-                                Isabella Silva
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-produto" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Óleo Essencial Relaxante de Lavanda 10ml
-                            </div>
-                            <div class="preco-card">
-                                R$30,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Bem estar
-                            </div>
-                            <div class="negocio-card">
-                                Luísa Oliveira
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    <?php
+                    }
+                    ?>
+
+
+
                 </div>
             </div>
             <div id="stats">
