@@ -18,7 +18,7 @@ switch ($method) {
         $anuncio->setValorAnuncio($_POST['valor']);
         $anuncio->setEstrelasAnuncio(0);
         $anuncio->setTipoAnuncio($_POST['tipo']);
-        $anuncio->setQtdProduto(3);
+        $anuncio->setQtdProduto($_POST['tipo'] == 2 ? $_POST['qtd'] : 0);
         
         session_start();
 
