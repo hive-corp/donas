@@ -224,7 +224,7 @@ require_once "validador.php";
                         <div class="input">
                             <label class="form-label" for="preco">Preço<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="text" name="preco" id="preco" required>
+                                <input type="number" name="preco" id="preco" required>
                             </div>
                             <div class="invalid-feedback">
                                 Insira um preço para o anúncio
@@ -233,7 +233,7 @@ require_once "validador.php";
                         <div class="input" id="qtd-produto">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="text" name="estoque" id="estoque" value="0">
+                                <input type="number" name="estoque" id="estoque" value="0">
                             </div>
                             <div class="invalid-feedback">
                                 Informe um valor inicial de estoque
