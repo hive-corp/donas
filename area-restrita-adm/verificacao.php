@@ -1,4 +1,7 @@
-<?php include_once("validador.php"); ?>
+<?php
+include_once("validador.php");
+include "global.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -253,30 +256,29 @@
                         </a>
                     </div>
                     <div class="d-flex flex-wrap" style="gap:8px">
-                    <div class="card-veri">
-                            <div class="card-veri-border-top">
+                        <?php
+
+                        foreach (daoVendedora::listarRevisao() as $v) {
+                        ?>
+                            <div class="card-veri">
+                                <div class="card-veri-border-top">
+                                </div>
+                                <div class="img">
+                                    <img src="../<?php echo $v['fotoNegocioVendedora'] ?>" alt="">
+                                </div>
+                                <input type="hidden" id="id-dona" value="<?php echo $v['idVendedora'] ?>">
+                                <input type="hidden" id="foto-dona" value="../<?php echo $v['fotoVendedora'] ?>">
+                                <input type="hidden" id="categoria" value="<?php echo $v['nomeCategoria'] ?>">
+                                <input type="hidden" id="plano" value="<?php echo $v['nivelNegocioVendedora'] ?>">
+                                <span><?php echo $v['nomeNegocioVendedora'] ?></span>
+                                <p class="job"><?php echo $v['nomeVendedora'] ?></p>
+                                <button data-bs-toggle="modal" data-bs-target="#modal-confirma"> Ver </button>
                             </div>
-                            <div class="img">
-                                <img src="../assets/img/LojaDona2.jpg" alt="">
-                            </div>
-                            <input type="hidden" id="categoria" value="Roupas">
-                            <input type="hidden" id="plano" value="Grátis">
-                            <span>Kyara Store</span>
-                            <p class="job">Luana Santos</p>
-                            <button data-bs-toggle="modal" data-bs-target="#modal-confirma"> Ver </button>
-                        </div>
-                        <div class="card-veri">
-                            <div class="card-veri-border-top">
-                            </div>
-                            <div class="img">
-                                <img src="../assets/img/LojaDona1.jpg" alt="">
-                            </div>
-                            <input type="hidden" id="categoria" value="Roupas">
-                            <input type="hidden" id="plano" value="Premium">
-                            <span>Flor e Modas</span>
-                            <p class="job">Isabela Silva</p>
-                            <button data-bs-toggle="modal" data-bs-target="#modal-confirma"> Ver </button>
-                        </div>
+                        <?php
+                        }
+
+                        ?>
+
                     </div>
                 </div>
             </div>
@@ -289,26 +291,32 @@
                         <h5 class="modal-title" id="TituloModalCentralizado" style="display: block; margin-left: auto; margin-right: auto;">Conta em revisão</h5>
                     </div>
                     <div class="modal-body">
-                        <img src="../assets/img/LojaDona2.jpg" alt="" class="foto-modal">
+                        <img src="../assets/img/LojaDona2.jpg" alt="" class="foto-modal-dona">
+                        <img src="../assets/img/LojaDona2.jpg" alt="" class="foto-modal-negocio">
+                        <div class="id-modal">
+                            <p class="text-xs text-secondary mb-0 textoVer">ID da Vendedora</p>
+                            <h6 class="text-sm"></h6>
+                            <div class="linha-modal"></div>
+                        </div>
                         <div class="nome-empresa-modal">
                             <p class="text-xs text-secondary mb-0 textoVer">Nome do Negócio</p>
-                            <h6 class="text-sm">Kyara Store</h6>
-                            <div id="linha-modal"></div>
+                            <h6 class="text-sm"></h6>
+                            <div class="linha-modal"></div>
                         </div>
                         <div class="nome-modal">
                             <p class="text-xs text-secondary mb-0 textoVer">Nome da Dona</p>
-                            <h6 class="text-sm">Luana Santos</h6>
-                            <div id="linha-modal"></div>
+                            <h6 class="text-sm"></h6>
+                            <div class="linha-modal"></div>
                         </div>
                         <div class="cat-modal">
                             <p class="text-xs text-secondary mb-0 textoVer">Categoria do Negócio</p>
-                            <h6 class="text-sm">Roupas</h6>
-                            <div id="linha-modal"></div>
+                            <h6 class="text-sm"></h6>
+                            <div class="linha-modal"></div>
                         </div>
                         <div class="plano-modal">
                             <p class="text-xs text-secondary mb-0 textoVer">Plano Donas</p>
-                            <h6 class="text-sm">Premium</h6>
-                            <div id="linha-modal"></div>
+                            <h6 class="text-sm"></h6>
+                            <div class="linha-modal"></div>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
@@ -378,24 +386,12 @@
             const recBtn = document.getElementById('toastAlertRec')
             const toastRec = document.getElementById('alertRecusado')
 
-            if (aprvBtn) {
-                const toastBootstrapAprv = bootstrap.Toast.getOrCreateInstance(toastAprv)
-                aprvBtn.addEventListener('click', () => {
-                    toastBootstrapAprv.show()
-                })
-            }
-
-            if (recBtn) {
-                const toastBootstrapRec = bootstrap.Toast.getOrCreateInstance(toastRec)
-                recBtn.addEventListener('click', () => {
-                    toastBootstrapRec.show()
-                })
-            }
-
             var cardsVeri = document.querySelectorAll('.card-veri')
 
             cardsVeri.forEach(item => {
                 let foto = item.querySelector('.img img').src
+                let fotoDona = item.querySelector('#foto-dona').value
+                let id = item.querySelector('#id-dona').value
                 let nomeNegocio = item.querySelector('span').innerText
                 let nome = item.querySelector('p.job').innerText
                 let categoria = item.querySelector('input#categoria').value
@@ -404,11 +400,56 @@
                 let button = item.querySelector('button')
 
                 button.addEventListener('click', () => {
-                    document.querySelector('.foto-modal').src = foto
+                    document.querySelector('.foto-modal-negocio').src = foto
+                    document.querySelector('.foto-modal-dona').src = fotoDona
+                    document.querySelector('.id-modal h6').innerText = id
                     document.querySelector('.nome-empresa-modal h6').innerText = nomeNegocio
                     document.querySelector('.nome-modal h6').innerText = nome
                     document.querySelector('.cat-modal h6').innerText = categoria
-                    document.querySelector('.plano-modal h6').innerText = plano
+                    document.querySelector('.plano-modal h6').innerText = plano == 0 ? 'Grátis' : 'Premium'
+
+                    if (aprvBtn) {
+                        const toastBootstrapAprv = bootstrap.Toast.getOrCreateInstance(toastAprv)
+                        aprvBtn.addEventListener('click', () => {
+                            toastBootstrapAprv.show()
+
+                            let formData = new FormData
+                            formData.append('id', document.querySelector('.id-modal h6').innerText)
+
+                            fetch('../api/dona/permitir-dona.php', {
+                                method: 'POST',
+                                header: {
+                                    'Accept': 'application/json',
+                                    'Content-type': 'application/json'
+                                },
+                                body: formData
+                            })
+
+                            item.remove()
+                        })
+                    }
+
+                    if (recBtn) {
+                        const toastBootstrapRec = bootstrap.Toast.getOrCreateInstance(toastRec)
+                        recBtn.addEventListener('click', () => {
+                            toastBootstrapRec.show()
+
+                            let formData = new FormData
+                            formData.append('id', document.querySelector('.id-modal h6').innerText)
+
+                            fetch('../api/dona/recusar-dona.php', {
+                                method: 'POST',
+                                header: {
+                                    'Accept': 'application/json',
+                                    'Content-type': 'application/json'
+                                },
+                                body: formData
+                            })
+                            
+                            item.remove()
+
+                        })
+                    }
                 })
             })
         </script>
