@@ -41,7 +41,7 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "DELETE tbVendedora WHERE idVendedora = ?";
+        $queryInsert = "DELETE FROM tbVendedora WHERE idVendedora = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
         $prepareStatement->bindvalue(1, $Vendedora->getIdVendedora());
@@ -128,6 +128,19 @@ class daoVendedora
         return $lista;
     }
 
+    public static function listarRevisao()
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT *, nomeCategoria FROM tbVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE statusVendedora = 0";
+        $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
     public static function consultarIdPorEmail($Vendedora)
     {
         $connection = Conexao::conectar();
@@ -182,7 +195,8 @@ class daoVendedora
         return $count;
     }
 
-    public static function consultaStatus($Vendedora){
+    public static function consultaStatus($Vendedora)
+    {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare('SELECT statusVendedora FROM tbVendedora
@@ -213,7 +227,7 @@ class daoVendedora
 
         $n = count($dados);
         if ($n == 1)
-            return $dados[0];   
+            return $dados[0];
         else
             return 0;
     }
@@ -262,8 +276,8 @@ class daoVendedora
         $stmt = $connection->prepare("SELECT nomeNegocioVendedora as name, fotoNegocioVendedora as foto, nomeUsuarioNegocioVendedora as username FROM tbVendedora
                                     WHERE nomeUsuarioNegocioVendedora LIKE ? OR nomeNegocioVendedora LIKE ?
                                     LIMIT 5");
-        $stmt->bindValue(1, '%'.$search.'%');
-        $stmt->bindValue(2, '%'.$search.'%');
+        $stmt->bindValue(1, '%' . $search . '%');
+        $stmt->bindValue(2, '%' . $search . '%');
         $stmt->execute();
 
         $dados = $stmt->fetchAll();
@@ -288,6 +302,21 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE statusVendedora = 2");
+        $stmt->execute();
+
+        $countVendBloq = $stmt->fetchAll();
+
+        return $countVendBloq;
+    }
+
+    public static function permitirVendedora($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("UPDATE tbVendedora
+                                    SET statusVendedora = 1
+                                    WHERE idVendedora = ?");
+        $stmt->bindValue(1, $Vendedora->getIdVendedora());
         $stmt->execute();
 
         $countVendBloq = $stmt->fetchAll();

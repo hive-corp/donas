@@ -34,7 +34,7 @@ class daoCliente
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "DELETE tbCliente WHERE idCliente = ?";
+        $queryInsert = "DELETE FROM tbCliente WHERE idCliente = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
         $prepareStatement->bindvalue(1, $Cliente->getIdCliente());
