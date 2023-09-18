@@ -341,4 +341,33 @@ class daoVendedora
 
         return $countVendBloq;
     }
+
+    public static function topVendedoras($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT nomeVendedora, fotoVendedora, nomeNegocioVendedora, fotoNegocioVendedora, COUNT(idEncomenda) FROM tbVendedora
+                                     INNER JOIN tbAnuncio
+                                     ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                                     INNER JOIN tbEncomenda
+                                     ON tbAnuncio.idAnuncio = tbEncomenda.idAnuncio
+                                     ORDER BY COUNT(idEncomenda)");
+        $stmt->execute();
+
+        $topVend = $stmt->fetchAll();
+
+        return $topVend
+    }
+
+    public static function qtdVendas($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idEncomenda) FROM tbEncomenda");
+        $stmt->execute();
+
+        $topVend = $stmt->fetchAll();
+
+        return $topVend
+    }
 }
