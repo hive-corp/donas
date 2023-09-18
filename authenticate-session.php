@@ -63,6 +63,7 @@ if($tipoLogin==1){
         $_SESSION['cep']=$consultaVendedora['cepNegocioVendedora'];
         $_SESSION['cnpj']=$consultaVendedora['cnpjNegocioVendedora'];
         $_SESSION['nivel-vendedora']=$consultaVendedora['nivelNegocioVendedora'];
+        $_SESSION['tel']=$consultaVendedora['telefoneNegocioVendedora'];
         $_SESSION['categoria-id']=$consultaVendedora['idCategoria'];
         $_SESSION['tipo-login']=1;
 
