@@ -47,24 +47,37 @@ class daoCliente
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbCliente
-                            SET nomeCliente = ?, nomeUsuarioCliente = ?, emailCliente = ?, senhaCliente = ?, dtNascCliente = ?, cidadeCliente = ?, estadoCliente = ?, logradouroCliente = ?, bairroCliente = ?, numeroCliente = ?, complementoCliente = ?, cepCliente = ?, cpfCliente = ?,
+                            SET nomeCliente = ?,
+                            nomeUsuarioCliente = ?,
+                            emailCliente = ?,
+                            senhaCliente = ?,
+                            dtNascCliente = ?,
+                            cidadeCliente = ?,
+                            estadoCliente = ?,
+                            logradouroCliente = ?,
+                            bairroCliente = ?,
+                            numeroCliente = ?,
+                            complementoCliente = ?,
+                            cepCliente = ?,
+                            cpfCliente = ?
                             WHERE idCliente = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
-        $prepareStatement->bindvalue(1, $Cliente->getNomeCliente());
-        $prepareStatement->bindvalue(2, $Cliente->getNomeUsuarioCliente());
-        $prepareStatement->bindvalue(3, $Cliente->getEmailCliente());
-        $prepareStatement->bindvalue(4, $Cliente->getSenhaCliente());
-        $prepareStatement->bindvalue(5, $Cliente->getDtNascCliente());
-        $prepareStatement->bindvalue(6, $Cliente->getCidadeCliente());
-        $prepareStatement->bindvalue(7, $Cliente->getEstadoCliente());
-        $prepareStatement->bindvalue(8, $Cliente->getLogradouroCliente());
-        $prepareStatement->bindvalue(9, $Cliente->getBairroCliente());
-        $prepareStatement->bindvalue(10, $Cliente->getNumeroCliente());
-        $prepareStatement->bindvalue(11, $Cliente->getComplementoCliente());
-        $prepareStatement->bindvalue(12, $Cliente->getCepCliente());
-        $prepareStatement->bindvalue(13, $Cliente->getIdCliente());
+        $prepareStatement->bindValue(1, $Cliente->getNomeCliente());
+        $prepareStatement->bindValue(2, $Cliente->getNomeUsuarioCliente());
+        $prepareStatement->bindValue(3, $Cliente->getEmailCliente());
+        $prepareStatement->bindValue(4, $Cliente->getSenhaCliente());
+        $prepareStatement->bindValue(5, $Cliente->getDtNascCliente());
+        $prepareStatement->bindValue(6, $Cliente->getCidadeCliente());
+        $prepareStatement->bindValue(7, $Cliente->getEstadoCliente());
+        $prepareStatement->bindValue(8, $Cliente->getLogradouroCliente());
+        $prepareStatement->bindValue(9, $Cliente->getBairroCliente());
+        $prepareStatement->bindValue(10, $Cliente->getNumeroCliente());
+        $prepareStatement->bindValue(11, $Cliente->getComplementoCliente());
+        $prepareStatement->bindValue(12, $Cliente->getCepCliente());
+        $prepareStatement->bindValue(13, $Cliente->getCpfCliente());
+        $prepareStatement->bindValue(14, $Cliente->getIdCliente());
 
         $prepareStatement->execute();
     }

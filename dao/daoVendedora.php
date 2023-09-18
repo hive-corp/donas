@@ -11,8 +11,8 @@ class daoVendedora
         $queryInsert = "INSERT tbVendedora(nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
                             nomeUsuarioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                             bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
-                            nivelNegocioVendedora, idCategoria)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            nivelNegocioVendedora, telefoneNegocioVendedora, idCategoria)
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
@@ -32,7 +32,8 @@ class daoVendedora
         $prepareStatement->bindvalue(14, $Vendedora->getCepNegocioVendedora());
         $prepareStatement->bindvalue(15, $Vendedora->getCnpjNegocioVendedora());
         $prepareStatement->bindvalue(16, $Vendedora->getNivelNegocioVendedora());
-        $prepareStatement->bindvalue(17, $Vendedora->getCategoria()->getIdCategoria());
+        $prepareStatement->bindvalue(17, $Vendedora->getTelefoneNegocioVendedora());
+        $prepareStatement->bindvalue(18, $Vendedora->getCategoria()->getIdCategoria());
 
         $prepareStatement->execute();
     }
@@ -49,15 +50,12 @@ class daoVendedora
         $prepareStatement->execute();
     }
 
-    public static function editar($Vendedora)
+    public static function editarVendedora($Vendedora)
     {
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbVendedora
-                            SET nomeVendedora = ?, emailVendedora = ?, senhaVendedora = ?, dtNascVendedora = ?, statusVendedora = ?, nomeNegocioVendedora = ?,
-                            nomeUsuarioNegocioVendedora = ?, logNegocioVendedora = ?, cidadeNegocioVendedora = ?, estadoNegocioVendedora = ?,
-                            bairroNegocioVendedora = ?, numNegocioVendedora = ?, compNegocioVendedora = ?, cepNegocioVendedora = ?, cnpjNegocioVendedora = ?,
-                            nivelNegocioVendedora = ?, idCategoria = ?
+                            SET nomeVendedora = ?, emailVendedora = ?, senhaVendedora = ?, dtNascVendedora = ?, statusVendedora = ?
                             WHERE idVendedora = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
@@ -67,20 +65,40 @@ class daoVendedora
         $prepareStatement->bindvalue(3, $Vendedora->getSenhaVendedora());
         $prepareStatement->bindvalue(4, $Vendedora->getDtNascVendedora());
         $prepareStatement->bindvalue(5, $Vendedora->getStatusVendedora());
-        $prepareStatement->bindvalue(6, $Vendedora->getNomeNegocioVendedora());
-        $prepareStatement->bindvalue(7, $Vendedora->getNomeUsuarioNegocioVendedora());
-        $prepareStatement->bindvalue(8, $Vendedora->getLogNegocioVendedora());
-        $prepareStatement->bindvalue(9, $Vendedora->getCidadeNegocioVendedora());
-        $prepareStatement->bindvalue(10, $Vendedora->getEstadoNegocioVendedora());
-        $prepareStatement->bindvalue(11, $Vendedora->getBairroNegocioVendedora());
-        $prepareStatement->bindvalue(12, $Vendedora->getNumNegocioVendedora());
-        $prepareStatement->bindvalue(13, $Vendedora->getCompNegocioVendedora());
-        $prepareStatement->bindvalue(14, $Vendedora->getCepNegocioVendedora());
-        $prepareStatement->bindvalue(15, $Vendedora->getCnpjNegocioVendedora());
-        $prepareStatement->bindvalue(16, $Vendedora->getNivelNegocioVendedora());
-        $prepareStatement->bindvalue(17, $Vendedora->getCategoria()->getIdCategoria());
 
-        $prepareStatement->bindValue(18, $Vendedora->getIdVendedora());
+        $prepareStatement->bindValue(6, $Vendedora->getIdVendedora());
+
+        $prepareStatement->execute();
+    }
+
+    public static function editarNegocio($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbVendedora
+                            SET nomeNegocioVendedora = ?,
+                            nomeUsuarioNegocioVendedora = ?, logNegocioVendedora = ?, cidadeNegocioVendedora = ?, estadoNegocioVendedora = ?,
+                            bairroNegocioVendedora = ?, numNegocioVendedora = ?, compNegocioVendedora = ?, cepNegocioVendedora = ?, cnpjNegocioVendedora = ?,
+                            nivelNegocioVendedora = ?, telefoneNegocioVendedora = ?, idCategoria = ?
+                            WHERE idVendedora = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindvalue(1, $Vendedora->getNomeNegocioVendedora());
+        $prepareStatement->bindvalue(2, $Vendedora->getNomeUsuarioNegocioVendedora());
+        $prepareStatement->bindvalue(3, $Vendedora->getLogNegocioVendedora());
+        $prepareStatement->bindvalue(4, $Vendedora->getCidadeNegocioVendedora());
+        $prepareStatement->bindvalue(5, $Vendedora->getEstadoNegocioVendedora());
+        $prepareStatement->bindvalue(6, $Vendedora->getBairroNegocioVendedora());
+        $prepareStatement->bindvalue(7, $Vendedora->getNumNegocioVendedora());
+        $prepareStatement->bindvalue(8, $Vendedora->getCompNegocioVendedora());
+        $prepareStatement->bindvalue(9, $Vendedora->getCepNegocioVendedora());
+        $prepareStatement->bindvalue(10, $Vendedora->getCnpjNegocioVendedora());
+        $prepareStatement->bindvalue(11, $Vendedora->getNivelNegocioVendedora());
+        $prepareStatement->bindvalue(12, $Vendedora->getTelefoneNegocioVendedora());
+        $prepareStatement->bindvalue(13, $Vendedora->getCategoria()->getIdCategoria());
+
+        $prepareStatement->bindValue(14, $Vendedora->getIdVendedora());
 
         $prepareStatement->execute();
     }
@@ -214,10 +232,10 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare('SELECT idVendedora, nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
+        $stmt = $connection->prepare('SELECT idVendedora, nomeVendedora, emailVendedora, fotoVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
                                     nomeUsuarioNegocioVendedora, fotoNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                                     bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
-                                    nivelNegocioVendedora, idCategoria FROM tbVendedora
+                                    nivelNegocioVendedora, telefoneNegocioVendedora, idCategoria FROM tbVendedora
                                     WHERE emailVendedora = ? AND senhaVendedora = ?');
         $stmt->bindValue(1, $Vendedora->getEmailVendedora());
         $stmt->bindValue(2, $Vendedora->getSenhaVendedora());
