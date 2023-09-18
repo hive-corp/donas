@@ -18,7 +18,7 @@ if (isset($_GET['cnpj'])) {
     $email = $_GET["email"];
     $count = daoVendedora::verificaEmail($email);
     echo json_encode($count);
-}else if (isset($_GET['search'])) {
+} else if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $result = daoVendedora::pesquisaVendedora($search);
     echo json_encode($result);
@@ -37,6 +37,11 @@ switch ($method) {
         $vendedora->setStatusVendedora(0);
         $vendedora->setNomeNegocioVendedora($_POST['nome-empresa']);
         $vendedora->setNomeUsuarioNegocioVendedora($_POST['username-empresa']);
+
+        $tel = str_replace('-', '', $_POST['telefone']);
+
+        $vendedora->setTelefoneNegocioVendedora($tel);
+
         $vendedora->setLogNegocio($_POST['log']);
         $vendedora->setCidadeNegocioVendedora($_POST['cidade']);
         $vendedora->setEstadoNegocioVendedora($_POST['uf']);
