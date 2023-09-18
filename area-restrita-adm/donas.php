@@ -1,4 +1,7 @@
-<?php include_once("validador.php"); ?>
+<?php
+include_once("validador.php");
+include "global.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -270,8 +273,7 @@
 					<div class="container-fluid py-4">
 						<div class="row">
 							<div class="col-12">
-								<div class="card mb-4">
-
+								<div class="card mb-4">	
 									<div class="card-body px-0 pt-0 pb-2">
 										<div class="table-responsive p-0">
 											<table class="table align-items-center mb-0">
@@ -283,11 +285,9 @@
 														<th class="text-uppercase lista">Categoria</th>
 														<th class="text-uppercase lista">Situação da Conta</th>
 														<th class="text-uppercase lista">Alterar</th>
-
 													</tr>
 												</thead>
 												<tbody>
-
 													<tr>
 														<td class="align-middle text-center text-sm">
 															<p>01</p>
@@ -310,17 +310,12 @@
 														<td class="align-middle text-center text-sm">
 															<span class="text-xs font-weight-bold mb-0">Roupas Femininas</span>
 														</td>
-
 														<td>
 															<p class="text-xs font-weight-bold mb-0">Desbloqueada</p>
 														</td>
-
-
 														<td class="align-middle text-center">
 															<button class="botaoTabela" data-bs-toggle="modal" data-bs-target="#reativarConta"></button>
 														</td>
-
-
 													</tr>
 												</tbody>
 											</table>
