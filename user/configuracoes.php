@@ -14,9 +14,9 @@ require_once "validador.php";
     <title>Configurações</title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/vendor/cropperjs/css/cropper.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
@@ -228,6 +228,9 @@ require_once "validador.php";
                 <button class="voltar hide" id="voltar-config" data-config-hide="">
                     <i class="bi bi-arrow-left"></i>
                 </button>
+                <button class="voltar hide" id="voltar-perfil" data-config-hide="">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
                 <span></span>
             </div>
             <div id="content">
@@ -289,7 +292,7 @@ require_once "validador.php";
                         <div class="input input-cep">
                             <label class="form-label" for="cep">CEP</label>
                             <div class="input-wrapper">
-                                <input type="text" name="cep" id="cep" maxlength="9" value="<?php echo substr($_SESSION['cep'], 0, 5).'-'.substr($_SESSION['cep'], 5)?>" onblur="pesquisacep(this.value)">
+                                <input type="text" name="cep" id="cep" maxlength="9" value="<?php echo substr($_SESSION['cep'], 0, 5) . '-' . substr($_SESSION['cep'], 5) ?>" onblur="pesquisacep(this.value)">
                             </div>
                             <div class="invalid-feedback">
                                 Insira um CEP válido.
@@ -370,6 +373,7 @@ require_once "validador.php";
             main = document.querySelector('#main'),
             configs = document.querySelector('#config'),
             voltarConfig = document.querySelector('#voltar-config'),
+            voltarPerfil = document.querySelector('#voltar-perfil'),
             campoSenha = document.querySelector('#pass-excluir'),
             btnSenha = document.querySelector('#hide-show-pass'),
             iconBtnSenha = document.querySelector('#hide-show-pass i'),
@@ -382,7 +386,7 @@ require_once "validador.php";
             confirmarAlteracao = document.querySelector('#salvar'),
             result = document.querySelector('.result-crop')
 
-            form.addEventListener('submit', event => {
+        form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
             if (!form.checkValidity()) {
@@ -410,17 +414,43 @@ require_once "validador.php";
                 enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
 
                 confirmarAlteracao.addEventListener('click', () => {
-                    let canvas = cropper.getCroppedCanvas({
-                        width: 512,
-                        height: 512
-                    })
+                    if (typeof cropper !== 'undefined') {
+                        let canvas = cropper.getCroppedCanvas({
+                            width: 512,
+                            height: 512
+                        })
 
-                    canvas.toBlob(async function(blob) {
+                        canvas.toBlob(async function(blob) {
+                            let formData = new FormData()
+
+                            formData.append('foto', blob, 'photo.png')
+                            formData.append('nome', document.getElementById('nome').value)
+                            formData.append('username', document.getElementById('username').value)
+                            formData.append('email', document.getElementById('email').value)
+                            formData.append('pass', campoSenha.value)
+                            formData.append('log', logradouro)
+                            formData.append('num', numero)
+                            formData.append('bairro', bairro)
+                            formData.append('cidade', cidade)
+                            formData.append('uf', uf)
+                            formData.append('cep', cep.replace(/\D/g, ''))
+                            formData.append('comp', complemento)
+
+                            fetch('../api/cliente/edit-profile.php', {
+                                method: 'POST',
+                                header: {
+                                    'Accept': 'application/json',
+                                    'Content-type': 'application/json'
+                                },
+                                body: formData
+                            }).then(() => {
+                                new bootstrap.Modal('#modal-sucesso').toggle()
+                                setTimeout(() => location.reload(), 3500)
+                            })
+                        })
+                    } else {
                         let formData = new FormData()
 
-                        console.log(document.getElementById('nome').value)
-
-                        formData.append('foto', blob, 'photo.png')
                         formData.append('nome', document.getElementById('nome').value)
                         formData.append('username', document.getElementById('username').value)
                         formData.append('email', document.getElementById('email').value)
@@ -433,8 +463,8 @@ require_once "validador.php";
                         formData.append('cep', cep.replace(/\D/g, ''))
                         formData.append('comp', complemento)
 
-                        fetch('../api/cliente/', {
-                            method: 'PUT',
+                        fetch('../api/cliente/edit-profile.php', {
+                            method: 'POST',
                             header: {
                                 'Accept': 'application/json',
                                 'Content-type': 'application/json'
@@ -442,9 +472,10 @@ require_once "validador.php";
                             body: formData
                         }).then(() => {
                             new bootstrap.Modal('#modal-sucesso').toggle()
-                            setTimeout(() => location.reload(), 2500)
+                            setTimeout(() => location.reload(), 3500)
                         })
-                    })
+
+                    }
                 })
             }
         })
@@ -553,8 +584,13 @@ require_once "validador.php";
                 box.classList.remove('hide')
                 configs.classList.add('hide')
                 main.classList.remove('hide')
-                voltarConfig.classList.remove('hide')
-                voltarConfig.setAttribute('data-config-hide', item.getAttribute('data-config-target'))
+                if (item.getAttribute('data-config-target') == '#seu-perfil') {
+                    voltarConfig.classList.remove('hide')
+                    voltarPerfil.classList.add('hide')
+                } else {
+                    voltarConfig.classList.add('hide')
+                    voltarPerfil.classList.remove('hide')
+                }
                 configMainTitle.innerText = item.getAttribute('data-config-name')
             })
         })
@@ -562,9 +598,17 @@ require_once "validador.php";
         voltarConfig.addEventListener('click', () => {
             configs.classList.remove('hide')
             main.classList.add('hide')
-            document.querySelector(voltarConfig.getAttribute('data-config-hide')).classList.add('hide')
+            document.querySelector('#seu-perfil').classList.add('hide')
             voltarConfig.classList.add('hide')
             configMainTitle.innerText = ''
+        })
+
+        voltarPerfil.addEventListener('click', () => {
+            document.querySelector('#editar-perfil').classList.add('hide')
+            document.querySelector('#seu-perfil').classList.remove('hide')
+            voltarPerfil.classList.add('hide')
+            voltarConfig.classList.remove('hide')
+            configMainTitle.innerText = 'Seu perfil'
         })
 
         function limpa_formulário_cep() {
