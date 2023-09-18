@@ -622,6 +622,7 @@
                                 formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
                                 formData.append('nome-empresa', document.getElementById('nome-empresa').value)
                                 formData.append('username-empresa', campoUsername.value)
+                                formData.append('telefone', document.getElementById('telefone').value.replace(/\D/g, ''))
                                 formData.append('log', logradouro)
                                 formData.append('num', numero)
                                 formData.append('bairro', bairro)
@@ -671,7 +672,6 @@
                     campoEmail.classList.remove('is-invalid')
                 }
             })
-
 
             campoUsername.addEventListener('blur', e => {
                 let username = e.target.value
@@ -761,15 +761,26 @@
 
                 let formattedValue = '';
 
-                const match = value.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
-                if (match) {
-                    const [, firstGroup, secondGroup, thirdGroup] = match;
-                    if (firstGroup) formattedValue += `(${firstGroup})`;
-                    if (secondGroup) formattedValue += ' ' + secondGroup;
-                    if (thirdGroup) formattedValue += '-' + thirdGroup;
-                }
+                const isPersonal = value.length > 10;
 
-                if (value.length < 10) {
+                if (isPersonal) {
+                    const match = value.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
+                    if (match) {
+                        const [, firstGroup, secondGroup, thirdGroup] = match;
+                        if (firstGroup) formattedValue += `(${firstGroup})`;
+                        if (secondGroup) formattedValue += ' ' + secondGroup;
+                        if (thirdGroup) formattedValue += '-' + thirdGroup;
+                    }
+                } else {
+                    const match = value.match(/^(\d{0,2})(\d{0,4})(\d{0,4})$/);
+                    if (match) {
+                        const [, firstGroup, secondGroup, thirdGroup] = match;
+                        if (firstGroup) formattedValue += `(${firstGroup})`;
+                        if (secondGroup) formattedValue += ' ' + secondGroup;
+                        if (thirdGroup) formattedValue += '-' + thirdGroup;
+                    }
+                }
+                if (value.length < 9) {
                     campoTel.classList.add('is-invalid')
                 } else {
                     campoTel.classList.remove('is-invalid')
@@ -784,17 +795,17 @@
                 let cnpj = e.target.value.replace(/\D/g, '')
 
                 fetch(`api/dona/?cnpj=${cnpj}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data == 1) {
-                        document.querySelector('#cnpj-feedback').innerText = "Esse CNPJ já está sendo utilizado"
-                        campoCnpj.classList.add('is-invalid')
-                        campoCnpj.classList.remove('is-valid')
-                    } else {
-                        campoCnpj.classList.add('is-valid')
-                        campoCnpj.classList.remove('is-invalid')
-                    }
-                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data == 1) {
+                            document.querySelector('#cnpj-feedback').innerText = "Esse CNPJ já está sendo utilizado"
+                            campoCnpj.classList.add('is-invalid')
+                            campoCnpj.classList.remove('is-valid')
+                        } else {
+                            campoCnpj.classList.add('is-valid')
+                            campoCnpj.classList.remove('is-invalid')
+                        }
+                    })
             })
             campoCep.addEventListener('input', maskCep)
             campoTel.addEventListener('input', maskTel)

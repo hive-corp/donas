@@ -122,7 +122,7 @@
                 <div class="create-new">
                     Não possui uma conta? <a href="#" id="login-new">Crie uma!</a>
                 </div>
-                <a class="create-new" href="user/">
+                <a class="create-new" href="unlogged-user/">
                     Entrar sem login
                 </a>
             </form>
