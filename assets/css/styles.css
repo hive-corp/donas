@@ -133,7 +133,8 @@ svg {
 #modal-erro i,
 #modal-erro-vendedora i,
 #modal-sucesso i,
-#modal-revisao i {
+#modal-revisao i,
+#modal-login i{
     font-size: 48px;
 }
 
@@ -143,7 +144,8 @@ svg {
 }
 
 #modal-sucesso i,
-#modal-revisao i {
+#modal-revisao i,
+#modal-login i{
     color: #CB6CE6;
 }
 
@@ -185,7 +187,7 @@ svg {
     gap: 16px
 }
 
-#modal-anuncio .modal-body{
+#modal-anuncio .modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
@@ -197,6 +199,42 @@ svg {
     gap: 16px
 }
 
+#modal-alterar .modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+        "foto foto"
+        "nome username"
+        "email email"
+        "endereco endereco";
+    gap: 16px
+}
+
+#modal-alterar-dona .modal-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "foto"
+        "nome"
+        "email";
+    gap: 16px
+}
+
+#modal-alterar-negocio .modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:
+        "foto foto"
+        "nome username"
+        "telefone categoria"
+        "cnpj cnpj"
+        "endereco endereco";
+    gap: 16px
+}
+
 .foto-modal {
     grid-area: foto;
     width: 250px;
@@ -205,7 +243,7 @@ svg {
     justify-self: center;
 }
 
-#modal-anuncio .foto-modal{
+#modal-anuncio .foto-modal {
     border-radius: 12px;
 }
 
@@ -213,19 +251,19 @@ svg {
     grid-area: nome;
 }
 
-.tipo-modal{
+.tipo-modal {
     grid-area: tipo;
 }
 
-.preco-modal{
+.preco-modal {
     grid-area: preco;
 }
 
-.estoque-modal{
+.estoque-modal {
     grid-area: estoque;
 }
 
-.desc-modal{
+.desc-modal {
     grid-area: desc;
 }
 
@@ -348,7 +386,7 @@ svg {
     color: #CB6CE6;
 }
 
-.voltar.hide{
+.voltar.hide {
     display: none;
 }
 
@@ -386,6 +424,10 @@ svg {
         "avancar avancar";
 }
 
+.input.input-foto {
+    grid-area: foto;
+}
+
 .input.input-nome {
     grid-area: nome;
 }
@@ -396,6 +438,10 @@ svg {
 
 .input.input-email {
     grid-area: email;
+}
+
+.input.input-senha {
+    grid-area: senha;
 }
 
 .input.input-tel {
@@ -578,7 +624,7 @@ input:checked+.tipo-login:hover {
     transition: .3s border-color, .3s box-shadow;
 }
 
-.modal-content:hover{
+.modal-content:hover {
     border-color: #CB6CE6;
     box-shadow: 0 0 0 4px #CB6CE633;
 }
@@ -816,7 +862,7 @@ input:checked+.tipo-login:hover {
     opacity: .5;
 }
 
-.button {
+.button, a.button {
     font-weight: bold;
     width: fit-content;
     padding: 4px 54px;
@@ -831,7 +877,7 @@ input:checked+.tipo-login:hover {
     /* transition: .5s; */
 }
 
-.button:hover {
+.button:hover, a.button:hover {
     background: #6f1688;
     border-color: #6f1688;
     /* background-position: right; */
@@ -857,15 +903,17 @@ input:checked+.tipo-login:hover {
     color: white;
 }
 
-.button-red{
+.button-red {
     background-color: red;
     border-color: red;
 }
 
-.button-red:hover, .button-red:focus{
+.button-red:hover,
+.button-red:focus {
     background-color: #890000;
     border-color: #890000;
 }
+
 .create-new,
 a.create-new {
     text-align: center;
@@ -1709,6 +1757,10 @@ a.veja-mais {
     color: white;
 }
 
+.modal-body{
+    color: var(--text-color);
+}
+
 #modal-pesquisa .modal-body {
     display: flex;
     flex-direction: column;
@@ -1931,6 +1983,10 @@ a.veja-mais {
     grid-area: descricao;
 }
 
+#tipo-new option{
+    color: black;
+}
+
 #fotos-new {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -2043,6 +2099,8 @@ a.veja-mais {
 
 #bio-name {
     font-size: 1.4em;
+    display: flex;
+    gap:8px;
 }
 
 #bio-username {
@@ -2053,6 +2111,10 @@ a.veja-mais {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+}
+
+#bio-desc {
+    white-space: pre-line;
 }
 
 #negocio-info {
@@ -2198,16 +2260,17 @@ a.config-item {
     transform: translateX(calc(1.2em - 0.1em));
 }
 
-#user-config #content{
+#user-config #content {
+    overflow: auto;
     padding: 0;
 }
 
-.config-box{
+.config-box {
     width: 100%;
     height: 100%;
 }
 
-.config-box.hide{
+.config-box.hide {
     display: none;
 }
 
@@ -2737,23 +2800,79 @@ a.config-item {
 
 #input-comentario {
     display: grid;
-    grid-template-rows: 1fr auto;
-    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 50px auto 1fr;
     grid-template-areas:
-        "textarea"
-        "enviar";
-    gap: 4px;
+        "foto nome avaliacao"
+        "foto textarea textarea"
+        "foto enviar enviar";
+    gap: 2px;
+    column-gap: 16px;
     width: 100%;
 }
 
+#foto-comentario {
+    grid-area: foto;
+    align-self: start;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    width: 50px;
+    border: 4px solid #CB6CE6
+}
+
+#nome-comentario {
+    font-weight: bold;
+    align-self: center;
+}
+
+#avaliacao {
+    grid-area: avaliacao;
+    justify-self: start;
+}
+
+#avaliacao:not(:checked)>input {
+    position: absolute;
+    appearance: none;
+}
+
+#avaliacao:not(:checked)>label {
+    float: right;
+    cursor: pointer;
+    font-size: 24px;
+    color: #666;
+}
+
+#avaliacao:not(:checked)>label:before {
+    content: '★';
+}
+
+#avaliacao>input:checked+label:hover,
+#avaliacao>input:checked+label:hover~label,
+#avaliacao>input:checked~label:hover,
+#avaliacao>input:checked~label:hover~label,
+#avaliacao>label:hover~input:checked~label {
+    color: #a4228e;
+}
+
+#avaliacao:not(:checked)>label:hover,
+#avaliacao:not(:checked)>label:hover~label {
+    color: #6f1688;
+}
+
+#avaliacao>input:checked~label {
+    color: #CB6CE6;
+}
+
+
 #textarea-comentario {
     grid-area: textarea;
-    border: 1px solid var(--bd-color);
-    background-color: var(--input-bg);
-    padding: 8px;
-    border-radius: 4px;
-    width: 100%;
-    resize: none;
+}
+
+.input-enviar {
+    grid-area: enviar;
+    justify-self: end;
 }
 
 .comentario {
@@ -2926,7 +3045,8 @@ a.config-item {
     color: gray;
 }
 
-.highlight, a.highlight {
+.highlight,
+a.highlight {
     color: #CB6CE6;
 }
 
@@ -2938,6 +3058,49 @@ a.config-item {
 
 .stats-box.estatisticas .row {
     padding: 16px;
+}
+
+#edit-cliente-form {
+    display: grid;
+    grid-template-areas:
+        "foto foto"
+        "nome username"
+        "email senha"
+        "cep estado"
+        "cidade bairro"
+        "logradouro logradouro"
+        "numero complemento"
+        "avancar avancar";
+    gap: 16px;
+    padding: 32px;
+}
+#edit-dona-form {
+    display: grid;
+    grid-template-areas:
+        "foto foto"
+        "nome email"
+        "senha senha"
+        "avancar avancar";
+    gap: 16px;
+    padding: 32px;
+}
+#edit-negocio-form {
+    display: grid;
+    grid-template-areas:
+        "foto foto"
+        "nome username"
+        "cnpj categoria"
+        "telefone cep"
+        "estado cidade"
+        "bairro logradouro"
+        "numero complemento"
+        "avancar avancar";
+    gap: 16px;
+    padding: 32px;
+}
+
+#edit-cliente-form .input-foto, #edit-dona-form .input-foto, #edit-negocio-form .input-foto {
+    place-self: center;
 }
 
 @media (max-width:1200px) {
@@ -3123,7 +3286,7 @@ a.config-item {
         display: block;
     }
 
-    .nav-link:nth-child(5) i {
+    #nav:has(#user-info) .nav-link:nth-child(5) i {
         display: none;
     }
 
@@ -3219,6 +3382,15 @@ a.config-item {
         place-self: center;
     }
 
+    #bio-name{
+        place-self: center;
+    }
+
+    #bio-name .dropdown{
+        position: absolute;
+        right: 0;
+    }
+
     #bio-options {
         justify-content: center;
     }
@@ -3260,5 +3432,21 @@ a.config-item {
     .produtos .preco-card {
         position: static;
         grid-area: preco;
+    }
+    #edit-cliente-form{
+        grid-template-areas:
+        "foto"
+        "nome"
+        "username"
+        "email"
+        "senha"
+        "cep"
+        "estado"
+        "cidade"
+        "bairro"
+        "logradouro"
+        "numero"
+        "complemento"
+        "avancar";
     }
 }
