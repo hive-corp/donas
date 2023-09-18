@@ -15,8 +15,8 @@ require_once "validador.php";
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
@@ -237,7 +237,7 @@ require_once "validador.php";
                     </div>
                 </div>
 
-                <p id="abra-conversa" class="hide">Abra uma conversa</p>
+                <p id="abra-conversa">Abra uma conversa</p>
                 <button id="desce-chat" class="hide">
                     <i class="bi bi-arrow-down"></i>
                 </button>
@@ -279,7 +279,7 @@ require_once "validador.php";
 
             if (!empty($dados)) {
         ?>
-                resgatarMensagens('<?php echo $dados['nomeNegocioVendedora'] ?>', '<?php echo $dados['fotoNegocioVendedora'] ?>', '<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>')
+                resgatarMensagens('<?php echo $dados['nomeNegocioVendedora'] ?>', '../<?php echo $dados['fotoNegocioVendedora'] ?>', '<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>')
         <?php
             }
         }

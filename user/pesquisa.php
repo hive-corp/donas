@@ -14,8 +14,8 @@ require_once "validador.php";
     <title>Pesquisa</title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
@@ -506,7 +506,7 @@ require_once "validador.php";
                                 Bolo de Laranja
                             </div>
                             <div class="preco-card">
-                                R$15,00
+                                R$20,00
                             </div>
                             <div class="avaliacao-card">
                                 <i class="bi bi-star-fill"></i>

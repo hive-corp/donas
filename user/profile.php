@@ -11,19 +11,19 @@ require_once "validador.php";
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grife do Coração</title>
+    <title>Açúcar e Canela</title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 
 <body>
     <div id="user-profile">
         <nav id="nav">
             <div id="nav-list">
-                <a href="index.php" class="nav-link active">
-                    <i class="bi bi-house-door-fill"></i>
+                <a href="index.php" class="nav-link">
+                    <i class="bi bi-house-door"></i>
                     <span>
                         Home
                     </span>
@@ -92,16 +92,16 @@ require_once "validador.php";
                 <button class="voltar" onclick="history.back()">
                     <i class="bi bi-arrow-left"></i>
                 </button>
-                Grife do Coração
+                Açúcar e Canela
             </div>
             <div id="content">
                 <div id="negocio-bio">
                     <div id="bio-photo">
-                        <img src="../assets/img/users/donas/grifecoracao.png" alt="">
+                        <img src="../assets/img/users/negocios/1.png" alt="">
                     </div>
                     <div id="bio-info">
-                        <div id="bio-name" class="d-flex justify-content-between">
-                            Grife do Coração
+                        <div id="bio-name">
+                            Açúcar e Canela
                             <div class="dropdown-start dropdown">
                                 <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical"></i>
@@ -114,7 +114,7 @@ require_once "validador.php";
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="conversas.php?username=bolinhos">
+                                        <a class="dropdown-item" href="conversas.php?username=acucarcanela">
                                             <i class="bi bi-chat"></i>
                                             Iniciar conversa
                                         </a>
@@ -122,9 +122,9 @@ require_once "validador.php";
                                 </ul>
                             </div>
                         </div>
-                        <div id="bio-username">@grifecoracao</div>
-                        <div id="bio-desc">
-                            bla bla bla grife do coração bla bla 2020
+                        <div id="bio-username">@acucarcanela</div>
+                        <div id="bio-desc">Tornando o seu mundo um pouco mais doce.
+                            - Sediada em SP
                         </div>
                         <div id="bio-options">
                             <button type="button" class="button bio-option">
@@ -140,42 +140,42 @@ require_once "validador.php";
                 <div id="negocio-info">
                     <div class="negocio-information">
                         <i class="bi bi-bag"></i>
-                        <span>9</span> Produtos
+                        <span>5</span> Produtos
                     </div>
                     <div class="negocio-information">
                         <i class="bi bi-grid"></i>
-                        <span>14</span> Serviços
+                        <span>0</span> Serviços
                     </div>
                     <div class="negocio-information">
                         <i class="bi bi-people"></i>
-                        <span>9</span> Seguidores
+                        <span>35</span> Seguidores
                     </div>
                 </div>
                 <div id="bio-products">
                     <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/bolo-chocolate.jpg" alt="">
+                        <img src="../assets/img/products-services/1.png" alt="">
                     </a>
                     <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/bolo-laranja.jpg" alt="">
+                        <img src="../assets/img/products-services/2.png" alt="">
                     </a>
                     <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/cadernos-artesanais.jpg" alt="">
+                        <img src="../assets/img/products-services/3.png" alt="">
                     </a>
                     <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/conjunto-de-velas.jpg" alt="">
+                        <img src="../assets/img/products-services/4.png" alt="">
                     </a>
                     <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg" alt="">
+                        <img src="../assets/img/products-services/5.png" alt="">
                     </a>
-                    <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/francesinha.jpeg" alt="">
+                    <!-- <a class="bio-product" href="produto.php">
+                        <img src="../assets/img/products-services/1.png" alt="">
                     </a>
                     <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/pano-de-prato.jpg" alt="">
                     </a>
                     <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/sabonetes.jpg" alt="">
-                    </a>
+                    </a> -->
 
                     <!-- <div class="card-produto" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">

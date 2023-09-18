@@ -13,85 +13,83 @@ require_once "validador.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produto</title>
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
     <div id="user-product">
-    <nav id="nav">
-			<div id="nav-list">
-				<a href="index.php" class="nav-link active">
-					<i class="bi bi-house-door-fill"></i>
-					<span>
-						Home
-					</span>
-				</a>
-				<a href="pesquisa.php" class="nav-link">
-					<i class="bi bi-search"></i>
-					<span>
-						Pesquisa
-					</span>
-				</a>
-				<a href="notificacoes.php" class="nav-link">
-					<i class="bi bi-bell"></i>
-					<span>
-						Notificações
-					</span>
-				</a>
-				<a href="conversas.php" class="nav-link">
-					<i class="bi bi-chat"></i>
-					<span>
-						Conversas
-					</span>
-				</a>
-				<a href="configuracoes.php" class="nav-link">
-					<img src="../<?php echo $_SESSION['foto'] ?>" id="foto-usuario" />
-					<i class="bi bi-person"></i>
-					<span>
-						Configurações
-					</span>
-				</a>
-			</div>
-			<div id="user-info">
-				<a href="../">
-					<img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
-				</a>
-				<div id="info-user">
-					<div id="nome-user">
-						<?php echo $_SESSION['nome'] ?>
-					</div>
-					<div id="nick-user">
-						@<?php echo $_SESSION['username'] ?>
+        <nav id="nav">
+            <div id="nav-list">
+                <a href="index.php" class="nav-link">
+                    <i class="bi bi-house-door"></i>
+                    <span>
+                        Home
+                    </span>
+                </a>
+                <a href="pesquisa.php" class="nav-link">
+                    <i class="bi bi-search"></i>
+                    <span>
+                        Pesquisa
+                    </span>
+                </a>
+                <a href="notificacoes.php" class="nav-link">
+                    <i class="bi bi-bell"></i>
+                    <span>
+                        Notificações
+                    </span>
+                </a>
+                <a href="conversas.php" class="nav-link">
+                    <i class="bi bi-chat"></i>
+                    <span>
+                        Conversas
+                    </span>
+                </a>
+                <a href="configuracoes.php" class="nav-link">
+                    <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-usuario" />
+                    <i class="bi bi-person"></i>
+                    <span>
+                        Configurações
+                    </span>
+                </a>
+            </div>
+            <div id="user-info">
+                <a href="../">
+                    <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
+                </a>
+                <div id="info-user">
+                    <div id="nome-user">
+                        <?php echo $_SESSION['nome'] ?>
+                    </div>
+                    <div id="nick-user">
+                        @<?php echo $_SESSION['username'] ?>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<div class="dropup-center dropup">
-					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-						<a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+                <div class="dropup-center dropup">
+                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <main id="main">
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
             <div id="content">
@@ -100,11 +98,11 @@ require_once "validador.php";
                         <button onclick="history.back()" id="voltar">
                             <i class="bi bi-arrow-left"></i>
                         </button>
-                        <img src="../assets/img/products-services/cadernos-artesanais.jpg">
+                        <img src="../assets/img/products-services/2.png">
                     </div>
                     <div id="info-produto">
                         <div id="nome-produto">
-                            Cadernos artesanais
+                            Bolo de Laranja
                         </div>
                         <div id="preco-produto">
                             R$20,00
@@ -118,19 +116,14 @@ require_once "validador.php";
                             <i class="bi bi-star-half"></i>
                         </div>
                         <div id="categoria-produto">
-                                Artesanato
+                            Culinária
                         </div>
-                        <a href="../user/profile.php" id="negocio-produto">
-                            Por Cantinho da Arte
+                        <a href="profile.php" id="negocio-produto">
+                            Por Açúcar e Canela
                         </a>
                         <div id="descricao-produto">
                             <div id="titulo-descricao">Descrição</div>
-                            <div id="texto-descricao">
-                                <label for="show-descricao">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam accusamus
-                                    quisquam veniam voluptate cumque blanditiis facere illo ut sequi, similique
-                                    eaque quas quis sed. Esse iusto eum dolorum odio ex!
-                                </label>
+                            <div id="texto-descricao"><label for="show-descricao">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae provident vel temporibus voluptatum omnis ipsum enim quas nihil repellat similique, voluptas aut nesciunt aperiam placeat recusandae cumque, ipsam expedita blanditiis.</label>
                             </div>
                             <input type="checkbox" id="show-descricao">
                         </div>
@@ -141,8 +134,30 @@ require_once "validador.php";
                         Comentarios
                     </div>
                     <div id="input-comentario">
-                        <textarea rows="4" id="textarea-comentario"></textarea>
-                        <button class="button button-square" id="enviar">Enviar</button>
+                        <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-comentario">
+                        <div id="nome-comentario">
+                            <?php echo $_SESSION['nome'] ?>
+                        </div>
+                        <div id="avaliacao">
+                            <input value="5" name="rate" id="star5" type="radio">
+                            <label title="text" for="star5"></label>
+                            <input value="4" name="rate" id="star4" type="radio">
+                            <label title="text" for="star4"></label>
+                            <input value="3" name="rate" id="star3" type="radio">
+                            <label title="text" for="star3"></label>
+                            <input value="2" name="rate" id="star2" type="radio">
+                            <label title="text" for="star2"></label>
+                            <input value="1" name="rate" id="star1" type="radio">
+                            <label title="text" for="star1"></label>
+                        </div>  
+                        <div class="input" id="textarea-comentario">
+                            <div class="input-wrapper">
+                                <textarea name="comentario" id="comentario" cols="30" rows="4" placeholder="Sua avaliação" required></textarea>
+                            </div>
+                        </div>
+                        <div class="input input-enviar">
+                            <button class="button button-square" id="enviar">Enviar</button>
+                        </div>
                     </div>
                     <div id="comentarios">
                         <div class="comentario">
@@ -158,7 +173,7 @@ require_once "validador.php";
                                 <i class="bi bi-star-fill"></i>
                             </div>
                             <div class="conteudo-comentario">
-                                Achei o produto excelente. Agora eu consigo fazer minhas anotações, recomendo muito!!!
+                                Achei o bolo excelente. Minha filha amou, recomendo muito!!!
                             </div>
                         </div>
                         <div class="comentario">
@@ -174,8 +189,7 @@ require_once "validador.php";
                                 <i class="bi bi-star-fill"></i>
                             </div>
                             <div class="conteudo-comentario">
-                                Amei!!! Recebi ontem às 4 da tarde. A entrega foi rápida e a qualidade do caderno é
-                                muito boa.
+                                Amei!!! 
                             </div>
                         </div>
                     </div>
@@ -183,14 +197,14 @@ require_once "validador.php";
             </div>
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
         </main>
-  
+
     </div>
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script>
         var enviarComentario = document.querySelector("#enviar"),
-            conteudoInputComentario = document.querySelector("#textarea-comentario")
+            conteudoInputComentario = document.querySelector("#comentario")
 
         enviarComentario.addEventListener("click", () => {
 
@@ -199,7 +213,7 @@ require_once "validador.php";
 
             let nome = document.createElement("div")
             nome.setAttribute("class", "nome-comentario")
-            nome.innerHTML = localStorage.getItem("nome")
+            nome.innerHTML = '<?php echo $_SESSION['nome'] ?>'
 
             let conteudo = document.createElement("div")
             conteudo.setAttribute("class", "conteudo-comentario")
@@ -207,27 +221,63 @@ require_once "validador.php";
 
             let img = document.createElement("img")
             img.setAttribute("class", "foto-comentario")
-            img.src = '../assets/img/foto.png'
+            img.src = '../<?php echo $_SESSION['foto'] ?>'
 
             let avaliacao = document.createElement("div")
             avaliacao.setAttribute("class", "avaliacao-comentario")
 
-            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i>"
+            let estrelas = document.getElementsByName('rate')
 
-            comentario.appendChild(img)
-            comentario.appendChild(nome)
-            comentario.appendChild(conteudo)
-            comentario.appendChild(avaliacao)
+            estrelas.forEach(item => {
+                    if (item.checked) {
+                        let qtd = item.value
 
-            if (conteudoInputComentario.value != "") {
-                comentarios.appendChild(comentario)
-            }
+                        console.log(qtd)
+
+                        if (qtd == 1) {
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                        } else if (qtd == 2) {
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                        } else if (qtd == 3) {
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                        } else if (qtd == 4) {
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                        } else if (qtd == 5) {
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        }
+                    }
+                
+            })
+
+        comentario.appendChild(img)
+        comentario.appendChild(nome)
+        comentario.appendChild(conteudo) 
+        comentario.appendChild(avaliacao)
+
+        if (conteudoInputComentario.value != "") {
+            comentarios.appendChild(comentario)
+        }
         })
-
     </script>
 </body>
 
