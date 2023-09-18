@@ -21,6 +21,7 @@
         private $cepNegocioVendedora;
         private $cnpjNegocioVendedora;
         private $nivelNegocioVendedora;
+        private $telefoneNegocioVendedora;
         private $Categoria;
 
         public function __construct()
@@ -85,6 +86,9 @@
         public function getNivelNegocioVendedora(){
             return $this->nivelNegocioVendedora;
         }
+        public function getTelefoneNegocioVendedora(){
+            return $this->telefoneNegocioVendedora;
+        }
         public function getCategoria(){
             return $this->Categoria;
         }
@@ -145,6 +149,9 @@
         }
         public function setCnpjNegocioVendedora($cnpjNegocioVendedora){
             $this->cnpjNegocioVendedora=$cnpjNegocioVendedora;
+        }
+        public function setTelefoneNegocioVendedora($telefoneNegocioVendedora){
+            $this->telefoneNegocioVendedora=$telefoneNegocioVendedora;
         }
         public function setCategoria($Categoria){
             $this->Categoria=$Categoria;
