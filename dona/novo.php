@@ -16,8 +16,8 @@ require_once "validador.php";
 
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
@@ -191,7 +191,7 @@ require_once "validador.php";
                 Novo anúncio
             </div>
             <div id="content">
-                <form class="needs-validation" action="/" method='post' id="new-form" novalidate>
+                <form class="needs-validation" method='post' id="new-form" novalidate>
                     <img src="../assets/img/rosas.svg" class="rosa-fundo">
                     <div id="imagens-form">
                         <label for="foto-principal" id="foto-anuncio">

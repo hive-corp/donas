@@ -14,8 +14,8 @@ require_once "validador.php";
     <title>Encomendas</title>
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 
 <body>
@@ -110,7 +110,7 @@ require_once "validador.php";
                             <div class="nome-pedido">
                                 <label for="" class="form-label">Pedido</label>
                                 <div class="input-wrapper">
-                                    Moletom de tricô
+                                    Bolo de Laranja
                                 </div>
                             </div>
                             <div class="data-pedido">
@@ -139,7 +139,7 @@ require_once "validador.php";
                             <div class="nome-pedido">
                                 <label for="" class="form-label">Pedido</label>
                                 <div class="input-wrapper">
-                                    Moletom de tricô
+                                    Bolo de Chocolate
                                 </div>
                             </div>
                             <div class="data-pedido">

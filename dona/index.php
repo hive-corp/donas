@@ -15,8 +15,8 @@ require_once "global.php";
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/vendor/flickity/css/flickity.css" />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 
 <body>
@@ -95,7 +95,7 @@ require_once "global.php";
         <main id="main">
             <div id="welcome" class="d-flex flex-column justify-content-center">
                 <h2>Bem vindo, <span class="highlight"><?php echo $_SESSION['nome-empresa']; ?></span>!</h2>
-                <h6>Aqui estão as informações do seu negócio!</h6>
+                <h6><span class="highlight"><?php echo explode(" ",$_SESSION['nome'])[0]?></span>, aqui estão as informações do seu negócio!</h6>
             </div>
             <div id="content">
                 <div class="section">
@@ -424,7 +424,7 @@ require_once "global.php";
                                     Seu anúncio melhor avaliado:
                                 </div>
                                 <a class="col highlight" href="produto.php">
-                                    Cadernos Artesanais
+                                    Bombom trufado de limão
                                 </a>
                             </div>
                             <div class="row">
@@ -547,7 +547,7 @@ require_once "global.php";
                                 Lúcia Rodrigues
                             </div>
                             <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Cadernos Artesanais</span>
+                                encomendou <span class="highlight">Bombom trufado de limão</span>
                             </div>
                         </a>
                         <a class="stats-item" href="encomendas.php">
@@ -558,7 +558,7 @@ require_once "global.php";
                                 Maria de Lucas
                             </div>
                             <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Cadernos Artesanais</span>
+                                encomendou <span class="highlight">Bombom trufado de limão</span>
                             </div>
                         </a>
                         <a class="stats-item" href="encomendas.php">
@@ -569,7 +569,7 @@ require_once "global.php";
                                 Luana Pinheiro Ferreira
                             </div>
                             <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Sabonetes Artesanais de Lavanda</span>
+                                encomendou <span class="highlight">Bolo de Chocolate</span>
                             </div>
                         </a>
                         <a class="stats-item" href="encomendas.php">
@@ -580,7 +580,7 @@ require_once "global.php";
                                 Heloísa Silva
                             </div>
                             <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Francesinha</span>
+                                encomendou <span class="highlight">Docinhos Tradicionais</span>
                             </div>
                         </a>
                         <a class="stats-item" href="encomendas.php">
