@@ -134,12 +134,14 @@ svg {
 #modal-erro-vendedora i,
 #modal-sucesso i,
 #modal-revisao i,
-#modal-login i{
+#modal-login i,
+#modal-genero i{
     font-size: 48px;
 }
 
 #modal-erro i,
-#modal-erro-vendedora i {
+#modal-erro-vendedora i,
+#modal-genero i{
     color: #d50000;
 }
 
@@ -149,6 +151,19 @@ svg {
     color: #CB6CE6;
 }
 
+#preferencias{
+    display: grid;
+}
+
+#preferencias-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    place-self: center;
+    padding: 16px;
+    gap: 4px;
+    overflow: auto;
+    max-height: 360px;
+}
 
 #modal-confirma .modal-body {
     display: grid;
@@ -406,7 +421,7 @@ svg {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "nome nome"
-        "email email"
+        "email gen"
         "nasc nasc"
         "senha confirm"
         "avancar avancar";
@@ -438,6 +453,10 @@ svg {
 
 .input.input-email {
     grid-area: email;
+}
+
+.input.input-gen {
+    grid-area: gen;
 }
 
 .input.input-senha {
@@ -1532,6 +1551,15 @@ a.veja-mais {
     border-radius: 2px;
 }
 
+.checkbox-preferencia{
+    display: none;
+}
+
+.checkbox-preferencia:checked + .card-categoria .img-categoria{
+    background-color: #5d0049;
+    box-shadow: 0 0 0 6px #9D007A33;
+}
+
 .card-categoria {
     display: grid;
     grid-template-columns: 1fr;
@@ -1541,16 +1569,16 @@ a.veja-mais {
     place-items: center;
     margin-right: 16px;
     cursor: pointer;
-    filter: saturate(0);
-    transition: .3s filter;
 }
 
 .img-categoria {
-    width: 70px;
+    width: 80px;
     aspect-ratio: 1/1;
     border-radius: 50%;
     transition: .3s background-color;
     overflow: hidden;
+    background-color: #9D007A;
+    padding: 4px;
 }
 
 .img-categoria img,
@@ -1562,7 +1590,8 @@ a.veja-mais {
 }
 
 .nome-categoria {
-    color: #CB6CE6;
+    color: #9D007A;
+    font-weight: bold;
 }
 
 .nome-categoria .placeholder {
@@ -1573,8 +1602,9 @@ a.veja-mais {
     background-color: #CB6CE633;
 }
 
-.carrossel-cards:not(.placeholder-element) .card-categoria:hover {
-    filter: none;
+.card-categoria:hover .img-categoria{
+    background-color: #5d0049;
+    box-shadow: 0 0 0 6px #9D007A33;
 }
 
 .card-produto {

@@ -50,6 +50,23 @@
         </div>
     </div>
 
+    <div class="modal pop" id="modal-genero" tabindex="-1" aria-labelledby="modal-genero" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">OPS!</h1>
+                </div>
+                <div class="modal-body d-flex flex-column text-center">
+                    <i class="bi bi-x-circle"></i>
+                    Apenas aceitamos mulheres nesta plataforma.
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="button" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal pop" id="modal-foto-user" tabindex="-1" aria-labelledby="modal-foto-user" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -197,6 +214,18 @@
                             </div>
                             <div class="invalid-feedback" id="email-feedback">
                                 Insira um e-mail válido.
+                            </div>
+                        </div>
+                        <div class="input input-gen">
+                            <label class="form-label" for="genero">Gênero<span>*</span></label>
+                            <div class="input-wrapper">
+                                <select name="genero" id="genero">
+                                    <option value="1">Feminino</option>
+                                    <option value="2">Masculino</option>
+                                </select>
+                            </div>
+                            <div class="invalid-feedback">
+                                Apenas aceitamos mulheres
                             </div>
                         </div>
                         <div class="input input-nasc">
@@ -528,7 +557,21 @@
                 resultEmpresa = document.querySelector('#modal-foto-empresa .result-crop'),
                 confirmarFotoUser = document.querySelector('#confirmar-foto-user'),
                 confirmarFotoEmpresa = document.querySelector('#confirmar-foto-empresa'),
-                confirmarCadastro = document.querySelector('#cadastrar')
+                confirmarCadastro = document.querySelector('#cadastrar'),
+                genero = document.querySelector('#genero')
+
+            genero.addEventListener('change', e => {
+
+                let target = e.target
+
+                genero = target.options[target.selectedIndex].value
+
+                if(genero==2){
+                    new bootstrap.Modal('#modal-genero').toggle()
+
+                    target.value=1
+                }
+            })
 
             window.addEventListener('DOMContentLoaded', async () => {
                 const response = await fetch('./api/categoria')

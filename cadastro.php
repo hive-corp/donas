@@ -15,6 +15,8 @@
 </head>
 
 <body>
+
+
     <div class="modal pop" id="modal-sucesso" tabindex="-1" aria-labelledby="modal-sucesso" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -301,14 +303,89 @@
                         </div>
                         <h5 class="escolha-foto">Tire ou escolha uma foto para colocar no perfil.</h5>
                         <div class="input">
-                            <button id="confirmar-cadastro" class="button">
-                                Cadastrar
+                            <button data-bs-toggle="modal" data-bs-target="#modal-preferencias" class="button" type="button">
+                                Avancar
                             </button>
                         </div>
                     </div>
                     <p class="create-new">
                         Já possui uma conta? <a href="./login.php">Faça login!</a>
                     </p>
+                </div>
+                <div class="modal pop" id="modal-preferencias" tabindex="-1" aria-labelledby="modal-preferencias" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Escolha suas preferências</h1>
+                            </div>
+                            <div class="modal-body text-center">
+                                Garanta uma <span class="highlight">experiência personalizada</span> nos dizendo o que você gostaria de ver por <span class="highlight">aqui!</span>
+                                <div id="preferencias">
+                                    <div id="preferencias-grid">
+                                        <input type="checkbox" class="checkbox-preferencia" name="artesanato" id="artesanato">
+                                        <label class="card-categoria" for="artesanato">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/artesanato.svg" alt="Artesanato" />
+                                            </div>
+                                            <p class="nome-categoria">Artesanato</p>
+                                        </label>
+
+                                        <input type="checkbox" class="checkbox-preferencia" name="culinaria" id="culinaria">
+                                        <label class="card-categoria" for="culinaria">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/culinaria.svg" alt="Culinária" />
+                                            </div>
+                                            <p class="nome-categoria">Culinária</p>
+                                        </label>
+
+                                        <input type="checkbox" class="checkbox-preferencia" name="manicure" id="manicure">
+                                        <label class="card-categoria" for="manicure">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/manicure.svg" alt="Manicure" />
+                                            </div>
+                                            <p class="nome-categoria">Manicure</p>
+                                        </label>
+
+                                        <input type="checkbox" class="checkbox-preferencia" name="roupas" id="roupas">
+                                        <label class="card-categoria" for="roupas">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/roupas.svg" alt="Roupas" />
+                                            </div>
+                                            <p class="nome-categoria">Roupas</p>
+                                        </label>
+
+                                        <input type="checkbox" class="checkbox-preferencia" name="joias" id="joias">
+                                        <label class="card-categoria" for="joias">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/joias.svg" alt="Joias" />
+                                            </div>
+                                            <p class="nome-categoria">Joias</p>
+                                        </label>
+
+                                        <input type="checkbox" class="checkbox-preferencia" name="livro" id="livro">
+                                        <label class="card-categoria" for="livro">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/livro.svg" alt="Livros" />
+                                            </div>
+                                            <p class="nome-categoria">Livros</p>
+                                        </label>
+
+                                        <input type="checkbox" class="checkbox-preferencia" name="beleza" id="beleza">
+                                        <label class="card-categoria" for="beleza">
+                                            <div class="img-categoria">
+                                                <img src="assets/img/categories/beleza.svg" alt="Beleza" />
+                                            </div>
+                                            <p class="nome-categoria">Beleza</p>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <a href="#" class="highlight" data-bs-dismiss="modal">Pular</a>
+                                <button class="button" id="confirmar-cadastro" data-bs-dismiss="modal">Concluir</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <img src="assets/img/rosas.svg" class="rosa-fundo">
@@ -335,6 +412,8 @@
             confirmarFoto = document.querySelector('#confirmar-foto'),
             confirmarCadastro = document.querySelector('#cadastrar'),
             form = document.querySelector('#form-cadastro')
+
+        new bootstrap.Modal('#modal-preferencias').toggle()
 
         nomeInput.addEventListener("input", () => {
             localStorage.setItem("nome", nomeInput.value)
