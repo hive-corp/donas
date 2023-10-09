@@ -78,7 +78,9 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT * FROM tbAnuncio";
+        $querySelect = "SELECT *, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
@@ -90,7 +92,7 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT *, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
+        $querySelect = "SELECT *, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
                         INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                         INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
                         WHERE tbAnuncio.idVendedora = ?";
@@ -115,6 +117,21 @@ class daoAnuncio
         $id = $stmt->fetch()[0];
 
         return $id;
+    }
+
+    public static function consultarPorId($id)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT *, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                            INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                            WHERE idAnuncio = ? ');
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
     }
 
     public static function contarAnuncio($Anuncio)

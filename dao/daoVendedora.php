@@ -356,7 +356,7 @@ class daoVendedora
 
         $topVend = $stmt->fetchAll();
 
-        return $topVend
+        return $topVend;
     }
 
     public static function qtdVendas($Vendedora)
@@ -368,6 +368,6 @@ class daoVendedora
 
         $topVend = $stmt->fetchAll();
 
-        return $topVend
+        return $topVend;
     }
 }
