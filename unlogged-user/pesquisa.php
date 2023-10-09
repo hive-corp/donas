@@ -46,11 +46,6 @@
                         Pesquisa
                     </span>
                 </a>
-                <a href="notificacoes.php" class="nav-link">
-                    <i class="bi bi-bell"></i> <span>
-                        Notificações
-                    </span>
-                </a>
 				<a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
                     <i class="bi bi-chat"></i>
                     <span>

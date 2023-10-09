@@ -1,3 +1,14 @@
+<?php
+
+require_once "global.php";
+
+if (isset($_GET['a'])) {
+    $anuncio = daoAnuncio::consultarPorId($_GET['a']);
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -49,13 +60,7 @@
                         Pesquisa
                     </span>
                 </a>
-                <a href="notificacoes.php" class="nav-link">
-                    <i class="bi bi-bell"></i>
-                    <span>
-                        Notificações
-                    </span>
-                </a>
-				<a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
+                <a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
                     <i class="bi bi-chat"></i>
                     <span>
                         Conversas
@@ -77,32 +82,48 @@
                         <button onclick="history.back()" id="voltar">
                             <i class="bi bi-arrow-left"></i>
                         </button>
-                        <img src="../assets/img/products-services/2.png">
+                        <img src="../<?php echo $anuncio['imagemPrincipalAnuncio'] ?>">
                     </div>
                     <div id="info-produto">
                         <div id="nome-produto">
-                            Bolo de Laranja
+                            <?php echo $anuncio['nomeAnuncio'] ?>
                         </div>
                         <div id="preco-produto">
-                            R$20,00
+                            R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',') ?>
                         </div>
-                        <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
+                        <?php
+                        if ($anuncio['nivelNegocioVendedora'] == 1) {
+                        ?>
+                            <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
+                        <?php
+                        }
+                        ?>
                         <div id="avaliacao-produto">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
+                            <?php
+                            $qtdestrelas = $anuncio['estrelasAnuncio'];
+
+                            for ($i = 0; $i < $qtdestrelas; $i++) {
+                            ?>
+                                <i class="bi bi-star-fill"></i>
+                            <?php
+                            }
+
+                            for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                            ?>
+                                <i class="bi bi-star"></i>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <div id="categoria-produto">
-                            Culinária
+                            <?php echo $anuncio['nomeCategoria'] ?>
                         </div>
-                        <a href="profile.php" id="negocio-produto">
-                            Por Açúcar e Canela
+                        <a href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora']?>" id="negocio-produto">
+                            Por <?php echo $anuncio['nomeNegocioVendedora'] ?>
                         </a>
                         <div id="descricao-produto">
                             <div id="titulo-descricao">Descrição</div>
-                            <div id="texto-descricao"><label for="show-descricao">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae provident vel temporibus voluptatum omnis ipsum enim quas nihil repellat similique, voluptas aut nesciunt aperiam placeat recusandae cumque, ipsam expedita blanditiis.</label>
+                            <div id="texto-descricao"><label for="show-descricao"><?php echo $anuncio['descricaoAnuncio'] ?></label>
                             </div>
                             <input type="checkbox" id="show-descricao">
                         </div>

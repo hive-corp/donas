@@ -1,3 +1,15 @@
+<?php
+
+require_once "global.php";
+
+if (isset($_GET['user'])) {
+    $vendedora = new Vendedora();
+    $vendedora->setNomeUsuarioNegocioVendedora($_GET['user']);
+    $dados = daoVendedora::consultarIdPorNomeUsuario($vendedora);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -46,12 +58,6 @@
                         Pesquisa
                     </span>
                 </a>
-                <a href="notificacoes.php" class="nav-link">
-                    <i class="bi bi-bell"></i>
-                    <span>
-                        Notificações
-                    </span>
-                </a>
 				<a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
                     <i class="bi bi-chat"></i>
                     <span>
@@ -71,7 +77,7 @@
                 <button class="voltar" onclick="history.back()">
                     <i class="bi bi-arrow-left"></i>
                 </button>
-                Açúcar e Canela
+                <?php echo $dados['nomeNegocioVendedora']?>
             </div>
             <div id="content">
                 <div id="negocio-bio">
