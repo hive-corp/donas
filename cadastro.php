@@ -413,8 +413,6 @@
             confirmarCadastro = document.querySelector('#cadastrar'),
             form = document.querySelector('#form-cadastro')
 
-        new bootstrap.Modal('#modal-preferencias').toggle()
-
         nomeInput.addEventListener("input", () => {
             localStorage.setItem("nome", nomeInput.value)
         })
