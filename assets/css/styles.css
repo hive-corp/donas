@@ -1563,7 +1563,7 @@ a.veja-mais {
 .card-categoria {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 70px auto;
+    grid-template-rows: 90px auto;
     width: 100px;
     aspect-ratio: 1/1;
     place-items: center;
