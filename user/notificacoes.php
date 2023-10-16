@@ -34,6 +34,12 @@ require_once "validador.php";
                         Pesquisa
                     </span>
                 </a>
+				<a href="#" class="nav-link mobile-hide">
+					<i class="bi bi-box-seam"></i>
+					<span>
+						Seus pedidos
+					</span>
+				</a>
                 <a href="notificacoes.php" class="nav-link active">
                     <i class="bi bi-bell-fill"></i> <span>
                         Notificações

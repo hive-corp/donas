@@ -147,6 +147,12 @@ require_once "validador.php";
                         Pesquisa
                     </span>
                 </a>
+				<a href="#" class="nav-link mobile-hide">
+					<i class="bi bi-box-seam"></i>
+					<span>
+						Seus pedidos
+					</span>
+				</a>
                 <a href="notificacoes.php" class="nav-link">
                     <i class="bi bi-bell"></i> <span>
                         Notificações
@@ -210,6 +216,9 @@ require_once "validador.php";
                 </div>
                 <a href="notificacoes.php" class="config-item">
                     Notificações
+                </a>
+                <a href="#" class="config-item">
+                    Seus pedidos
                 </a>
                 <label for="noturno-slider" class="config-item">
                     Tema escuro
