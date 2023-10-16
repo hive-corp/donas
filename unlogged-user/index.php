@@ -69,7 +69,8 @@ require_once "global.php";
 		</nav>
 		<main id="main">
 			<div id="pesquisa">
-				<div class="search-container">
+				<img class="logo-pesquisa" src="../assets/img/Logo-menor.png" alt="">
+				<div class="search-container search-square">
 					<input type="text" role="search" placeholder="Pesquisa" class="search-field" />
 					<button class="search-button">
 						<i class="bi bi-search"></i>
@@ -79,6 +80,21 @@ require_once "global.php";
 			<img src="../assets/img/rosas.svg" class="rosa-fundo">
 
 			<div id="content">
+				<h2>Bem vindo(a)!</h2>
+				<div id="carrossel">
+					<div class="carousel-cell">
+						<img src="../assets/img/carousel/carousel.png" alt="">
+					</div>
+					<div class="carousel-cell">
+						<img src="../assets/img/carousel/carousel.png" alt="">
+					</div>
+					<div class="carousel-cell">
+						<img src="../assets/img/carousel/carousel.png" alt="">
+					</div>
+					<div class="carousel-cell">
+						<img src="../assets/img/carousel/carousel.png" alt="">
+					</div>
+				</div>
 				<div class="section">
 					<div class="section-title placeholder-element placeholder-glow">
 						<span class="placeholder col-4"></span>
@@ -373,30 +389,31 @@ require_once "global.php";
 							$qtdestrelas = $a['estrelasAnuncio'];
 
 						?>
-							<a class="card-produto" href="anuncio.php?a=<?php echo $a['idAnuncio']?>">
+							<a class="card-produto" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
 								<div class="img-card">
-									<img src="../<?php echo $a['imagemPrincipalAnuncio']?>" />
+									<img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
 								</div>
 								<div class="info-card">
-									<div class="nome-card"><?php echo $a['nomeAnuncio']?></div>
-									<div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',')?></div>
+									<div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
+									<div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',') ?></div>
 									<div class="avaliacao-card">
 										<?php
-											for($i = 0 ; $i < $qtdestrelas ; $i++){
-												?>
-													<i class="bi bi-star-fill"></i>
-												<?php
-											}
 
-											for($i = 0 ; $i < 5 - $qtdestrelas ; $i++){
-												?>
-													<i class="bi bi-star"></i>
-												<?php
-											}
+										for ($i = 0; $i < $qtdestrelas; $i += 1) {
+										?>
+											<i class="bi bi-star-fill"></i>
+										<?php
+										}
+										for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+										?>
+											<i class="bi bi-star"></i>
+										<?php
+										}
+
 										?>
 									</div>
-									<div class="categoria-card"><?php echo $a['nomeCategoria']?></div>
-									<div class="negocio-card"><?php echo $a['nomeNegocioVendedora']?></div>
+									<div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
+									<div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
 								</div>
 							</a>
 						<?php
@@ -749,6 +766,18 @@ require_once "global.php";
 				resize: false,
 				contain: true,
 			});
+		});
+
+		var carro = document.querySelector("#carrossel")
+
+		new Flickity(carro, {
+			prevNextButtons: false,
+			pageDots: true,
+			resize: true,
+			contain: false,
+			lazyLoad: true,
+			wrapAround: true,
+			autoPlay: 1500
 		});
 	</script>
 </body>
