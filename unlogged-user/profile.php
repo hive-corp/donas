@@ -5,7 +5,7 @@ require_once "global.php";
 if (isset($_GET['user'])) {
     $vendedora = new Vendedora();
     $vendedora->setNomeUsuarioNegocioVendedora($_GET['user']);
-    $dados = daoVendedora::consultarIdPorNomeUsuario($vendedora);
+    $dados = daoVendedora::consultarPorNomeUsuario($vendedora);
 }
 
 ?>
@@ -17,7 +17,7 @@ if (isset($_GET['user'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Açúcar e Canela</title>
+    <title><?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.'?></title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
@@ -58,7 +58,7 @@ if (isset($_GET['user'])) {
                         Pesquisa
                     </span>
                 </a>
-				<a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
+                <a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
                     <i class="bi bi-chat"></i>
                     <span>
                         Conversas
@@ -77,16 +77,17 @@ if (isset($_GET['user'])) {
                 <button class="voltar" onclick="history.back()">
                     <i class="bi bi-arrow-left"></i>
                 </button>
-                <?php echo $dados['nomeNegocioVendedora']?>
+                <?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.'?>
             </div>
             <div id="content">
+                <?php if(isset($dados['nomeNegocioVendedora'])){?>
                 <div id="negocio-bio">
                     <div id="bio-photo">
-                        <img src="../assets/img/users/negocios/1.png" alt="">
+                        <img src="../<?php echo $dados['fotoNegocioVendedora'] ?>" alt="">
                     </div>
                     <div id="bio-info">
                         <div id="bio-name">
-                            Açúcar e Canela
+                            <?php echo $dados['nomeNegocioVendedora'] ?>
                             <div class="dropdown-start dropdown">
                                 <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical"></i>
@@ -107,7 +108,7 @@ if (isset($_GET['user'])) {
                                 </ul>
                             </div>
                         </div>
-                        <div id="bio-username">@acucarcanela</div>
+                        <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
                         <div id="bio-desc">Tornando o seu mundo um pouco mais doce.
                             - Sediada em SP
                         </div>
@@ -125,11 +126,19 @@ if (isset($_GET['user'])) {
                 <div id="negocio-info">
                     <div class="negocio-information">
                         <i class="bi bi-bag"></i>
-                        <span>5</span> Produtos
+                        <?php
+                            $qtdprodutos = daoAnuncio::contarAnuncioProduto($dados['idVendedora']);
+                        
+                        ?>
+                        <span><?php echo $qtdprodutos?></span> Produtos
                     </div>
                     <div class="negocio-information">
                         <i class="bi bi-grid"></i>
-                        <span>0</span> Serviços
+                        <?php
+                            $qtdservicos = daoAnuncio::contarAnuncioServico($dados['idVendedora']);
+                        
+                        ?>
+                        <span><?php echo $qtdservicos?></span> Serviços
                     </div>
                     <div class="negocio-information">
                         <i class="bi bi-people"></i>
@@ -137,21 +146,24 @@ if (isset($_GET['user'])) {
                     </div>
                 </div>
                 <div id="bio-products">
-                    <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/1.png" alt="">
-                    </a>
-                    <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/2.png" alt="">
-                    </a>
-                    <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/3.png" alt="">
-                    </a>
-                    <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/4.png" alt="">
-                    </a>
-                    <a class="bio-product" href="produto.php">
-                        <img src="../assets/img/products-services/5.png" alt="">
-                    </a>
+                    <?php
+
+                    $anuncios = daoAnuncio::listarAnunciosVendedora($dados['idVendedora']);
+
+                    foreach ($anuncios as $a) {
+
+                        $qtdestrelas = $a['estrelasAnuncio'];
+
+                    ?>
+                        <a class="bio-product" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
+                        <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
+                        </a>
+                     
+                    <?php
+                    }
+
+                    ?>
+                  
                     <!-- <a class="bio-product" href="produto.php">
                         <img src="../assets/img/products-services/1.png" alt="">
                     </a>
@@ -255,6 +267,13 @@ if (isset($_GET['user'])) {
                         </div>
                     </div> -->
                 </div>
+                <?php
+                }
+                else{
+                ?>
+                    <h2 class="mx-auto my-auto">Nenhum negócio com esse nome foi encontrado.</h2>
+                <?php
+                }?>
             </div>
         </main>
     </div>
