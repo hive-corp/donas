@@ -1443,6 +1443,11 @@ a.dropdown-item {
     padding: 24px;
 }
 
+.logo-pesquisa{
+    width: 50px;
+    margin-right: 5px;
+}
+
 .search-container {
     font-size: 16px;
     display: flex;
@@ -1451,6 +1456,10 @@ a.dropdown-item {
     border-radius: 50px;
     width: 100%;
     transition: 0.3s border-color ease-in-out, 0.3s box-shadow ease-in-out;
+}
+
+.search-square{
+    border-radius: 8px;
 }
 
 .search-container:hover,
@@ -1531,6 +1540,33 @@ a.veja-mais {
     color: #CB6CE6
 }
 
+#carrossel .carousel-cell{
+    overflow: hidden;
+    border-radius: 12px;
+    width: 100%;
+}
+
+#carrossel .carousel-cell img{
+    width: 100%;
+    background-color: red;
+}
+
+/* dots are lines */
+.flickity-page-dots .dot {
+    width: 10px;
+    margin: 2px;
+    opacity: 1;
+    background-color: #ecc8f6;
+}
+
+.flickity-page-dots .dot.is-selected {
+    background: #CB6CE6;
+    aspect-ratio: 2/1;
+    width: 20px;
+    border-radius: 100px;
+    transition: .4s background-color;
+}
+
 .carrossel-cards {
     grid-area: carrossel;
     transition: .5s opacity ease-in-out;
@@ -1599,7 +1635,7 @@ a.veja-mais {
 }
 
 .carrossel-cards:not(.placeholder-element) .card-categoria:hover .img-categoria {
-    background-color: #CB6CE633;
+    background-color: #540042;
 }
 
 .card-categoria:hover .img-categoria{
@@ -3312,11 +3348,15 @@ a.highlight {
         order: 4;
     }
 
+    .nav-link.mobile-hide{
+        display: none;
+    }
+
     #foto-usuario {
         display: block;
     }
 
-    #nav:has(#user-info) .nav-link:nth-child(5) i {
+    #nav:has(#user-info) .nav-link:last-child i {
         display: none;
     }
 
