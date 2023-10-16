@@ -146,26 +146,28 @@ class daoAnuncio
         return $countAnuncio;
     }
 
-    public static function contarAnuncioServico($Anuncio)
+    public static function contarAnuncioServico($id)
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ? AND tipoAnuncio = 1");
+        $stmt->bindValue(1, $id);
         $stmt->execute();
 
-        $countAnuncioServico = $stmt->fetchAll();
+        $countAnuncioServico = $stmt->fetch()[0];
 
         return $countAnuncioServico;
     }
 
-    public static function contarAnuncioProduto($Anuncio)
+    public static function contarAnuncioProduto($id)
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ? AND tipoAnuncio = 2");
+        $stmt->bindValue(1, $id);
         $stmt->execute();
 
-        $countAnuncioProduto = $stmt->fetchAll();
+        $countAnuncioProduto = $stmt->fetch()[0];
 
         return $countAnuncioProduto;
     }
