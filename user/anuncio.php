@@ -16,7 +16,8 @@ if (isset($_GET['a'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $anuncio['nomeAnuncio']?></title>
+    <title><?php echo isset($anuncio['nomeAnuncio']) ? $anuncio['nomeAnuncio'] :  'Nada foi encontrado.' ?></title>
+
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
@@ -40,11 +41,11 @@ if (isset($_GET['a'])) {
                     </span>
                 </a>
                 <a href="#" class="nav-link mobile-hide">
-					<i class="bi bi-box-seam"></i>
-					<span>
-						Seus pedidos
-					</span>
-				</a>
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Seus pedidos
+                    </span>
+                </a>
                 <a href="notificacoes.php" class="nav-link">
                     <i class="bi bi-bell"></i>
                     <span>
@@ -102,125 +103,135 @@ if (isset($_GET['a'])) {
         </nav>
         <main id="main">
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
-            <div id="content">
-                <div id="produto">
-                    <div id="foto-produto">
-                        <button onclick="history.back()" id="voltar">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                        <img src="../<?php echo $anuncio['imagemPrincipalAnuncio'] ?>">
-                    </div>
-                    <div id="info-produto">
-                        <div id="nome-produto">
-                        <?php echo $anuncio['nomeAnuncio'] ?>
-                        </div>
-                        <div id="preco-produto">
-                        R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',') ?>
-                        </div>
-                        <?php
-                        if ($anuncio['nivelNegocioVendedora'] == 1) {
-                        ?>
-                            <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
-                        <?php
-                        }
-                        ?>
-                        <div id="avaliacao-produto">
-                        <?php
-                            $qtdestrelas = $anuncio['estrelasAnuncio'];
+            <?php if (isset($anuncio['nomeAnuncio'])) { ?>
 
-                            for ($i = 0; $i < $qtdestrelas; $i++) {
-                            ?>
-                                <i class="bi bi-star-fill"></i>
+                <div id="content">
+
+                    <div id="produto">
+                        <div id="foto-produto">
+                            <button onclick="history.back()" id="voltar">
+                                <i class="bi bi-arrow-left"></i>
+                            </button>
+                            <img src="../<?php echo $anuncio['imagemPrincipalAnuncio'] ?>">
+                        </div>
+                        <div id="info-produto">
+                            <div id="nome-produto">
+                                <?php echo $anuncio['nomeAnuncio'] ?>
+                            </div>
+                            <div id="preco-produto">
+                                R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',') ?>
+                            </div>
                             <?php
-                            }
-
-                            for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                            if ($anuncio['nivelNegocioVendedora'] == 1) {
                             ?>
-                                <i class="bi bi-star"></i>
+                                <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
                             <?php
                             }
                             ?>
-                        </div>
-                        <div id="categoria-produto">
-                        <?php echo $anuncio['nomeCategoria'] ?>
-                        </div>
-                        <a href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora']?>" id="negocio-produto">
-                            Por <?php echo $anuncio['nomeNegocioVendedora'] ?>
-                        </a>
-                        <div id="descricao-produto">
-                            <div id="titulo-descricao">Descrição</div>
-                            <div id="texto-descricao"><label for="show-descricao"><?php echo $anuncio['descricaoAnuncio'] ?></label>
+                            <div id="avaliacao-produto">
+                                <?php
+                                $qtdestrelas = $anuncio['estrelasAnuncio'];
+
+                                for ($i = 0; $i < $qtdestrelas; $i++) {
+                                ?>
+                                    <i class="bi bi-star-fill"></i>
+                                <?php
+                                }
+
+                                for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                ?>
+                                    <i class="bi bi-star"></i>
+                                <?php
+                                }
+                                ?>
                             </div>
-                            <input type="checkbox" id="show-descricao">
+                            <div id="categoria-produto">
+                                <?php echo $anuncio['nomeCategoria'] ?>
+                            </div>
+                            <a href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora'] ?>" id="negocio-produto">
+                                Por <?php echo $anuncio['nomeNegocioVendedora'] ?>
+                            </a>
+                            <div id="descricao-produto">
+                                <div id="titulo-descricao">Descrição</div>
+                                <div id="texto-descricao"><label for="show-descricao"><?php echo $anuncio['descricaoAnuncio'] ?></label>
+                                </div>
+                                <input type="checkbox" id="show-descricao">
+                            </div>
                         </div>
                     </div>
+                    <div id="comentarios-produto">
+                        <div id="comentarios-titulo">
+                            Comentarios
+                        </div>
+                        <div id="input-comentario">
+                            <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-comentario">
+                            <div id="nome-comentario">
+                                <?php echo $_SESSION['nome'] ?>
+                            </div>
+                            <div id="avaliacao">
+                                <input value="5" name="rate" id="star5" type="radio">
+                                <label title="text" for="star5"></label>
+                                <input value="4" name="rate" id="star4" type="radio">
+                                <label title="text" for="star4"></label>
+                                <input value="3" name="rate" id="star3" type="radio">
+                                <label title="text" for="star3"></label>
+                                <input value="2" name="rate" id="star2" type="radio">
+                                <label title="text" for="star2"></label>
+                                <input value="1" name="rate" id="star1" type="radio">
+                                <label title="text" for="star1"></label>
+                            </div>
+                            <div class="input" id="textarea-comentario">
+                                <div class="input-wrapper">
+                                    <textarea name="comentario" id="comentario" cols="30" rows="4" placeholder="Sua avaliação" required></textarea>
+                                </div>
+                            </div>
+                            <div class="input input-enviar">
+                                <button class="button button-square" id="enviar">Enviar</button>
+                            </div>
+                        </div>
+                        <div id="comentarios">
+                            <div class="comentario">
+                                <img src="../assets/img/foto.png" class="foto-comentario">
+                                <div class="nome-comentario">
+                                    Isabelle Silva
+                                </div>
+                                <div class="avaliacao-comentario">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="conteudo-comentario">
+                                    Achei o bolo excelente. Minha filha amou, recomendo muito!!!
+                                </div>
+                            </div>
+                            <div class="comentario">
+                                <img src="../assets/img/foto.png" class="foto-comentario">
+                                <div class="nome-comentario">
+                                    Marcela Dantas
+                                </div>
+                                <div class="avaliacao-comentario">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <div class="conteudo-comentario">
+                                    Amei!!!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div id="comentarios-produto">
-                    <div id="comentarios-titulo">
-                        Comentarios
-                    </div>
-                    <div id="input-comentario">
-                        <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-comentario">
-                        <div id="nome-comentario">
-                            <?php echo $_SESSION['nome'] ?>
-                        </div>
-                        <div id="avaliacao">
-                            <input value="5" name="rate" id="star5" type="radio">
-                            <label title="text" for="star5"></label>
-                            <input value="4" name="rate" id="star4" type="radio">
-                            <label title="text" for="star4"></label>
-                            <input value="3" name="rate" id="star3" type="radio">
-                            <label title="text" for="star3"></label>
-                            <input value="2" name="rate" id="star2" type="radio">
-                            <label title="text" for="star2"></label>
-                            <input value="1" name="rate" id="star1" type="radio">
-                            <label title="text" for="star1"></label>
-                        </div>  
-                        <div class="input" id="textarea-comentario">
-                            <div class="input-wrapper">
-                                <textarea name="comentario" id="comentario" cols="30" rows="4" placeholder="Sua avaliação" required></textarea>
-                            </div>
-                        </div>
-                        <div class="input input-enviar">
-                            <button class="button button-square" id="enviar">Enviar</button>
-                        </div>
-                    </div>
-                    <div id="comentarios">
-                        <div class="comentario">
-                            <img src="../assets/img/foto.png" class="foto-comentario">
-                            <div class="nome-comentario">
-                                Isabelle Silva
-                            </div>
-                            <div class="avaliacao-comentario">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="conteudo-comentario">
-                                Achei o bolo excelente. Minha filha amou, recomendo muito!!!
-                            </div>
-                        </div>
-                        <div class="comentario">
-                            <img src="../assets/img/foto.png" class="foto-comentario">
-                            <div class="nome-comentario">
-                                Marcela Dantas
-                            </div>
-                            <div class="avaliacao-comentario">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="conteudo-comentario">
-                                Amei!!! 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            } else {
+            ?>
+                <h2 class="mx-auto my-auto">Nenhum negócio com esse nome foi encontrado.</h2>
+            <?php
+            } ?>
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
         </main>
 
@@ -255,54 +266,54 @@ if (isset($_GET['a'])) {
             let estrelas = document.getElementsByName('rate')
 
             estrelas.forEach(item => {
-                    if (item.checked) {
-                        let qtd = item.value
+                if (item.checked) {
+                    let qtd = item.value
 
-                        console.log(qtd)
+                    console.log(qtd)
 
-                        if (qtd == 1) {
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                        } else if (qtd == 2) {
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                        } else if (qtd == 3) {
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                        } else if (qtd == 4) {
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                        } else if (qtd == 5) {
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                            avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        }
+                    if (qtd == 1) {
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                    } else if (qtd == 2) {
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                    } else if (qtd == 3) {
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                    } else if (qtd == 4) {
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
+                    } else if (qtd == 5) {
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
+                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
                     }
-                
+                }
+
             })
 
-        comentario.appendChild(img)
-        comentario.appendChild(nome)
-        comentario.appendChild(conteudo) 
-        comentario.appendChild(avaliacao)
+            comentario.appendChild(img)
+            comentario.appendChild(nome)
+            comentario.appendChild(conteudo)
+            comentario.appendChild(avaliacao)
 
-        if (conteudoInputComentario.value != "") {
-            comentarios.appendChild(comentario)
-        }
+            if (conteudoInputComentario.value != "") {
+                comentarios.appendChild(comentario)
+            }
         })
     </script>
 </body>
