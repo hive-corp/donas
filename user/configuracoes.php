@@ -214,9 +214,6 @@ require_once "validador.php";
                 <div class="config-item" data-config-target="#seu-perfil" data-config-name="Seu perfil">
                     Sua conta
                 </div>
-                <a href="notificacoes.php" class="config-item">
-                    Notificações
-                </a>
                 <a href="#" class="config-item">
                     Seus pedidos
                 </a>

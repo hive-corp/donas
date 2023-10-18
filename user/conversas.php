@@ -207,7 +207,7 @@ require_once "validador.php";
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
                         <li>
-                            <a class="dropdown-item" href="product.php">
+                            <a id="acessar-perfil" class="dropdown-item" href="product.php">
                                 <i class="bi bi-person"></i>
                                 Acessar perfil
                             </a>
