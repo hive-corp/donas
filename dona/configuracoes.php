@@ -264,9 +264,6 @@ require_once "global.php";
                 <div class="config-item" data-config-target="#seu-perfil" data-config-name="Seu perfil">
                     Sua conta
                 </div>
-                <a href="notificacoes.php" class="config-item">
-                    Notificações
-                </a>
                 <label for="noturno-slider" class="config-item">
                     Tema escuro
                     <label class="switch">

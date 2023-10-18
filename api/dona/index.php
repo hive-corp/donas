@@ -34,9 +34,10 @@ switch ($method) {
         $vendedora->setEmailVendedora($_POST['email']);
         $vendedora->setSenhaVendedora($_POST['pass']);
         $vendedora->setDtNascVendedora($_POST['nasc']);
-        $vendedora->setStatusVendedora(0);
+        $vendedora->setStatusVendedora(1);
         $vendedora->setNomeNegocioVendedora($_POST['nome-empresa']);
         $vendedora->setNomeUsuarioNegocioVendedora($_POST['username-empresa']);
+        $vendedora->setBioNegocioVendedora('');
 
         $tel = str_replace('-', '', $_POST['telefone']);
 
