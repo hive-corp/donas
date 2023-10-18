@@ -1768,7 +1768,7 @@ a.veja-mais {
 
 .produtos {
     display: grid;
-    justify-items: center;
+    justify-self: center;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
     transition: .2s opacity;
