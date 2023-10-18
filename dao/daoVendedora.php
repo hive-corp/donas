@@ -9,10 +9,10 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $queryInsert = "INSERT tbVendedora(nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
-                            nomeUsuarioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
+                            nomeUsuarioNegocioVendedora, bioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                             bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
                             nivelNegocioVendedora, telefoneNegocioVendedora, idCategoria)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
@@ -23,17 +23,18 @@ class daoVendedora
         $prepareStatement->bindvalue(5, $Vendedora->getStatusVendedora());
         $prepareStatement->bindvalue(6, $Vendedora->getNomeNegocioVendedora());
         $prepareStatement->bindvalue(7, $Vendedora->getNomeUsuarioNegocioVendedora());
-        $prepareStatement->bindvalue(8, $Vendedora->getLogNegocioVendedora());
-        $prepareStatement->bindvalue(9, $Vendedora->getCidadeNegocioVendedora());
-        $prepareStatement->bindvalue(10, $Vendedora->getEstadoNegocioVendedora());
-        $prepareStatement->bindvalue(11, $Vendedora->getBairroNegocioVendedora());
-        $prepareStatement->bindvalue(12, $Vendedora->getNumNegocioVendedora());
-        $prepareStatement->bindvalue(13, $Vendedora->getCompNegocioVendedora());
-        $prepareStatement->bindvalue(14, $Vendedora->getCepNegocioVendedora());
-        $prepareStatement->bindvalue(15, $Vendedora->getCnpjNegocioVendedora());
-        $prepareStatement->bindvalue(16, $Vendedora->getNivelNegocioVendedora());
-        $prepareStatement->bindvalue(17, $Vendedora->getTelefoneNegocioVendedora());
-        $prepareStatement->bindvalue(18, $Vendedora->getCategoria()->getIdCategoria());
+        $prepareStatement->bindvalue(8, $Vendedora->getBioNegocioVendedora());
+        $prepareStatement->bindvalue(9, $Vendedora->getLogNegocioVendedora());
+        $prepareStatement->bindvalue(10, $Vendedora->getCidadeNegocioVendedora());
+        $prepareStatement->bindvalue(11, $Vendedora->getEstadoNegocioVendedora());
+        $prepareStatement->bindvalue(12, $Vendedora->getBairroNegocioVendedora());
+        $prepareStatement->bindvalue(13, $Vendedora->getNumNegocioVendedora());
+        $prepareStatement->bindvalue(14, $Vendedora->getCompNegocioVendedora());
+        $prepareStatement->bindvalue(15, $Vendedora->getCepNegocioVendedora());
+        $prepareStatement->bindvalue(16, $Vendedora->getCnpjNegocioVendedora());
+        $prepareStatement->bindvalue(17, $Vendedora->getNivelNegocioVendedora());
+        $prepareStatement->bindvalue(18, $Vendedora->getTelefoneNegocioVendedora());
+        $prepareStatement->bindvalue(19, $Vendedora->getCategoria()->getIdCategoria());
 
         $prepareStatement->execute();
     }
@@ -67,7 +68,6 @@ class daoVendedora
         $prepareStatement->bindvalue(5, $Vendedora->getStatusVendedora());
 
         $prepareStatement->bindValue(6, $Vendedora->getIdVendedora());
-
         $prepareStatement->execute();
     }
 
@@ -77,7 +77,7 @@ class daoVendedora
 
         $queryInsert = "UPDATE tbVendedora
                             SET nomeNegocioVendedora = ?,
-                            nomeUsuarioNegocioVendedora = ?, logNegocioVendedora = ?, cidadeNegocioVendedora = ?, estadoNegocioVendedora = ?,
+                            nomeUsuarioNegocioVendedora = ?, bioNegocioVendedora = ?, logNegocioVendedora = ?, cidadeNegocioVendedora = ?, estadoNegocioVendedora = ?,
                             bairroNegocioVendedora = ?, numNegocioVendedora = ?, compNegocioVendedora = ?, cepNegocioVendedora = ?, cnpjNegocioVendedora = ?,
                             nivelNegocioVendedora = ?, telefoneNegocioVendedora = ?, idCategoria = ?
                             WHERE idVendedora = ?";
@@ -86,19 +86,20 @@ class daoVendedora
 
         $prepareStatement->bindvalue(1, $Vendedora->getNomeNegocioVendedora());
         $prepareStatement->bindvalue(2, $Vendedora->getNomeUsuarioNegocioVendedora());
-        $prepareStatement->bindvalue(3, $Vendedora->getLogNegocioVendedora());
-        $prepareStatement->bindvalue(4, $Vendedora->getCidadeNegocioVendedora());
-        $prepareStatement->bindvalue(5, $Vendedora->getEstadoNegocioVendedora());
-        $prepareStatement->bindvalue(6, $Vendedora->getBairroNegocioVendedora());
-        $prepareStatement->bindvalue(7, $Vendedora->getNumNegocioVendedora());
-        $prepareStatement->bindvalue(8, $Vendedora->getCompNegocioVendedora());
-        $prepareStatement->bindvalue(9, $Vendedora->getCepNegocioVendedora());
-        $prepareStatement->bindvalue(10, $Vendedora->getCnpjNegocioVendedora());
-        $prepareStatement->bindvalue(11, $Vendedora->getNivelNegocioVendedora());
-        $prepareStatement->bindvalue(12, $Vendedora->getTelefoneNegocioVendedora());
-        $prepareStatement->bindvalue(13, $Vendedora->getCategoria()->getIdCategoria());
+        $prepareStatement->bindvalue(3, $Vendedora->geBioNegocioVendedora());
+        $prepareStatement->bindvalue(4, $Vendedora->getLogNegocioVendedora());
+        $prepareStatement->bindvalue(5, $Vendedora->getCidadeNegocioVendedora());
+        $prepareStatement->bindvalue(6, $Vendedora->getEstadoNegocioVendedora());
+        $prepareStatement->bindvalue(7, $Vendedora->getBairroNegocioVendedora());
+        $prepareStatement->bindvalue(8, $Vendedora->getNumNegocioVendedora());
+        $prepareStatement->bindvalue(9, $Vendedora->getCompNegocioVendedora());
+        $prepareStatement->bindvalue(10, $Vendedora->getCepNegocioVendedora());
+        $prepareStatement->bindvalue(11, $Vendedora->getCnpjNegocioVendedora());
+        $prepareStatement->bindvalue(12, $Vendedora->getNivelNegocioVendedora());
+        $prepareStatement->bindvalue(13, $Vendedora->getTelefoneNegocioVendedora());
+        $prepareStatement->bindvalue(14, $Vendedora->getCategoria()->getIdCategoria());
 
-        $prepareStatement->bindValue(14, $Vendedora->getIdVendedora());
+        $prepareStatement->bindValue(15, $Vendedora->getIdVendedora());
 
         $prepareStatement->execute();
     }
@@ -233,7 +234,7 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare('SELECT idVendedora, nomeVendedora, emailVendedora, fotoVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
-                                    nomeUsuarioNegocioVendedora, fotoNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
+                                    nomeUsuarioNegocioVendedora, bioNegocioVendedora, fotoNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                                     bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
                                     nivelNegocioVendedora, telefoneNegocioVendedora, idCategoria FROM tbVendedora
                                     WHERE emailVendedora = ? AND senhaVendedora = ?');

@@ -136,9 +136,7 @@ if (isset($_GET['user'])) {
                                 </div>
                             </div>
                             <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
-                            <div id="bio-desc">Tornando o seu mundo um pouco mais doce.
-                                - Sediada em SP
-                            </div>
+                            <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
                             <div id="bio-options">
                                 <button type="button" class="button bio-option">
                                     Seguir

@@ -11,6 +11,7 @@
         private $statusVendedora;
         private $nomeNegocioVendedora;
         private $nomeUsuarioNegocioVendedora;
+        private $bioNegocioVendedora;
         private $fotoNegocioVendedora;
         private $logNegocioVendedora;
         private $cidadeNegocioVendedora;
@@ -55,6 +56,9 @@
         }
         public function getNomeUsuarioNegocioVendedora(){
             return $this->nomeUsuarioNegocioVendedora;
+        }
+        public function getBioNegocioVendedora(){
+            return $this->bioNegocioVendedora;
         }
         public function getFotoNegocioVendedora(){
             return $this->fotoNegocioVendedora;
@@ -122,6 +126,9 @@
         }
         public function setNomeUsuarioNegocioVendedora($nomeUsuarioNegocioVendedora){
             $this->nomeUsuarioNegocioVendedora=$nomeUsuarioNegocioVendedora;
+        }
+        public function setBioNegocioVendedora($bioNegocioVendedora){
+            $this->bioNegocioVendedora=$bioNegocioVendedora;
         }
         public function setFotoNegocioVendedora($fotoNegocioVendedora){
             $this->fotoNegocioVendedora=$fotoNegocioVendedora;
