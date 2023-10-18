@@ -9,6 +9,7 @@ var mainMessageButton = document.querySelector('#main-message-button'),
     desceChat = document.querySelector('#desce-chat'),
     fotoConversa = document.querySelector('#foto-chat'),
     linkDestino = document.querySelector('#link-destino'),
+    acessarPerfil = document.querySelector('#acessar-perfil'),
     abraConversa = document.getElementById('abra-conversa'),
     nomeConversa = document.querySelector('#main-title div'),
     voltarChat = document.querySelector('#voltar-chat'),
@@ -80,7 +81,7 @@ const resgatarMensagens = async (nome, foto, apelido) => {
     nomeConversa.innerText = nome
     username = apelido
 
-    linkDestino.href = "../profile?user=" + apelido
+    linkDestino.href = "profile.php?user=" + apelido
     linkDestino.classList.remove('hide')
 
     var dadosAnteriores = await consultaMensagens(apelido)
@@ -137,9 +138,14 @@ const preencherLista = async (url, elemento) => {
         apelido.setAttribute('class', 'chat-username')
         apelido.innerText = '@' + item.username
 
+        let ultimaMensagem = document.createElement('div')
+        ultimaMensagem.setAttribute('class', 'chat-message')
+        ultimaMensagem.innerText = item.remetente==type ? `Você: ${item.ultimaMensagem}` : `${item.username}: ${item.ultimaMensagem}`
+
         conversaItem.append(foto)
         conversaItem.append(nome)
         conversaItem.append(apelido)
+        conversaItem.append(ultimaMensagem)
 
         conversaItem.addEventListener('click', () => resgatarMensagens(item.name, "../" + item.foto, item.username))
 
@@ -271,5 +277,22 @@ window.onload = () => {
     setTimeout(async () => {
         await preencherLista('../api/chat/?type=chats', listaConversas)
 
+        const response = await fetch('../api/chat/?type=chats')
+        const data = await response.json()
+
+        var conversasAnteriores = data
+
+        setInterval(async () => {
+            const response = await fetch('../api/chat/?type=chats')
+            const data = await response.json()
+
+            var conversasAtuais = data;
+
+            if (JSON.stringify(conversasAnteriores) != JSON.stringify(conversasAtuais)) {
+                await preencherLista('../api/chat/?type=chats', listaConversas)
+
+                conversasAnteriores = conversasAtuais
+            }
+        }, 3000)
     }, 750)
 }
