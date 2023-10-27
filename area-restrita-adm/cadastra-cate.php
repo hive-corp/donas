@@ -13,9 +13,9 @@
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
 
     <link rel="shortcut icon" type="imagex/png" href="../assets/img/Logo-menor.png">
-
+    
+    <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/css/styles-dash.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -255,40 +255,55 @@
 
                     <br><br>
 
-                    <div class="row justify-content-center" style="justify-content: center;">
-                        <div class="d-flex px-2 py-1">
+                    <form id="form-categoria">
 
-                            <div class="d-flex flex-column justify-content-center">
-                                <div class="input-div one">
-                                    <div class="i">
-                                        <i class="fas fa-plus"></i>
+                        <div class="row justify-content-center" style="justify-content: center;">
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                    <div class="max-width d-flex justify-content-center">
+                                        <div class="imagemContainer">
+                                            <img src="../assets/img/foto.png" alt="Selecione uma imagem" id="imgPhoto">
+                                        </div>
                                     </div>
-                                    <div class="div">
-                                        <h5>Nome Categoria</h5>
-                                        <input type="text" class="input">
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="div">
+                                            <h5>Nome da categoria</h5>
+                                            <input type="text" class="input" id="nome-categoria" required>
+                                        </div>
                                     </div>
+                                    <div id="linha3"></div>
                                 </div>
 
-                                <div id="linha3"></div>
-
+                                <input type="file" id="filmage" name="filmage" accept="image/*">
                             </div>
-                            <div class="max-width" style="margin-left: 5%;">
-                                <div class="imagemContainer">
-                                    <img src="../assets/img/foto.png" alt="Selecione uma imagem" id="imgPhoto">
-                                </div>
-                            </div>
-
-                            <input type="file" id="filmage" name="filmage" accept="image/*">
                         </div>
 
+                        <br><br>
 
-                    </div>
+                        <div class="d-flex px-2 py-1" style="text-align: center; justify-content: center;">
+                            <div class="d-flex flex-column justify-content-center">
+                                <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Cadastrar categoria </button>
+                            </div>
+                        </div>
+                    </form>
 
-                    <br><br>
-
-                    <div class="d-flex px-2 py-1" style="text-align: center; justify-content: center;">
-                        <div class="d-flex flex-column justify-content-center">
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalCate"> Cadastrar Categoria </a>
+                    <div class="modal pop" id="modal-foto" tabindex="-1" aria-labelledby="modal-foto" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fs-5">Recorte da foto</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="result-crop"></div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-around">
+                                    <button type="button" class="botaoRec" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="botao" data-bs-dismiss="modal" id="confirmar-foto">Confirmar</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -377,8 +392,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h6 style="text-align: center; font-weight: bold;">Categoria Artesanal</h6>
-                        <p style="text-align: center;">Categoria Artesanal cadastrada com sucesso!</p>
+                        <h6 style="text-align: center; font-weight: bold;">Categoria <span id="nome-modal-categoria"></span></h6>
+                        <p style="text-align: center;">Categoria cadastrada com sucesso!</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
@@ -387,14 +402,15 @@
             </div>
         </div>
 
+        </div>
 
         <!--LINKS-->
+        <script src="../assets/vendor/cropperjs/js/cropper.js"></script>
         <script src="../assets/vendor/jquery/jquery.min.js"></script>
         <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/js/sb-admin-2.min.js"></script>
         <script src="../assets/js/photo.js"></script>
         <script src="../assets/js/main.js"></script>
-
 </body>
 
 </html>
