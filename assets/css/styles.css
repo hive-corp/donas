@@ -1960,6 +1960,7 @@ a.veja-mais {
 }
 
 #foto-anuncio-cadastro {
+    place-self: center;
     width: min-content;
     position: relative;
     overflow: hidden;
