@@ -95,7 +95,7 @@ require_once "global.php";
         <main id="main">
             <div id="welcome" class="d-flex flex-column justify-content-center">
                 <h2>Bem vindo, <span class="highlight"><?php echo $_SESSION['nome-empresa']; ?></span>!</h2>
-                <h6><span class="highlight"><?php echo explode(" ",$_SESSION['nome'])[0]?></span>, aqui estão as informações do seu negócio!</h6>
+                <h6><span class="highlight"><?php echo explode(" ", $_SESSION['nome'])[0] ?></span>, aqui estão as informações do seu negócio!</h6>
             </div>
             <div id="content">
                 <div class="section">
@@ -109,7 +109,7 @@ require_once "global.php";
                     <a href="#" class="veja-mais load"> veja mais </a>
                 </div>
                 <div class="produtos placeholder-element">
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -132,7 +132,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -155,7 +155,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -178,7 +178,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -201,7 +201,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -224,7 +224,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -247,7 +247,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -270,7 +270,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -293,7 +293,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -316,7 +316,7 @@ require_once "global.php";
                             </div>
                         </div>
                     </div>
-                    <div class="card-produto" href="produto.php" aria-hidden="true">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
                             <span class="placeholder"></span>
                         </div>
@@ -344,8 +344,11 @@ require_once "global.php";
 
                     <?php
                     foreach (daoAnuncio::listarAnunciosVendedora($_SESSION['id']) as $a) {
+
+                        $qtdestrelas = $a['estrelasAnuncio'];
+
                     ?>
-                        <a class="card-produto" href="produto.php">
+                        <a class="card-anuncio" href="produto.php">
                             <div class="img-card">
                                 <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>">
                             </div>
@@ -354,14 +357,23 @@ require_once "global.php";
                                     <?php echo $a['nomeAnuncio'] ?>
                                 </div>
                                 <div class="preco-card">
-                                    R$<?php echo number_format($a['valorAnuncio'], 2, ',', ' ')  ?>
+                                    R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.')  ?>
                                 </div>
                                 <div class="avaliacao-card">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
+                                    <?php
+
+                                    for ($i = 0; $i < $qtdestrelas; $i += 1) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
+                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+
+                                    ?>
                                 </div>
                                 <div class="categoria-card">
                                     <?php echo $a['nomeCategoria'] ?>

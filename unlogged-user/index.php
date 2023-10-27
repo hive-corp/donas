@@ -395,7 +395,7 @@ require_once "global.php";
 								</div>
 								<div class="info-card">
 									<div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
-									<div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',') ?></div>
+									<div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.') ?></div>
 									<div class="avaliacao-card">
 										<?php
 

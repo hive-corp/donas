@@ -194,7 +194,7 @@ require_once "validador.php";
                 <form class="needs-validation" method='post' id="new-form" novalidate>
                     <img src="../assets/img/rosas.svg" class="rosa-fundo">
                     <div id="imagens-form">
-                        <label for="foto-principal" id="foto-anuncio">
+                        <label for="foto-principal" id="foto-anuncio-cadastro">
                             <img src="../assets/img/foto.png" id="preview-foto">
                         </label>
                         <input type="file" accept="image/*" name="foto-principal" id="foto-principal" required>
@@ -206,7 +206,7 @@ require_once "validador.php";
                         <div class="input">
                             <label class="form-label" for="nome-anuncio">Nome<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="text" name="nome-anuncio" id="nome-anuncio" required>
+                                <input type="text" name="nome-anuncio" id="nome-anuncio-cadastro" required>
                             </div>
                             <div class="invalid-feedback">
                                 Insira um nome para o anúncio
@@ -230,7 +230,7 @@ require_once "validador.php";
                                 Insira um preço para o anúncio
                             </div>
                         </div>
-                        <div class="input" id="qtd-produto">
+                        <div class="input" id="qtd-anuncio">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
                                 <input type="number" name="estoque" id="estoque" value="0">
@@ -263,7 +263,7 @@ require_once "validador.php";
 
     <script>
         var tipoAnuncio = document.querySelector('#tipo-new'),
-            estoque = document.querySelector('#qtd-produto'),
+            estoque = document.querySelector('#qtd-anuncio'),
             form = document.querySelector('form'),
             fotoInput = document.querySelector('#foto-principal'),
             result = document.querySelector('.result-crop'),
@@ -286,7 +286,7 @@ require_once "validador.php";
                     estoqueModal = document.querySelector('.estoque-modal .input-wrapper'),
                     descModal = document.querySelector('.desc-modal .input-wrapper')
 
-                nomeModal.innerText = document.getElementById('nome-anuncio').value
+                nomeModal.innerText = document.getElementById('nome-anuncio-cadastro').value
                 precoModal.innerText = document.getElementById('preco').value
                 tipoModal.innerText = document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].text
                 estoqueModal.innerText = document.getElementById('estoque').value
@@ -302,7 +302,7 @@ require_once "validador.php";
                         let formData = new FormData()
 
                         formData.append('foto', blob, 'photo.png')
-                        formData.append('nome', document.getElementById('nome-anuncio').value)
+                        formData.append('nome', document.getElementById('nome-anuncio-cadastro').value)
                         formData.append('desc', document.getElementById('desc').value)
                         formData.append('valor', document.getElementById('preco').value)
                         formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
