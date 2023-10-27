@@ -40,12 +40,12 @@ if (isset($_GET['user'])) {
                         Pesquisa
                     </span>
                 </a>
-				<a href="#" class="nav-link mobile-hide">
-					<i class="bi bi-box-seam"></i>
-					<span>
-						Seus pedidos
-					</span>
-				</a>
+                <a href="#" class="nav-link mobile-hide">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Seus pedidos
+                    </span>
+                </a>
                 <a href="notificacoes.php" class="nav-link">
                     <i class="bi bi-bell"></i>
                     <span>
@@ -127,7 +127,7 @@ if (isset($_GET['user'])) {
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="conversas.php?username=<?php echo $dados['nomeUsuarioNegocioVendedora']?>">
+                                            <a class="dropdown-item" href="conversas.php?username=<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>">
                                                 <i class="bi bi-chat"></i>
                                                 Iniciar conversa
                                             </a>
@@ -138,9 +138,24 @@ if (isset($_GET['user'])) {
                             <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
                             <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
                             <div id="bio-options">
-                                <button type="button" class="button bio-option">
-                                    Seguir
-                                </button>
+                                <?php
+                                
+                                    $seguidor = new Seguidor();
+                                    
+                                    $vendedora = new Vendedora();
+                                    $vendedora->setIdVendedora($dados['idVendedora']);
+
+                                    $cliente = new Cliente();
+                                    $cliente->setIdCliente($_SESSION['id']);
+
+                                    $seguidor->setCliente($cliente);
+                                    $seguidor->setVendedora($vendedora);
+
+                                    $isFollowed = daoSeguidor::consultaSeguidor($seguidor);
+                                ?>
+                                <a href="<?php echo $isFollowed ? "unfollow" : "follow"?>.php?user=<?php echo $dados['nomeUsuarioNegocioVendedora']?>" class="button <?php echo $isFollowed ? "button-secondary" : ""?> bio-option">
+                                <?php echo $isFollowed ? "Parar de seguir" : "Seguir"?>
+                                </a>
                                 <button type="button" class="button bio-option">
                                     Compartilhar
                                     <i class="bi bi-share-fill"></i>
@@ -167,7 +182,11 @@ if (isset($_GET['user'])) {
                         </div>
                         <div class="negocio-information">
                             <i class="bi bi-people"></i>
-                            <span>35</span> Seguidores
+                            <?php
+                            $qtdseguidores = daoSeguidor::contarSeguidor($dados['idVendedora']);
+
+                            ?>
+                            <span><?php echo $qtdseguidores ?></span> Seguidores
                         </div>
                     </div>
                     <div id="bio-products">
