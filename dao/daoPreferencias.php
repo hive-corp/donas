@@ -1,3 +1,5 @@
+<?php
+
 require_once "global.php";
 
 class daoPreferencias
@@ -40,9 +42,9 @@ class daoPreferencias
 
         $prepareStatement = $connection->prepare($queryInsert);
 
-        $prepareStatement->bindValue(1, $Seguidor->getCliente()->getIdCliente());
-        $prepareStatement->bindValue(2, $Seguidor->getCategoria()->getIdCategoria());
-        $prepareStatement->bindValue(3, $Seguidor->getIdPreferencias());
+        $prepareStatement->bindValue(1, $Preferencias->getCliente()->getIdCliente());
+        $prepareStatement->bindValue(2, $Preferencias->getCategoria()->getIdCategoria());
+        $prepareStatement->bindValue(3, $Preferencias->getIdPreferencias());
 
         $prepareStatement->execute();
     }
@@ -51,10 +53,11 @@ class daoPreferencias
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT * FROM tbPreferencias
+        $querySelect = "SELECT * FROM tbPreferencias";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
     }
+}

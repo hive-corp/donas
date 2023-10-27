@@ -1,3 +1,9 @@
+<?php
+
+require_once "global.php"
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -322,7 +328,7 @@
                                 Garanta uma <span class="highlight">experiência personalizada</span> nos dizendo o que você gostaria de ver por <span class="highlight">aqui!</span>
                                 <div id="preferencias">
                                     <div id="preferencias-grid">
-                                        <input type="checkbox" class="checkbox-preferencia" name="artesanato" id="artesanato">
+                                        <input type="checkbox" class="checkbox-preferencia" name="artesanato" id="artesanato" value='1'>
                                         <label class="card-categoria" for="artesanato">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/artesanato.svg" alt="Artesanato" />
@@ -330,7 +336,7 @@
                                             <p class="nome-categoria">Artesanato</p>
                                         </label>
 
-                                        <input type="checkbox" class="checkbox-preferencia" name="culinaria" id="culinaria">
+                                        <input type="checkbox" class="checkbox-preferencia" name="culinaria" id="culinaria" value='2'>
                                         <label class="card-categoria" for="culinaria">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/culinaria.svg" alt="Culinária" />
@@ -338,7 +344,7 @@
                                             <p class="nome-categoria">Culinária</p>
                                         </label>
 
-                                        <input type="checkbox" class="checkbox-preferencia" name="manicure" id="manicure">
+                                        <input type="checkbox" class="checkbox-preferencia" name="manicure" id="manicure" value='3'>
                                         <label class="card-categoria" for="manicure">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/manicure.svg" alt="Manicure" />
@@ -346,7 +352,7 @@
                                             <p class="nome-categoria">Manicure</p>
                                         </label>
 
-                                        <input type="checkbox" class="checkbox-preferencia" name="roupas" id="roupas">
+                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="roupas" value='4'>
                                         <label class="card-categoria" for="roupas">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/roupas.svg" alt="Roupas" />
@@ -354,7 +360,7 @@
                                             <p class="nome-categoria">Roupas</p>
                                         </label>
 
-                                        <input type="checkbox" class="checkbox-preferencia" name="joias" id="joias">
+                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="joias" value='5'>
                                         <label class="card-categoria" for="joias">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/joias.svg" alt="Joias" />
@@ -362,7 +368,7 @@
                                             <p class="nome-categoria">Joias</p>
                                         </label>
 
-                                        <input type="checkbox" class="checkbox-preferencia" name="livro" id="livro">
+                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="livro" value='6'>
                                         <label class="card-categoria" for="livro">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/livro.svg" alt="Livros" />
@@ -370,14 +376,30 @@
                                             <p class="nome-categoria">Livros</p>
                                         </label>
 
-                                        <input type="checkbox" class="checkbox-preferencia" name="beleza" id="beleza">
+                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="beleza" value='7'>
                                         <label class="card-categoria" for="beleza">
                                             <div class="img-categoria">
                                                 <img src="assets/img/categories/beleza.svg" alt="Beleza" />
                                             </div>
                                             <p class="nome-categoria">Beleza</p>
                                         </label>
+                                        <?php
+                                        $categorias = daoCategoria::listar();
+
+                                        foreach ($categorias as $c) {
+                                        ?>
+                                            <input type="checkbox" class="checkbox-preferencia" name="categoria" id="<?php echo $c['nomeCategoria']?>" value="<?php echo $c['idCategoria']?>">
+                                            <label class="card-categoria" for="<?php echo $c['nomeCategoria']?>">
+                                                <div class="img-categoria">
+                                                    <img src="<?php echo $c['fotoCategoria']?>" alt="<?php echo $c['nomeCategoria']?>" />
+                                                </div>
+                                                <p class="nome-categoria"><?php echo $c['nomeCategoria']?></p>
+                                            </label>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="modal-footer d-flex justify-content-between">
@@ -482,7 +504,14 @@
                     uf = document.getElementById('uf').value,
                     numero = document.getElementById('numero').value,
                     complemento = document.getElementById('complemento').value,
-                    cep = campoCep.value
+                    cep = campoCep.value,
+                    preferenciasCheck = document.querySelectorAll('input[name=categoria]:checked')
+
+                let preferencias = []
+
+                preferenciasCheck.forEach(item => {
+                    preferencias.push(item.value)
+                })
 
                 nomeModal.innerText = document.getElementById('nome').value
                 usernameModal.innerText = document.getElementById('username').value
@@ -490,7 +519,7 @@
                 emailModal.innerText = document.getElementById('email').value
                 nascModal.innerText = document.getElementById('date').value.replaceAll('-', '/')
                 enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
-
+            
                 confirmarCadastro.addEventListener('click', () => {
                     let canvas = cropper.getCroppedCanvas({
                         width: 512,
@@ -516,6 +545,7 @@
                         formData.append('uf', uf)
                         formData.append('cep', cep.replace(/\D/g, ''))
                         formData.append('comp', complemento)
+                        formData.append('preferencias', JSON.stringify(preferencias))
 
                         fetch('api/cliente/index.php', {
                             method: 'POST',
