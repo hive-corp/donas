@@ -246,7 +246,7 @@ require_once "validador.php";
 					</span>
 					<a href="pesquisa.php" class="veja-mais load"> veja mais </a>
 					<div class="carrossel-cards placeholder-element">
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -269,7 +269,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -292,7 +292,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -315,7 +315,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -338,7 +338,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -361,7 +361,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -384,7 +384,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -418,7 +418,7 @@ require_once "validador.php";
 							$qtdestrelas = $a['estrelasAnuncio'];
 
 						?>
-							<a class="card-produto" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
+							<a class="card-anuncio" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
 								<div class="img-card">
 									<img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
 								</div>
@@ -461,7 +461,7 @@ require_once "validador.php";
 					</span>
 					<a href="pesquisa.php" class="veja-mais load"> veja mais </a>
 					<div class="carrossel-cards placeholder-element">
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -484,7 +484,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -507,7 +507,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -530,7 +530,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -553,7 +553,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -576,7 +576,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -599,7 +599,7 @@ require_once "validador.php";
 								</div>
 							</div>
 						</div>
-						<div class="card-produto" href="produto.php" aria-hidden="true">
+						<div class="card-anuncio" href="produto.php" aria-hidden="true">
 							<div class="img-card placeholder-glow">
 								<span class="placeholder"></span>
 							</div>
@@ -633,7 +633,7 @@ require_once "validador.php";
 							$qtdestrelas = $a['estrelasAnuncio'];
 
 						?>
-							<a class="card-produto" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
+							<a class="card-anuncio" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
 								<div class="img-card">
 									<img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
 								</div>
