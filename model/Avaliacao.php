@@ -2,6 +2,7 @@
 class Avaliacao {
     private $idAvaliacao ;
     private $conteudoAvaliacao ;
+    private $estrelasAvaliacao ;
    
     private $Anuncio ;
     private $Cliente ;
@@ -18,17 +19,24 @@ class Avaliacao {
     public function getConteudoAvaliacao() {
         return $this->conteudoAvaliacao;
     }
+    public function getEstrelasAvaliacao() {
+        return $this->estrelasAvaliacao;
+    }
     public function getAnuncio() {
         return $this->Anuncio;
     }
     public function getCliente() {
         return $this->Cliente;
     }
+
     public function setIdAvaliacao($idAvaliacao) {
         $this->idAvaliacao=$idAvaliacao;
     }
     public function setConteudoAvaliacao($conteudoAvaliacao) {
         $this->conteudoAvaliacao=$conteudoAvaliacao;
+    }
+    public function setEstrelasAvaliacao($estrelasAvaliacao) {
+        $this->estrelasAvaliacao=$estrelasAvaliacao;
     }
     public function setAnuncio($Anuncio) {
         $this->Anuncio=$Anuncio;
