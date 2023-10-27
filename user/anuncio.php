@@ -108,17 +108,17 @@ if (isset($_GET['a'])) {
                 <div id="content">
 
                     <div id="produto">
-                        <div id="foto-produto">
+                        <div id="foto-anuncio">
                             <button onclick="history.back()" id="voltar">
                                 <i class="bi bi-arrow-left"></i>
                             </button>
                             <img src="../<?php echo $anuncio['imagemPrincipalAnuncio'] ?>">
                         </div>
-                        <div id="info-produto">
-                            <div id="nome-produto">
+                        <div id="info-anuncio">
+                            <div id="nome-anuncio">
                                 <?php echo $anuncio['nomeAnuncio'] ?>
                             </div>
-                            <div id="preco-produto">
+                            <div id="preco-anuncio">
                                 R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',') ?>
                             </div>
                             <?php
@@ -128,7 +128,7 @@ if (isset($_GET['a'])) {
                             <?php
                             }
                             ?>
-                            <div id="avaliacao-produto">
+                            <div id="avaliacao-anuncio">
                                 <?php
                                 $qtdestrelas = $anuncio['estrelasAnuncio'];
 
@@ -143,27 +143,77 @@ if (isset($_GET['a'])) {
                                     <i class="bi bi-star"></i>
                                 <?php
                                 }
+
+                                $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
+
+                                echo $qtdavaliacoes > 1 ? "(".$qtdavaliacoes . " avaliações)" : "(".$qtdavaliacoes . " avaliação)";
                                 ?>
                             </div>
-                            <div id="categoria-produto">
+                            <div id="categoria-anuncio">
                                 <?php echo $anuncio['nomeCategoria'] ?>
                             </div>
-                            <a href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora'] ?>" id="negocio-produto">
-                                Por <?php echo $anuncio['nomeNegocioVendedora'] ?>
-                            </a>
-                            <div id="descricao-produto">
-                                <div id="titulo-descricao">Descrição</div>
-                                <div id="texto-descricao"><label for="show-descricao"><?php echo $anuncio['descricaoAnuncio'] ?></label>
+
+                            <div class="accordion accordion-flush accordion-anuncio">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-descricao" aria-expanded="true" aria-controls="collapse-descricao">
+                                            Descrição
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-descricao" class="accordion-collapse collapse" data-bs-parent="#accordion-descricao">
+                                        <div class="accordion-body">
+                                            <?php echo $anuncio['descricaoAnuncio'] ?>
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="checkbox" id="show-descricao">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-empresa" aria-expanded="false" aria-controls="collapse-empresa">
+                                            Sobre a empresa
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-empresa" class="accordion-collapse collapse" data-bs-parent="#accordion-empresa">
+                                        <a class="accordion-body accordion-empresa" href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora'] ?>">
+                                            <img src="../<?php echo $anuncio['fotoNegocioVendedora'] ?>" id="foto-accordion">
+                                            <div id="empresa-anuncio">
+                                                <?php
+                                                echo $anuncio['nomeNegocioVendedora'];
+                                                if ($anuncio['nivelNegocioVendedora'] == 1) {
+                                                ?>
+                                                    <i class="bi bi-gem highlight"></i>
+                                                <?php
+                                                }
+
+                                                ?>
+                                            </div>
+                                            <div id="categoria-empresa">
+                                                <?php echo $anuncio['nomeCategoria'] ?>
+                                            </div>
+                                            <div id="anuncios-empresa">
+                                                <?php
+                                                $qtdanuncio = daoAnuncio::contarAnuncioGeral($anuncio['idVendedora']);
+
+                                                echo $qtdanuncio > 1 ? $qtdanuncio . " anúncios" : $qtdanuncio . " anúncio";
+                                                ?>
+                                            </div>
+                                            <div id="seguidores-empresa">
+                                            <?php
+                                                $qtdseguidores = daoSeguidor::contarSeguidor($anuncio['idVendedora']);
+
+                                                echo $qtdseguidores > 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
+                                                ?>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div id="comentarios-produto">
+                    <div id="comentarios-anuncio">
                         <div id="comentarios-titulo">
-                            Comentarios
+                            Avaliações
                         </div>
-                        <div id="input-comentario">
+                        <form id="input-comentario" method="post" action="avaliar-anuncio.php?a=<?php echo $anuncio['idAnuncio']?>" class="needs-validation" novalidate>
                             <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-comentario">
                             <div id="nome-comentario">
                                 <?php echo $_SESSION['nome'] ?>
@@ -184,44 +234,49 @@ if (isset($_GET['a'])) {
                                 <div class="input-wrapper">
                                     <textarea name="comentario" id="comentario" cols="30" rows="4" placeholder="Sua avaliação" required></textarea>
                                 </div>
+                                <div class="invalid-feedback">
+                                    Você não preencheu o campo de conteúdo.
+                                </div>
                             </div>
                             <div class="input input-enviar">
                                 <button class="button button-square" id="enviar">Enviar</button>
                             </div>
-                        </div>
+                        </form>
                         <div id="comentarios">
-                            <div class="comentario">
-                                <img src="../assets/img/foto.png" class="foto-comentario">
-                                <div class="nome-comentario">
-                                    Isabelle Silva
+                            <?php
+                            $avaliacoes = daoAvaliacao::listarPorAnuncio($anuncio['idAnuncio']);
+
+                            foreach ($avaliacoes as $a) {
+                            ?>
+                                <div class="comentario">
+                                    <img src="../<?php echo $a['fotoCliente'] ?>" class="foto-comentario">
+                                    <div class="nome-comentario">
+                                        <?php echo $a['nomeCliente'] ?>
+                                    </div>
+                                    <div class="avaliacao-comentario">
+                                        <?php
+                                        $qtdestrelas = $a['estrelasAvaliacao'];
+
+                                        for ($i = 0; $i < $qtdestrelas; $i++) {
+                                        ?>
+                                            <i class="bi bi-star-fill"></i>
+                                        <?php
+                                        }
+
+                                        for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                        ?>
+                                            <i class="bi bi-star"></i>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="conteudo-comentario">
+                                        <?php echo $a['conteudoAvaliacao'] ?>
+                                    </div>
                                 </div>
-                                <div class="avaliacao-comentario">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                </div>
-                                <div class="conteudo-comentario">
-                                    Achei o bolo excelente. Minha filha amou, recomendo muito!!!
-                                </div>
-                            </div>
-                            <div class="comentario">
-                                <img src="../assets/img/foto.png" class="foto-comentario">
-                                <div class="nome-comentario">
-                                    Marcela Dantas
-                                </div>
-                                <div class="avaliacao-comentario">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                </div>
-                                <div class="conteudo-comentario">
-                                    Amei!!!
-                                </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
 
@@ -229,7 +284,7 @@ if (isset($_GET['a'])) {
             <?php
             } else {
             ?>
-                <h2 class="mx-auto my-auto">Nenhum negócio com esse nome foi encontrado.</h2>
+                <h2 class="mx-auto my-auto">Nenhum anúncio foi encontrado.</h2>
             <?php
             } ?>
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
@@ -240,79 +295,18 @@ if (isset($_GET['a'])) {
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script>
-        var enviarComentario = document.querySelector("#enviar"),
+        var inputComentario = document.querySelector("#input-comentario"),
             conteudoInputComentario = document.querySelector("#comentario")
 
-        enviarComentario.addEventListener("click", () => {
+        inputComentario.addEventListener("submit", e => {
 
-            let comentario = document.createElement("div")
-            comentario.setAttribute("class", "comentario")
+            e.preventDefault();
+            e.stopPropagation()
 
-            let nome = document.createElement("div")
-            nome.setAttribute("class", "nome-comentario")
-            nome.innerHTML = '<?php echo $_SESSION['nome'] ?>'
-
-            let conteudo = document.createElement("div")
-            conteudo.setAttribute("class", "conteudo-comentario")
-            conteudo.innerHTML = conteudoInputComentario.value
-
-            let img = document.createElement("img")
-            img.setAttribute("class", "foto-comentario")
-            img.src = '../<?php echo $_SESSION['foto'] ?>'
-
-            let avaliacao = document.createElement("div")
-            avaliacao.setAttribute("class", "avaliacao-comentario")
-
-            let estrelas = document.getElementsByName('rate')
-
-            estrelas.forEach(item => {
-                if (item.checked) {
-                    let qtd = item.value
-
-                    console.log(qtd)
-
-                    if (qtd == 1) {
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                    } else if (qtd == 2) {
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                    } else if (qtd == 3) {
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                    } else if (qtd == 4) {
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star'></i>"
-                    } else if (qtd == 5) {
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                        avaliacao.innerHTML += "<i class='bi bi-star-fill'></i> "
-                    }
-                }
-
-            })
-
-            comentario.appendChild(img)
-            comentario.appendChild(nome)
-            comentario.appendChild(conteudo)
-            comentario.appendChild(avaliacao)
-
-            if (conteudoInputComentario.value != "") {
-                comentarios.appendChild(comentario)
+            if (!inputComentario.checkValidity()) {
+                inputComentario.classList.add('was-validated')
+            } else{
+                inputComentario.submit();
             }
         })
     </script>

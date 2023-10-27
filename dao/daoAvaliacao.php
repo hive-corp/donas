@@ -1,3 +1,5 @@
+<?php
+
 require_once "global.php";
 
 class daoAvaliacao
@@ -7,7 +9,7 @@ class daoAvaliacao
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "INSERT tbAvaliacao(conteudoAvaliacao, estrelasAvaliacao, idAnuncio, isCliente)
+        $queryInsert = "INSERT tbAvaliacao(conteudoAvaliacao, estrelasAvaliacao, idAnuncio, idCliente)
             VALUES (?, ?, ?, ?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
@@ -15,7 +17,7 @@ class daoAvaliacao
         $prepareStatement->bindvalue(1, $Avaliacao->getConteudoAvaliacao());
         $prepareStatement->bindvalue(2, $Avaliacao->getEstrelasAvaliacao());
         $prepareStatement->bindvalue(3, $Avaliacao->getAnuncio()->getIdAnuncio());
-        $prepareStatement->bindvalue(3, $Avaliacao->getCliente()->getIdCliente());
+        $prepareStatement->bindvalue(4, $Avaliacao->getCliente()->getIdCliente());
 
         $prepareStatement->execute();
     }
@@ -63,3 +65,44 @@ class daoAvaliacao
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public static function listarPorAnuncio($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT *, nomeCliente, fotoCliente FROM tbAvaliacao
+                        INNER JOIN tbCliente ON tbCliente.idCliente = tbAvaliacao.idCliente
+                        WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($querySelect);
+        $prepareStatement->bindValue(1, $id);
+        $prepareStatement->execute();
+        $lista = $prepareStatement->fetchAll();
+        return $lista;
+    }
+
+    public static function contarAvaliacaoAnuncio($id)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAvaliacao) FROM tbAvaliacao WHERE idAnuncio = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        $count = $stmt->fetch()[0];
+
+        return $count;
+    }
+
+    public static function consultarMediaAvaliacao($id){
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare(("SELECT AVG(estrelasAvaliacao) FROM tbAvaliacao WHERE idAnuncio = ?"));
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        $avg = $stmt->fetch()[0];
+
+        return $avg;
+    }
+}

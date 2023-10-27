@@ -58,6 +58,22 @@ class daoAnuncio
         $prepareStatement->execute();
     }
 
+    public static function editarEstrelas($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbAnuncio
+                            SET estrelasAnuncio = ?
+                            WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $Anuncio->getEstrelasAnuncio());
+        $prepareStatement->bindValue(2, $Anuncio->getIdAnuncio());
+
+        $prepareStatement->execute();
+    }
+
     public static function editarFoto($Anuncio)
     {
         $connection = Conexao::conectar();
@@ -123,7 +139,7 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare('SELECT *, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+        $stmt = $connection->prepare('SELECT *, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora, fotoNegocioVendedora FROM tbAnuncio
                             INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                             INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
                             WHERE idAnuncio = ? ');
@@ -172,14 +188,15 @@ class daoAnuncio
         return $countAnuncioProduto;
     }
 
-    public static function contarAnuncioGeral($Anuncio)
+    public static function contarAnuncioGeral($id)
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ?");
+        $stmt->bindValue(1, $id);
         $stmt->execute();
 
-        $countAnuncioGeral = $stmt->fetchAll();
+        $countAnuncioGeral = $stmt->fetch()[0];
 
         return $countAnuncioGeral;
     }
