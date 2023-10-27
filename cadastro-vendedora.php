@@ -574,7 +574,7 @@
             })
 
             window.addEventListener('DOMContentLoaded', async () => {
-                const response = await fetch('./api/categoria')
+                const response = await fetch('./api/categoria/?categorias')
                 const data = await response.json()
 
                 let selectCategoria = document.querySelector('#categoria')
