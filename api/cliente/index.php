@@ -69,6 +69,20 @@ switch ($method) {
         $cliente->setFotoCliente($arquivo);
 
         daoCliente::editarFoto($cliente);
+
+        $preferencias = json_decode($_POST['preferencias']);
+
+        foreach($preferencias as $p){
+            $categoria = new Categoria();
+            $categoria->setIdCategoria($p);
+
+            $preferencia = new Preferencias();
+            $preferencia->setCategoria($categoria);
+            $preferencia->setCliente($cliente);
+
+            daoPreferencias::cadastrar($preferencia);
+        }
+
         break;
 
     case "PUT":
