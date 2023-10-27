@@ -13,6 +13,11 @@
     scrollbar-width: none;
 }
 
+*:focus {
+    outline: 0 !important;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+  }
+
 a:focus,
 a:active,
 a:visited {
@@ -906,12 +911,12 @@ input:checked+.tipo-login:hover {
     border-radius: 4px;
 }
 
-.button-secondary {
+.button-secondary, a.button-secondary {
     background-color: transparent;
     color: #CB6CE6;
 }
 
-.button-secondary:hover {
+.button-secondary:hover, a.button-secondary:hover {
     color: white
 }
 
@@ -1623,6 +1628,7 @@ a.veja-mais {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    border-radius: 50%;
 }
 
 .nome-categoria {
@@ -1643,7 +1649,7 @@ a.veja-mais {
     box-shadow: 0 0 0 6px #9D007A33;
 }
 
-.card-produto {
+.card-anuncio {
     width: 180px;
     font-size: 0.9em;
     margin-right: 24px;
@@ -1674,11 +1680,11 @@ a.veja-mais {
     transition: opacity .3s;
 }
 
-.card-produto:hover .img-card::before {
+.card-anuncio:hover .img-card::before {
     opacity: 1;
 }
 
-.card-produto:hover .img-card img {
+.card-anuncio:hover .img-card img {
     transform: scale(1.15);
 }
 
@@ -1774,7 +1780,7 @@ a.veja-mais {
     transition: .2s opacity;
 }
 
-.produtos .card-produto {
+.produtos .card-anuncio {
     margin-right: 0;
 }
 
@@ -1953,8 +1959,7 @@ a.veja-mais {
     display: none;
 }
 
-#foto-anuncio {
-    place-self: center;
+#foto-anuncio-cadastro {
     width: min-content;
     position: relative;
     overflow: hidden;
@@ -1966,7 +1971,7 @@ a.veja-mais {
     transition: box-shadow .3s;
 }
 
-#foto-anuncio::before {
+#foto-anuncio-cadastro::before {
     content: 'ESCOLHER';
     position: absolute;
     background: #420C3388;
@@ -1983,11 +1988,11 @@ a.veja-mais {
     transition: opacity .3s;
 }
 
-#foto-anuncio:hover {
+#foto-anuncio-cadastro:hover {
     box-shadow: 0 0 0 6px #97188133;
 }
 
-#foto-anuncio:hover::before {
+#foto-anuncio-cadastro:hover::before {
     opacity: 1;
 }
 
@@ -2709,13 +2714,13 @@ a.config-item {
 #user-product #content {
     display: grid;
     grid-template-areas:
-        "info-produto"
+        "info-anuncio"
         "comentarios";
     gap: 16px;
 }
 
 #produto {
-    grid-area: info-produto;
+    grid-area: info-anuncio;
     background-color: var(--bg-color);
     border: 1px solid var(--bd-color);
     border-radius: 8px;
@@ -2728,10 +2733,10 @@ a.config-item {
     gap: 16px;
 }
 
-#foto-produto {
+#foto-anuncio {
     grid-area: foto;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 #voltar {
@@ -2746,41 +2751,41 @@ a.config-item {
     display: none;
 }
 
-#foto-produto img {
+#foto-anuncio img {
     aspect-ratio: 1/1;
     width: 100%;
     object-fit: cover;
-    border-radius: 6px;
-    border: 4px solid #971881;
+    border-radius: 8px;
+    border: 6px solid #971881;
 }
 
-#info-produto {
+#info-anuncio {
     display: grid;
-    grid-template-rows: 1fr auto auto auto 1fr auto;
+    grid-template-rows: auto auto auto auto 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "nome nome"
-        "preco comprar"
         "avaliacao avaliacao"
+        "preco comprar"
         "categoria categoria"
-        "negocio negocio"
-        "descricao descricao";
+        "accordion accordion";
     align-self: center;
-    gap: 12px;
+    gap: 8px;
     padding: 24px;
     background: var(--bg-color);
 }
 
-#nome-produto {
+#nome-anuncio {
     grid-area: nome;
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
-#preco-produto {
+#preco-anuncio {
     grid-area: preco;
-    font-size: 1.2em;
+    font-size: 1.6em;
     color: #CB6CE6;
     font-weight: bold;
+    align-self: center;
 }
 
 #encomendar {
@@ -2790,12 +2795,13 @@ a.config-item {
     font-size: 1em;
 }
 
-#avaliacao-produto {
+#avaliacao-anuncio {
     grid-area: avaliacao;
-    color: #CB6CE6
+    color: #CB6CE6;
+    font-size: 1.2em;
 }
 
-#categoria-produto {
+#categoria-anuncio {
     grid-area: categoria;
     background: var(--select-bg);
     padding: 4px 16px;
@@ -2807,47 +2813,84 @@ a.config-item {
     width: fit-content;
 }
 
-#categoria-produto:hover {
+#categoria-anuncio:hover {
     background: #8f95a3;
 }
 
-#negocio-produto {
-    grid-area: negocio;
-    color: lightslategray
+.accordion-anuncio{
+    grid-area: accordion;
 }
 
-#descricao-produto {
-    grid-area: descricao;
+.accordion-anuncio .accordion-item{
+    width: 100%;
+    border: 0;
+    background: var(--bg-color);
+    color:var(--text-color);
+}
+
+.accordion-anuncio .accordion-button:focus{
+        box-shadow: 0;
+    background: var(--bg-color);
+}
+
+.accordion-anuncio .accordion-button{
+    padding-left: 0;
+    padding-bottom: 0;
+    font-size: 24px;
+    color:var(--text-color);
+    background: var(--bg-color);
+    border: 0;
+    box-shadow: none;
+}
+
+.accordion-button::after,
+.accordion-button:not(.collapsed)::after {
+    background-image: none;
+}
+
+.accordion-anuncio .accordion-body{
+    padding-left: 0;
+}
+
+.accordion-empresa{
     display: grid;
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 1fr;
-    gap: 4px;
+    grid-template-areas:
+    "foto nome anuncios"
+    "foto categoria seguidores";
+    grid-template-columns: 65px 1fr 1fr;
+    column-gap: 12px;
 }
 
-#titulo-descricao {
-    font-size: 1.5em;
+#foto-accordion{
+    grid-area: foto;
+    width: 65px;
+    aspect-ratio: 1/1;
+    border: 4px solid #CB6CE6;
+    border-radius: 50%;
 }
 
-#texto-descricao {
+#empresa-anuncio{
+    font-size: 1.2em;
+}
+
+#categoria-empresa{
+    grid-area: categoria;
     color: lightslategray;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    height: 2em;
-    overflow: hidden;
-    transform: height 0.3s ease-in-out;
 }
 
-#show-descricao {
-    display: none;
+#anuncios-empresa{
+    grid-area: anuncios;
+    color: #CB6CE6;
+    justify-self: end;
 }
 
-#info-produto:has(#show-descricao:checked) #texto-descricao {
-    overflow: visible;
-    white-space: wrap;
-    height: auto
+#seguidores-empresa{
+    grid-area: seguidores;
+    color: lightslategray;
+    justify-self: end;
 }
 
-#comentarios-produto {
+#comentarios-anuncio {
     grid-area: comentarios;
     background-color: var(--bg-color);
     border: 1px solid var(--bd-color);
@@ -2862,17 +2905,19 @@ a.config-item {
 
 #comentarios-titulo {
     font-size: 1.5em;
+    padding-bottom: 12px;
 }
 
 #input-comentario {
     display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: 50px auto 1fr;
+    grid-template-rows: 1em auto auto auto;
+    grid-template-columns: 50px 1fr;
     grid-template-areas:
-        "foto nome avaliacao"
-        "foto textarea textarea"
-        "foto enviar enviar";
-    gap: 2px;
+        "foto nome"
+        "foto avaliacao"
+        "textarea textarea"
+        "enviar enviar";
+    gap: 4px;
     column-gap: 16px;
     width: 100%;
 }
@@ -2890,12 +2935,13 @@ a.config-item {
 
 #nome-comentario {
     font-weight: bold;
-    align-self: center;
+    align-self: start;
 }
 
 #avaliacao {
     grid-area: avaliacao;
     justify-self: start;
+    align-self: start;
 }
 
 #avaliacao:not(:checked)>input {
@@ -3382,14 +3428,15 @@ a.highlight {
         display: block;
     }
 
-    #foto-produto {
+    #foto-anuncio {
         width: 100%;
         aspect-ratio: 4/3;
         border-radius: 0;
         position: relative;
+        border: 0;
     }
 
-    #foto-produto img {
+    #foto-anuncio img {
         object-fit: cover;
         object-position: center;
         width: 110%;
@@ -3399,7 +3446,7 @@ a.highlight {
         border-radius: 0;
     }
 
-    #foto-produto::before {
+    #foto-anuncio::before {
         content: '';
         position: absolute;
         top: 0;
@@ -3410,7 +3457,7 @@ a.highlight {
         background: linear-gradient(transparent 10%, black);
     }
 
-    #info-produto {
+    #info-anuncio {
         position: relative;
         z-index: 1;
         padding: 24px;
@@ -3418,7 +3465,7 @@ a.highlight {
         transition: 0.3s border-radius ease-out;
     }
 
-    #comentarios-produto {
+    #comentarios-anuncio {
         z-index: 1;
         padding: 24px;
         border: 0;
@@ -3477,7 +3524,7 @@ a.highlight {
 
 
 @media (max-width:420px) {
-    .produtos .card-produto {
+    .produtos .card-anuncio {
         display: grid;
         grid-template-columns: 160px 1fr;
         width: 100%;
