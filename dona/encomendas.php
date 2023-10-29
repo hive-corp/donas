@@ -20,7 +20,11 @@ require_once "validador.php";
 
 <body>
     <div id="user-encomenda">
-        <nav id="nav">
+        <nav id="nav" class="nav-dona">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -32,6 +36,12 @@ require_once "validador.php";
                     <i class="bi bi-grid-fill"></i>
                     <span>
                         Painel
+                    </span>
+                </a>
+                <a href="meus-anuncios.php" class="nav-link">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Meus anúncios
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">
@@ -98,70 +108,66 @@ require_once "validador.php";
             </div>
             <div id="content">
                 <div id="encomendas">
-                    <div class="encomenda">
-                        <div class="info-encomenda">
-                            <img src="../assets/img/foto.png" alt="" class="foto-encomenda">
-                            <div class="nome-username">
-                                <div class="nome-encomenda">Claudia Alves</div>
-                                <div class="username-encomenda">@claudiaalves</div>
-                            </div>
-                        </div>
-                        <div class="dados-encomenda">
-                            <div class="nome-pedido">
-                                <label for="" class="form-label">Pedido</label>
-                                <div class="input-wrapper">
-                                    Bolo de Laranja
+                    <?php
+
+
+                    $pedidos = daoEncomenda::listarEncomendasVendedora($_SESSION['id']);
+
+                    foreach ($pedidos as $p) {
+                    ?>
+                        <div class="encomenda">
+                            <div class="info-encomenda">
+                                <img src="../<?php echo $p['fotoCliente'] ?>" alt="" class="foto-encomenda">
+                                <div class="nome-username">
+                                    <div class="nome-encomenda"><?php echo $p['nomeCliente'] ?></div>
+                                    <div class="username-encomenda">@<?php echo $p['nomeUsuarioCliente'] ?></div>
                                 </div>
                             </div>
-                            <div class="data-pedido">
-                                <label for="" class="form-label">Data do pedido</label>
-                                <div class="input-wrapper">
-                                    26/06/2023
+                            <div class="dados-encomenda">
+                                <div class="nome-pedido">
+                                    <label for="" class="form-label">Pedido</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['nomeAnuncio'] ?>
+                                    </div>
+                                </div>
+                                <div class="data-pedido">
+                                    <label for="" class="form-label">Data do pedido</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['dataEncomenda'] ?>
+                                    </div>
                                 </div>
                             </div>
+                            <select name="select-status" id="" class="select-status situacao-encomenda">
+                                <?php
+                                for ($i = 1; $i <= 3; $i++) {
+                                ?>
+                                    <option value="<?php echo $i ?>" <?php if ($p['statusEncomenda'] == $i) echo 'selected' ?>><?php
+                                                                                                                            switch ($i) {
+                                                                                                                                case 1:
+                                                                                                                                    echo 'Fazendo';
+                                                                                                                                    break;
+                                                                                                                                case 2:
+                                                                                                                                    echo 'Cancelado';
+                                                                                                                                    break;
+                                                                                                                                case 3:
+                                                                                                                                    echo 'Concluído';
+                                                                                                                                    break;
+                                                                                                                            }
+                                                                                                                            ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
                         </div>
-                        <select name="" id="" class="select-filtro situacao-encomenda">
-                            <option checked>Situação</option>
-                            <option value="1">Concluído</option>
-                            <option value="2">Fazendo</option>
-                            <option value="3">Cancelado</option>
-                        </select>
-                    </div>
-                    <div class="encomenda">
-                        <div class="info-encomenda">
-                            <img src="../assets/img/foto.png" alt="" class="foto-encomenda">
-                            <div class="nome-username">
-                                <div class="nome-encomenda">Claudia Alves</div>
-                                <div class="username-encomenda">@claudiaalves</div>
-                            </div>
-                        </div>
-                        <div class="dados-encomenda">
-                            <div class="nome-pedido">
-                                <label for="" class="form-label">Pedido</label>
-                                <div class="input-wrapper">
-                                    Bolo de Chocolate
-                                </div>
-                            </div>
-                            <div class="data-pedido">
-                                <label for="" class="form-label">Data do pedido</label>
-                                <div class="input-wrapper">
-                                    26/06/2023
-                                </div>
-                            </div>
-                        </div>
-                        <select name="" id="" class="select-filtro situacao-encomenda">
-                            <option checked>Situação</option>
-                            <option value="1">Concluído</option>
-                            <option value="2">Fazendo</option>
-                            <option value="3">Cancelado</option>
-                        </select>
-                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
         </main>
     </div>
-    
+
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
 
