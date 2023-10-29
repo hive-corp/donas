@@ -21,7 +21,11 @@ require_once "global.php";
 
 <body>
     <div id="user-dashboard">
-        <nav id="nav">
+        <nav id="nav" class="nav-dona">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link active">
                     <i class="bi bi-house-door-fill"></i>
@@ -33,6 +37,12 @@ require_once "global.php";
                     <i class="bi bi-grid"></i>
                     <span>
                         Painel
+                    </span>
+                </a>
+                <a href="meus-anuncios.php" class="nav-link">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Meus anúncios
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">
@@ -100,13 +110,105 @@ require_once "global.php";
             <div id="content">
                 <div class="section">
                     <div class="section-title placeholder-element placeholder-glow">
+                        <span class="placeholder w-75"></span>
+                    </div>
+                    <div class="section-title load">Dados sobre o seu negócio</div>
+                </div>
+                <div class="row">
+                    <?php
+
+                    $qtdestrelas = ceil(daoAnuncio::consultarMediaVendedora($_SESSION['id']));
+
+                    if ($qtdestrelas != '') {
+                    ?>
+                        <div class="col">
+                            <div class="chart-wrapper" id="estrelas-post">
+                                <canvas id="grafico-estrelas"></canvas>
+                            </div>
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center">
+
+                            <div class="stats-box p-4">
+                                <h3 class="highlight">
+                                    <?php
+
+                                    switch ($qtdestrelas) {
+                                        case 1:
+                                        case 2:
+                                    ?>
+                                            Puxa...
+                                        <?php
+                                            break;
+                                        case 3:
+                                        ?>
+                                            Quase lá!
+                                        <?php
+                                            break;
+                                        case 4:
+                                        case 5:
+                                        ?>
+                                            Parabéns!
+                                    <?php
+                                        default:
+                                            break;
+                                    }
+                                    ?>
+                                    <?php
+                                    for ($i = 0; $i < $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
+                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+                                    ?>
+                                </h3>
+                                <h4>
+                                    Você é uma vendedora nota <span class="highlight"><?php
+                                                                                        echo ceil($qtdestrelas);
+                                                                                        switch ($qtdestrelas) {
+                                                                                            case 1:
+                                                                                            case 2:
+                                                                                        ?>...
+                                        <?php
+                                                                                                break;
+                                                                                            case 3:
+                                        ?>.
+                                        <?php
+                                                                                                break;
+                                                                                            case 4:
+                                                                                            case 5:
+                                        ?>!
+                                <?php
+                                                                                            default:
+                                                                                                break;
+                                                                                        }
+                                ?></span>
+                                </h4>
+                            </div>
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="col d-flex justify-content-center align-items-center p-5">
+                            <h5>Sem informações o suficiente</h5>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <div class="section">
+                    <div class="section-title placeholder-element placeholder-glow">
                         <span class="placeholder col-4"></span>
                     </div>
                     <div class="section-title load">Seus anúncios</div>
                     <span class="veja-mais placeholder-element placeholder-glow">
                         <span class="placeholder col-4"></span>
                     </span>
-                    <a href="#" class="veja-mais load"> veja mais </a>
+                    <a href="#" class="veja-mais load">veja mais</a>
                 </div>
                 <div class="produtos placeholder-element">
                     <div class="card-anuncio" href="produto.php" aria-hidden="true">
@@ -344,11 +446,9 @@ require_once "global.php";
 
                     <?php
                     foreach (daoAnuncio::listarAnunciosVendedora($_SESSION['id']) as $a) {
-
                         $qtdestrelas = $a['estrelasAnuncio'];
-
                     ?>
-                        <a class="card-anuncio" href="produto.php">
+                        <a class="card-anuncio" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
                             <div class="img-card">
                                 <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>">
                             </div>
@@ -386,9 +486,6 @@ require_once "global.php";
                     <?php
                     }
                     ?>
-
-
-
                 </div>
             </div>
             <div id="stats">
@@ -424,10 +521,10 @@ require_once "global.php";
                     <div class="stats-body load">
                         <div class="row">
                             <div class="col">
-                                Hoje você teve: <span class="highlight">12 encomendas</span>
+                                Hoje você teve: <span class="highlight"><?php echo daoEncomenda::contarEncomendasHoje($_SESSION['id']) ?> encomendas</span>
                             </div>
                             <div class="col">
-                                Neste mês: <span class="highlight">56 encomendas</span>
+                                Neste mês: <span class="highlight"><?php echo daoEncomenda::contarEncomendasEsteMes($_SESSION['id']) ?> encomendas</span>
                             </div>
                         </div>
                         <div class="stats-carousel">
@@ -435,8 +532,12 @@ require_once "global.php";
                                 <div class="col">
                                     Seu anúncio melhor avaliado:
                                 </div>
-                                <a class="col highlight" href="produto.php">
-                                    Bombom trufado de limão
+                                <a class="col highlight d-flex flex-column justify-content-center" href="produto.php">
+                                    <?php
+                                    $melhor = daoAnuncio::consultarMelhorAvaliado($_SESSION['id']);
+
+                                    echo $melhor['nomeAnuncio']
+                                    ?>
                                 </a>
                             </div>
                             <div class="row">
@@ -444,7 +545,11 @@ require_once "global.php";
                                     Seu anúncio mais encomendado:
                                 </div>
                                 <a class="col highlight" href="produto.php">
-                                    Bolo de Chocolate
+                                    <?php
+                                    $mais = daoAnuncio::consultarMaisEncomendado($_SESSION['id']);
+
+                                    echo $mais['nomeAnuncio']
+                                    ?>
                                 </a>
                             </div>
                         </div>
@@ -551,61 +656,28 @@ require_once "global.php";
                         </div>
                     </div>
                     <div class="stats-body load">
-                        <a class="stats-item" href="encomendas.php">
-                            <div class="stats-foto placeholder-glow">
-                                <img src="../assets/img/Adm-dash.jpg" alt="">
-                            </div>
-                            <div class="stats-name placeholder-glow">
-                                Lúcia Rodrigues
-                            </div>
-                            <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Bombom trufado de limão</span>
-                            </div>
-                        </a>
-                        <a class="stats-item" href="encomendas.php">
-                            <div class="stats-foto placeholder-glow">
-                                <img src="../assets/img/Denun01.jpg" alt="">
-                            </div>
-                            <div class="stats-name placeholder-glow">
-                                Maria de Lucas
-                            </div>
-                            <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Bombom trufado de limão</span>
-                            </div>
-                        </a>
-                        <a class="stats-item" href="encomendas.php">
-                            <div class="stats-foto placeholder-glow">
-                                <img src="../assets/img/Perfil1.jpg" alt="">
-                            </div>
-                            <div class="stats-name placeholder-glow">
-                                Luana Pinheiro Ferreira
-                            </div>
-                            <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Bolo de Chocolate</span>
-                            </div>
-                        </a>
-                        <a class="stats-item" href="encomendas.php">
-                            <div class="stats-foto placeholder-glow">
-                                <img src="../assets/img/Adm-dash.jpg" alt="">
-                            </div>
-                            <div class="stats-name placeholder-glow">
-                                Heloísa Silva
-                            </div>
-                            <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Docinhos Tradicionais</span>
-                            </div>
-                        </a>
-                        <a class="stats-item" href="encomendas.php">
-                            <div class="stats-foto placeholder-glow">
-                                <img src="../assets/img/Perfil.jpg" alt="">
-                            </div>
-                            <div class="stats-name placeholder-glow">
-                                Suzane Ferreira
-                            </div>
-                            <div class="stats-encomenda placeholder-glow">
-                                encomendou <span class="highlight">Bolo de Laranja</span>
-                            </div>
-                        </a>
+                        <?php
+
+
+                        $pedidos = daoEncomenda::listarEncomendasVendedora($_SESSION['id']);
+
+                        foreach ($pedidos as $p) {
+                        ?>
+                            <a class="stats-item" href="encomendas.php">
+                                <div class="stats-foto placeholder-glow">
+                                    <img src="../<?php echo $p['fotoCliente'] ?>" alt="">
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <?php echo $p['nomeCliente'] ?>
+                                </div>
+                                <div class="stats-encomenda placeholder-glow">
+                                    encomendou <span class="highlight"><?php echo $p['nomeAnuncio'] ?></span>
+                                </div>
+                            </a>
+                        <?php
+                        }
+                        ?>
+
                     </div>
                     <div class="stats-footer">
 
@@ -619,6 +691,7 @@ require_once "global.php";
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/vendor/chartjs/js/chart.js"></script>
     <script>
         var elem = document.querySelector(".stats-carousel")
 
@@ -629,6 +702,56 @@ require_once "global.php";
             autoPlay: 2500,
             wrapAround: true
         });
+
+        let cores = [
+            '#32103B',
+            '#572664',
+            '#6E347E',
+            '#7F3E91',
+            '#A857BF',
+            '#CB6CE6'
+        ]
+
+        new Chart(document.querySelector('#grafico-estrelas'), {
+            type: 'pie',
+            data: {
+                labels: <?php echo json_encode(array_keys(daoAnuncio::contarEstrelasAnuncioVendedora($_SESSION['id']))) ?>,
+                datasets: [{
+                    label: 'Quantidade de anúncios',
+                    data: <?php echo json_encode(array_values(daoAnuncio::contarEstrelasAnuncioVendedora($_SESSION['id']))) ?>,
+                    borderRadius: 4,
+                    color: 'rgb(0,0,0)',
+                    backgroundColor: cores
+                }]
+
+            },
+            options: {
+                responsive: true,
+                aspectRatio: 1 / 1,
+                plugins: {
+                    legend: {
+                        labels: {
+                            font: {
+                                size: 12,
+                                family: 'DM Sans',
+                            },
+                            color: '#666'
+                        },
+                    },
+                    title: {
+                        display: true,
+                        text: 'Quantidade de anúncios por estrela',
+                        font: {
+                            size: 14,
+                            family: 'DM Sans',
+                            weight: 'bold',
+                        },
+                        color: '#333'
+                    }
+
+                }
+            }
+        })
     </script>
 </body>
 
