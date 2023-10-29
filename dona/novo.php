@@ -105,7 +105,6 @@ require_once "validador.php";
                         <div class="input-wrapper">
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button button-secondary" data-bs-dismiss="modal">Voltar</button>
@@ -116,7 +115,11 @@ require_once "validador.php";
     </div>
 
     <div id="user-new">
-        <nav id="nav">
+        <nav id="nav" class="nav-dona">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -128,6 +131,12 @@ require_once "validador.php";
                     <i class="bi bi-grid"></i>
                     <span>
                         Painel
+                    </span>
+                </a>
+                <a href="meus-anuncios.php" class="nav-link">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Meus anúncios
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">

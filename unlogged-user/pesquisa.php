@@ -33,6 +33,10 @@
 
     <div id="user">
         <nav id="nav">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -46,7 +50,7 @@
                         Pesquisa
                     </span>
                 </a>
-				<a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
+                <a href="#" class="nav-link" data-bs-target="#modal-login" data-bs-toggle="modal">
                     <i class="bi bi-chat"></i>
                     <span>
                         Conversas

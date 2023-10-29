@@ -186,7 +186,11 @@ require_once "global.php";
     </div>
 
     <div id="user-config">
-        <nav id="nav">
+        <nav id="nav" class="nav-dona">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -198,6 +202,12 @@ require_once "global.php";
                     <i class="bi bi-grid"></i>
                     <span>
                         Painel
+                    </span>
+                </a>
+                <a href="meus-anuncios.php" class="nav-link">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Meus anúncios
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">
@@ -408,11 +418,11 @@ require_once "global.php";
                                 Insira uma categoria válida.
                             </div>
                         </div>
-                        
+
                         <div class="input input-tel">
                             <label class="form-label" for="telefone">Telefone<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="tel" name="telefone" id="telefone" value="<?php echo "(".substr($_SESSION['tel'],0, 2).") ".(strlen($_SESSION['tel'])==11 ? (substr($_SESSION['tel'], 2, 5).'-'.substr($_SESSION['tel'], 7, 4)) : (substr($_SESSION['tel'], 2, 4).'-'.substr($_SESSION['tel'], 6, 4)))?>">
+                                <input type="tel" name="telefone" id="telefone" value="<?php echo "(" . substr($_SESSION['tel'], 0, 2) . ") " . (strlen($_SESSION['tel']) == 11 ? (substr($_SESSION['tel'], 2, 5) . '-' . substr($_SESSION['tel'], 7, 4)) : (substr($_SESSION['tel'], 2, 4) . '-' . substr($_SESSION['tel'], 6, 4))) ?>">
                             </div>
                             <div class="invalid-feedback">
                                 Insira um telefone válido.

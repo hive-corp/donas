@@ -17,7 +17,7 @@ if (isset($_GET['user'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.'?></title>
+    <title><?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.' ?></title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
@@ -45,6 +45,10 @@ if (isset($_GET['user'])) {
 
     <div id="user-profile">
         <nav id="nav">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -77,101 +81,100 @@ if (isset($_GET['user'])) {
                 <button class="voltar" onclick="history.back()">
                     <i class="bi bi-arrow-left"></i>
                 </button>
-                <?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.'?>
+                <?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.' ?>
             </div>
             <div id="content">
-                <?php if(isset($dados['nomeNegocioVendedora'])){?>
-                <div id="negocio-bio">
-                    <div id="bio-photo">
-                        <img src="../<?php echo $dados['fotoNegocioVendedora'] ?>" alt="">
-                    </div>
-                    <div id="bio-info">
-                        <div id="bio-name">
-                            <?php echo $dados['nomeNegocioVendedora'] ?>
-                            <div class="dropdown-start dropdown">
-                                <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots-vertical"></i>
+                <?php if (isset($dados['nomeNegocioVendedora'])) { ?>
+                    <div id="negocio-bio">
+                        <div id="bio-photo">
+                            <img src="../<?php echo $dados['fotoNegocioVendedora'] ?>" alt="">
+                        </div>
+                        <div id="bio-info">
+                            <div id="bio-name">
+                                <?php echo $dados['nomeNegocioVendedora'] ?>
+                                <div class="dropdown-start dropdown">
+                                    <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-start dropdown-sobe">
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-bs-target="#modal-login" data-bs-toggle="modal">
+                                                <i class="bi bi-exclamation-triangle"></i>
+                                                Denunciar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" data-bs-target="#modal-login" data-bs-toggle="modal">
+                                                <i class="bi bi-chat"></i>
+                                                Iniciar conversa
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
+                            <div id="bio-desc">Tornando o seu mundo um pouco mais doce.
+                                - Sediada em SP
+                            </div>
+                            <div id="bio-options">
+                                <button type="button" class="button bio-option" data-bs-target="#modal-login" data-bs-toggle="modal">
+                                    Seguir
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-start dropdown-sobe">
-                                    <li>
-                                        <a class="dropdown-item" href="#" data-bs-target="#modal-login" data-bs-toggle="modal">
-                                            <i class="bi bi-exclamation-triangle"></i>
-                                            Denunciar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#" data-bs-target="#modal-login" data-bs-toggle="modal">
-                                            <i class="bi bi-chat"></i>
-                                            Iniciar conversa
-                                        </a>
-                                    </li>
-                                </ul>
+                                <button type="button" class="button bio-option">
+                                    Compartilhar
+                                    <i class="bi bi-share-fill"></i>
+                                </button>
                             </div>
                         </div>
-                        <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
-                        <div id="bio-desc">Tornando o seu mundo um pouco mais doce.
-                            - Sediada em SP
-                        </div>
-                        <div id="bio-options">
-                            <button type="button" class="button bio-option" data-bs-target="#modal-login" data-bs-toggle="modal">
-                                Seguir
-                            </button>
-                            <button type="button" class="button bio-option">
-                                Compartilhar
-                                <i class="bi bi-share-fill"></i>
-                            </button>
-                        </div>
                     </div>
-                </div>
-                <div id="negocio-info">
-                    <div class="negocio-information">
-                        <i class="bi bi-bag"></i>
-                        <?php
+                    <div id="negocio-info">
+                        <div class="negocio-information">
+                            <i class="bi bi-bag"></i>
+                            <?php
                             $qtdprodutos = daoAnuncio::contarAnuncioProduto($dados['idVendedora']);
-                        
-                        ?>
-                        <span><?php echo $qtdprodutos?></span> Produtos
-                    </div>
-                    <div class="negocio-information">
-                        <i class="bi bi-grid"></i>
-                        <?php
+
+                            ?>
+                            <span><?php echo $qtdprodutos ?></span> Produtos
+                        </div>
+                        <div class="negocio-information">
+                            <i class="bi bi-grid"></i>
+                            <?php
                             $qtdservicos = daoAnuncio::contarAnuncioServico($dados['idVendedora']);
-                        
+
+                            ?>
+                            <span><?php echo $qtdservicos ?></span> Serviços
+                        </div>
+                        <div class="negocio-information">
+                            <i class="bi bi-people"></i>
+                            <span>35</span> Seguidores
+                        </div>
+                    </div>
+                    <div id="bio-products">
+                        <?php
+
+                        $anuncios = daoAnuncio::listarAnunciosVendedora($dados['idVendedora']);
+
+                        foreach ($anuncios as $a) {
+
+                            $qtdestrelas = $a['estrelasAnuncio'];
+
                         ?>
-                        <span><?php echo $qtdservicos?></span> Serviços
+                            <a class="bio-product" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
+                                <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
+                            </a>
+
+                        <?php
+                        }
+
+                        ?>
+
                     </div>
-                    <div class="negocio-information">
-                        <i class="bi bi-people"></i>
-                        <span>35</span> Seguidores
-                    </div>
-                </div>
-                <div id="bio-products">
-                    <?php
-
-                    $anuncios = daoAnuncio::listarAnunciosVendedora($dados['idVendedora']);
-
-                    foreach ($anuncios as $a) {
-
-                        $qtdestrelas = $a['estrelasAnuncio'];
-
-                    ?>
-                        <a class="bio-product" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
-                        <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
-                        </a>
-                     
-                    <?php
-                    }
-
-                    ?>
-
-                </div>
                 <?php
-                }
-                else{
+                } else {
                 ?>
                     <h2 class="mx-auto my-auto">Nenhum negócio com esse nome foi encontrado.</h2>
                 <?php
-                }?>
+                } ?>
             </div>
         </main>
     </div>

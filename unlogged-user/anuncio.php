@@ -43,6 +43,10 @@ if (isset($_GET['a'])) {
 
     <div id="user-product">
         <nav id="nav">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -86,7 +90,7 @@ if (isset($_GET['a'])) {
                                 <?php echo $anuncio['nomeAnuncio'] ?>
                             </div>
                             <div id="preco-anuncio">
-                                R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',') ?>
+                                R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',', '.') ?>
                             </div>
                             <?php
                             if ($anuncio['nivelNegocioVendedora'] == 1) {

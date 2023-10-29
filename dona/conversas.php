@@ -43,7 +43,11 @@ require_once "validador.php";
     </div>
 
     <div id="user-chats">
-        <nav id="nav">
+        <nav id="nav" class="nav-dona">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -55,6 +59,12 @@ require_once "validador.php";
                     <i class="bi bi-grid"></i>
                     <span>
                         Painel
+                    </span>
+                </a>
+                <a href="meus-anuncios.php" class="nav-link">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Meus anúncios
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">
@@ -280,7 +290,7 @@ require_once "validador.php";
             $cliente = new Cliente();
             $cliente->setNomeUsuarioCliente($_GET['username']);
             $dados = daoCliente::consultarPorNomeUsuario($cliente);
-            
+
             if (!empty($dados)) {
         ?>
                 resgatarMensagens('<?php echo $dados['nomeCliente'] ?>', '<?php echo $dados['fotoCliente'] ?>', '<?php echo $dados['nomeUsuarioCliente'] ?>')

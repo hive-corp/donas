@@ -20,7 +20,11 @@ require_once "validador.php";
 
 <body>
     <div id="user-notifications">
-        <nav id="nav">
+        <nav id="nav" class="nav-dona">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -32,6 +36,12 @@ require_once "validador.php";
                     <i class="bi bi-grid"></i>
                     <span>
                         Painel
+                    </span>
+                </a>
+                <a href="meus-anuncios.php" class="nav-link">
+                    <i class="bi bi-box-seam"></i>
+                    <span>
+                        Meus anúncios
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link active">
@@ -58,36 +68,36 @@ require_once "validador.php";
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-				<a href="../">
-					<img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
-				</a>
-				<div id="info-user">
-					<div id="nome-user">
-						<?php echo $_SESSION['nome-empresa'] ?>
-					</div>
-					<div id="nick-user">
-						@<?php echo $_SESSION['username'] ?>
-					</div>
-				</div>
+                <a href="../">
+                    <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
+                </a>
+                <div id="info-user">
+                    <div id="nome-user">
+                        <?php echo $_SESSION['nome-empresa'] ?>
+                    </div>
+                    <div id="nick-user">
+                        @<?php echo $_SESSION['username'] ?>
+                    </div>
+                </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-                        <a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <main id="main">
@@ -101,7 +111,7 @@ require_once "validador.php";
         </main>
 
     </div>
-    
+
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
 
@@ -111,9 +121,9 @@ require_once "validador.php";
             fotoUsuario = document.querySelector('#foto-usuario'),
             html = document.querySelector('html')
 
-		if (localStorage.getItem('theme') == 'dark') {
-			html.classList.add('dark')
-		}
+        if (localStorage.getItem('theme') == 'dark') {
+            html.classList.add('dark')
+        }
 
         window.onload = () => {
             if (localStorage.getItem('imagemPerfil') === null) {
