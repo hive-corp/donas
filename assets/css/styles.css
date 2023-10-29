@@ -16,7 +16,7 @@
 *:focus {
     outline: 0 !important;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
-  }
+}
 
 a:focus,
 a:active,
@@ -140,27 +140,29 @@ svg {
 #modal-sucesso i,
 #modal-revisao i,
 #modal-login i,
-#modal-genero i{
+#modal-genero i,
+#modal-encomenda i {
     font-size: 48px;
 }
 
 #modal-erro i,
 #modal-erro-vendedora i,
-#modal-genero i{
+#modal-genero i {
     color: #d50000;
 }
 
 #modal-sucesso i,
 #modal-revisao i,
-#modal-login i{
+#modal-login i,
+#modal-encomenda i {
     color: #CB6CE6;
 }
 
-#preferencias{
+#preferencias {
     display: grid;
 }
 
-#preferencias-grid{
+#preferencias-grid {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     place-self: center;
@@ -886,7 +888,8 @@ input:checked+.tipo-login:hover {
     opacity: .5;
 }
 
-.button, a.button {
+.button,
+a.button {
     font-weight: bold;
     width: fit-content;
     padding: 4px 54px;
@@ -901,7 +904,8 @@ input:checked+.tipo-login:hover {
     /* transition: .5s; */
 }
 
-.button:hover, a.button:hover {
+.button:hover,
+a.button:hover {
     background: #6f1688;
     border-color: #6f1688;
     /* background-position: right; */
@@ -911,12 +915,14 @@ input:checked+.tipo-login:hover {
     border-radius: 4px;
 }
 
-.button-secondary, a.button-secondary {
+.button-secondary,
+a.button-secondary {
     background-color: transparent;
     color: #CB6CE6;
 }
 
-.button-secondary:hover, a.button-secondary:hover {
+.button-secondary:hover,
+a.button-secondary:hover {
     color: white
 }
 
@@ -927,13 +933,15 @@ input:checked+.tipo-login:hover {
     color: white;
 }
 
-.button-red {
+.button-red, a.button-red {
     background-color: red;
     border-color: red;
 }
 
 .button-red:hover,
-.button-red:focus {
+.button-red:focus,
+a.button-red:hover,
+a.button-red:focus {
     background-color: #890000;
     border-color: #890000;
 }
@@ -1204,7 +1212,8 @@ a.create-new:hover {
 #user-new,
 #user-profile,
 #user-encomenda,
-#user-dashboard {
+#user-dashboard,
+#user-ads {
     height: 100dvh;
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -1219,8 +1228,9 @@ a.create-new:hover {
     border-right: 1px solid var(--bd-color);
     background: var(--bg-color);
     display: grid;
-    grid-template-rows: auto 1fr 70px;
+    grid-template-rows: auto auto 1fr 70px;
     grid-template-areas:
+        "logo"
         "nav-list"
         "new"
         "info";
@@ -1229,7 +1239,7 @@ a.create-new:hover {
 #main {
     grid-area: main;
     display: grid;
-    grid-template-rows: 180px 1fr;
+    grid-template-rows: 100px 1fr;
     grid-template-columns: 1fr;
     grid-template-areas:
         "pesquisa"
@@ -1238,6 +1248,7 @@ a.create-new:hover {
     overflow-y: auto;
     overflow-x: hidden;
     color: var(--text-color);
+    background: var(--bg-color);
 }
 
 #conversas {
@@ -1280,12 +1291,22 @@ a.create-new:hover {
     grid-area: title;
 }
 
+#nav-logo{
+    height: 80px;
+    justify-self:center;
+    border-bottom: 1px solid var(--bd-color);
+}
+
+#nav-logo img{
+    height: 100%;
+}
+
 #nav-list {
     grid-area: nav-list;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-size: 1.3em;
+    font-size: 1.2em;
     padding: 32px 12px 32px 20px;
 }
 
@@ -1300,10 +1321,37 @@ a.create-new:hover {
     transition: color .3s;
 }
 
+.nav-dona .nav-link {
+    color: white;
+}
+
+.nav-dona .nav-link:hover,
+.nav-dona .nav-link.active,
 .nav-link:hover,
 .nav-link.active {
     color: #CB6CE6;
     background: #CB6CE633;
+}
+
+#nav.nav-dona {
+    background: #280a23;
+}
+
+#nav.nav-dona #user-info {
+    border-color: #74396c
+}
+
+.nav-dona #nav-logo{
+    border-color: #74396c
+}
+
+#nav.nav-dona #nome-user,
+#nav.nav-dona #options-user {
+    color: white
+}
+
+#nav.nav-dona #nick-user {
+    color: #bba1b7
 }
 
 #new-product {
@@ -1361,7 +1409,7 @@ a.create-new:hover {
 #options-user,
 #options-chat,
 #options-profile {
-    font-size: 1.1em;
+    font-size: 1.2em;
     margin-right: 16px;
     color: gray;
     background: transparent;
@@ -1448,7 +1496,7 @@ a.dropdown-item {
     padding: 24px;
 }
 
-.logo-pesquisa{
+.logo-pesquisa {
     width: 50px;
     margin-right: 5px;
 }
@@ -1463,7 +1511,7 @@ a.dropdown-item {
     transition: 0.3s border-color ease-in-out, 0.3s box-shadow ease-in-out;
 }
 
-.search-square{
+.search-square {
     border-radius: 8px;
 }
 
@@ -1501,7 +1549,6 @@ a.dropdown-item {
     display: flex;
     flex-direction: column;
     padding: 16px;
-    background: var(--bg-color);
 }
 
 #user #content {
@@ -1545,13 +1592,14 @@ a.veja-mais {
     color: #CB6CE6
 }
 
-#carrossel .carousel-cell{
+#carrossel .carousel-cell {
     overflow: hidden;
     border-radius: 12px;
     width: 100%;
+    margin-right: 4px;
 }
 
-#carrossel .carousel-cell img{
+#carrossel .carousel-cell img {
     width: 100%;
     background-color: red;
 }
@@ -1592,11 +1640,11 @@ a.veja-mais {
     border-radius: 2px;
 }
 
-.checkbox-preferencia{
+.checkbox-preferencia {
     display: none;
 }
 
-.checkbox-preferencia:checked + .card-categoria .img-categoria{
+.checkbox-preferencia:checked+.card-categoria .img-categoria {
     background-color: #5d0049;
     box-shadow: 0 0 0 6px #9D007A33;
 }
@@ -1619,7 +1667,7 @@ a.veja-mais {
     transition: .3s background-color;
     overflow: hidden;
     background-color: #9D007A;
-    padding: 4px;
+    padding: 2px;
 }
 
 .img-categoria img,
@@ -1644,7 +1692,7 @@ a.veja-mais {
     background-color: #540042;
 }
 
-.card-categoria:hover .img-categoria{
+.card-categoria:hover .img-categoria {
     background-color: #5d0049;
     box-shadow: 0 0 0 6px #9D007A33;
 }
@@ -1774,7 +1822,7 @@ a.veja-mais {
 
 .produtos {
     display: grid;
-    justify-self: center;
+    justify-items: center;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
     transition: .2s opacity;
@@ -1800,7 +1848,7 @@ a.veja-mais {
     gap: 8px;
 }
 
-.select-filtro {
+.select-filtro, .select-status {
     background: var(--select-bg);
     padding: 4px 8px;
     border-radius: 4px;
@@ -1829,7 +1877,7 @@ a.veja-mais {
     color: white;
 }
 
-.modal-body{
+.modal-body {
     color: var(--text-color);
 }
 
@@ -2055,7 +2103,7 @@ a.veja-mais {
     grid-area: descricao;
 }
 
-#tipo-new option{
+#tipo-new option {
     color: black;
 }
 
@@ -2098,6 +2146,22 @@ a.veja-mais {
     grid-template-rows: auto auto auto;
     padding: 24px;
     transition: .2s box-shadow
+}
+
+.pedido{
+    width: 270px;
+    border: 2px solid #CB6CE6;
+    background: var(--input-color);
+    padding: 12px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.foto-pedido{
+    width: 100%;
+    border-radius: 8px;
 }
 
 .encomenda:hover {
@@ -2165,27 +2229,55 @@ a.veja-mais {
 
 #bio-info {
     display: grid;
-    grid-template-rows: repeat(4, min-content);
-    gap: 4px;
+    grid-template-rows: repeat(5, min-content);
+    grid-template-columns: auto min-content min-content;
+    grid-template-areas:
+        "name rating dropdown"
+        "username username username"
+        "followers followers followers"
+        "bio bio bio"
+        "options options options";
+    column-gap: 4px;
 }
 
 #bio-name {
+    grid-area: name;
     font-size: 1.4em;
+    gap: 8px;
+}
+
+#bio-rating {
+    grid-area: rating;
+    color: #CB6CE6;
     display: flex;
-    gap:8px;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+#bio-dropdown {
+    grid-area: dropdown;
 }
 
 #bio-username {
-    color: gray
+    grid-area: username;
+    color: gray;
 }
 
-#bio-options {
+#bio-followers {
+    grid-area: followers;
+    color: gray;
+}
+
+#bio-follow-share {
+    grid-area: options;
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
 }
 
 #bio-desc {
+    grid-area: bio;
     white-space: pre-line;
 }
 
@@ -2194,7 +2286,7 @@ a.veja-mais {
     border-bottom: 1px solid var(--bd-color);
     padding: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .negocio-information {
@@ -2768,7 +2860,7 @@ a.config-item {
         "nome nome"
         "avaliacao avaliacao"
         "preco comprar"
-        "categoria categoria"
+        "categoria estoque"
         "accordion accordion";
     align-self: center;
     gap: 8px;
@@ -2818,27 +2910,34 @@ a.config-item {
     background: #8f95a3;
 }
 
-.accordion-anuncio{
+#estoque-anuncio {
+    grid-area: estoque;
+    color: lightslategray;
+    justify-self: end;
+    align-self: center;
+}
+
+.accordion-anuncio {
     grid-area: accordion;
 }
 
-.accordion-anuncio .accordion-item{
+.accordion-anuncio .accordion-item {
     width: 100%;
     border: 0;
     background: var(--bg-color);
-    color:var(--text-color);
+    color: var(--text-color);
 }
 
-.accordion-anuncio .accordion-button:focus{
-        box-shadow: 0;
+.accordion-anuncio .accordion-button:focus {
+    box-shadow: 0;
     background: var(--bg-color);
 }
 
-.accordion-anuncio .accordion-button{
+.accordion-anuncio .accordion-button {
     padding-left: 0;
     padding-bottom: 0;
     font-size: 24px;
-    color:var(--text-color);
+    color: var(--text-color);
     background: var(--bg-color);
     border: 0;
     box-shadow: none;
@@ -2849,20 +2948,20 @@ a.config-item {
     background-image: none;
 }
 
-.accordion-anuncio .accordion-body{
+.accordion-anuncio .accordion-body {
     padding-left: 0;
 }
 
-.accordion-empresa{
+.accordion-empresa {
     display: grid;
     grid-template-areas:
-    "foto nome anuncios"
-    "foto categoria seguidores";
+        "foto nome anuncios"
+        "foto categoria seguidores";
     grid-template-columns: 65px 1fr 1fr;
     column-gap: 12px;
 }
 
-#foto-accordion{
+#foto-accordion {
     grid-area: foto;
     width: 65px;
     aspect-ratio: 1/1;
@@ -2870,22 +2969,22 @@ a.config-item {
     border-radius: 50%;
 }
 
-#empresa-anuncio{
+#empresa-anuncio {
     font-size: 1.2em;
 }
 
-#categoria-empresa{
+#categoria-empresa {
     grid-area: categoria;
     color: lightslategray;
 }
 
-#anuncios-empresa{
+#anuncios-empresa {
     grid-area: anuncios;
     color: #CB6CE6;
     justify-self: end;
 }
 
-#seguidores-empresa{
+#seguidores-empresa {
     grid-area: seguidores;
     color: lightslategray;
     justify-self: end;
@@ -3111,8 +3210,8 @@ a.config-item {
 .stats-body {
     grid-area: body;
     transition: .5s opacity ease-in-out;
-
 }
+
 
 .stats-item {
     padding: 16px;
@@ -3125,7 +3224,6 @@ a.config-item {
         "foto encomenda";
     column-gap: 4px;
     transition: .3s background-color, .3s color, opacity .5s;
-
 }
 
 .stats-item:not(:last-child) {
@@ -3173,6 +3271,10 @@ a.highlight {
     padding: 16px;
 }
 
+.chart-wrapper{
+    width: 100%;
+}
+
 #edit-cliente-form {
     display: grid;
     grid-template-areas:
@@ -3187,6 +3289,7 @@ a.highlight {
     gap: 16px;
     padding: 32px;
 }
+
 #edit-dona-form {
     display: grid;
     grid-template-areas:
@@ -3197,6 +3300,7 @@ a.highlight {
     gap: 16px;
     padding: 32px;
 }
+
 #edit-negocio-form {
     display: grid;
     grid-template-areas:
@@ -3212,7 +3316,9 @@ a.highlight {
     padding: 32px;
 }
 
-#edit-cliente-form .input-foto, #edit-dona-form .input-foto, #edit-negocio-form .input-foto {
+#edit-cliente-form .input-foto,
+#edit-dona-form .input-foto,
+#edit-negocio-form .input-foto {
     place-self: center;
 }
 
@@ -3224,7 +3330,8 @@ a.highlight {
     #user-profile,
     #user-encomenda,
     #user-new,
-    #user-dashboard {
+    #user-dashboard,
+    #user-ads {
         grid-template-columns: auto 1fr;
         grid-template-areas:
             "nav main";
@@ -3257,6 +3364,7 @@ a.highlight {
 
     #nav-list {
         padding: 32px 16px;
+        justify-self: center;
     }
 
     #options-user {
@@ -3380,7 +3488,7 @@ a.highlight {
     }
 
     .nav-link:nth-child(2) {
-        order: 2
+        order: 1
     }
 
     .nav-link:nth-child(3) {
@@ -3395,7 +3503,7 @@ a.highlight {
         order: 4;
     }
 
-    .nav-link.mobile-hide{
+    .mobile-hide {
         display: none;
     }
 
@@ -3493,6 +3601,18 @@ a.highlight {
         grid-template-columns: 1fr;
         place-self: auto;
         text-align: center;
+        place-items: center;
+    }
+
+    #bio-info{
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "name"
+        "rating"
+        "username"
+        "followers"
+        "bio"
+        "options";
     }
 
     #bio-photo {
@@ -3500,16 +3620,22 @@ a.highlight {
         place-self: center;
     }
 
-    #bio-name{
+    #bio-name {
         place-self: center;
+        position: relative;
     }
 
-    #bio-name .dropdown{
+    #bio-star{
+        position: absolute;
+        right: -1.5em;
+    }
+
+    #bio-dropdown {
         position: absolute;
         right: 0;
     }
 
-    #bio-options {
+    #bio-follow-share {
         justify-content: center;
     }
 
@@ -3551,20 +3677,21 @@ a.highlight {
         position: static;
         grid-area: preco;
     }
-    #edit-cliente-form{
+
+    #edit-cliente-form {
         grid-template-areas:
-        "foto"
-        "nome"
-        "username"
-        "email"
-        "senha"
-        "cep"
-        "estado"
-        "cidade"
-        "bairro"
-        "logradouro"
-        "numero"
-        "complemento"
-        "avancar";
+            "foto"
+            "nome"
+            "username"
+            "email"
+            "senha"
+            "cep"
+            "estado"
+            "cidade"
+            "bairro"
+            "logradouro"
+            "numero"
+            "complemento"
+            "avancar";
     }
 }
