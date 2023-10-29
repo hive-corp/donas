@@ -26,7 +26,28 @@ if (isset($_GET['a'])) {
 
 <body>
     <div id="user-product">
+        <div class="modal pop" id="modal-encomenda" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Tem certeza?</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        <i class="bi bi-box-seam"></i>
+                        Você está prestes a encomendar esse <?php echo $anuncio['tipoAnuncio'] == 1 ? "serviço" : "produto"; ?>. Tem certeza?
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Não</button>
+                        <a class="button" href="fazer-encomenda.php?a=<?php echo $anuncio['idAnuncio'] ?>">Sim</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav id="nav">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -40,7 +61,7 @@ if (isset($_GET['a'])) {
                         Pesquisa
                     </span>
                 </a>
-                <a href="#" class="nav-link mobile-hide">
+                <a href="seus-pedidos.php" class="nav-link mobile-hide">
                     <i class="bi bi-box-seam"></i>
                     <span>
                         Seus pedidos
@@ -119,13 +140,33 @@ if (isset($_GET['a'])) {
                                 <?php echo $anuncio['nomeAnuncio'] ?>
                             </div>
                             <div id="preco-anuncio">
-                                R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',') ?>
+                                R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',', '.') ?>
                             </div>
                             <?php
+
+                            $encomenda = new Encomenda();
+                            $a = new Anuncio();
+                            $c = new Cliente();
+
+                            $a->setIdAnuncio($anuncio['idAnuncio']);
+                            $c->setIdCliente($_SESSION['id']);
+
+                            $encomenda->setAnuncio($a);
+                            $encomenda->setCliente($c);
+
                             if ($anuncio['nivelNegocioVendedora'] == 1) {
+                                $temEncomenda = daoEncomenda::consultaTemEncomenda($encomenda);
+                                $temEncomendaAtiva = daoEncomenda::consultaTemEncomendaAtiva($encomenda);
+
+                                if (!$temEncomenda || !$temEncomendaAtiva) {
                             ?>
-                                <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
+                                    <button class="button button-square" id="encomendar" data-bs-target="#modal-encomenda" data-bs-toggle="modal">Encomendar</button>
+                                <?php
+                                } else if ($temEncomendaAtiva) {
+                                ?>
+                                    <button class="button button-square button-secondary" id="encomendar">Encomendado</button>
                             <?php
+                                }
                             }
                             ?>
                             <div id="avaliacao-anuncio">
@@ -143,16 +184,21 @@ if (isset($_GET['a'])) {
                                     <i class="bi bi-star"></i>
                                 <?php
                                 }
-
                                 $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
 
-                                echo $qtdavaliacoes > 1 ? "(".$qtdavaliacoes . " avaliações)" : "(".$qtdavaliacoes . " avaliação)";
+                                echo $qtdavaliacoes > 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
                                 ?>
                             </div>
                             <div id="categoria-anuncio">
                                 <?php echo $anuncio['nomeCategoria'] ?>
                             </div>
-
+                            <div id="estoque-anuncio">
+                                <?php
+                                if ($anuncio['tipoAnuncio'] == 2) {
+                                    echo $anuncio['qtdProduto'] > 1 ? $anuncio['qtdProduto'] . " unidades" : $anuncio['qtdProduto'] . " unidade";
+                                }
+                                ?>
+                            </div>
                             <div class="accordion accordion-flush accordion-anuncio">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
@@ -197,7 +243,7 @@ if (isset($_GET['a'])) {
                                                 ?>
                                             </div>
                                             <div id="seguidores-empresa">
-                                            <?php
+                                                <?php
                                                 $qtdseguidores = daoSeguidor::contarSeguidor($anuncio['idVendedora']);
 
                                                 echo $qtdseguidores > 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
@@ -213,35 +259,43 @@ if (isset($_GET['a'])) {
                         <div id="comentarios-titulo">
                             Avaliações
                         </div>
-                        <form id="input-comentario" method="post" action="avaliar-anuncio.php?a=<?php echo $anuncio['idAnuncio']?>" class="needs-validation" novalidate>
-                            <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-comentario">
-                            <div id="nome-comentario">
-                                <?php echo $_SESSION['nome'] ?>
-                            </div>
-                            <div id="avaliacao">
-                                <input value="5" name="rate" id="star5" type="radio">
-                                <label title="text" for="star5"></label>
-                                <input value="4" name="rate" id="star4" type="radio">
-                                <label title="text" for="star4"></label>
-                                <input value="3" name="rate" id="star3" type="radio">
-                                <label title="text" for="star3"></label>
-                                <input value="2" name="rate" id="star2" type="radio">
-                                <label title="text" for="star2"></label>
-                                <input value="1" name="rate" id="star1" type="radio">
-                                <label title="text" for="star1"></label>
-                            </div>
-                            <div class="input" id="textarea-comentario">
-                                <div class="input-wrapper">
-                                    <textarea name="comentario" id="comentario" cols="30" rows="4" placeholder="Sua avaliação" required></textarea>
+                        <?php
+
+                        $foiFinalizada = daoEncomenda::foiFinalizada($encomenda);
+                        if ($foiFinalizada) {
+                        ?>
+                            <form id="input-comentario" method="post" action="avaliar-anuncio.php?a=<?php echo $anuncio['idAnuncio'] ?>" class="needs-validation" novalidate>
+                                <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-comentario">
+                                <div id="nome-comentario">
+                                    <?php echo $_SESSION['nome'] ?>
                                 </div>
-                                <div class="invalid-feedback">
-                                    Você não preencheu o campo de conteúdo.
+                                <div id="avaliacao">
+                                    <input value="5" name="rate" id="star5" type="radio">
+                                    <label title="text" for="star5"></label>
+                                    <input value="4" name="rate" id="star4" type="radio">
+                                    <label title="text" for="star4"></label>
+                                    <input value="3" name="rate" id="star3" type="radio">
+                                    <label title="text" for="star3"></label>
+                                    <input value="2" name="rate" id="star2" type="radio">
+                                    <label title="text" for="star2"></label>
+                                    <input value="1" name="rate" id="star1" type="radio">
+                                    <label title="text" for="star1"></label>
                                 </div>
-                            </div>
-                            <div class="input input-enviar">
-                                <button class="button button-square" id="enviar">Enviar</button>
-                            </div>
-                        </form>
+                                <div class="input" id="textarea-comentario">
+                                    <div class="input-wrapper">
+                                        <textarea name="comentario" id="comentario" cols="30" rows="4" placeholder="Sua avaliação" required></textarea>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Você não preencheu o campo de conteúdo.
+                                    </div>
+                                </div>
+                                <div class="input input-enviar">
+                                    <button class="button button-square" id="enviar">Enviar</button>
+                                </div>
+                            </form>
+                        <?php
+                        }
+                        ?>
                         <div id="comentarios">
                             <?php
                             $avaliacoes = daoAvaliacao::listarPorAnuncio($anuncio['idAnuncio']);
@@ -305,7 +359,7 @@ if (isset($_GET['a'])) {
 
             if (!inputComentario.checkValidity()) {
                 inputComentario.classList.add('was-validated')
-            } else{
+            } else {
                 inputComentario.submit();
             }
         })
