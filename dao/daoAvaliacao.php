@@ -57,7 +57,7 @@ class daoAvaliacao
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT *, nomeCliente, fotoCliente FROM tbAvaliacao
+        $querySelect = "SELECT tbAvaliacao.*, nomeCliente, fotoCliente FROM tbAvaliacao
                         INNER JOIN tbCliente ON tbCliente.idCliente = tbAvaliacao.idCliente";
 
         $resultado = $connection->prepare($querySelect);
@@ -70,7 +70,7 @@ class daoAvaliacao
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT *, nomeCliente, fotoCliente FROM tbAvaliacao
+        $querySelect = "SELECT tbAvaliacao.*, nomeCliente, fotoCliente FROM tbAvaliacao
                         INNER JOIN tbCliente ON tbCliente.idCliente = tbAvaliacao.idCliente
                         WHERE idAnuncio = ?";
 
@@ -105,4 +105,5 @@ class daoAvaliacao
 
         return $avg;
     }
+
 }

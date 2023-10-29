@@ -84,8 +84,8 @@ class daoSeguidor
 
         $resultado->bindValue(1, $id);
         $resultado->execute();
-        $lista = $resultado->fetch()[0];
-        return $lista;
+        $count = $resultado->fetch()[0];
+        return $count;
     }
 
     public static function consultaSeguidor($seguidor){
@@ -102,5 +102,18 @@ class daoSeguidor
         $count = $resultado->fetch()[0];
 
         return $count!=0;
+    }
+
+    public static function contarQuantosSegue($id){
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT COUNT(idSeguidor) FROM tbSeguidor WHERE idCliente = ?";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+        return $count;
     }
 }
