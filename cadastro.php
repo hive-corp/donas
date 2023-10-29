@@ -328,61 +328,6 @@ require_once "global.php"
                                 Garanta uma <span class="highlight">experiência personalizada</span> nos dizendo o que você gostaria de ver por <span class="highlight">aqui!</span>
                                 <div id="preferencias">
                                     <div id="preferencias-grid">
-                                        <input type="checkbox" class="checkbox-preferencia" name="artesanato" id="artesanato" value='1'>
-                                        <label class="card-categoria" for="artesanato">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/artesanato.svg" alt="Artesanato" />
-                                            </div>
-                                            <p class="nome-categoria">Artesanato</p>
-                                        </label>
-
-                                        <input type="checkbox" class="checkbox-preferencia" name="culinaria" id="culinaria" value='2'>
-                                        <label class="card-categoria" for="culinaria">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/culinaria.svg" alt="Culinária" />
-                                            </div>
-                                            <p class="nome-categoria">Culinária</p>
-                                        </label>
-
-                                        <input type="checkbox" class="checkbox-preferencia" name="manicure" id="manicure" value='3'>
-                                        <label class="card-categoria" for="manicure">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/manicure.svg" alt="Manicure" />
-                                            </div>
-                                            <p class="nome-categoria">Manicure</p>
-                                        </label>
-
-                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="roupas" value='4'>
-                                        <label class="card-categoria" for="roupas">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/roupas.svg" alt="Roupas" />
-                                            </div>
-                                            <p class="nome-categoria">Roupas</p>
-                                        </label>
-
-                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="joias" value='5'>
-                                        <label class="card-categoria" for="joias">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/joias.svg" alt="Joias" />
-                                            </div>
-                                            <p class="nome-categoria">Joias</p>
-                                        </label>
-
-                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="livro" value='6'>
-                                        <label class="card-categoria" for="livro">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/livro.svg" alt="Livros" />
-                                            </div>
-                                            <p class="nome-categoria">Livros</p>
-                                        </label>
-
-                                        <input type="checkbox" class="checkbox-preferencia" name="categoria" id="beleza" value='7'>
-                                        <label class="card-categoria" for="beleza">
-                                            <div class="img-categoria">
-                                                <img src="assets/img/categories/beleza.svg" alt="Beleza" />
-                                            </div>
-                                            <p class="nome-categoria">Beleza</p>
-                                        </label>
                                         <?php
                                         $categorias = daoCategoria::listar();
 
@@ -403,7 +348,7 @@ require_once "global.php"
                                 </div>
                             </div>
                             <div class="modal-footer d-flex justify-content-between">
-                                <a href="#" class="highlight" data-bs-dismiss="modal">Pular</a>
+                                <a href="#" class="highlight" data-bs-dismiss="modal">Sair</a>
                                 <button class="button" id="confirmar-cadastro" data-bs-dismiss="modal">Concluir</button>
                             </div>
                         </div>
