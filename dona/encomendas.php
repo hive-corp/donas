@@ -20,6 +20,38 @@ require_once "validador.php";
 
 <body>
     <div id="user-encomenda">
+        <div class="modal pop" id="modal-cancelar" tabindex="-1" aria-labelledby="modal-cancelar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Cancelar encomenda</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a cancelar a encomenda <h5 class="highlight"></h5>. Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="cancelar-pedido.php" class="button button-red" id="cancelar-pedido">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal pop" id="modal-concluir" tabindex="-1" aria-labelledby="modal-concluir" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Concluir encomenda</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a concluir a encomenda <h5 class="highlight"></h5> Tem certeza? Ao finalizar, não será mais possível ter acesso a ele novamente.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="concluir-pedido.php" class="button" id="concluir-pedido">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav id="nav" class="nav-dona">
             <picture id="nav-logo">
                 <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
@@ -35,7 +67,7 @@ require_once "validador.php";
                 <a href="encomendas.php" class="nav-link active">
                     <i class="bi bi-grid-fill"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">
@@ -109,9 +141,7 @@ require_once "validador.php";
             <div id="content">
                 <div id="encomendas">
                     <?php
-
-
-                    $pedidos = daoEncomenda::listarEncomendasVendedora($_SESSION['id']);
+                    $pedidos = daoEncomenda::listarEncomendasAtivasVendedora($_SESSION['id']);
 
                     foreach ($pedidos as $p) {
                     ?>
@@ -124,40 +154,23 @@ require_once "validador.php";
                                 </div>
                             </div>
                             <div class="dados-encomenda">
-                                <div class="nome-pedido">
+                                <div class="nome-encomenda-anuncio">
                                     <label for="" class="form-label">Pedido</label>
                                     <div class="input-wrapper">
                                         <?php echo $p['nomeAnuncio'] ?>
                                     </div>
                                 </div>
-                                <div class="data-pedido">
+                                <div class="data-encomenda-anuncio">
                                     <label for="" class="form-label">Data do pedido</label>
                                     <div class="input-wrapper">
                                         <?php echo $p['dataEncomenda'] ?>
                                     </div>
                                 </div>
                             </div>
-                            <select name="select-status" id="" class="select-status situacao-encomenda">
-                                <?php
-                                for ($i = 1; $i <= 3; $i++) {
-                                ?>
-                                    <option value="<?php echo $i ?>" <?php if ($p['statusEncomenda'] == $i) echo 'selected' ?>><?php
-                                                                                                                            switch ($i) {
-                                                                                                                                case 1:
-                                                                                                                                    echo 'Fazendo';
-                                                                                                                                    break;
-                                                                                                                                case 2:
-                                                                                                                                    echo 'Cancelado';
-                                                                                                                                    break;
-                                                                                                                                case 3:
-                                                                                                                                    echo 'Concluído';
-                                                                                                                                    break;
-                                                                                                                            }
-                                                                                                                            ?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
+                            <div class="opcoes-encomenda">
+                                <button class="button concluir-pedido" data-bs-toggle="modal" data-bs-target="#modal-concluir" data-id="<?php echo $p['idEncomenda'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Concluir</button>
+                                <button class="button button-red cancelar-pedido" data-bs-toggle="modal" data-bs-target="#modal-cancelar" data-id="<?php echo $p['idEncomenda'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Cancelar</button>
+                            </div>
                         </div>
                     <?php
                     }
@@ -170,25 +183,33 @@ require_once "validador.php";
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
-
     <script>
-        var configuracoes = document.querySelectorAll('.nav-link')[4],
-            configIcon = document.querySelectorAll('.nav-link i')[4],
-            fotoUsuario = document.querySelector('#foto-usuario'),
-            html = document.querySelector('html')
+        let cancelarPedido = document.querySelectorAll('.cancelar-pedido')
+        let concluirPedido = document.querySelectorAll('.concluir-pedido')
 
-        if (localStorage.getItem('theme') == 'dark') {
-            html.classList.add('dark')
-        }
+        cancelarPedido.forEach(item => {
+            let id = item.getAttribute('data-id')
+            let cliente = item.getAttribute('data-nome')
+            let anuncio = item.getAttribute('data-anuncio')
 
-        window.onload = () => {
-            if (localStorage.getItem('imagemPerfil') === null) {
-                configIcon.style.display = 'inline-block'
-                fotoUsuario.style.display = "none"
-            } else {
-                fotoUsuario.src = localStorage.getItem('imagemPerfil')
-            }
-        }
+            item.addEventListener('click', () => {
+                document.querySelector('#cancelar-pedido').href=`cancelar-encomenda.php?e=${id}`
+
+                document.querySelector('#modal-cancelar h5.highlight').innerText = `${cliente} - ${anuncio}`
+            })
+        })
+        
+        concluirPedido.forEach(item => {
+            let id = item.getAttribute('data-id')
+            let cliente = item.getAttribute('data-nome')
+            let anuncio = item.getAttribute('data-anuncio')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#concluir-pedido').href=`concluir-encomenda.php?e=${id}`
+
+                document.querySelector('#modal-concluir h5.highlight').innerText = `${cliente} - ${anuncio}`
+            })
+        })
     </script>
 </body>
 

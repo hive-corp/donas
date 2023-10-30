@@ -21,9 +21,5 @@
     $encomenda->setValorEncomenda($dados['valorAnuncio']);
     $encomenda->setStatusEncomenda(1);
 
-    $codigo = $_SESSION['id'] . ' - ' . $_GET['a'];
-
-    $encomenda->setCodigoRastreio(hash('md5', $codigo));
-
     daoEncomenda::criar($encomenda);
 ?>

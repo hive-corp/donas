@@ -23,7 +23,7 @@
         public static function deletar($Encomenda){
             $connection = Conexao::conectar();
 
-            $queryInsert = "DELETE tbEncomenda WHERE idEncomenda = ?";
+            $queryInsert = "DELETE FROM tbEncomenda WHERE idEncomenda = ?";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
@@ -52,6 +52,34 @@
             $prepareStatement->execute();
         }
 
+        public static function cancelar($Encomenda){
+            $connection = Conexao::conectar();
+
+            $queryInsert = "UPDATE tbEncomenda
+                            SET statusEncomenda = 2
+                            WHERE idEncomenda = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $Encomenda->getIdEncomenda());
+
+            $prepareStatement->execute();
+        }
+
+        public static function finalizar($Encomenda){
+            $connection = Conexao::conectar();
+
+            $queryInsert = "UPDATE tbEncomenda
+                            SET statusEncomenda = 3
+                            WHERE idEncomenda = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $Encomenda->getIdEncomenda());
+
+            $prepareStatement->execute();
+        }
+
         public static function listar(){
             $connection = Conexao::conectar();
 
@@ -69,7 +97,7 @@
 
             $querySelect = "SELECT tbEncomenda.*, nomeAnuncio, imagemPrincipalAnuncio FROM tbEncomenda
                             INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbEncomenda.idAnuncio
-                            WHERE idCliente = ?";
+                            WHERE idCliente = ? AND statusEncomenda = 1";
 
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $id);
@@ -84,7 +112,39 @@
             $querySelect = "SELECT tbEncomenda.*, nomeCliente, nomeUsuarioCliente, fotoCliente, nomeAnuncio, imagemPrincipalAnuncio FROM tbEncomenda
                             INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbEncomenda.idAnuncio
                             INNER JOIN tbCliente ON tbCliente.idCliente = tbEncomenda.idCliente
-                            WHERE idVendedora = ?";
+                            WHERE idVendedora = ?
+                            LIMIT 10";
+
+            $resultado = $connection->prepare($querySelect);
+            $resultado->bindValue(1, $id);
+            $resultado->execute();
+            $lista = $resultado->fetchAll();
+            return $lista;
+        }
+
+        public static function listarEncomendasAnuncio($id){
+            $connection = Conexao::conectar();
+
+            $querySelect = "SELECT tbEncomenda.*, nomeCliente, nomeUsuarioCliente, fotoCliente, nomeAnuncio, imagemPrincipalAnuncio FROM tbEncomenda
+                            INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbEncomenda.idAnuncio
+                            INNER JOIN tbCliente ON tbCliente.idCliente = tbEncomenda.idCliente
+                            WHERE tbAnuncio.idAnuncio = ?";
+
+            $resultado = $connection->prepare($querySelect);
+            $resultado->bindValue(1, $id);
+            $resultado->execute();
+            $lista = $resultado->fetchAll();
+
+            return $lista;
+        }
+
+        public static function listarEncomendasAtivasVendedora($id){
+            $connection = Conexao::conectar();
+
+            $querySelect = "SELECT tbEncomenda.*, nomeCliente, nomeUsuarioCliente, fotoCliente, nomeAnuncio, imagemPrincipalAnuncio FROM tbEncomenda
+                            INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbEncomenda.idAnuncio
+                            INNER JOIN tbCliente ON tbCliente.idCliente = tbEncomenda.idCliente
+                            WHERE idVendedora = ? AND statusEncomenda = 1";
 
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $id);
@@ -143,13 +203,13 @@
         public static function consultaTemEncomendaAtiva($encomenda){
             $connection = Conexao::conectar();
 
-            $querySelect = "SELECT COUNT(idEncomenda) FROM tbEncomenda WHERE idAnuncio = ? AND idCliente = ? AND statusEncomenda == 1";
+            $querySelect = "SELECT COUNT(idEncomenda) FROM tbEncomenda WHERE idAnuncio = ? AND idCliente = ? AND statusEncomenda = 1";
     
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $encomenda->getAnuncio()->getIdAnuncio());
             $resultado->bindValue(2, $encomenda->getCliente()->getIdCliente());
-    
             $resultado->execute();
+
             $count = $resultado->fetch()[0];
             
             return $count!=0;
