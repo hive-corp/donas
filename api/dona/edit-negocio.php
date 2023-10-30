@@ -20,6 +20,7 @@ $vendedora->setSenhaVendedora($_SESSION['senha']);
 
 $vendedora->setNomeNegocioVendedora($_POST['nome-empresa']);
 $vendedora->setNomeUsuarioNegocioVendedora($_POST['username-empresa']);
+$vendedora->setBioNegocioVendedora($_POST['bio-empresa']);
 $vendedora->setLogNegocio($_POST['log']);
 $vendedora->setCidadeNegocioVendedora($_POST['cidade']);
 $vendedora->setEstadoNegocioVendedora($_POST['uf']);
@@ -70,6 +71,7 @@ $consultaVendedora = daoVendedora::consultaLogin($vendedora);
 
 $_SESSION['nome-empresa'] = $consultaVendedora['nomeNegocioVendedora'];
 $_SESSION['username'] = $consultaVendedora['nomeUsuarioNegocioVendedora'];
+$_SESSION['bio'] = $consultaVendedora['bioNegocioVendedora'];
 $_SESSION['tel'] = $consultaVendedora['telefoneNegocioVendedora'];
 $_SESSION['foto-empresa'] = $consultaVendedora['fotoNegocioVendedora'];
 $_SESSION['cidade'] = $consultaVendedora['cidadeNegocioVendedora'];

@@ -53,6 +53,7 @@ if($tipoLogin==1){
         $_SESSION['foto']=$consultaVendedora['fotoVendedora'];
         $_SESSION['nome-empresa']=$consultaVendedora['nomeNegocioVendedora'];
         $_SESSION['username']=$consultaVendedora['nomeUsuarioNegocioVendedora'];
+        $_SESSION['bio']=$consultaVendedora['bioNegocioVendedora'];
         $_SESSION['foto-empresa']=$consultaVendedora['fotoNegocioVendedora'];
         $_SESSION['cidade']=$consultaVendedora['cidadeNegocioVendedora'];
         $_SESSION['estado']=$consultaVendedora['estadoNegocioVendedora'];

@@ -142,6 +142,11 @@ require_once "global.php";
                         <div class="input-wrapper">
                         </div>
                     </div>
+                    <div class="bio-modal">
+                        <div class="form-label">Descrição</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
                     <div class="tel-modal">
                         <div class="form-label">Telefone</div>
                         <div class="input-wrapper"></div>
@@ -201,7 +206,7 @@ require_once "global.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">
@@ -388,6 +393,15 @@ require_once "global.php";
                             </div>
                             <div class="invalid-feedback" id="username-feedback">
                                 Insira um nome de usuário válido.
+                            </div>
+                        </div>
+                        <div class="input input-bio">
+                            <label class="form-label" for="username">Descrição</label>
+                            <div class="input-wrapper">
+                                <textarea name="desc" id="desc" rows="6" required><?php echo $_SESSION['bio'] ?></textarea>
+                            </div>
+                            <div class="invalid-feedback" id="username-feedback">
+                                Insira uma descrição.
                             </div>
                         </div>
                         <div class="input input-cnpj">
@@ -607,6 +621,7 @@ require_once "global.php";
                 const nomeModal = document.querySelector('#modal-alterar-negocio .nome-modal .input-wrapper'),
                     usernameModal = document.querySelector('#modal-alterar-negocio .username-modal .input-wrapper'),
                     cnpjModal = document.querySelector('#modal-alterar-negocio .cnpj-modal .input-wrapper'),
+                    bioModal = document.querySelector('#modal-alterar-negocio .bio-modal .input-wrapper'),
                     categoriaNegocioModal = document.querySelector('#modal-alterar-negocio .cat-modal .input-wrapper'),
                     enderecoModal = document.querySelector('#modal-alterar-negocio .endereco-modal .input-wrapper'),
                     telefoneModal = document.querySelector('#modal-alterar-negocio .tel-modal .input-wrapper'),
@@ -621,6 +636,7 @@ require_once "global.php";
                 nomeModal.innerText = document.getElementById('nome-empresa').value
                 usernameModal.innerText = document.getElementById('username').value
                 cnpjModal.innerText = document.getElementById('cnpj').value
+                bioModal.innerText = document.getElementById('desc').value
                 telefoneModal.innerText = document.getElementById('telefone').value
                 enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
                 categoriaNegocioModal.innerText = document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].text
@@ -638,6 +654,7 @@ require_once "global.php";
                             formData.append('foto-empresa', blob, 'photo.png')
                             formData.append('nome-empresa', document.getElementById('nome-empresa').value)
                             formData.append('username-empresa', document.getElementById('username').value)
+                            formData.append('bio-empresa', document.getElementById('desc').value)
                             formData.append('telefone', document.getElementById('telefone').value.replace(/\D/g, ''))
                             formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
                             formData.append('log', logradouro)
@@ -667,6 +684,7 @@ require_once "global.php";
 
                         formData.append('nome-empresa', document.getElementById('nome-empresa').value)
                         formData.append('username-empresa', document.getElementById('username').value)
+                        formData.append('bio-empresa', document.getElementById('desc').value)
                         formData.append('telefone', document.getElementById('telefone').value.replace(/\D/g, ''))
                         formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
                         formData.append('log', logradouro)
@@ -678,7 +696,7 @@ require_once "global.php";
                         formData.append('comp', complemento)
                         formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
 
-                        const response = await fetch('../api/dona/edit-negocio.php', {
+                        fetch('../api/dona/edit-negocio.php', {
                                 method: 'POST',
                                 header: {
                                     'Accept': 'application/json',
