@@ -86,7 +86,7 @@ class daoVendedora
 
         $prepareStatement->bindvalue(1, $Vendedora->getNomeNegocioVendedora());
         $prepareStatement->bindvalue(2, $Vendedora->getNomeUsuarioNegocioVendedora());
-        $prepareStatement->bindvalue(3, $Vendedora->geBioNegocioVendedora());
+        $prepareStatement->bindvalue(3, $Vendedora->getBioNegocioVendedora());
         $prepareStatement->bindvalue(4, $Vendedora->getLogNegocioVendedora());
         $prepareStatement->bindvalue(5, $Vendedora->getCidadeNegocioVendedora());
         $prepareStatement->bindvalue(6, $Vendedora->getEstadoNegocioVendedora());
