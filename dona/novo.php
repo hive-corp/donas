@@ -130,7 +130,7 @@ require_once "validador.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">

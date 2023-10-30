@@ -91,7 +91,32 @@ if (isset($_GET['user'])) {
                         </div>
                         <div id="bio-info">
                             <div id="bio-name">
-                                <?php echo $dados['nomeNegocioVendedora'] ?>
+                                <?php echo $dados['nomeNegocioVendedora'];
+                                if ($dados['nivelNegocioVendedora'] == 1) {
+                                ?>
+                                    <i class="bi bi-gem highlight" id="bio-star"></i>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div id="bio-rating">
+                                <?php
+                                $qtdestrelas = ceil(daoAnuncio::consultarMediaVendedora($dados['idVendedora']));
+
+                                for ($i = 0; $i < $qtdestrelas; $i++) {
+                                ?>
+                                    <i class="bi bi-star-fill"></i>
+                                <?php
+                                }
+
+                                for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                ?>
+                                    <i class="bi bi-star"></i>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div id="bio-dropdown">
                                 <div class="dropdown-start dropdown">
                                     <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -113,17 +138,19 @@ if (isset($_GET['user'])) {
                                 </div>
                             </div>
                             <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
-                            <div id="bio-desc">Tornando o seu mundo um pouco mais doce.
-                                - Sediada em SP
+                            <div id="bio-followers">
+                                <?php
+                                $qtdseguidores = daoSeguidor::contarSeguidor($dados['idVendedora']);
+
+                                echo $qtdseguidores != 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
+                                ?>
                             </div>
-                            <div id="bio-options">
-                                <button type="button" class="button bio-option" data-bs-target="#modal-login" data-bs-toggle="modal">
-                                    Seguir
-                                </button>
-                                <button type="button" class="button bio-option">
+                            <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
+                            <div id="bio-follow-share">
+                                <a type="button" class="button bio-option">
                                     Compartilhar
                                     <i class="bi bi-share-fill"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -143,10 +170,6 @@ if (isset($_GET['user'])) {
 
                             ?>
                             <span><?php echo $qtdservicos ?></span> Serviços
-                        </div>
-                        <div class="negocio-information">
-                            <i class="bi bi-people"></i>
-                            <span>35</span> Seguidores
                         </div>
                     </div>
                     <div id="bio-products">

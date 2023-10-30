@@ -117,7 +117,7 @@ if (isset($_GET['a'])) {
 
                                 $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
 
-                                echo $qtdavaliacoes > 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
+                                echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
                                 ?>
                             </div>
                             <div id="categoria-anuncio">
@@ -132,8 +132,7 @@ if (isset($_GET['a'])) {
                                         </button>
                                     </h2>
                                     <div id="collapse-descricao" class="accordion-collapse collapse" data-bs-parent="#accordion-descricao">
-                                        <div class="accordion-body">
-                                            <?php echo $anuncio['descricaoAnuncio'] ?>
+                                        <div class="accordion-body"><?php echo $anuncio['descricaoAnuncio'] ?>
                                         </div>
                                     </div>
                                 </div>
@@ -164,14 +163,14 @@ if (isset($_GET['a'])) {
                                                 <?php
                                                 $qtdanuncio = daoAnuncio::contarAnuncioGeral($anuncio['idVendedora']);
 
-                                                echo $qtdanuncio > 1 ? $qtdanuncio . " anúncios" : $qtdanuncio . " anúncio";
+                                                echo $qtdanuncio != 1 ? $qtdanuncio . " anúncios" : $qtdanuncio . " anúncio";
                                                 ?>
                                             </div>
                                             <div id="seguidores-empresa">
                                                 <?php
                                                 $qtdseguidores = daoSeguidor::contarSeguidor($anuncio['idVendedora']);
 
-                                                echo $qtdseguidores > 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
+                                                echo $qtdseguidores != 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
                                                 ?>
                                             </div>
                                         </a>

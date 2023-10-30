@@ -20,28 +20,6 @@ require_once "validador.php";
 </head>
 
 <body>
-    <div class="modal pop" id="modal-pesquisa" tabindex="-1" aria-labelledby="modal-pesquisa" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5">Pesquisar clientes</h1>
-                </div>
-                <div class="modal-body">
-                    <div class="search-container">
-                        <input type="text" name="pesquisar-cliente" id="pesquisar-cliente" class="search-field" placeholder="Digite o nome de um cliente">
-                        <button class="search-button"><i class="bi bi-search"></i></button>
-                    </div>
-                    <div id="search-results">
-
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-around">
-                    <button type="button" class="button" data-bs-dismiss="modal">Sair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="user-chats">
         <nav id="nav" class="nav-dona">
             <picture id="nav-logo">
@@ -58,7 +36,7 @@ require_once "validador.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">
@@ -195,11 +173,6 @@ require_once "validador.php";
                     </div>
                 </div>
             </div>
-            <div class="dropup-center dropup" id="new-chat-dropup">
-                <button id="new-chat" type="button" data-bs-toggle="modal" data-bs-target="#modal-pesquisa">
-                    <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
         </div>
         <main id="main" class="hide">
             <div id="main-title">
@@ -282,31 +255,6 @@ require_once "validador.php";
     <script src='../assets/vendor/cropperjs/js/cropper.js'></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/chat.js"></script>
-    <script>
-        type = 1
-
-        <?php
-        if (isset($_GET['username'])) {
-            $cliente = new Cliente();
-            $cliente->setNomeUsuarioCliente($_GET['username']);
-            $dados = daoCliente::consultarPorNomeUsuario($cliente);
-
-            if (!empty($dados)) {
-        ?>
-                resgatarMensagens('<?php echo $dados['nomeCliente'] ?>', '<?php echo $dados['fotoCliente'] ?>', '<?php echo $dados['nomeUsuarioCliente'] ?>')
-        <?php
-            }
-        }
-        ?>
-
-        var searchField = document.querySelector('#pesquisar-cliente'),
-            searchResults = document.querySelector("#search-results")
-
-        searchField.addEventListener('keyup',
-            async e => {
-                preencherLista(`../api/cliente/?search=${e.target.value}`, searchResults)
-            })
-    </script>
 </body>
 
 </html>

@@ -618,10 +618,6 @@ require_once "global.php";
 	<script>
 		var elem = document.querySelectorAll(".carrossel-cards")
 
-		if (localStorage.getItem('theme') == 'dark') {
-			html.classList.add('dark')
-		}
-
 		elem.forEach((item) => {
 			new Flickity(item, {
 				cellAlign: "left",

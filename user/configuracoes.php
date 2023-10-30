@@ -218,7 +218,7 @@ require_once "validador.php";
                 <div class="config-item" data-config-target="#seu-perfil" data-config-name="Seu perfil">
                     Sua conta
                 </div>
-                <a href="#" class="config-item">
+                <a href="seus-pedidos.php" class="config-item">
                     Seus pedidos
                 </a>
                 <label for="noturno-slider" class="config-item">

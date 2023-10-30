@@ -35,7 +35,7 @@ require_once "validador.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">
@@ -114,26 +114,6 @@ require_once "validador.php";
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
-
-    <script>
-        var configuracoes = document.querySelectorAll('.nav-link')[4],
-            configIcon = document.querySelectorAll('.nav-link i')[4],
-            fotoUsuario = document.querySelector('#foto-usuario'),
-            html = document.querySelector('html')
-
-        if (localStorage.getItem('theme') == 'dark') {
-            html.classList.add('dark')
-        }
-
-        window.onload = () => {
-            if (localStorage.getItem('imagemPerfil') === null) {
-                configIcon.style.display = 'inline-block'
-                fotoUsuario.style.display = "none"
-            } else {
-                fotoUsuario.src = localStorage.getItem('imagemPerfil')
-            }
-        }
-    </script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@ require_once "global.php";
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
-                    <i class="bi bi-house-door-fill"></i>
+                    <i class="bi bi-house-door"></i>
                     <span>
                         Home
                     </span>
@@ -36,7 +36,7 @@ require_once "global.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link active">

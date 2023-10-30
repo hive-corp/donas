@@ -186,7 +186,7 @@ if (isset($_GET['a'])) {
                                 }
                                 $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
 
-                                echo $qtdavaliacoes > 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
+                                echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
                                 ?>
                             </div>
                             <div id="categoria-anuncio">
@@ -195,29 +195,28 @@ if (isset($_GET['a'])) {
                             <div id="estoque-anuncio">
                                 <?php
                                 if ($anuncio['tipoAnuncio'] == 2) {
-                                    echo $anuncio['qtdProduto'] > 1 ? $anuncio['qtdProduto'] . " unidades" : $anuncio['qtdProduto'] . " unidade";
+                                    echo $anuncio['qtdProduto'] != 1 ? $anuncio['qtdProduto'] . " unidades" : $anuncio['qtdProduto'] . " unidade";
                                 }
                                 ?>
                             </div>
                             <div class="accordion accordion-flush accordion-anuncio">
                                 <div class="accordion-item">
-                                    <h2 class="accordion-header">
+                                    <h3 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-descricao" aria-expanded="true" aria-controls="collapse-descricao">
                                             Descrição
                                         </button>
-                                    </h2>
+                                    </h3>
                                     <div id="collapse-descricao" class="accordion-collapse collapse" data-bs-parent="#accordion-descricao">
-                                        <div class="accordion-body">
-                                            <?php echo $anuncio['descricaoAnuncio'] ?>
+                                        <div class="accordion-body"><?php echo $anuncio['descricaoAnuncio'] ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
-                                    <h2 class="accordion-header">
+                                    <h3 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-empresa" aria-expanded="false" aria-controls="collapse-empresa">
                                             Sobre a empresa
                                         </button>
-                                    </h2>
+                                    </h3>
                                     <div id="collapse-empresa" class="accordion-collapse collapse" data-bs-parent="#accordion-empresa">
                                         <a class="accordion-body accordion-empresa" href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora'] ?>">
                                             <img src="../<?php echo $anuncio['fotoNegocioVendedora'] ?>" id="foto-accordion">
@@ -239,14 +238,14 @@ if (isset($_GET['a'])) {
                                                 <?php
                                                 $qtdanuncio = daoAnuncio::contarAnuncioGeral($anuncio['idVendedora']);
 
-                                                echo $qtdanuncio > 1 ? $qtdanuncio . " anúncios" : $qtdanuncio . " anúncio";
+                                                echo $qtdanuncio != 1 ? $qtdanuncio . " anúncios" : $qtdanuncio . " anúncio";
                                                 ?>
                                             </div>
                                             <div id="seguidores-empresa">
                                                 <?php
                                                 $qtdseguidores = daoSeguidor::contarSeguidor($anuncio['idVendedora']);
 
-                                                echo $qtdseguidores > 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
+                                                echo $qtdseguidores != 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
                                                 ?>
                                             </div>
                                         </a>

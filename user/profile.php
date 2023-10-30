@@ -27,6 +27,10 @@ if (isset($_GET['user'])) {
 <body>
     <div id="user-profile">
         <nav id="nav">
+            <picture id="nav-logo">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+            </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
                     <i class="bi bi-house-door"></i>
@@ -40,7 +44,7 @@ if (isset($_GET['user'])) {
                         Pesquisa
                     </span>
                 </a>
-                <a href="#" class="nav-link mobile-hide">
+                <a href="seus-pedidos.php" class="nav-link mobile-hide">
                     <i class="bi bi-box-seam"></i>
                     <span>
                         Seus pedidos
@@ -114,7 +118,32 @@ if (isset($_GET['user'])) {
                         </div>
                         <div id="bio-info">
                             <div id="bio-name">
-                                <?php echo $dados['nomeNegocioVendedora'] ?>
+                                <?php echo $dados['nomeNegocioVendedora'];
+                                if ($dados['nivelNegocioVendedora'] == 1) {
+                                ?>
+                                    <i class="bi bi-gem highlight" id="bio-star"></i>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div id="bio-rating">
+                                <?php
+                                $qtdestrelas = ceil(daoAnuncio::consultarMediaVendedora($dados['idVendedora']));
+
+                                for ($i = 0; $i < $qtdestrelas; $i++) {
+                                ?>
+                                    <i class="bi bi-star-fill"></i>
+                                <?php
+                                }
+
+                                for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                ?>
+                                    <i class="bi bi-star"></i>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div id="bio-dropdown">
                                 <div class="dropdown-start dropdown">
                                     <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
@@ -135,31 +164,41 @@ if (isset($_GET['user'])) {
                                     </ul>
                                 </div>
                             </div>
-                            <div id="bio-username">@<?php echo $dados['nomeUsuarioNegocioVendedora'] ?></div>
-                            <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
-                            <div id="bio-options">
+                            <div id="bio-username">
+                                @<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>
+                            </div>
+                            <div id="bio-followers">
                                 <?php
-                                
-                                    $seguidor = new Seguidor();
-                                    
-                                    $vendedora = new Vendedora();
-                                    $vendedora->setIdVendedora($dados['idVendedora']);
+                                $qtdseguidores = daoSeguidor::contarSeguidor($dados['idVendedora']);
 
-                                    $cliente = new Cliente();
-                                    $cliente->setIdCliente($_SESSION['id']);
-
-                                    $seguidor->setCliente($cliente);
-                                    $seguidor->setVendedora($vendedora);
-
-                                    $isFollowed = daoSeguidor::consultaSeguidor($seguidor);
+                                echo $qtdseguidores != 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
                                 ?>
-                                <a href="<?php echo $isFollowed ? "unfollow" : "follow"?>.php?user=<?php echo $dados['nomeUsuarioNegocioVendedora']?>" class="button <?php echo $isFollowed ? "button-secondary" : ""?> bio-option">
-                                <?php echo $isFollowed ? "Parar de seguir" : "Seguir"?>
+                            </div>
+
+                            <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
+                            <div id="bio-follow-share">
+                                <?php
+
+                                $seguidor = new Seguidor();
+
+                                $vendedora = new Vendedora();
+                                $vendedora->setIdVendedora($dados['idVendedora']);
+
+                                $cliente = new Cliente();
+                                $cliente->setIdCliente($_SESSION['id']);
+
+                                $seguidor->setCliente($cliente);
+                                $seguidor->setVendedora($vendedora);
+
+                                $isFollowed = daoSeguidor::consultaSeguidor($seguidor);
+                                ?>
+                                <a href="<?php echo $isFollowed ? "unfollow" : "follow" ?>.php?user=<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>" class="button <?php echo $isFollowed ? "button-secondary" : "" ?> bio-option">
+                                    <?php echo $isFollowed ? "Parar de seguir" : "Seguir" ?>
                                 </a>
-                                <button type="button" class="button bio-option">
+                                <a type="button" class="button bio-option">
                                     Compartilhar
                                     <i class="bi bi-share-fill"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -179,14 +218,6 @@ if (isset($_GET['user'])) {
 
                             ?>
                             <span><?php echo $qtdservicos ?></span> Serviços
-                        </div>
-                        <div class="negocio-information">
-                            <i class="bi bi-people"></i>
-                            <?php
-                            $qtdseguidores = daoSeguidor::contarSeguidor($dados['idVendedora']);
-
-                            ?>
-                            <span><?php echo $qtdseguidores ?></span> Seguidores
                         </div>
                     </div>
                     <div id="bio-products">

@@ -66,8 +66,9 @@
         </nav>
         <main id="main">
             <div id="pesquisa">
-                <div class="search-container">
-                    <input type="text" role="search" placeholder="Pesquisa" class="search-field">
+                <img class="logo-pesquisa" src="../assets/img/Logo-menor.png" alt="">
+                <div class="search-container search-square">
+                    <input type="text" role="search" placeholder="Pesquisa" class="search-field" />
                     <button class="search-button">
                         <i class="bi bi-search"></i>
                     </button>
