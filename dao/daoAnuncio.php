@@ -28,7 +28,7 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "DELETE tbAnuncio WHERE idAnuncio = ?";
+        $queryInsert = "DELETE FROM tbAnuncio WHERE idAnuncio = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
         $prepareStatement->bindvalue(1, $Anuncio->getIdAnuncio());
@@ -41,7 +41,7 @@ class daoAnuncio
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbAnuncio
-                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, estrelasAnuncio = ?, tipoAnuncio = ?, qtdAnuncio = ?, idNegocio = ?
+                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, qtdProduto = ?
                             WHERE idAnuncio = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
@@ -49,11 +49,8 @@ class daoAnuncio
         $prepareStatement->bindValue(1, $Anuncio->getNomeAnuncio());
         $prepareStatement->bindValue(2, $Anuncio->getDescricaoAnuncio());
         $prepareStatement->bindValue(3, $Anuncio->getValorAnuncio());
-        $prepareStatement->bindValue(4, $Anuncio->getEstrelasAnuncio());
-        $prepareStatement->bindValue(5, $Anuncio->getTipoAnuncio());
-        $prepareStatement->bindvalue(5, $Anuncio->getQtdAnuncio());
-        $prepareStatement->bindValue(6, $Anuncio->getNegocio()->getIdNegocio());
-        $prepareStatement->bindValue(7, $Anuncio->getIdAnuncio());
+        $prepareStatement->bindvalue(4, $Anuncio->getQtdProduto());
+        $prepareStatement->bindValue(5, $Anuncio->getIdAnuncio());
 
         $prepareStatement->execute();
     }
@@ -145,6 +142,23 @@ class daoAnuncio
                             WHERE idAnuncio = ? ');
         $stmt->bindValue(1, $id);
         $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
+    public static function consultarPorVendedoraId($anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora, fotoNegocioVendedora FROM tbAnuncio
+                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                            INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                            WHERE idAnuncio = ? AND tbVendedora.idVendedora = ?');
+        $stmt->bindValue(1, $anuncio->getIdAnuncio());
+        $stmt->bindValue(2, $anuncio->getVendedora()->getIdVendedora());
+        $stmt->execute();
+
         $dados = $stmt->fetch();
 
         return $dados;

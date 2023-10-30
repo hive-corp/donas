@@ -36,7 +36,7 @@ require_once "global.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Painel
+                        Encomendas
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">
@@ -529,24 +529,27 @@ require_once "global.php";
                         </div>
                         <div class="stats-carousel">
                             <div class="row">
+                                <?php
+                                $melhor = daoAnuncio::consultarMelhorAvaliado($_SESSION['id']);
+                                ?>
                                 <div class="col">
                                     Seu anúncio melhor avaliado:
                                 </div>
-                                <a class="col highlight d-flex flex-column justify-content-center" href="produto.php">
+                                <a class="col highlight d-flex flex-column justify-content-center" href="anuncio.php?a=<?php echo $melhor['idAnuncio'] ?>">
                                     <?php
-                                    $melhor = daoAnuncio::consultarMelhorAvaliado($_SESSION['id']);
-
                                     echo $melhor['nomeAnuncio']
                                     ?>
                                 </a>
                             </div>
                             <div class="row">
+                                <?php
+                                $mais = daoAnuncio::consultarMaisEncomendado($_SESSION['id']);
+                                ?>
                                 <div class="col">
                                     Seu anúncio mais encomendado:
                                 </div>
-                                <a class="col highlight" href="produto.php">
+                                <a class="col highlight d-flex flex-column justify-content-center" href="anuncio.php?a=<?php echo $mais['idAnuncio'] ?>">
                                     <?php
-                                    $mais = daoAnuncio::consultarMaisEncomendado($_SESSION['id']);
 
                                     echo $mais['nomeAnuncio']
                                     ?>
@@ -694,6 +697,9 @@ require_once "global.php";
     <script src="../assets/vendor/chartjs/js/chart.js"></script>
     <script>
         var elem = document.querySelector(".stats-carousel")
+        var legendColor, borderColor
+
+        legendColor = localStorage.getItem('theme') == 'dark' ? 'white' : '#666'
 
         new Flickity(elem, {
             prevNextButtons: false,
@@ -735,7 +741,7 @@ require_once "global.php";
                                 size: 12,
                                 family: 'DM Sans',
                             },
-                            color: '#666'
+                            color: legendColor
                         },
                     },
                     title: {
@@ -746,7 +752,7 @@ require_once "global.php";
                             family: 'DM Sans',
                             weight: 'bold',
                         },
-                        color: '#333'
+                        color: legendColor
                     }
 
                 }
