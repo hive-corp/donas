@@ -20,6 +20,22 @@ require_once "validador.php";
 
 <body>
     <div id="user-encomenda">
+        <div class="modal pop" id="modal-pedido" tabindex="-1" aria-labelledby="modal-pedido" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Tem certeza?</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a cancelar esse pedido. Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="cancelar-pedido.php" class="button button-red" id="cancelar-pedido">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav id="nav">
             <picture id="nav-logo">
                 <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
@@ -110,9 +126,7 @@ require_once "validador.php";
                     foreach ($pedidos as $p) {
                     ?>
                         <div class="pedido">
-                            <div class="info-pedido">
-                                <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
-                            </div>
+                            <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
                             <div class="nome-pedido">
                                 <label for="" class="form-label">Pedido</label>
                                 <div class="input-wrapper">
@@ -151,7 +165,7 @@ require_once "validador.php";
                                     ?>
                                 </div>
                             </div>
-                            <a class="button button-red mx-auto">CANCELAR</a>
+                            <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idEncomenda']?>">CANCELAR</button>
                         </div>
                     <?php
                     }
@@ -165,6 +179,18 @@ require_once "validador.php";
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
+
+    <script>
+        let cancelarPedido = document.querySelectorAll('.cancelar-pedido')
+
+        cancelarPedido.forEach(item => {
+            let id = item.getAttribute('data-id')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#cancelar-pedido').href=`cancelar-pedido.php?p=${id}`
+            })
+        })
+    </script>
 </body>
 
 </html>
