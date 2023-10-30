@@ -251,6 +251,7 @@ svg {
     grid-template-areas:
         "foto foto"
         "nome username"
+        "bio bio"
         "telefone categoria"
         "cnpj cnpj"
         "endereco endereco";
@@ -291,6 +292,10 @@ svg {
 
 .username-modal {
     grid-area: username;
+}
+
+.bio-modal {
+    grid-area: bio;
 }
 
 .cpf-modal {
@@ -458,6 +463,10 @@ svg {
     grid-area: username;
 }
 
+.input.input-bio {
+    grid-area: bio;
+}
+
 .input.input-email {
     grid-area: email;
 }
@@ -599,7 +608,8 @@ input:checked+.tipo-login:hover {
 
 .account-type::before,
 .modal-content::before,
-.stats-box::before {
+.stats-box::before,
+.pedido::before {
     content: '';
     position: absolute;
     height: 40px;
@@ -614,7 +624,8 @@ input:checked+.tipo-login:hover {
 
 .account-type::after,
 .modal-content::after,
-.stats-box::after {
+.stats-box::after,
+.pedido::after {
     content: '';
     position: absolute;
     height: 40px;
@@ -632,7 +643,9 @@ input:checked+.tipo-login:hover {
 .modal-content:hover::after,
 .modal-content:hover::before,
 .stats-box:hover::after,
-.stats-box:hover::before {
+.stats-box:hover::before,
+.pedido:hover::before,
+.pedido:hover::after {
     opacity: 0.5;
 }
 
@@ -1408,7 +1421,8 @@ a.create-new:hover {
 #sair-user,
 #options-user,
 #options-chat,
-#options-profile {
+#options-profile,
+#options-anuncio {
     font-size: 1.2em;
     margin-right: 16px;
     color: gray;
@@ -1425,7 +1439,8 @@ a.create-new:hover {
 #sair-user:hover,
 #options-user:hover,
 #options-chat:hover,
-#options-profile:hover {
+#options-profile:hover
+#options-anuncio:hover {
     background: #CB6CE633;
     color: #CB6CE6
 }
@@ -2137,42 +2152,28 @@ a.veja-mais {
 }
 
 .encomenda {
-    border-radius: 4px;
-    border: 2px solid #CB6CE6;
-    background: var(--input-color);
+    border-radius: 8px;
+    border: 1px solid var(--bd-color);
+    background: var(--input-bg);
     width: 320px;
-    aspect-ratio: 1/1;
     display: grid;
     grid-template-rows: auto auto auto;
-    padding: 24px;
-    transition: .2s box-shadow
-}
-
-.pedido{
-    width: 270px;
-    border: 2px solid #CB6CE6;
-    background: var(--input-color);
-    padding: 12px;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.foto-pedido{
-    width: 100%;
-    border-radius: 8px;
+    padding: 20px;
+    transition: .3s box-shadow, .3s border-color;
+    gap:12px
 }
 
 .encomenda:hover {
     box-shadow: 0 0 0 4px #CB6CE633;
+    border-color: #CB6CE6;
 }
 
 .info-encomenda {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 4px;
 }
 
 .foto-encomenda {
@@ -2189,16 +2190,102 @@ a.veja-mais {
 
 .username-encomenda {
     grid-area: username;
+    text-align: center;
     color: gray;
 }
 
 .dados-encomenda {
     display: grid;
-    gap: 4px;
+    gap: 8px;
 }
 
 .situacao-encomenda {
     place-self: center;
+}
+
+.opcoes-encomenda{
+    display: flex;
+    gap: 4px;
+    justify-content: space-around;
+}
+
+.opcoes-encomenda button{
+    font-size: 16px;
+    padding: 4px 24px;
+}
+
+.pedido{
+    width: 270px;
+    border: 1px solid var(--bd-color);
+    background: var(--input-bg);
+    padding: 12px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    transition: .3s box-shadow, .3s border-color;
+    overflow: hidden;
+}
+
+.pedido:hover {
+    box-shadow: 0 0 0 4px #CB6CE633;
+    border-color: #CB6CE6;
+}
+
+.pedido::before {
+    height: 30px;
+    bottom: -25px;
+    right: -15px;
+}
+
+.pedido::after {
+    height: 30px;
+    top: -25px;
+    left: -15px;
+}
+
+/* .rosa-pedido{
+    position: absolute;
+    width: 120px;
+    bottom: -50px;
+    opacity: 0.2;
+}
+
+.rosa-pedido:first-child{
+    left: 0;
+    scale: -1 1;
+}
+.rosa-pedido:last-child{
+    right: 0;
+} */
+
+.foto-pedido{
+    grid-area: foto;
+    width: 100%;
+    border-radius: 8px;
+    align-self: center;
+}
+
+.nome-pedido{
+    grid-area: nome;
+}
+
+.preco-pedido{
+    grid-area: valor;
+}
+
+.data-pedido{
+    grid-area: data;
+}
+
+.status-pedido{
+    grid-area: status;
+}
+
+.cancelar-pedido{
+    grid-area: cancelar;
+    justify-self: center;
 }
 
 #negocio-bio {
@@ -2229,7 +2316,7 @@ a.veja-mais {
 
 #bio-info {
     display: grid;
-    grid-template-rows: repeat(5, min-content);
+    grid-template-rows: min-content min-content min-content 1fr min-content;
     grid-template-columns: auto min-content min-content;
     grid-template-areas:
         "name rating dropdown"
@@ -2801,7 +2888,7 @@ a.config-item {
 
 #user-product #main {
     background: var(--bg-color);
-    grid-template-rows: 1fr;
+    display: block;
 }
 
 #user-product #content {
@@ -2866,11 +2953,22 @@ a.config-item {
     gap: 8px;
     padding: 24px;
     background: var(--bg-color);
+    position: relative;
+}
+
+#editar-anuncio{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#options-anuncio{
+    font-size: 1.6em;
 }
 
 #nome-anuncio {
     grid-area: nome;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 #preco-anuncio {
@@ -2935,12 +3033,12 @@ a.config-item {
 
 .accordion-anuncio .accordion-button {
     padding-left: 0;
-    padding-bottom: 0;
     font-size: 24px;
     color: var(--text-color);
     background: var(--bg-color);
     border: 0;
     box-shadow: none;
+    transition: .3s all;    
 }
 
 .accordion-button::after,
@@ -2950,6 +3048,7 @@ a.config-item {
 
 .accordion-anuncio .accordion-body {
     padding-left: 0;
+    padding-top: 4px;
 }
 
 .accordion-empresa {
@@ -2957,8 +3056,13 @@ a.config-item {
     grid-template-areas:
         "foto nome anuncios"
         "foto categoria seguidores";
-    grid-template-columns: 65px 1fr 1fr;
+    grid-template-columns: 65px 1fr auto;
+    grid-template-rows: auto auto;
     column-gap: 12px;
+}
+
+#collapse-descricao .accordion-body{
+    white-space: pre-line;
 }
 
 #foto-accordion {
@@ -2970,7 +3074,7 @@ a.config-item {
 }
 
 #empresa-anuncio {
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 #categoria-empresa {
@@ -3306,6 +3410,7 @@ a.highlight {
     grid-template-areas:
         "foto foto"
         "nome username"
+        "bio bio"
         "cnpj categoria"
         "telefone cep"
         "estado cidade"
@@ -3539,7 +3644,7 @@ a.highlight {
 
     #foto-anuncio {
         width: 100%;
-        aspect-ratio: 4/3;
+        aspect-ratio: 1/1;
         border-radius: 0;
         position: relative;
         border: 0;
@@ -3549,7 +3654,7 @@ a.highlight {
         object-fit: cover;
         object-position: center;
         width: 110%;
-        aspect-ratio: 4/3;
+        aspect-ratio: 1/1;
         position: fixed;
         border: 0;
         border-radius: 0;
@@ -3589,6 +3694,33 @@ a.highlight {
         width: 180px;
         place-self: auto;
     }
+
+    #encomendas{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        justify-items: center;
+    }
+}
+
+@media (max-width:600px) {
+    .pedido{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas:
+        "foto nome"
+        "foto valor"
+        "foto data"
+        "foto status"
+        "cancelar cancelar";
+        column-gap: 16px;
+    }
+
+    .cancelar-pedido{
+        margin-top: 16px;
+    }
+
 }
 
 @media (max-width:550px) {
