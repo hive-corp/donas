@@ -6,15 +6,16 @@
         public static function criar($PedidoProduto){
             $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, idAnuncio, idCliente)
+            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, qtdProdutoPedido idAnuncio, idCliente)
                             VALUES (?,?,?,?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
             $prepareStatement->bindValue(1, $PedidoProduto->getStatusPedidoProduto());
             $prepareStatement->bindValue(2, $PedidoProduto->getValorTotal());
-            $prepareStatement->bindValue(3, $PedidoProduto->getAnuncio()->getIdAnuncio());
-            $prepareStatement->bindValue(4, $PedidoProduto->getCliente()->getIdCliente());
+            $prepareStatement->bindValue(3, $PedidoProduto->getQtdProdutoPedido());
+            $prepareStatement->bindValue(4, $PedidoProduto->getAnuncio()->getIdAnuncio());
+            $prepareStatement->bindValue(5, $PedidoProduto->getCliente()->getIdCliente());
 
             $prepareStatement->execute();
         }
@@ -35,17 +36,18 @@
             $connection = Conexao::conectar();
 
             $queryInsert = "UPDATE tbPedidoProduto
-                            SET statusPedidoProduto = ?, valorTotal = ?, dataPedidoFeito = ?, idAnuncio = ?, idCliente = ?
+                            SET statusPedidoProduto = ?, valorTotal = ?, qtdProdutoPedido = ?, dataPedidoFeito = ?, idAnuncio = ?, idCliente = ?
                             WHERE idPedidoProduto = ?";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
             $prepareStatement->bindValue(1, $PedidoProduto->getStatusPedidoProduto());
             $prepareStatement->bindValue(2, $PedidoProduto->getValorTotal());
-            $prepareStatement->bindValue(3, $PedidoProduto->getDataPedidoFeito());
-            $prepareStatement->bindValue(4, $PedidoProduto->getAnuncio()->getIdAnuncio());
-            $prepareStatement->bindValue(5, $PedidoProduto->getCliente()->getIdCliente());
-            $prepareStatement->bindValue(6, $PedidoProduto->getIdPedidoProduto());
+            $prepareStatement->bindValue(3, $PedidoProduto->getQtdProdutoPedido());
+            $prepareStatement->bindValue(4, $PedidoProduto->getDataPedidoFeito());
+            $prepareStatement->bindValue(5, $PedidoProduto->getAnuncio()->getIdAnuncio());
+            $prepareStatement->bindValue(6, $PedidoProduto->getCliente()->getIdCliente());
+            $prepareStatement->bindValue(7, $PedidoProduto->getIdPedidoProduto());
             
 
             $prepareStatement->execute();
@@ -171,7 +173,7 @@
             $connection = Conexao::conectar();
 
             $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto
-                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbEncomenda.idAnuncio
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
                         WHERE idVendedora = ? AND DATE(dataEncomenda) = CURDATE();";
     
             $resultado = $connection->prepare($querySelect);
