@@ -61,7 +61,19 @@ require_once "validador.php";
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">
-                    <i class="bi bi-bell"></i> <span>
+                    <i class="bi bi-bell">
+                        <?php
+                        if (daoNotificCliente::contarNotificacoes($_SESSION['id'])) {
+                        ?>
+                            <span class="counter">
+                                <?php
+                                echo daoNotificCliente::contarNotificacoes($_SESSION['id']);
+                                ?>
+                            </span>
+                        <?php
+                        }
+                        ?>
+                    </i> <span>
                         Notificações
                     </span>
                 </a>
@@ -165,7 +177,7 @@ require_once "validador.php";
                                     ?>
                                 </div>
                             </div>
-                            <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idEncomenda']?>">CANCELAR</button>
+                            <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idEncomenda'] ?>">CANCELAR</button>
                         </div>
                     <?php
                     }
@@ -187,7 +199,7 @@ require_once "validador.php";
             let id = item.getAttribute('data-id')
 
             item.addEventListener('click', () => {
-                document.querySelector('#cancelar-pedido').href=`cancelar-pedido.php?p=${id}`
+                document.querySelector('#cancelar-pedido').href = `cancelar-pedido.php?p=${id}`
             })
         })
     </script>
