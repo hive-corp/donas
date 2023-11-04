@@ -45,7 +45,19 @@ require_once "validador.php";
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link active">
-                    <i class="bi bi-bell-fill"></i> <span>
+                    <i class="bi bi-bell">
+                        <?php
+                        if (daoNotificCliente::contarNotificacoes($_SESSION['id'])) {
+                        ?>
+                            <span class="counter">
+                                <?php
+                                echo daoNotificCliente::contarNotificacoes($_SESSION['id']);
+                                ?>
+                            </span>
+                        <?php
+                        }
+                        ?>
+                    </i> <span>
                         Notificações
                     </span>
                 </a>
@@ -102,6 +114,114 @@ require_once "validador.php";
                 Notificações
             </div>
             <div id="content">
+                <?php
+
+                $notificacoes = daoNotificCliente::listarNotificacoes($_SESSION['id']);
+
+                foreach ($notificacoes as $n) {
+                ?>
+                    <a class="notificacao" <?php
+
+                                            switch ($n['tipoNotificacao']) {
+                                                case 0:
+                                                    break;
+                                                case 1:
+                                                case 2:
+                                                    $dados = daoDenuncia::consultaDenuncia($n['idDenuncia']);
+                                                    $vendedora = daoVendedora::consultarPorId($dados['idVendedora']);
+                                                    
+                                                    ?> href="profile.php?user=<?php echo $vendedora['nomeUsuarioNegocioVendedora'];?>"<?php
+                                                    break;
+                                                case 3:
+
+                                                    break;
+                                                case 4:
+
+
+                                                    break;
+                                                case 5:
+
+                                                    break;
+                                                default:
+                                                    $src = '';
+                                                    break;
+                                            }
+
+                                            ?>>
+                        <div class="notificacao-img">
+                            <?php
+
+                            switch ($n['tipoNotificacao']) {
+                                case 0:
+                                    $src = 'assets/img/logo-letra.svg';
+                                    break;
+                                case 1:case 2:
+                                    $src = $vendedora['fotoNegocioVendedora'];
+                                    break;
+                                case 3:
+
+                                    break;
+                                case 4:
+
+
+                                    break;
+                                case 5:
+
+                                    break;
+                                default:
+                                    $src = '';
+                                    break;
+                            }
+
+                            ?>
+                            <img src="../<?php echo $src ?>" alt="">
+                        </div>
+                        <div class="notificacao-content">
+                            <?php
+
+                            switch ($n['tipoNotificacao']) {
+                                case 0:
+                            ?>
+                                    Seja bem vindo à plataforma!
+                                <?php
+                                    break;
+                                case 1:
+                                ?>
+                                    Sua denúncia foi recebida.
+                                <?php
+                                    break;
+                                case 2:
+                                ?>
+                                    Sua denúncia foi aceita.
+                                <?php
+                                    break;
+                                case 3:
+                                ?>
+                                    Sua encomenda foi recebida.
+                                <?php
+                                    break;
+                                case 4:
+                                ?>
+                                    Sua encomenda foi cancelada.
+                                <?php
+                                    break;
+                                case 5:
+                                ?>
+                                    Sua encomenda foi finalizada.
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            ?>
+                        </div>
+
+                    </a>
+                <?php
+                }
+
+                ?>
             </div>
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
         </main>
@@ -109,6 +229,12 @@ require_once "validador.php";
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../api/notificacao')
+        })
+    </script>
 </body>
 
 </html>

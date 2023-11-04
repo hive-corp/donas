@@ -199,6 +199,19 @@ class daoVendedora
         return $dados;
     }
 
+    public static function consultarPorId($id)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT * FROM tbVendedora
+                            WHERE idVendedora = ?');
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
     public static function verificaLogin($Vendedora)
     {
         $connection = Conexao::conectar();

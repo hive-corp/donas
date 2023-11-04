@@ -72,7 +72,7 @@ switch ($method) {
 
         $preferencias = json_decode($_POST['preferencias']);
 
-        foreach($preferencias as $p){
+        foreach ($preferencias as $p) {
             $categoria = new Categoria();
             $categoria->setIdCategoria($p);
 
@@ -83,10 +83,26 @@ switch ($method) {
             daoPreferencias::cadastrar($preferencia);
         }
 
+        $notific = new NotificCliente();
+        $notific->setCliente($cliente);
+
+        $denuncia = new Denuncia();
+        $denuncia->setIdDenuncia(null);
+
+        $notific->setDenuncia($denuncia);
+
+        $anuncio = new Anuncio;
+        $anuncio->setIdAnuncio(null);
+
+        $notific->setTipoNotificacao(0);
+        $notific->setStatusNotificacao(0);
+
+        daoNotificCliente::cadastrar($notific);
+
         break;
 
     case "PUT":
-        
+
         //a acrescentar...
 
         break;
