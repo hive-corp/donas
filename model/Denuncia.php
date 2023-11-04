@@ -7,13 +7,11 @@ class Denuncia {
 
     private $Cliente ;
     private $Vendedora ;
-    private $Negocio ;
     
     public function __construct()
     {
         $this->Cliente = new Cliente();
         $this->Vendedora = new Vendedora();
-        $this->Negocio = new Negocio();
     }
 
     public function getIdDenuncia() {
@@ -31,9 +29,6 @@ class Denuncia {
     public function getVendedora() {
         return $this->Vendedora;
     }
-    public function getNegocio() {
-        return $this->Negocio;
-    }
     public function setIdDenuncia($idDenuncia) {
         $this->idDenuncia=$idDenuncia;
     }
@@ -48,9 +43,6 @@ class Denuncia {
     }
     public function setVendedora($Vendedora) {
         $this->Vendedora=$Vendedora;
-    }
-    public function setNegocio($Negocio) {
-        $this->Negocio=$Negocio;
     }
 }
 

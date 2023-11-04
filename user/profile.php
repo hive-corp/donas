@@ -26,6 +26,77 @@ if (isset($_GET['user'])) {
 
 <body>
     <div id="user-profile">
+        <div class="modal pop" id="modal-denuncia" tabindex="-1" aria-labelledby="modal-denuncia" aria-hidden="true">
+            <form id="form-denuncia" class="modal-dialog modal-dialog-centered needs-validation" action="nova-denuncia.php?user=<?php echo $_GET['user'] ?>" method="post" novalidate>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Nova denúncia</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input input-denunciante">
+                            <label class="form-label">Nome do denunciante<span>*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" disabled value="<?php echo $_SESSION['nome'] ?>">
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira um nome para o anúncio
+                            </div>
+                        </div>
+                        <div class="input input-denunciado">
+                            <label class="form-label" for="nome-denunciado">Nome do negócio<span>*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" disabled value="<?php echo $dados['nomeNegocioVendedora'] ?>">
+                            </div>
+                        </div>
+                        <div class="input input-motivo">
+                            <label class="form-label" for="motivo">Motivo da denúncia<span>*</span></label>
+                            <div class="input-wrapper">
+                                <select name="motivo" id="motivo" required>
+                                    <option value="1">Propaganda enganosa</option>
+                                    <option value="2">Assédio</option>
+                                    <option value="3">Atividades ilegais</option>
+                                    <option value="4">Ofensas</option>
+                                    <option value="5">Falta de segurança</option>
+                                    <option value="6">Se passando por outra pessoa</option>
+                                </select>
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira um motivo da denúncia
+                            </div>
+                        </div>
+                        <div class="input input-conteudo">
+                            <label class="form-label" for="conteudo">Conteúdo<span>*</span></label>
+                            <div class="input-wrapper">
+                                <textarea name="conteudo" id="conteudo" cols="30" rows="6" required></textarea>
+                            </div>
+                            <div class="invalid-feedback">
+                                Informe o conteúdo da denúncia
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="button" data-bs-dismiss="modal">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal pop" id="modal-sucesso" tabindex="-1" aria-labelledby="modal-sucesso" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Denúncia realizada com sucesso!</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        <i class="bi bi-check-circle"></i>
+                        Denúncia realizada com sucesso!
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav id="nav">
             <picture id="nav-logo">
                 <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
@@ -51,7 +122,19 @@ if (isset($_GET['user'])) {
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link">
-                    <i class="bi bi-bell"></i>
+                    <i class="bi bi-bell">
+                        <?php
+                        if (daoNotificCliente::contarNotificacoes($_SESSION['id'])) {
+                        ?>
+                            <span class="counter">
+                                <?php
+                                echo daoNotificCliente::contarNotificacoes($_SESSION['id']);
+                                ?>
+                            </span>
+                        <?php
+                        }
+                        ?>
+                    </i>
                     <span>
                         Notificações
                     </span>
@@ -150,7 +233,7 @@ if (isset($_GET['user'])) {
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-start dropdown-sobe">
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-denuncia" href="#">
                                                 <i class="bi bi-exclamation-triangle"></i>
                                                 Denunciar
                                             </a>
@@ -251,6 +334,30 @@ if (isset($_GET['user'])) {
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
+    <script>
+        var form = document.querySelector('#form-denuncia')
+        form.addEventListener('submit', event => {
+            event.preventDefault()
+            event.stopPropagation()
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated')
+            } else {
+                let formData = new FormData(form)
+
+                fetch('../api/denuncia/?user=<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>', {
+                    method: 'POST',
+                    header: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: formData
+                }).then(() => {
+                    new bootstrap.Modal('#modal-sucesso').toggle()
+                    setTimeout(() => location.reload(), 2500)
+                })
+            }
+        })
+    </script>
 </body>
 
 </html>
