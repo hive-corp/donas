@@ -155,6 +155,45 @@ const preencherLista = async (url, elemento) => {
     })
 }
 
+const preencherListaPesquisa = async (url, elemento) => {
+
+    elemento.innerText = ''
+
+    const response = await fetch(url)
+    const data = await response.json()
+
+    let conversas = data
+
+    conversas.forEach(item => {
+        let conversaItem = document.createElement('div')
+        conversaItem.setAttribute('class', 'chat-item')
+
+        let foto = document.createElement('div')
+        foto.setAttribute('class', 'chat-foto')
+
+        let img = document.createElement('img')
+        img.src = "../" + item.foto
+
+        foto.append(img)
+
+        let nome = document.createElement('div')
+        nome.setAttribute('class', 'chat-name')
+        nome.innerText = item.name
+
+        let apelido = document.createElement('div')
+        apelido.setAttribute('class', 'chat-username')
+        apelido.innerText = '@' + item.username
+
+        conversaItem.append(foto)
+        conversaItem.append(nome)
+        conversaItem.append(apelido)
+
+        conversaItem.addEventListener('click', () => resgatarMensagens(item.name, "../" + item.foto, item.username))
+
+        elemento.appendChild(conversaItem)
+    })
+}
+
 voltarChat.addEventListener('click', () => {
     conversas.classList.toggle('hide')
     main.classList.toggle('hide')

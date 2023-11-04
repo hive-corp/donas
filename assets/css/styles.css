@@ -258,6 +258,17 @@ svg {
     gap: 16px
 }
 
+#modal-denuncia .modal-body{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "denunciante denunciado"
+        "motivo motivo"
+        "conteudo conteudo";
+    gap: 16px
+}
+
 .foto-modal {
     grid-area: foto;
     width: 250px;
@@ -449,6 +460,22 @@ svg {
         "logradouro logradouro"
         "numero complemento"
         "avancar avancar";
+}
+
+.input.input-denunciante{
+    grid-area: denunciante;
+}
+
+.input.input-denunciado{
+    grid-area: denunciado;
+}
+
+.input.input-conteudo{
+    grid-area: conteudo;
+}
+
+.input.input-motivo{
+    grid-area: motivo;
 }
 
 .input.input-foto {
@@ -1346,6 +1373,25 @@ a.create-new:hover {
     background: #CB6CE633;
 }
 
+.nav-link i{
+    position: relative;
+}
+
+.nav-link .counter{
+    position: absolute;
+    top: 0;
+    left: -8px;
+    background: #CB6CE6;
+    color: white;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    font-size: 10px;
+    height: 16px;
+    font-style: normal;
+    display: grid;
+    place-items: center;
+}
+
 #nav.nav-dona {
     background: #280a23;
 }
@@ -1945,6 +1991,10 @@ a.veja-mais {
         "content";
 }
 
+#user-notifications #content{
+    padding: 0;
+}
+
 #main-title {
     grid-area: title;
     border-bottom: 1px solid var(--bd-color);
@@ -2465,7 +2515,40 @@ a.config-item {
     user-select: none;
 }
 
-.config-item:hover {
+.notificacao{
+    display: grid;
+    grid-template-columns: minmax(0,60px) 1fr;
+    border-bottom: 1px solid var(--bd-color);
+    color: var(--text-color);
+    transition: .3s background-color, .3s color;
+    gap:16px;
+    padding: 24px 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.notificacao-img{
+    display: grid;
+    place-items: center;
+    width: 55px;
+}
+
+.notificacao-img img{
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.notificacao-content{
+    display: flex;
+    align-items: center;
+}
+
+
+.config-item:hover,
+.notificacao:hover{
     background: #CB6CE633;
     color: #CB6CE6;
 }
@@ -3476,7 +3559,7 @@ a.highlight {
         display: none;
     }
 
-    #nav-list span {
+    #nav-list span:not(span.counter) {
         display: none
     }
 

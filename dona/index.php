@@ -117,7 +117,7 @@ require_once "global.php";
                 <div class="row">
                     <?php
 
-                    $qtdestrelas = ceil(daoAnuncio::consultarMediaVendedora($_SESSION['id']));
+                    $qtdestrelas = daoAnuncio::consultarMediaVendedora($_SESSION['id']);
 
                     if ($qtdestrelas != '') {
                     ?>
@@ -132,7 +132,8 @@ require_once "global.php";
                                 <h3 class="highlight">
                                     <?php
 
-                                    switch ($qtdestrelas) {
+                                    switch (ceil($qtdestrelas)) {
+                                        case 0:
                                         case 1:
                                         case 2:
                                     ?>
@@ -170,6 +171,7 @@ require_once "global.php";
                                     Você é uma vendedora nota <span class="highlight"><?php
                                                                                         echo ceil($qtdestrelas);
                                                                                         switch ($qtdestrelas) {
+                                                                                            case 0:
                                                                                             case 1:
                                                                                             case 2:
                                                                                         ?>...
@@ -531,13 +533,14 @@ require_once "global.php";
                             <div class="row">
                                 <?php
                                 $melhor = daoAnuncio::consultarMelhorAvaliado($_SESSION['id']);
+
                                 ?>
                                 <div class="col">
                                     Seu anúncio melhor avaliado:
                                 </div>
                                 <a class="col highlight d-flex flex-column justify-content-center" href="anuncio.php?a=<?php echo $melhor['idAnuncio'] ?>">
                                     <?php
-                                    echo $melhor['nomeAnuncio']
+                                    echo isset($melhor['nomeAnuncio']) ? $melhor['nomeAnuncio'] : "Nenhum"
                                     ?>
                                 </a>
                             </div>
@@ -550,8 +553,7 @@ require_once "global.php";
                                 </div>
                                 <a class="col highlight d-flex flex-column justify-content-center" href="anuncio.php?a=<?php echo $mais['idAnuncio'] ?>">
                                     <?php
-
-                                    echo $mais['nomeAnuncio']
+                                    echo isset($mais['nomeAnuncio']) ? $mais['nomeAnuncio'] : "Nenhum"
                                     ?>
                                 </a>
                             </div>
