@@ -254,6 +254,9 @@ require_once "validador.php";
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src='../assets/vendor/cropperjs/js/cropper.js'></script>
     <script src="../assets/js/script.js"></script>
+    <script>
+        type = 1
+</script>
     <script src="../assets/js/chat.js"></script>
 </body>
 

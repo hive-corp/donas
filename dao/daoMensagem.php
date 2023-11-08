@@ -152,7 +152,7 @@ class daoMensagem
         $connection = Conexao::conectar();
 
         $querySelect = "SELECT DISTINCT tbCliente.idCliente as id, nomeCliente as name, fotoCliente as foto, nomeUsuarioCliente as username FROM tbMensagem
-                            INNER JOIN tbCliente ON tbCliente.idCliente = tbCliente.idCliente
+                            INNER JOIN tbCliente ON tbMensagem.idCliente = tbCliente.idCliente
                             WHERE idVendedora=?";
 
         $prepareStatement = $connection->prepare($querySelect);

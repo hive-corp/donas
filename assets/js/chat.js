@@ -84,7 +84,7 @@ const resgatarMensagens = async (nome, foto, apelido) => {
     linkDestino.href = "profile.php?user=" + apelido
     linkDestino.classList.remove('hide')
 
-    document.querySelector('#acessar-perfil').href= "profile.php?user=" + apelido;
+    document.querySelector('#acessar-perfil') != null ? document.querySelector('#acessar-perfil').href= "profile.php?user=" + apelido : null
 
     var dadosAnteriores = await consultaMensagens(apelido)
 
