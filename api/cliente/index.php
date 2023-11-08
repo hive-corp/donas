@@ -83,7 +83,7 @@ switch ($method) {
             daoPreferencias::cadastrar($preferencia);
         }
 
-        $notific = new NotificCliente();
+        $notific = new NotifcCliente();
         $notific->setCliente($cliente);
 
         $denuncia = new Denuncia();
@@ -97,7 +97,7 @@ switch ($method) {
         $notific->setTipoNotificacao(0);
         $notific->setStatusNotificacao(0);
 
-        daoNotificCliente::cadastrar($notific);
+        daoNotifcCliente::cadastrar($notific);
 
         break;
 

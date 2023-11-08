@@ -184,8 +184,8 @@ class daoAnuncio
         $connection = Conexao::conectar();
 
 
-        $stmt = $connection->prepare('SELECT COUNT(idEncomenda) as qtd, tbAnuncio.* FROM tbAnuncio
-                            INNER JOIN tbEncomenda ON tbEncomenda.idAnuncio = tbAnuncio.idAnuncio
+        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.* FROM tbAnuncio
+                            INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
                             WHERE idVendedora = ?
                             ORDER BY qtd DESC
                             LIMIT 1');

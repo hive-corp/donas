@@ -1,6 +1,6 @@
 <?php
-class NotificCliente {
-    private $idNotificCliente  ;
+class NotifcCliente {
+    private $idNotifcCliente  ;
     private $statusNotificacao ;
     private $tipoNotificacao ;
     private $dataNotificacao ;
@@ -15,8 +15,8 @@ class NotificCliente {
         $this->Cliente = new Cliente();
     }
 
-    public function getIdNotificCliente() {
-        return $this->idNotificCliente;
+    public function getIdNotifcCliente() {
+        return $this->idNotifcCliente;
     }
     public function getStatusNotificacao() {
         return $this->statusNotificacao;
@@ -36,8 +36,8 @@ class NotificCliente {
     public function getDenuncia() {
         return $this->Denuncia;
     }
-    public function setIdNotificCliente($idNotificCliente) {
-        $this->idNotificCliente=$idNotificCliente;
+    public function setIdNotifcCliente($idNotifcCliente) {
+        $this->idNotifcCliente=$idNotifcCliente;
     }
     public function setStatusNotificacao($statusNotificacao) {
         $this->statusNotificacao=$statusNotificacao;

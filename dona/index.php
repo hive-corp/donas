@@ -120,6 +120,8 @@ require_once "global.php";
                     $qtdestrelas = daoAnuncio::consultarMediaVendedora($_SESSION['id']);
 
                     if ($qtdestrelas != '') {
+
+                        $qtdestrelas = ceil($qtdestrelas);
                     ?>
                         <div class="col">
                             <div class="chart-wrapper" id="estrelas-post">
@@ -129,7 +131,7 @@ require_once "global.php";
                         <div class="col d-flex flex-column justify-content-center">
 
                             <div class="stats-box p-4">
-                                <h3 class="highlight">
+                                <h3 class="highlight"><!--
                                     <?php
 
                                     switch (ceil($qtdestrelas)) {
@@ -153,7 +155,7 @@ require_once "global.php";
                                         default:
                                             break;
                                     }
-                                    ?>
+                                    ?>-->
                                     <?php
                                     for ($i = 0; $i < $qtdestrelas; $i++) {
                                     ?>
@@ -168,22 +170,21 @@ require_once "global.php";
                                     ?>
                                 </h3>
                                 <h4>
-                                    Você é uma vendedora nota <span class="highlight"><?php
-                                                                                        echo ceil($qtdestrelas);
+                                    Suas avaliações estão <span class="highlight"><?php
                                                                                         switch ($qtdestrelas) {
                                                                                             case 0:
                                                                                             case 1:
                                                                                             case 2:
-                                                                                        ?>...
+                                                                                        ?>baixas...
                                         <?php
                                                                                                 break;
                                                                                             case 3:
-                                        ?>.
+                                        ?>boas.
                                         <?php
                                                                                                 break;
                                                                                             case 4:
                                                                                             case 5:
-                                        ?>!
+                                        ?>ótimas!
                                 <?php
                                                                                             default:
                                                                                                 break;
@@ -523,10 +524,10 @@ require_once "global.php";
                     <div class="stats-body load">
                         <div class="row">
                             <div class="col">
-                                Hoje você teve: <span class="highlight"><?php echo daoEncomenda::contarEncomendasHoje($_SESSION['id']) ?> encomendas</span>
+                                Hoje você teve: <span class="highlight"><?php echo daoPedidoProduto::contarPedidosHoje($_SESSION['id']) ?> encomendas</span>
                             </div>
                             <div class="col">
-                                Neste mês: <span class="highlight"><?php echo daoEncomenda::contarEncomendasEsteMes($_SESSION['id']) ?> encomendas</span>
+                                Neste mês: <span class="highlight"><?php echo daoPedidoProduto::contarPedidosEsteMes($_SESSION['id']) ?> encomendas</span>
                             </div>
                         </div>
                         <div class="stats-carousel">
@@ -664,7 +665,7 @@ require_once "global.php";
                         <?php
 
 
-                        $pedidos = daoEncomenda::listarEncomendasVendedora($_SESSION['id']);
+                        $pedidos = daoPedidoProduto::listarPedidosVendedora($_SESSION['id']);
 
                         foreach ($pedidos as $p) {
                         ?>

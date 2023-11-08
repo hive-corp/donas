@@ -47,11 +47,11 @@ require_once "validador.php";
                 <a href="notificacoes.php" class="nav-link active">
                     <i class="bi bi-bell">
                         <?php
-                        if (daoNotificCliente::contarNotificacoes($_SESSION['id'])) {
+                        if (daoNotifcCliente::contarNotificacoes($_SESSION['id'])) {
                         ?>
                             <span class="counter">
                                 <?php
-                                echo daoNotificCliente::contarNotificacoes($_SESSION['id']);
+                                echo daoNotifcCliente::contarNotificacoes($_SESSION['id']);
                                 ?>
                             </span>
                         <?php
@@ -116,11 +116,11 @@ require_once "validador.php";
             <div id="content">
                 <?php
 
-                $notificacoes = daoNotificCliente::listarNotificacoes($_SESSION['id']);
+                $notificacoes = daoNotifcCliente::listarNotificacoes($_SESSION['id']);
 
                 foreach ($notificacoes as $n) {
                 ?>
-                    <a class="notificacao" <?php
+                    <a class="notificacao <?php echo $n['statusNotificacao'] == 0 ? "new" : "" ?> " <?php
 
                                             switch ($n['tipoNotificacao']) {
                                                 case 0:
@@ -130,7 +130,7 @@ require_once "validador.php";
                                                     $dados = daoDenuncia::consultaDenuncia($n['idDenuncia']);
                                                     $vendedora = daoVendedora::consultarPorId($dados['idVendedora']);
                                                     
-                                                    ?> href="profile.php?user=<?php echo $vendedora['nomeUsuarioNegocioVendedora'];?>"<?php
+                                                    ?> href="profile.php?user=<?php echo $vendedora['nomeUsuarioNegocioVendedora'];
                                                     break;
                                                 case 3:
 
@@ -147,7 +147,7 @@ require_once "validador.php";
                                                     break;
                                             }
 
-                                            ?>>
+                                            ?> >
                         <div class="notificacao-img">
                             <?php
 
@@ -221,6 +221,7 @@ require_once "validador.php";
                 <?php
                 }
 
+                daoNotifcCliente::visualizarNotificacoes($_SESSION['id']);
                 ?>
             </div>
             <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->

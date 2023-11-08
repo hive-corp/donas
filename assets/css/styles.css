@@ -2527,6 +2527,10 @@ a.config-item {
     user-select: none;
 }
 
+.notificacao.new{
+    background: #CB6CE622;
+}
+
 .notificacao-img{
     display: grid;
     place-items: center;

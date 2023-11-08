@@ -70,11 +70,11 @@ require_once "validador.php";
                 <a href="notificacoes.php" class="nav-link">
                     <i class="bi bi-bell">
                         <?php
-                        if (daoNotificCliente::contarNotificacoes($_SESSION['id'])) {
+                        if (daoNotifcCliente::contarNotificacoes($_SESSION['id'])) {
                         ?>
                             <span class="counter">
                                 <?php
-                                echo daoNotificCliente::contarNotificacoes($_SESSION['id']);
+                                echo daoNotifcCliente::contarNotificacoes($_SESSION['id']);
                                 ?>
                             </span>
                         <?php

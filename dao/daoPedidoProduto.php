@@ -6,7 +6,7 @@
         public static function criar($PedidoProduto){
             $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, qtdProdutoPedido idAnuncio, idCliente)
+            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, qtdProdutoPedido, idAnuncio, idCliente)
                             VALUES (?,?,?,?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
@@ -174,7 +174,7 @@
 
             $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto
                         INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
-                        WHERE idVendedora = ? AND DATE(dataEncomenda) = CURDATE();";
+                        WHERE idVendedora = ? AND DATE(dataPedidoFeito) = CURDATE();";
     
             $resultado = $connection->prepare($querySelect);
 
