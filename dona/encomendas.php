@@ -141,7 +141,7 @@ require_once "validador.php";
             <div id="content">
                 <div id="encomendas">
                     <?php
-                    $pedidos = daoEncomenda::listarEncomendasAtivasVendedora($_SESSION['id']);
+                    $pedidos = daoPedidoProduto::listarPedidosAtivosVendedora($_SESSION['id']);
 
                     foreach ($pedidos as $p) {
                     ?>
