@@ -238,14 +238,14 @@ class daoCliente
         return $dados;
     }
 
-    public static function contarCliente($Cliente)
+    public static function contarCliente()
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idCliente) FROM tbCliente");
         $stmt->execute();
 
-        $countCliente = $stmt->fetchAll();
+        $countCliente = $stmt->fetch()[0];
 
         return $countCliente;
     }

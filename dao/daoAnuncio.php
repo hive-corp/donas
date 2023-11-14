@@ -198,14 +198,14 @@ class daoAnuncio
         return $dados;
     }
 
-    public static function contarAnuncio($Anuncio)
+    public static function contarAnuncio()
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio");
         $stmt->execute();
 
-        $countAnuncio = $stmt->fetchAll();
+        $countAnuncio = $stmt->fetch()[0];
 
         return $countAnuncio;
     }

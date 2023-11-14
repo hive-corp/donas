@@ -1,5 +1,7 @@
-<?php include_once("validador.php"); ?>
-
+<?php
+include_once("validador.php");
+include_once("global.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -284,18 +286,23 @@
 													</tr>
 												</thead>
 												<tbody>
+												<?php
+													$clientes = daoCliente::listar();
+
+													foreach ($clientes as $c) {
+													?>
 													<tr>
 														<td class="align-middle text-center text-sm">
-															<p>01</p>
+															<p><?php echo $c['idCliente']?></p>
 														</td>
 														<td>
 															<div class="d-flex px-2 py-1">
 																<div>
-																	<img src="../assets/img/Perfil1.jpg" class="avatar avatar-sm me-3" alt="user6">
+																	<img src="../<?php echo $c['fotoCliente']?>" class="avatar avatar-sm me-3" alt="user6">
 																</div>
 																<div class="d-flex flex-column justify-content-center">
-																	<h6 class="text-sm">Luana Pinheiro Ferreira</h6>
-																	<p class="text-xs text-secondary mb-0">luana@ferreira.com</p>
+																	<h6 class="text-sm"><?php echo $c['nomeCliente']?></h6>
+																	<p class="text-xs text-secondary mb-0"><?php echo $c['emailCliente']?></p>
 																</div>
 															</div>
 														</td>
@@ -310,11 +317,15 @@
 
 
 														<td class="align-middle text-center">
-															<button class="botaoTabela" data-bs-toggle="modal" data-bs-target="#reativarConta"></button>
+															<button class="botaoTabela ativado" data-bs-toggle="modal" data-bs-target="#reativarConta"></button>
 														</td>
 
 
 													</tr>
+													<?php
+													}
+													?>
+													
 												</tbody>
 											</table>
 										</div>

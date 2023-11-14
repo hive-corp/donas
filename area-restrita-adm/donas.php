@@ -273,7 +273,7 @@ include "global.php";
 					<div class="container-fluid py-4">
 						<div class="row">
 							<div class="col-12">
-								<div class="card mb-4">	
+								<div class="card mb-4">
 									<div class="card-body px-0 pt-0 pb-2">
 										<div class="table-responsive p-0">
 											<table class="table align-items-center mb-0">
@@ -288,35 +288,43 @@ include "global.php";
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td class="align-middle text-center text-sm">
-															<p>01</p>
-														</td>
-														<td>
-															<div class="d-flex px-2 py-1">
-																<div>
-																	<img src="../assets/img/LojaDona1.jpg" class="avatar avatar-sm me-3" alt="user5">
+													<?php
+													$donas = daoVendedora::listar();
+
+													foreach ($donas as $d) {
+													?>
+														<tr>
+															<td class="align-middle text-center text-sm">
+																<p><?php echo $d['idVendedora']?></p>
+															</td>
+															<td>
+																<div class="d-flex px-2 py-1">
+																	<div>
+																		<img src="../<?php echo $d['fotoVendedora']?>" class="avatar avatar-sm me-3" alt="user5">
+																	</div>
+																	<div class="d-flex flex-column justify-content-center">
+																		<h6 class="text-sm"><?php echo $d['nomeVendedora']?></h6>
+																		<p class="text-xs text-secondary mb-0"><?php echo $d['emailVendedora']?></p>
+																	</div>
 																</div>
-																<div class="d-flex flex-column justify-content-center">
-																	<h6 class="text-sm">Luciana Santos Almeida</h6>
-																	<p class="text-xs text-secondary mb-0">lulu@almeida.com</p>
-																</div>
-															</div>
-														</td>
-														<td>
-															<p class="text-xs font-weight-bold mb-0">Lulu Store</p>
-															<p class="text-xs text-secondary mb-0">Desde 2023</p>
-														</td>
-														<td class="align-middle text-center text-sm">
-															<span class="text-xs font-weight-bold mb-0">Roupas Femininas</span>
-														</td>
-														<td>
-															<p class="text-xs font-weight-bold mb-0">Desbloqueada</p>
-														</td>
-														<td class="align-middle text-center">
-															<button class="botaoTabela" data-bs-toggle="modal" data-bs-target="#reativarConta"></button>
-														</td>
-													</tr>
+															</td>
+															<td>
+																<p class="text-xs font-weight-bold mb-0"><?php echo $d['nomeNegocioVendedora']?></p>
+																<p class="text-xs text-secondary mb-0">Desde 2023</p>
+															</td>
+															<td class="align-middle text-center text-sm">
+																<span class="text-xs font-weight-bold mb-0"><?php echo $d['nomeCategoria']?></span>
+															</td>
+															<td>
+																<p class="text-xs font-weight-bold mb-0">Desbloqueada</p>
+															</td>
+															<td class="align-middle text-center">
+																<button class="botaoTabela ativado" data-bs-toggle="modal" data-bs-target="#reativarConta"></button>
+															</td>
+														</tr>
+													<?php
+													}
+													?>
 												</tbody>
 											</table>
 										</div>

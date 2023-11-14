@@ -140,7 +140,8 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT * FROM tbVendedora";
+        $querySelect = "SELECT *, nomeCategoria FROM tbVendedora
+        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria";
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
         $lista = $resultado->fetchAll();
@@ -317,26 +318,26 @@ class daoVendedora
         return $dados;
     }
 
-    public static function contarVendedora($Vendedora)
+    public static function contarVendedora()
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora");
         $stmt->execute();
 
-        $countVendedora = $stmt->fetchAll();
+        $countVendedora = $stmt->fetch()[0];
 
         return $countVendedora;
     }
 
-    public static function contarVendBloq($Vendedora)
+    public static function contarVendBloq()
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE statusVendedora = 2");
         $stmt->execute();
 
-        $countVendBloq = $stmt->fetchAll();
+        $countVendBloq = $stmt->fetch()[0];
 
         return $countVendBloq;
     }
