@@ -9,13 +9,13 @@
     $anuncio = new Anuncio();
     $anuncio->setIdAnuncio($_GET['a']);
 
-    $encomendas = daoEncomenda::listarEncomendasAnuncio($_GET['a']);
+    $encomendas = daoPedidoProduto::listarPedidosAnuncio($_GET['a']);
 
     foreach($encomendas as $e){
-        $encomenda = new Encomenda;
-        $encomenda->setIdEncomenda($e['idEncomenda']);
+        $encomenda = new PedidoProduto;
+        $encomenda->setIdPedidoProduto($e['idPedidoProduto']);
 
-        daoEncomenda::deletar($encomenda);
+        daoPedidoProduto::deletar($encomenda);
     }
 
     daoAnuncio::deletar($anuncio);
