@@ -32,6 +32,18 @@ class daoPreferencias
         $prepareStatement->execute();
     }
 
+    public static function deletarPorUsuario($id)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "DELETE FROM tbPreferencias WHERE idCliente = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+        $prepareStatement->bindValue(1, $id);
+
+        $prepareStatement->execute();
+    }
+
     public static function editar($Preferencias)
     {
         $connection = Conexao::conectar();
@@ -56,6 +68,19 @@ class daoPreferencias
         $querySelect = "SELECT * FROM tbPreferencias";
 
         $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
+    public static function listarUsuario($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT idCategoria FROM tbPreferencias WHERE idCliente = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;

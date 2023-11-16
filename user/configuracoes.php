@@ -37,6 +37,43 @@ require_once "validador.php";
         </div>
     </div>
 
+    <div class="modal pop" id="modal-preferencias" tabindex="-1" aria-labelledby="modal-preferencias" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Escolha suas preferências</h1>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="preferencias">
+                        <div id="preferencias-grid">
+                            <?php
+                            $categorias = daoCategoria::listar();
+
+                            $preferencias = daoPreferencias::listarUsuario($_SESSION['id']);
+                            foreach ($categorias as $c) {
+                            ?>
+                                <input type="checkbox" class="checkbox-preferencia" name="categoria" id="<?php echo $c['nomeCategoria'] ?>" value="<?php echo $c['idCategoria'] ?>" <?php if (in_array($c['idCategoria'], array_column($preferencias, 'idCategoria'))) echo "checked" ?>>
+                                <label class="card-categoria" for="<?php echo $c['nomeCategoria'] ?>">
+                                    <div class="img-categoria">
+                                        <img src="<?php echo $c['fotoCategoria'] ?>" alt="<?php echo $c['nomeCategoria'] ?>" />
+                                    </div>
+                                    <p class="nome-categoria"><?php echo $c['nomeCategoria'] ?></p>
+                                </label>
+                            <?php
+                            }
+                            ?>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a href="#" class="highlight" data-bs-dismiss="modal">Sair</a>
+                    <button class="button" id="confirmar-preferencias" data-bs-dismiss="modal">Concluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal pop" id="modal-excluir" tabindex="-1" aria-labelledby="modal-erro" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -260,6 +297,9 @@ require_once "validador.php";
                     <div class="config-item" data-config-target="#editar-perfil" data-config-name="Editar perfil">
                         Editar informações
                     </div>
+                    <div class="config-item" data-bs-toggle="modal" data-bs-target="#modal-preferencias">
+                        Suas preferências
+                    </div>
                     <div class="config-item" data-bs-toggle="modal" data-bs-target="#modal-confirma-excluir">
                         Excluir conta
                     </div>
@@ -406,7 +446,33 @@ require_once "validador.php";
             fotoInput = document.querySelector('#foto'),
             confirmarFoto = document.querySelector('#confirmar-foto'),
             confirmarAlteracao = document.querySelector('#salvar'),
-            result = document.querySelector('.result-crop')
+            result = document.querySelector('.result-crop'),
+            confirmarPreferencias = document.querySelector('#confirmar-preferencias')
+
+        confirmarPreferencias.addEventListener('click', () => {
+            preferenciasCheck = document.querySelectorAll('input[name=categoria]:checked')
+
+            let preferencias = []
+
+            preferenciasCheck.forEach(item => {
+                preferencias.push(item.value)
+            })
+
+            let formData = new FormData()
+            formData.append('preferencias', JSON.stringify(preferencias))
+
+            fetch('../api/preferencias/', {
+                method: 'POST',
+                header: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                },
+                body: formData
+            }).then(() => {
+                new bootstrap.Modal('#modal-sucesso').toggle()
+                setTimeout(() => location.reload(), 3500)
+            })
+        })
 
         form.addEventListener('submit', event => {
             event.preventDefault()
@@ -632,6 +698,8 @@ require_once "validador.php";
             voltarConfig.classList.remove('hide')
             configMainTitle.innerText = 'Seu perfil'
         })
+
+
 
         function limpa_formulário_cep() {
             //Limpa valores do formulário de cep.
