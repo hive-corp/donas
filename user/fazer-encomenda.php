@@ -14,12 +14,12 @@
     $cliente = new Cliente();
     $cliente->setIdCliente($_SESSION['id']);
 
-    $encomenda = new Encomenda();
+    $encomenda = new PedidoProduto();
 
     $encomenda->setCliente($cliente);
     $encomenda->setAnuncio($anuncio);
-    $encomenda->setValorEncomenda($dados['valorAnuncio']);
-    $encomenda->setStatusEncomenda(1);
+    $encomenda->setValorTotal($dados['valorAnuncio']);
+    $encomenda->setStatusPedidoProduto(1);
 
-    daoEncomenda::criar($encomenda);
+    daoPedidoProduto::criar($encomenda);
 ?>
