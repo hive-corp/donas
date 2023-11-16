@@ -133,7 +133,7 @@ require_once "validador.php";
                 <div id="encomendas">
                     <?php
 
-                    $pedidos = daoEncomenda::listarEncomendasCliente($_SESSION['id']);
+                    $pedidos = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
 
                     foreach ($pedidos as $p) {
                     ?>
@@ -148,20 +148,20 @@ require_once "validador.php";
                             <div class="preco-pedido">
                                 <label for="" class="form-label">Valor</label>
                                 <div class="input-wrapper">
-                                    <?php echo number_format($p['valorEncomenda'], 2, ',', '.') ?>
+                                    <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
                                 </div>
                             </div>
                             <div class="data-pedido">
                                 <label for="" class="form-label">Data do pedido</label>
                                 <div class="input-wrapper">
-                                    <?php echo $p['dataEncomenda'] ?>
+                                    <?php echo $p['$dataPedidoFeito'] ?>
                                 </div>
                             </div>
                             <div class="status-pedido">
                                 <label for="" class="form-label">Estado do pedido</label>
                                 <div class="input-wrapper">
                                     <?php
-                                    switch ($p['statusEncomenda']) {
+                                    switch ($p['statusPedidoProduto']) {
                                         case 1:
                                             echo 'Fazendo';
                                             break;
@@ -177,7 +177,7 @@ require_once "validador.php";
                                     ?>
                                 </div>
                             </div>
-                            <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idEncomenda'] ?>">CANCELAR</button>
+                            <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idPedidoProduto'] ?>">CANCELAR</button>
                         </div>
                     <?php
                     }
