@@ -155,7 +155,7 @@ if (isset($_GET['a'])) {
                             </div>
                             <?php
 
-                            $encomenda = new Encomenda();
+                            $encomenda = new PedidoProduto();
                             $a = new Anuncio();
                             $c = new Cliente();
 
@@ -166,8 +166,8 @@ if (isset($_GET['a'])) {
                             $encomenda->setCliente($c);
 
                             if ($anuncio['nivelNegocioVendedora'] == 1) {
-                                $temEncomenda = daoEncomenda::consultaTemEncomenda($encomenda);
-                                $temEncomendaAtiva = daoEncomenda::consultaTemEncomendaAtiva($encomenda);
+                                $temEncomenda = daoPedidoProduto::consultaTemPedidos($encomenda);
+                                $temEncomendaAtiva = daoPedidoProduto::consultaTemPedidoAtivo($encomenda);
 
                                 if (!$temEncomenda || !$temEncomendaAtiva) {
                             ?>
@@ -271,7 +271,7 @@ if (isset($_GET['a'])) {
                         </div>
                         <?php
 
-                        $foiFinalizada = daoEncomenda::foiFinalizada($encomenda);
+                        $foiFinalizada = daoPedidoProduto::foiFinalizada($encomenda);
                         if ($foiFinalizada) {
                         ?>
                             <form id="input-comentario" method="post" action="avaliar-anuncio.php?a=<?php echo $anuncio['idAnuncio'] ?>" class="needs-validation" novalidate>
