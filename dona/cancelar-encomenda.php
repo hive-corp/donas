@@ -6,9 +6,9 @@
 
     session_start();
 
-    $encomenda = new Encomenda();
+    $encomenda = new PedidoProduto();
 
-    $encomenda->setIdEncomenda($_GET['e']);
+    $encomenda->setIdPedidoProduto($_GET['e']);
 
-    daoEncomenda::cancelar($encomenda);
+    daoPedidoProduto::cancelar($encomenda);
 ?>
