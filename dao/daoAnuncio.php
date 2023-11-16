@@ -320,6 +320,23 @@ class daoAnuncio
         return $lista;
     }
 
+    public static function listarAnunciosPorCategoria()
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                    INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                    INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                    WHERE idategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
+
+        $lista = $resultado->fetchAll();
+
+        return $lista;
+    }
+
     public static function listarAnunciosPreferencias($id)
     {
         $connection = Conexao::conectar();
