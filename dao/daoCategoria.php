@@ -96,4 +96,45 @@ class daoCategoria
 
         return $id;
     }
+       public static function pesquisarCategoriaNome($string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbCategoria.*, nomeCategoria FROM tbCategoria
+                        WHERE nomeCategoria LIKE ? ";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarCategoriasnomeCategoriaCategoria($categoria, $string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbCategoria.*, nomeCategoria FROM tbCategoria
+                        WHERE idCategoria = ? AND nomeCategoria LIKE ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarCategoriasCategoria($categoria) {
+    
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbCategoria.*, nomeCategoria FROM tbCategoria
+
+                        WHERE idCategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
 }
