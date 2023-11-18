@@ -1,3 +1,21 @@
+<?php
+
+require_once "global.php";
+if (isset($_GET['pesquisa']) && !empty($_GET['pesquisa'])) {
+    $pesquisa = $_GET['pesquisa'];
+
+}
+if (isset($_GET['categoria']) && !empty($_GET['categoria'])) {
+    $categoria = $_GET['categoria'];
+}
+if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
+    $tipo = $_GET['tipo'];
+}
+if (isset($_GET['preco']) && !empty($_GET['preco'])) {
+    $preco = $_GET['preco'];
+}
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -9,7 +27,9 @@
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/vendor/flickity/css/flickity.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+
 </head>
 
 <body>
@@ -65,61 +85,465 @@
             </div>
         </nav>
         <main id="main">
-            <div id="pesquisa">
+            
+            <form id="pesquisa" action="pesquisa.php">
                 <img class="logo-pesquisa" src="../assets/img/Logo-menor.png" alt="">
-                <div class="search-container search-square">
-                    <input type="text" role="search" placeholder="Pesquisa" class="search-field" />
+                <div class="search-container search-square ">
+                    <select name="tipo" id="tipo">
+                        <option value="" selected>Tipo</option>
+                        <option value="2">Produto</option>
+                        <option value="1">Serviço</option>
+                    </select>
+                   
+                    <select name="categoria" id="categoria">
+                        <option value="" selected>Categoria</option>
+                        <?php
+                        $categorias = daoCategoria::listar();
+
+                        foreach ($categorias as $c) {
+                        ?>
+                            <option value="<?php echo $c['idCategoria'] ?>" <?php echo $c['idCategoria'] == $categorias ? "selected" : ""?>>
+                                <?php echo $c['nomeCategoria'] ?>
+                            </option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                    <input type="text" role="search" placeholder="Pesquisa" class="search-field" name="pesquisa" value="<?php echo isset($pesquisa) ? $pesquisa : "" ?>" />
                     <button class="search-button">
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
-            </div>
+            </form>
             <div id="content">
+          
+            <?php
+           if(empty($pesquisa) && empty($categoria) && empty($tipo)) {
+            ?>
+            <div class="filtro-pesquisa">
+                    <div class="filtro-title">
+                        <?php
+
+                        echo "Categorias"
+
+                        ?>
+                    </div>
+                </div>
+                <?php
+                } else {
+                ?>
+                 <div class="filtro-pesquisa">
+                    <div class="filtro-title">
+                        <?php
+
+echo isset($pesquisa) && !empty($pesquisa) ? "Procurando por vendedoras com \"" . $pesquisa . "\"" : "Vendedoras"
+
+                        ?>
+                    </div>
+                </div>
+                <?php
+                      
+                    }?>
+                <div class="produtos placeholder-element">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+           if(empty($pesquisa) && empty($categoria) && empty($tipo)) {
+            ?>
+                <div class="carrossel-cards load">
+                
+						<?php
+						$categorias = daoCategoria::listar();
+
+						foreach ($categorias as $c) {
+						?>
+                         <form style="display: flex; flex-direction: row;"action="pesquisa.php" >
+							 <button style="background-color: transparent;" value="<?php echo $c['idCategoria'] ?>" name="categoria">
+							<a class="card-categoria  <?php echo $c['idCategoria'] == $categorias ? "selected" : ""?>" >
+								<div class="img-categoria">
+									<img src="../<?php echo $c['fotoCategoria'] ?>" alt="<?php echo $c['nomeCategoria'] ?>"/>
+								</div>
+                                
+								<p class="nome-categoria"><?php echo $c['nomeCategoria'] ?></p>
+							</a>
+                            </button>
+                            </form>
+						<?php
+						}
+						?>
+                         
+					</div>
+              <?php
+                } else {
+              ?>
+               <div class="carrossel-cards load">
+                
+                <?php
+                 if (isset($categoria) && isset($pesquisa)) {
+                    $vendedoras = daoVendedora::pesquisarVendedoraNomeDescricaoCategoria($categoria, $pesquisa);
+                } else if (isset($categoria)) {
+                    $vendedoras = daoVendedora::pesquisarVendedoraCategoria($categoria);
+                } else if (isset($pesquisa)) {
+                    $vendedoras = daoVendedora::pesquisarVendedoraNome($pesquisa);
+                } else {
+                    $vendedoras = daoVendedora::listar();
+                }
+                $anuncios = daoAnuncio::listar();
+       
+                foreach ($vendedoras as $a) {
+                    $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
+                    $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
+                ?>
+                 
+                     
+                 <a class="card-categoria" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> "style="width:20%; margin-top: 4%">
+                        <div class="img-categoria" style="width:70%;">
+                            <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>"/>
+                        </div>
+                       
+                        <p class="nome-categoria" style="margin-top: 15%;"><?php echo $a['nomeNegocioVendedora']; if ($a['nivelNegocioVendedora'] == 1) {
+                                ?>
+                                    <i class="bi bi-gem highlight" id="bio-star"></i>
+                                <?php
+                                }
+                                ?></p>
+                                 <div style="margin-top: -15%; color: #CB6CE6; display: flex; flex-direction: row;">
+                                    <?php
+
+                                    for ($i = 0; $i < $estrelas; $i += 1) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
+                                    for ($i = 0; $i < 5 - $estrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+                                    
+                                    ?>
+                                    
+                                </div>
+                                <div style="color: lightslategray; margin-top: -10%"><?php echo $totalanuncios ?> anúncios</div>
+                                
+                    </a>
+                   
+                    
+                <?php
+                }
+            
+                ?>
+                 
+            </div>
+              <?php
+              }
+              ?>
+                       
                 <div class="filtro-pesquisa">
                     <div class="filtro-title">
-                        Filtro
-                    </div>
-                    <div class="filtros">
-                        <select class="select-filtro" name="tipo" id="filtro-tipo">
-                            <option selected>Tipo</option>
-                            <option value="1">Produto</option>
-                            <option value="2">Serviço</option>
-                        </select>
-                        <select class="select-filtro" name="preco" id="filtro-preco">
-                            <option selected>Preço</option>
-                            <option value="<10">
-                                < R$10 </option>
-                            <option value="<25">
-                                < R$25 </option>
-                            <option value="<40">
-                                < R$40</option>
-                            <option value="<50">
-                                < R$50 </option>
-                            <option value="<75">
-                                < R$75 </option>
-                        </select>
-                        <select class="select-filtro" name="distancia" id="filtro-distancia">
-                            <option selected>Distância</option>
-                            <option value="1">
-                                < 1km</option>
-                            <option value="2">
-                                < 2km</option>
-                            <option value="3">
-                                < 5km</option>
-                            <option value="4">
-                                < 10km</option>
-                            <option value="5">
-                                < 15km</option>
-                        </select>
-                        <select class="select-filtro" name="categoria" id="filtro-categoria">
-                            <option selected>Categoria</option>
-                            <option value="1">Artesanato</option>
-                            <option value="2">Culinária</option>
-                            <option value="3">Manicure</option>
-                            <option value="4">Roupas</option>
-                            <option value="5">Joias</option>
-                            <option value="6">Livros</option>
-                        </select>
+                        <?php
+
+                        echo isset($pesquisa) && !empty($pesquisa) ? "Procurando por produtos com \"" . $pesquisa . "\"" : "Produtos"
+
+                        ?>
                     </div>
                 </div>
                 <div class="produtos placeholder-element">
@@ -424,222 +848,470 @@
                     </div>
                 </div>
                 <div class="produtos load">
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/cadernos-artesanais.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Cadernos artesanais
-                            </div>
-                            <div class="preco-card">
-                                R$25,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Artesanato
-                            </div>
-                            <div class="negocio-card">
-                                Cantinho da Arte
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/francesinha.jpeg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Francesinha
-                            </div>
-                            <div class="preco-card">
-                                R$20,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Manicure
-                            </div>
-                            <div class="negocio-card">
-                                Mulher Maravilha
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/bolo-laranja.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Bolo de Laranja
-                            </div>
-                            <div class="preco-card">
-                                R$20,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Culinária
-                            </div>
-                            <div class="negocio-card">
-                                Açúcar e Canela
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/bolo-chocolate.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Bolo de Chocolate
-                            </div>
-                            <div class="preco-card">
-                                R$25,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Culinária
-                            </div>
-                            <div class="negocio-card">
-                                Açúcar e Canela
-                            </div>
+                    <?php
+                    if (isset($categoria) && isset($pesquisa) && isset($tipo)) {
+                        $anuncios = daoAnuncio::pesquisarAnunciosNomeDescricaoCategoriaTipo($categoria, $pesquisa, $tipo);
+                    } else if (isset($categoria)) {
+                        $anuncios = daoAnuncio::pesquisarAnunciosCategoria($categoria);
+                    } else  if (isset($categoria) && isset($pesquisa)) {
+                        $anuncios = daoAnuncio::pesquisarAnunciosNomeDescricaoCategoria($categoria, $pesquisa);
+                    } else if (isset($pesquisa) && isset($tipo)) {
+                        $anuncios = daoAnuncio::pesquisarAnunciosNomeDescricaoTipo($pesquisa, $tipo);
+                    } else if (isset($categoria) && isset($tipo)) {
+                        $anuncios = daoAnuncio::pesquisarCategoriaTipo($categoria, $tipo);
+                    } else if (isset($pesquisa)) {
+                        $anuncios = daoAnuncio::pesquisarAnunciosNomeDescricao($pesquisa);
+                    } else if (isset($tipo)) {
+                        $anuncios = daoAnuncio::pesquisarTipo($tipo);
+                    } else {
+                        $anuncios = daoAnuncio::listar();
+                    }
 
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/sabonetes.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Sabonetes Artesanais de Lavanda
+                    foreach ($anuncios as $a) {
+
+                        $qtdestrelas = $a['estrelasAnuncio'];
+
+                    ?>
+                        <a class="card-anuncio" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
+                            <div class="img-card">
+                                <img src="../<?php echo $a['imagemPrincipalAnuncio'] ?>" />
                             </div>
-                            <div class="preco-card">
-                                R$12,00
+                            <div class="info-card">
+                                <div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
+                                <div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.') ?></div>
+                                <div class="avaliacao-card">
+                                    <?php
+
+                                    for ($i = 0; $i < $qtdestrelas; $i += 1) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
+                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+
+                                    ?>
+                                </div>
+                                <div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
+                                <div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
                             </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-half"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Beleza
-                            </div>
-                            <div class="negocio-card">
-                                Ana Rodrigues
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/pano-de-prato.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Pano de Prato Bordado
-                            </div>
-                            <div class="preco-card">
-                                R$25,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Artesanato
-                            </div>
-                            <div class="negocio-card">
-                                Maria Santos
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/conjunto-de-velas.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Conjunto de Velas Perfumadas
-                            </div>
-                            <div class="preco-card">
-                                R$35,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Decoração
-                            </div>
-                            <div class="negocio-card">
-                                Isabella Silva
-                            </div>
-                        </div>
-                    </a>
-                    <a class="card-anuncio" href="produto.php">
-                        <div class="img-card">
-                            <img src="../assets/img/products-services/oleo-essencial-de-lavanda-10ml.jpg">
-                        </div>
-                        <div class="info-card">
-                            <div class="nome-card">
-                                Óleo Essencial Relaxante de Lavanda 10ml
-                            </div>
-                            <div class="preco-card">
-                                R$30,00
-                            </div>
-                            <div class="avaliacao-card">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <div class="categoria-card">
-                                Bem estar
-                            </div>
-                            <div class="negocio-card">
-                                Luísa Oliveira
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    <?php
+                    }
+
+                    ?>
                 </div>
+                <?php
+           if(empty($pesquisa) && empty($categoria) && empty($tipo)) {
+            ?>
+                <div class="filtro-pesquisa">
+                    <div class="filtro-title">
+                        <?php
+
+echo isset($pesquisa) && !empty($pesquisa) ? "Procurando por vendedoras com \"" . $pesquisa . "\"" : "Vendedoras"
+
+                        ?>
+                    </div>
+                </div>
+                <div class="produtos placeholder-element">
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-anuncio" href="produto.php" aria-hidden="true">
+                        <div class="img-card placeholder-glow">
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="info-card">
+                            <div class="nome-card placeholder-glow">
+                                <span class="placeholder col-5"></span>
+                                <span class="placeholder col-6"></span>
+                            </div>
+                            <div class="preco-card placeholder-glow">
+                                <div class="placeholder"></div>
+                            </div>
+                            <div class="avaliacao-card placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                            </div>
+                            <div class="categoria-card placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="negocio-card placeholder-glow">
+                                <span class="placeholder col-4 placeholder-sm"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="carrossel-cards load">
+                
+                <?php
+                 if (isset($categoria) && isset($pesquisa)) {
+                    $vendedoras = daoVendedora::pesquisarVendedoraNomeDescricaoCategoria($categoria, $pesquisa);
+                } else if (isset($categoria)) {
+                    $vendedoras = daoVendedora::pesquisarVendedoraCategoria($categoria);
+                } else if (isset($pesquisa)) {
+                    $vendedoras = daoVendedora::pesquisarVendedoraNome($pesquisa);
+                } else {
+                    $vendedoras = daoVendedora::listar();
+                }
+                $anuncios = daoAnuncio::listar();
+       
+                foreach ($vendedoras as $a) {
+                    $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
+                   
+                ?>
+                 
+                     
+                    <a class="card-categoria" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> "style="width:20%; margin-top: 4%">
+                        <div class="img-categoria" style="width:70%;">
+                            <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>"/>
+                        </div>
+                       
+                        <p class="nome-categoria" style="margin-top: 15%;"><?php echo $a['nomeNegocioVendedora']; if ($a['nivelNegocioVendedora'] == 1) {
+                                ?>
+                                    <i class="bi bi-gem highlight" id="bio-star"></i>
+                                <?php
+                                }
+                                ?></p>
+                                 <div style="margin-top: -20%; color: #CB6CE6;">
+                                    <?php
+
+                                    for ($i = 0; $i < $estrelas; $i += 1) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
+                                    for ($i = 0; $i < 5 - $estrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+
+                                    ?>
+                                </div>
+                                
+                                
+                    </a>
+                   
+                    
+                <?php
+                }
+            
+                ?>
+                 
             </div>
+            </div>
+            <?php
+            }
+            ?>
+            
         </main>
     </div>
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
+    <script>
+		var elem = document.querySelectorAll(".carrossel-cards")
+
+		elem.forEach((item) => {
+			new Flickity(item, {
+				cellAlign: "left",
+				prevNextButtons: false,
+				pageDots: false,
+				resize: false,
+				contain: true,
+			});
+		});
+
+		var carro = document.querySelector("#carrossel")
+
+		new Flickity(carro, {
+			prevNextButtons: false,
+			pageDots: true,
+			resize: true,
+			contain: false,
+			lazyLoad: true,
+			wrapAround: true,
+			autoPlay: 1500
+		});
+	</script>
 </body>
 
 </html>
