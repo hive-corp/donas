@@ -6,16 +6,16 @@
         public static function criar($PedidoProduto){
             $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, qtdProdutoPedido, idAnuncio, idCliente)
+            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, idAnuncio, idCliente)
                             VALUES (?,?,?,?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
             $prepareStatement->bindValue(1, $PedidoProduto->getStatusPedidoProduto());
             $prepareStatement->bindValue(2, $PedidoProduto->getValorTotal());
-            $prepareStatement->bindValue(3, $PedidoProduto->getQtdProdutoPedido());
-            $prepareStatement->bindValue(4, $PedidoProduto->getAnuncio()->getIdAnuncio());
-            $prepareStatement->bindValue(5, $PedidoProduto->getCliente()->getIdCliente());
+            //$prepareStatement->bindValue(3, $PedidoProduto->getQtdProdutoPedido());
+            $prepareStatement->bindValue(3, $PedidoProduto->getAnuncio()->getIdAnuncio());
+            $prepareStatement->bindValue(4, $PedidoProduto->getCliente()->getIdCliente());
 
             $prepareStatement->execute();
         }
