@@ -388,4 +388,132 @@ class daoAnuncio
 
         return $avg;
     }
+      public static function contarAnuncioVendedora($id)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idAnuncio) FROM tbAnuncio WHERE idVendedora = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        $countAnuncio = $stmt->fetch()[0];
+
+        return $countAnuncio;
+    }
+        public static function pesquisarAnunciosNomeDescricaoCategoria($categoria, $string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbCategoria.idCategoria = ? AND nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, "%".$string."%");
+        $resultado->bindValue(3, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
+    public static function pesquisarAnunciosNomeDescricao($string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, "%".$string."%");
+        $resultado->bindValue(2, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
+    public static function pesquisarAnunciosCategoria($categoria)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbCategoria.idCategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarTipo($tipo)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tipoAnuncio = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $tipo);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarAnunciosNomeDescricaoCategoriaTipo($categoria, $string, $tipo)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbCategoria.idCategoria = ? AND tipoAnuncio = ? AND (nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?) ";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, $tipo);
+        $resultado->bindValue(3, "%".$string."%");
+        $resultado->bindValue(4, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarAnunciosNomeDescricaoTipo($tipo, $string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tipoAnuncio = ? AND nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $tipo);
+        $resultado->bindValue(2, "%".$string."%");
+        $resultado->bindValue(3, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarCategoriaTipo($tipo, $categoria)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tipoAnuncio = ? AND tbCategoria.idCategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $tipo);
+        $resultado->bindValue(2, $categoria);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
 }

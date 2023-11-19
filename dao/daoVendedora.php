@@ -385,4 +385,45 @@ class daoVendedora
 
         return $topVend;
     }
+     public static function pesquisarVendedoraNomeDescricaoCategoria($categoria, $string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbVendedora.*, idCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, fotoNegocioVendedora FROM tbVendedora
+                       
+                        WHERE idCategoria = ? AND nomeNegocioVendedora LIKE ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarVendedoraCategoria($categoria)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbVendedora.*, idCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, fotoNegocioVendedora FROM tbVendedora
+                        WHERE idCategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarVendedoraNome($string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbVendedora.*, idCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, fotoNegocioVendedora FROM tbVendedora
+                        WHERE nomeNegocioVendedora LIKE ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
 }
