@@ -93,7 +93,8 @@ class daoAnuncio
 
         $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
                         INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
-                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria";
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        ORDER BY nivelNegocioVendedora DESC";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
@@ -262,8 +263,6 @@ class daoAnuncio
         return $estrelas;
     }
 
-
-
     public static function contarAnuncioServico($id)
     {
         $connection = Conexao::conectar();
@@ -310,7 +309,7 @@ class daoAnuncio
         $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
                     INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                     INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
-                    ORDER BY estrelasAnuncio DESC";
+                    ORDER BY estrelasAnuncio DESC, nivelNegocioVendedora DESC";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
@@ -327,7 +326,7 @@ class daoAnuncio
         $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
                     INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                     INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
-                    WHERE idategoria = ?";
+                    WHERE idCategoria = ?";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
@@ -341,29 +340,17 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT idCategoria FROM tbPreferencias
-                        WHERE idCliente=?";
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+        WHERE tbCategoria.idCategoria IN (SELECT idCategoria FROM tbPreferencias WHERE idCliente = ?)
+        ORDER BY nivelNegocioVendedora DESC";
 
         $prepareStatement = $connection->prepare($querySelect);
         $prepareStatement->bindValue(1, $id);
         $prepareStatement->execute();
 
-        $lista = array();
-
-        while ($linha = $prepareStatement->fetch(PDO::FETCH_ASSOC)) {
-
-            $prepareStatementAnuncio = $connection->prepare("SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
-            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
-            INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
-            WHERE tbCategoria.idCategoria = ?");
-
-            $prepareStatementAnuncio->bindValue(1, $linha['idCategoria']);
-            $prepareStatementAnuncio->execute();
-
-            $dados = $prepareStatementAnuncio->fetchAll();
-
-            $lista = array_merge($lista, $dados);
-        }
+        $lista = $prepareStatement->fetchAll();
 
         return $lista;
     }
@@ -372,29 +359,17 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT idVendedora FROM tbSeguidor
-                        WHERE idCliente=?";
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbVendedora.idVendedora IN (SELECT idVendedora FROM tbseguidor WHERE idCliente = ?)
+                        ORDER BY nivelNegocioVendedora DESC";
 
         $prepareStatement = $connection->prepare($querySelect);
         $prepareStatement->bindValue(1, $id);
         $prepareStatement->execute();
 
-        $lista = array();
-
-        while ($linha = $prepareStatement->fetch(PDO::FETCH_ASSOC)) {
-
-            $prepareStatementAnuncio = $connection->prepare("SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
-            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
-            INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
-            WHERE tbVendedora.idVendedora = ?");
-
-            $prepareStatementAnuncio->bindValue(1, $linha['idVendedora']);
-            $prepareStatementAnuncio->execute();
-
-            $dados = $prepareStatementAnuncio->fetchAll();
-
-            $lista = array_merge($lista, $dados);
-        }
+        $lista = $prepareStatement->fetchAll();
 
         return $lista;
     }
