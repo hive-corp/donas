@@ -17,6 +17,12 @@
             $this->Vendedora = new Vendedora();
         }
 
+        private $SubCategoria;
+        public function __construct()
+        {
+            $this->SubCategoria = new SubCategoria();
+        }
+
         public function getIdAnuncio() {
             return $this->idAnuncio;
         }
@@ -44,6 +50,9 @@
         public function getVendedora() {
             return $this->Vendedora;
         }
+        public function getSubCategoria() {
+            return $this->SubCategoria;
+        }
         public function setIdAnuncio($idAnuncio) {
             $this->idAnuncio = $idAnuncio;
         }
@@ -70,6 +79,9 @@
         }
         public function setVendedora($Vendedora) {
             $this->Vendedora = $Vendedora;
+        }
+        public function setSubCategoria($SubCategoria) {
+            $this->SubCategoria = $SubCategoria;
         }
     }
 
