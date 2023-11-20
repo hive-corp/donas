@@ -8,8 +8,8 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "INSERT tbAnuncio(nomeAnuncio, descricaoAnuncio, valorAnuncio, estrelasAnuncio, tipoAnuncio, qtdProduto, idVendedora)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $queryInsert = "INSERT tbAnuncio(nomeAnuncio, descricaoAnuncio, valorAnuncio, estrelasAnuncio, tipoAnuncio, qtdProduto, idVendedora, idSubCategoria)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
@@ -20,6 +20,7 @@ class daoAnuncio
         $prepareStatement->bindvalue(5, $Anuncio->getTipoAnuncio());
         $prepareStatement->bindvalue(6, $Anuncio->getQtdProduto());
         $prepareStatement->bindvalue(7, $Anuncio->getVendedora()->getIdVendedora());
+        $prepareStatement->bindvalue(7, $Anuncio->getSubCategoria()->getIdSubCategoria());
 
         $prepareStatement->execute();
     }
@@ -41,7 +42,7 @@ class daoAnuncio
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbAnuncio
-                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, qtdProduto = ?
+                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, qtdProduto = ?, idSubCategoria = ?
                             WHERE idAnuncio = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
@@ -50,6 +51,7 @@ class daoAnuncio
         $prepareStatement->bindValue(2, $Anuncio->getDescricaoAnuncio());
         $prepareStatement->bindValue(3, $Anuncio->getValorAnuncio());
         $prepareStatement->bindvalue(4, $Anuncio->getQtdProduto());
+        $prepareStatement->bindvalue(7, $Anuncio->getSubCategoria()->getIdSubCategoria());
         $prepareStatement->bindValue(5, $Anuncio->getIdAnuncio());
 
         $prepareStatement->execute();
