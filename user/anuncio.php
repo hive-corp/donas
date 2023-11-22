@@ -7,6 +7,9 @@ if (isset($_GET['a'])) {
     $anuncio = daoAnuncio::consultarPorId($_GET['a']);
 }
 
+date_default_timezone_set('America/Sao_Paulo');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +29,7 @@ if (isset($_GET['a'])) {
 
 <body>
     <div id="user-product">
-        <div class="modal pop" id="modal-encomenda" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+        <div class="modal pop" id="modal-confirma" tabindex="-1" aria-labelledby="modal-confirma" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -38,11 +41,119 @@ if (isset($_GET['a'])) {
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Não</button>
-                        <a class="button" href="fazer-encomenda.php?a=<?php echo $anuncio['idAnuncio'] ?>">Sim</a>
+                        <button type="button" class="button" data-bs-target="#modal-encomenda" data-bs-toggle="modal">Sim</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal pop" id="modal-encomenda" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Realizar encomenda</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input input-cliente">
+                            <label class="form-label">Cliente</label>
+                            <div class="input-wrapper">
+                                <input type="text" disabled value="<?php echo $_SESSION['nome'] ?>">
+                            </div>
+                        </div>
+                        <div class="input input-dona">
+                            <label class="form-label">Negócio</label>
+                            <div class="input-wrapper">
+                                <input type="text" disabled value="<?php echo $anuncio['nomeNegocioVendedora'] ?>">
+                            </div>
+                        </div>
+                        <div class="input input-produto">
+                            <label class="form-label">Produto</label>
+                            <div class="input-wrapper">
+                                <input type="text" disabled value="<?php echo $anuncio['nomeAnuncio'] ?>">
+                            </div>
+                        </div>
+                        <div class="input input-valor">
+                            <label class="form-label">Valor<span>*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" name="valor" id="valor" required disabled value="<?php echo $anuncio['valorAnuncio'] ?>">
+                            </div>
+                        </div>
+                        <div class="input input-data">
+                            <label class="form-label" for="data-entrega">Data de entrega<span>*</span></label>
+                            <div class="input-wrapper">
+                                <input type="date" name="data-entrega" id="data-entrega" required value="<?php echo date("o-m-d", time() + 60 * 60 * 24) ?>">
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira uma data de entrega para o produto
+                            </div>
+                        </div>
+                        <div class="input input-qtd">
+                            <label class="form-label" for="qtd">Quantidade<span>*</span></label>
+                            <div class="input-wrapper">
+                                <input type="number" name="qtd" id="qtd" required value="1" min="1">
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira uma quantidade para a encomenda
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="button" id="iniciar-pagamento" data-bs-target="#modal-pagamento" data-bs-toggle="modal">Avançar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal pop" id="modal-pagamento" tabindex="-1" aria-labelledby="modal-pagamento" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Tem certeza?</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">Estamos quase no final! Escolha sua <span class="highlight">forma de pagamento</span>.</p>
+                        <div class="input input-pagamento">
+                            <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
+                            <div class="input-wrapper">
+                                <select name="forma-pagamento" id="forma-pagamento" required>
+                                    <option value="1">PIX</option>
+                                    <option value="2">Boleto</option>
+                                </select>
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira uma quantidade para a encomenda
+                            </div>
+                        </div>
+                        <div id="qrcode-pix">
+                            <div id="loading-pix"></div>
+                            <img src="" alt="QR Code do PIX" id="qr-code" class="hide">
+                        </div>
+                        <p class="text-center">Você tem <span class="highlight" id="tempo-restante">8 minutos e 0 segundos</span> restantes</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button" data-bs-dismiss="modal">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal pop" id="modal-cancelado" tabindex="-1" aria-labelledby="modal-cancelado" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Pedido cancelado</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você demorou demais para confirmar sua encomenda e ela foi cancelada...
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button" data-bs-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <nav id="nav">
             <picture id="nav-logo">
                 <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
@@ -171,7 +282,7 @@ if (isset($_GET['a'])) {
 
                                 if (!$temEncomenda || !$temEncomendaAtiva) {
                             ?>
-                                    <button class="button button-square" id="encomendar" data-bs-target="#modal-encomenda" data-bs-toggle="modal">Encomendar</button>
+                                    <button class="button button-square" id="encomendar" data-bs-target="#modal-confirma" data-bs-toggle="modal">Encomendar</button>
                                 <?php
                                 } else if ($temEncomendaAtiva) {
                                 ?>
@@ -359,8 +470,62 @@ if (isset($_GET['a'])) {
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script>
-        var inputComentario = document.querySelector("#input-comentario"),
+        var iniciarPagamento = document.getElementById('iniciar-pagamento'),
+            inputComentario = document.querySelector("#input-comentario"),
             conteudoInputComentario = document.querySelector("#comentario")
+
+        let cronometro;
+
+
+        iniciarPagamento.addEventListener('click', () => {
+            clearInterval(cronometro)
+
+            let qrCodeImg = document.querySelector('#qr-code')
+            let loadingQrCode = document.querySelector('#loading-pix')
+            qrCodeImg.src = ''
+
+            qrCodeImg.classList.add('hide')
+            loadingQrCode.classList.remove('hide')
+
+            let tempoFinal = new Date().getTime() + 8 * 60 * 1000;
+
+            cronometro = setInterval(() => {
+
+                let tempoInicial = new Date().getTime();
+
+                let distancia = tempoFinal - tempoInicial;
+
+                var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+                var segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+                if (distancia > 0) {
+                    document.getElementById('tempo-restante').innerText = `${minutos} minutos e ${segundos} segundos`;
+                } else {
+                    document.getElementById('tempo-restante').innerText = `0 minutos e 0 segundos`;
+                    clearInterval(cronometro);
+
+                    document.getElementById('modal-pagamento').classList.remove('show')
+                    document.querySelector('.modal-backdrop').remove()
+                    new bootstrap.Modal(document.getElementById('modal-cancelado')).toggle();
+                }
+            }, 1000)
+
+            let valor = document.querySelector('#valor').value
+
+            fetch('../api/encomenda/?v=<?php echo $anuncio['nomeUsuarioNegocioVendedora'] ?>&p=' + valor)
+                .then(response => response.blob())
+                .then(blob => {
+                    let url = URL.createObjectURL(blob)
+
+                    qrCodeImg.src = url
+
+                    setTimeout(() => {
+                        qrCodeImg.classList.remove('hide')
+                        loadingQrCode.classList.add('hide')
+                    }, 2000)
+
+                })
+        })
 
         inputComentario.addEventListener("submit", e => {
 

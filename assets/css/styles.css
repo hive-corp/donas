@@ -141,7 +141,7 @@ svg {
 #modal-revisao i,
 #modal-login i,
 #modal-genero i,
-#modal-encomenda i {
+#modal-confirma i {
     font-size: 48px;
 }
 
@@ -154,7 +154,7 @@ svg {
 #modal-sucesso i,
 #modal-revisao i,
 #modal-login i,
-#modal-encomenda i {
+#modal-confirma i {
     color: #CB6CE6;
 }
 
@@ -267,6 +267,61 @@ svg {
         "motivo motivo"
         "conteudo conteudo";
     gap: 16px
+}
+
+#modal-encomenda .modal-body{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "cliente dona"
+        "produto valor"
+        "data qtd";
+    gap: 16px
+}
+
+#qrcode-pix{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#qr-code{
+    transition: opacity .5s;
+    width: 200px;
+    aspect-ratio: 1/1;
+}
+
+#qr-code.hide{
+    opacity: 0;
+    user-select: none;
+}
+
+#loading-pix{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 6px solid #CB6CE6;
+    border-left-color: transparent;
+    border-radius: 50%;
+    z-index: 1;
+    animation: giro .75s infinite linear;
+    transition: opacity .5s
+}
+
+#loading-pix.hide{
+    opacity: 0;
+    user-select: none;
+}
+
+@keyframes giro {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .foto-modal {
@@ -460,6 +515,30 @@ svg {
         "logradouro logradouro"
         "numero complemento"
         "avancar avancar";
+}
+
+.input.input-cliente{
+    grid-area: cliente;
+}
+
+.input.input-dona{
+    grid-area: dona;
+}
+
+.input.input-produto{
+    grid-area: produto;
+}
+
+.input.input-valor{
+    grid-area:valor;
+}
+
+.input.input-data{
+    grid-area: data;
+}
+
+.input.input-qtd{
+    grid-area: qtd;
 }
 
 .input.input-denunciante{
@@ -1345,7 +1424,7 @@ a.create-new:hover {
     grid-area: nav-list;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     font-size: 1.2em;
     padding: 32px 12px 32px 20px;
 }
@@ -1570,6 +1649,7 @@ a.dropdown-item {
     border-radius: 50px;
     width: 100%;
     transition: 0.3s border-color ease-in-out, 0.3s box-shadow ease-in-out;
+    overflow: hidden;
 }
 
 .search-square {
@@ -3600,14 +3680,7 @@ a.highlight {
     }
 
     #user-config #main,
-    #user-config #config {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: calc(100% - 70px);
-    }
-
+    #user-config #config,
     #user-chats #main,
     #user-chats #conversas {
         position: fixed;
@@ -3616,11 +3689,11 @@ a.highlight {
         width: 100%;
         height: calc(100% - 70px);
     }
-
-    #user-chats #main.hide,
+    
     #user-chats #conversas.hide,
-    #user-config #main.hide,
-    #user-config #config.hide {
+    #user-config #config.hide,
+    #user-chats #main.hide,
+    #user-config #main.hide{
         display: none;
     }
 
@@ -3630,7 +3703,7 @@ a.highlight {
 
     #main {
         border: 0;
-        grid-template-rows: 140px 1fr;
+        grid-template-rows: 100px 1fr;
     }
 
     #nav {
@@ -3656,7 +3729,11 @@ a.highlight {
         display: none;
     }
 
-    /* .nav-link.active::before{
+    .nav-link.active{
+        background: transparent;
+    }
+
+    .nav-link.active::before{
         content: '';
         position: absolute;
         top:-12px;
@@ -3664,7 +3741,7 @@ a.highlight {
         width: 100%;
         height: 6px;
         border-radius: 0 0 4px 4px;
-    } */
+    }
 
     .nav-link {
         font-size: 24px;
