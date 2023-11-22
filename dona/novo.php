@@ -12,7 +12,7 @@ require_once "validador.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo produto/serviço</title>
-    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
 
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -79,7 +79,7 @@ require_once "validador.php";
                     <h1 class="modal-title fs-5">Informações do anúncio</h1>
                 </div>
                 <div class="modal-body">
-                    <img src="assets/media/foto.png" alt="" class="foto-modal">
+                    <img src="assets/img/foto.png" alt="" class="foto-modal">
                     <div class="nome-modal">
                         <div class="form-label">Nome</div>
                         <div class="input-wrapper">
@@ -117,8 +117,8 @@ require_once "validador.php";
     <div id="user-new">
         <nav id="nav" class="nav-dona">
             <picture id="nav-logo">
-                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -201,16 +201,33 @@ require_once "validador.php";
             </div>
             <div id="content">
                 <form class="needs-validation" method='post' id="new-form" novalidate>
-                    <img src="../assets/media/rosas.svg" class="rosa-fundo">
+                    <img src="../assets/img/rosas.svg" class="rosa-fundo">
                     <div id="imagens-form">
                         <label for="foto-principal" id="foto-anuncio-cadastro">
-                            <img src="../assets/media/foto.png" id="preview-foto">
+                            <img src="../assets/img/foto.png" id="preview-foto">
                         </label>
                         <input type="file" accept="image/*" name="foto-principal" id="foto-principal" required>
                         <div class="invalid-feedback">
                             Insira uma foto
                         </div>
                     </div>
+                    <div class="input">
+                            <label class="form-label" for="subCategoria-new">Subcategorias<span>*</span></label>
+                            <div class="input-wrapper">
+                                <?php
+                                    $subCategorias = daoSubCategoria::listar();
+
+                                    foreach($subCategorias as $sub) {
+                                        ?> 
+                                        <input type="checkbox" class="checkbox-subCategoria" name="subCategorias" id="<?php echo $sub['nomeSubCategoria']?>" value="<?php echo $sub['idSubCategoria']?>">
+                                            <label class="card-categoria" for="<?php echo $sub['nomeSubCategoria']?>">
+                                                <p class="nome-categoria"><?php echo $sub['nomeSubCategoria']?></p>
+                                            </label>
+                                    <?php
+                                    }
+                                    ?>
+                            </div>
+                        </div>
                     <div id="info-form">
                         <div class="input">
                             <label class="form-label" for="nome-anuncio">Nome<span>*</span></label>
@@ -261,7 +278,7 @@ require_once "validador.php";
                     <button class="button button-square" id="salvar">
                         Criar anúncio
                     </button>
-                    <img src="../assets/media/rosas.svg" class="rosa-fundo">
+                    <img src="../assets/img/rosas.svg" class="rosa-fundo">
                 </form>
             </div>
         </main>
@@ -294,6 +311,13 @@ require_once "validador.php";
                     tipoModal = document.querySelector('.tipo-modal .input-wrapper'),
                     estoqueModal = document.querySelector('.estoque-modal .input-wrapper'),
                     descModal = document.querySelector('.desc-modal .input-wrapper')
+                    AnuncioSubCategoriaCheck = document.querySelectorAll('input[name=subCategorias]:checked')
+
+                let AnuncioSubCategoria= []
+
+                AnuncioSubCategoriaCheck.forEach(item => {
+                    AnuncioSubCategoria.push(item.value)
+                })
 
                 nomeModal.innerText = document.getElementById('nome-anuncio-cadastro').value
                 precoModal.innerText = document.getElementById('preco').value
@@ -316,6 +340,7 @@ require_once "validador.php";
                         formData.append('valor', document.getElementById('preco').value)
                         formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
                         formData.append('qtd', document.getElementById('estoque').value)
+                        formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
 
                         fetch('../api/anuncio/', {
                             method: 'POST',
