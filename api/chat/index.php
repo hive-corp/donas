@@ -77,8 +77,7 @@ switch ($method) {
     case "POST":
 
         $mensagem = new Mensagem();
-
-        $mensagem->setConteudoMensagem($_POST['conteudo']);
+        $mensagem->setConteudoMensagem(isset($_POST['conteudo']) ? $_POST['conteudo'] : "");
 
         session_start();
 
@@ -116,24 +115,23 @@ switch ($method) {
 
         daoMensagem::criar($mensagem);
 
-        if (isset($_FILES["imagem"]) && !empty($_FILES["imagem"]["name"])) {
-            if (is_uploaded_file($_FILES["imagem"]["tmp_name"])) {
+        if (isset($_FILES["arquivo"]) && !empty($_FILES["arquivo"]["name"])) {
+            if (is_uploaded_file($_FILES["arquivo"]["tmp_name"])) {
                 $id = daoMensagem::consultaIdUltimaMensagem($mensagem);
 
-                $nomeimagem = $_FILES['imagem']['name'];
-                $tipo = $_FILES['imagem']['type'];
+                $nomearquivo = $_FILES['arquivo']['name'];
 
-                $extensao = substr($nomeimagem, -4);
-                $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
+                $extensao = strtolower(pathinfo($nomearquivo,PATHINFO_EXTENSION));
+                $arquivo = "assets/media/messages/" . $id . "." . $extensao;
 
-                $arquivo = "assets/img/messages/" . $id . $extensao;
-
-                move_uploaded_file($_FILES['imagem']['tmp_name'], "../../" . $arquivo);
+                move_uploaded_file($_FILES['arquivo']['tmp_name'], "../../" . $arquivo);
 
                 $mensagem->setIdMensagem($id);
-                $mensagem->setImagemMensagem($arquivo);
+                $mensagem->setArquivoMensagem($arquivo);
 
-                daoMensagem::editarFoto($mensagem);
+                daoMensagem::editarArquivo($mensagem);
+
+                echo $arquivo;
             }
         }
 

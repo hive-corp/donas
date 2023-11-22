@@ -1543,11 +1543,7 @@ a.create-new:hover {
     color: gray;
 }
 
-#sair-user,
-#options-user,
-#options-chat,
-#options-profile,
-#options-anuncio {
+.options-button {
     font-size: 1.2em;
     margin-right: 16px;
     color: gray;
@@ -1561,11 +1557,7 @@ a.create-new:hover {
     cursor: pointer;
 }
 
-#sair-user:hover,
-#options-user:hover,
-#options-chat:hover,
-#options-profile:hover
-#options-anuncio:hover {
+.options-button:hover {
     background: #CB6CE633;
     color: #CB6CE6
 }
@@ -2486,11 +2478,9 @@ a.veja-mais {
     color: gray;
 }
 
-#bio-follow-share {
+#bio-follow {
     grid-area: options;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    margin-top: 12px;
 }
 
 #bio-desc {
@@ -2692,7 +2682,7 @@ a.config-item {
     display: none;
 }
 
-#options-chat.hide {
+.options-button.hide {
     display: none;
 }
 
@@ -2805,47 +2795,84 @@ a.config-item {
     gap: 8px;
 }
 
-#crop-image {
+.preview-file {
     position: absolute;
     background: var(--bg-color);
-    width: 100%;
     height: 100%;
+    width: 100%;
     padding: 16px;
     z-index: 999;
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
 
-#crop-image.hide {
+.preview-file.hide {
     display: none;
 }
 
-.crop-area {
+.preview-area {
     display: grid;
     place-items: center;
     overflow: hidden;
 }
 
-.crop-area .result-crop {
+.preview-area .result-crop {
     height: 90%;
 }
 
-.crop-area .result-crop img {
+.preview-area .result-crop img {
     height: 100%;
+    width: 100%;
 }
 
-.crop-area .cropper-crop-box,
-.crop-area .cropper-view-box {
+.preview-area .cropper-crop-box,
+.preview-area .cropper-view-box {
     border-radius: 0%;
 }
 
-.crop-area .cropper-point.point-n,
-.crop-area .cropper-point.point-w,
-.crop-area .cropper-point.point-s,
-.crop-area .cropper-point.point-e {
+.preview-area .cropper-point.point-n,
+.preview-area .cropper-point.point-w,
+.preview-area .cropper-point.point-s,
+.preview-area .cropper-point.point-e {
     display: block;
 }
 
+.preview-area .cropper-crop-box,
+.preview-area .cropper-view-box {
+    border-radius: 0%;
+}
+
+.preview-area .cropper-point.point-n,
+.preview-area .cropper-point.point-w,
+.preview-area .cropper-point.point-s,
+.preview-area .cropper-point.point-e {
+    display: block;
+}
+
+#preview-audio .preview-send{
+    display: flex;
+    justify-content: end;
+}
+
+#preview-audio .audio{
+    display: grid;
+    grid-template-columns: 50px 30px 1fr 1fr;
+    grid-template-areas:
+    "foto start audio audio"
+    "foto nothing duration time";
+    column-gap: 4px;
+    padding: 12px;
+    background: #971881;
+    border-radius: 8px;
+    min-width: 100%;
+    color: white;
+}
+
+#preview-audio .audio img{
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
 
 #abra-conversa {
     position: absolute;
@@ -2974,13 +3001,150 @@ a.config-item {
     }
 }
 
+
+.message-myself .time {
+    align-self: flex-end;
+}
+
+.message-other .time {
+    align-self: flex-start;
+}
+
+.time {
+    grid-area: time;
+    font-size: 0.8em;
+    user-select: none;
+    opacity: 0.5;
+}
+
+.document{
+    display: grid;
+    column-gap: 2px;
+    grid-template-columns: 50px 1fr;
+    grid-template-areas:
+    "icon nome";
+    border-radius: 4px;
+    background: #00000011;
+    padding: 12px;
+    cursor: pointer;
+    transition: .3s background-color;
+}
+
+.document:hover{
+    background: #00000022;
+}
+
+.document-icon{
+    font-size: 40px;
+}
+
+.document-name{
+    grid-area: nome;
+    place-self: center;
+    font-weight: bold;
+}
+
+.message-myself.audio,
+.message-other.audio{
+    width: 100%;
+    display: grid;
+    column-gap: 4px;
+}
+
+.message-myself.audio {
+    grid-template-columns: 50px 30px 1fr 1fr;
+    grid-template-areas:
+    "foto start audio audio"
+    "foto nothing duration time";
+}
+
+.message-other.audio{
+    grid-template-columns: 30px 1fr 1fr  50px;
+    grid-template-areas:
+    "start audio audio foto"
+    "time duration duration foto";
+}
+
+.message-myself .audio-photo,
+.message-other .audio-photo{
+    grid-area: foto;
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.message-myself .audio-options,
+.message-other .audio-options{
+    grid-area: start;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.start-stop-audio{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+}
+
+.message-other .start-stop-audio{
+    justify-self: flex-start;
+    color: gray;
+}
+
+.start-stop-audio.hide{
+    display: none;
+}
+
+.duration{
+    grid-area: duration;
+    font-size: 0.8em;
+    user-select: none;
+    opacity: 0.8;
+}
+
+.message-other .duration{
+    justify-self: end;
+}
+
+.audio-wave{
+    grid-area: audio;
+    cursor: pointer;
+}
+
+.audio-wave ::part(cursor) {
+    top: 20px;
+    height: 9px;
+    width: 9px;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    border: 1px solid var(--active-color);
+}
+
+.message-other .audio-wave ::part(cursor){
+    background: gray;
+    border-color: var(--msg-other-bg);
+}
+
+.message-myself.audio .time{
+    grid-area: time;
+    justify-self: flex-end;
+}
+
+.message-other.audio .time{
+    grid-area: time;
+    justify-self: flex-start;
+}
+
 .message-container {
     grid-area: mensagem;
     position: relative;
     z-index: 1;
     display: grid;
     grid-template-columns: auto 1fr auto;
-    overflow: hidden;
     border: 1px solid var(--bd-color);
     border-radius: 4px;
     width: 100%;
@@ -3005,7 +3169,7 @@ a.config-item {
     padding: 12px;
 }
 
-.message-embeds label {
+.message-embeds button {
     display: grid;
     place-items: center;
     color: #666;
@@ -3013,6 +3177,11 @@ a.config-item {
     border-radius: 50%;
     transition: 0.3s ease-out;
     cursor: pointer;
+    background: transparent;
+}
+
+.message-embeds:hover button{
+    color: #CB6CE6;
 }
 
 .message-embeds:hover {
@@ -3020,10 +3189,10 @@ a.config-item {
 }
 
 .message-embeds:hover label {
-    color: #CB6CE6;
+    cursor: pointer;
 }
 
-#message-photo {
+.message-embed {
     display: none;
 }
 
@@ -3051,6 +3220,42 @@ a.config-item {
 .message-container:focus-within .message-button,
 .message-container:has(*:hover) .message-button {
     color: #CB6CE6;
+}
+
+
+.message-button.hide {
+    display: none;
+}
+
+#record-message-container {
+    grid-template-columns: 1fr auto;
+    justify-items: space-around;
+}
+
+#stop-recording-button {
+    color: red;
+    font-size: 1.2em;
+    padding: 8px;
+}
+
+#time {
+    padding: 12px;
+    font-size: 1.1em;
+}
+
+#preview-audio .message-button{
+    color: white;
+    background: linear-gradient(-45deg, #971881 0%, #a4228e 50%, #85066f 100%);
+    border-radius: 50%;
+    padding: 12px;
+    width: 2.5em;
+    aspect-ratio: 1/1;
+    font-size: 1.8em;
+    transition: .3s filter;
+}
+
+#preview-audio .message-button:active{
+    filter: brightness(0.6);
 }
 
 #user-product #main {
@@ -3688,13 +3893,17 @@ a.highlight {
         left: 0;
         width: 100%;
         height: calc(100% - 70px);
+        transition: .3s transform;
     }
     
     #user-chats #conversas.hide,
-    #user-config #config.hide,
+    #user-config #config.hide{
+        transform: translateX(-100%);
+    }
+
     #user-chats #main.hide,
     #user-config #main.hide{
-        display: none;
+        transform: translateX(100%);
     }
 
     #user-info {
@@ -3931,7 +4140,7 @@ a.highlight {
         right: 0;
     }
 
-    #bio-follow-share {
+    #bio-follow {
         justify-content: center;
     }
 

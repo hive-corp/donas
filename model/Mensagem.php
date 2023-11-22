@@ -7,7 +7,7 @@
         private $horaMensagem ;
         private $lidoEmMensagem ;
         private $origemMensagem;
-        private $imagemMensagem;
+        private $arquivoMensagem;
         private $Cliente ;
         private $Vendedora ;
  
@@ -16,7 +16,6 @@
             $this->Cliente = new Cliente();
             $this->Vendedora = new Vendedora();
         }
-      
 
         public function getIdMensagem() {
             return $this->idMensagem;
@@ -39,8 +38,8 @@
         public function getOrigemMensagem() {
             return $this->origemMensagem;
         }
-        public function getImagemMensagem() {
-            return $this->imagemMensagem;
+        public function getArquivoMensagem() {
+            return $this->arquivoMensagem;
         }
         public function setIdMensagem($idMensagem) {
             $this->idMensagem=$idMensagem;
@@ -63,8 +62,8 @@
         public function setOrigemMensagem($origemMensagem) {
             $this->origemMensagem=$origemMensagem;
         }
-        public function setImagemMensagem($imagemMensagem) {
-            $this->imagemMensagem=$imagemMensagem;
+        public function setArquivoMensagem($arquivoMensagem) {
+            $this->arquivoMensagem=$arquivoMensagem;
         }
     }
 

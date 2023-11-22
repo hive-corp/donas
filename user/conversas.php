@@ -14,7 +14,7 @@ require_once "validador.php";
     <title>Conversas</title>
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -45,8 +45,8 @@ require_once "validador.php";
     <div id="user-chats">
         <nav id="nav">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -111,7 +111,7 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
@@ -214,11 +214,11 @@ require_once "validador.php";
                     <i class="bi bi-arrow-left"></i>
                 </button>
                 <a id="link-destino" class="hide">
-                    <img src="../assets/img/foto.png" alt="" id="foto-chat">
+                    <img src="../assets/media/foto.png" alt="" id="foto-chat">
                 </a>
                 <div>Escolha uma conversa ao lado</div>
                 <div class="dropdown-start dropdown d-flex justify-content-end" id="config-chat">
-                    <button class="hide" id="options-chat" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="options-button hide" id="options-chat" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
@@ -238,24 +238,42 @@ require_once "validador.php";
                 </div>
             </div>
             <div id="content">
-                <img src="../assets/img/rosas.svg" class="rosa-fundo">
+                <img src="../assets/media/rosas.svg" class="rosa-fundo">
 
-                <div id="crop-image" class="hide">
-                    <div class="crop-title">
-                        <button class="voltar" id="voltar-crop">
+                <div id="crop-image" class="preview-file hide">
+                    <div class="preview-title">
+                        <button class="voltar">
                             <i class="bi bi-arrow-left"></i>
                         </button>
                     </div>
-                    <div class="crop-area">
+                    <div class="preview-area">
                         <div class="result-crop"></div>
                     </div>
-                    <div class="crop-send">
+                    <div class="preview-send">
                         <div class="message-container" id="crop-message-container">
                             <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="crop-message-field" autofocus>
                             <button class="message-button" id="crop-message-button" type="button">
                                 <i class="bi bi-send"></i>
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                <div id="preview-audio" class="preview-file hide">
+                    <div class="preview-title">
+                        <button class="voltar">
+                            <i class="bi bi-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="preview-area">
+                        <div class="audio">
+                            <img src="../<?php echo $_SESSION['foto'] ?>" alt="">
+                        </div>
+                    </div>
+                    <div class="preview-send">
+                        <button class="message-button" id="send-audio-button" type="button">
+                            <i class="bi bi-send"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -269,25 +287,61 @@ require_once "validador.php";
                 </div>
 
                 <div class="message-container hide" id="main-message-container">
-                    <div class="message-embeds">
-                        <label for="message-photo">
-                            <i class="bi bi-image"></i>
-                            <input type="file" id="message-photo" accept="image/*">
-                        </label>
+                    <div class="message-embeds dropdown-start dropup d-flex justify-content-end">
+                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                            <li>
+                                <label class="dropdown-item">
+                                    <i class="bi bi-file-earmark-text-fill"></i>
+                                    Documento
+                                    <input type="file" id="message-document" class="message-embed">
+                                </label>
+                            </li>
+                            <li>
+                                <label class="dropdown-item">
+                                    <i class="bi bi-soundwave"></i>
+                                    Áudio
+                                    <input type="file" id="message-audio" accept="audio/*" class="message-embed">
+                                </label>
+                            </li>
+                            <li>
+                                <label class="dropdown-item">
+                                    <i class="bi bi-image"></i>
+                                    Imagem
+                                    <input type="file" id="message-photo" accept="image/*" class="message-embed">
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                     <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="main-message-field" autofocus>
-                    <button class="message-button" id="main-message-button" type="button">
-                        <i class="bi bi-send"></i>
+                    <div class="message-send">
+                        <button class="message-button hide" id="main-message-button" type="button">
+                            <i class="bi bi-send"></i>
+                        </button>
+                        <button class="message-button" id="record-message-button" type="button">
+                            <i class="bi bi-mic-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="message-container hide" id="record-message-container">
+                    <div id="time">
+                        0:00
+                    </div>
+                    <button class="message-button" type="button" id="stop-recording-button">
+                        <i class="bi bi-stop-fill"></i>
                     </button>
                 </div>
 
-                <img src="../assets/img/rosas.svg" class="rosa-fundo">
+                <img src="../assets/media/rosas.svg" class="rosa-fundo">
             </div>
         </main>
     </div>
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src='../assets/vendor/cropperjs/js/cropper.js'></script>
+    <script src='../assets/vendor/wavesurfer/js/wavesurfer.js'></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/js/chat.js"></script>
     <script>

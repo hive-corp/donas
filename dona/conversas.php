@@ -206,16 +206,16 @@ require_once "validador.php";
             <div id="content">
                 <img src="../assets/media/rosas.svg" class="rosa-fundo">
 
-                <div id="crop-image" class="hide">
-                    <div class="crop-title">
-                        <button class="voltar" id="voltar-crop">
+                <div id="crop-image" class="preview-file hide">
+                    <div class="preview-title">
+                        <button class="voltar">
                             <i class="bi bi-arrow-left"></i>
                         </button>
                     </div>
-                    <div class="crop-area">
+                    <div class="preview-area">
                         <div class="result-crop"></div>
                     </div>
-                    <div class="crop-send">
+                    <div class="preview-send">
                         <div class="message-container" id="crop-message-container">
                             <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="crop-message-field" autofocus>
                             <button class="message-button" id="crop-message-button" type="button">
@@ -225,24 +225,78 @@ require_once "validador.php";
                     </div>
                 </div>
 
+                <div id="preview-audio" class="preview-file hide">
+                    <div class="preview-title">
+                        <button class="voltar">
+                            <i class="bi bi-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="preview-area">
+                        <div class="audio">
+                            <img src="../<?php echo $_SESSION['foto'] ?>" alt="">
+                        </div>
+                    </div>
+                    <div class="preview-send">
+                        <button class="message-button" id="send-audio-button" type="button">
+                            <i class="bi bi-send"></i>
+                        </button>
+                    </div>
+                </div>
+
                 <p id="abra-conversa">Abra uma conversa</p>
                 <button id="desce-chat" class="hide">
                     <i class="bi bi-arrow-down"></i>
                 </button>
 
                 <div id="chat">
+
                 </div>
 
                 <div class="message-container hide" id="main-message-container">
-                    <div class="message-embeds">
-                        <label for="message-photo">
-                            <i class="bi bi-image"></i>
-                            <input type="file" id="message-photo" accept="image/*">
-                        </label>
+                    <div class="message-embeds dropdown-start dropup d-flex justify-content-end">
+                        <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                            <li>
+                                <label class="dropdown-item">
+                                    <i class="bi bi-file-earmark-text-fill"></i>
+                                    Documento
+                                    <input type="file" id="message-document" class="message-embed">
+                                </label>
+                            </li>
+                            <li>
+                                <label class="dropdown-item">
+                                    <i class="bi bi-soundwave"></i>
+                                    Áudio
+                                    <input type="file" id="message-audio" accept="audio/*" class="message-embed">
+                                </label>
+                            </li>
+                            <li>
+                                <label class="dropdown-item">
+                                    <i class="bi bi-image"></i>
+                                    Imagem
+                                    <input type="file" id="message-photo" accept="image/*" class="message-embed">
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                     <input type="text" placeholder="Escreva uma mensagem" class="message-field" id="main-message-field" autofocus>
-                    <button class="message-button" id="main-message-button" type="button">
-                        <i class="bi bi-send"></i>
+                    <div class="message-send">
+                        <button class="message-button hide" id="main-message-button" type="button">
+                            <i class="bi bi-send"></i>
+                        </button>
+                        <button class="message-button" id="record-message-button" type="button">
+                            <i class="bi bi-mic-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="message-container hide" id="record-message-container">
+                    <div id="time">
+                        0:00
+                    </div>
+                    <button class="message-button" type="button" id="stop-recording-button">
+                        <i class="bi bi-stop-fill"></i>
                     </button>
                 </div>
 
@@ -253,10 +307,11 @@ require_once "validador.php";
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src='../assets/vendor/cropperjs/js/cropper.js'></script>
+    <script src='../assets/vendor/wavesurfer/js/wavesurfer.js'></script>
     <script src="../assets/js/script.js"></script>
     <script>
         type = 1
-</script>
+    </script>
     <script src="../assets/js/chat.js"></script>
 </body>
 

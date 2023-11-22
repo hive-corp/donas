@@ -40,7 +40,7 @@ class daoMensagem
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbMensagem
-                            SET conteudoMensagem = ?, imagemMensagem = ?, horaMensagem = ?, 
+                            SET conteudoMensagem = ?, arquivoMensagem = ?, horaMensagem = ?, 
                             lidoEmMensagem = ?, origemMensagem = ?, idCliente = ?, idVendedora = ?
                             WHERE idMensagem = ?";
 
@@ -58,17 +58,17 @@ class daoMensagem
         $prepareStatement->execute();
     }
 
-    public static function editarFoto($Mensagem)
+    public static function editarArquivo($Mensagem)
     {
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbMensagem
-                            SET imagemMensagem = ?
+                            SET arquivoMensagem = ?
                             WHERE idMensagem = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
-        $prepareStatement->bindValue(1, $Mensagem->getImagemMensagem());
+        $prepareStatement->bindValue(1, $Mensagem->getArquivoMensagem());
         $prepareStatement->bindValue(2, $Mensagem->getIdMensagem());
 
         $prepareStatement->execute();
@@ -90,8 +90,10 @@ class daoMensagem
     {
         $connection = Conexao::conectar();
 
-        $querySelect = 'SELECT conteudoMensagem, imagemMensagem, TIME_FORMAT(horaMensagem, "%H:%i") as horaMensagem, lidoEmMensagem, origemMensagem FROM tbMensagem
-                            WHERE idCliente = ? AND idVendedora = ?';
+        $querySelect = 'SELECT conteudoMensagem, arquivoMensagem, TIME_FORMAT(horaMensagem, "%H:%i") as horaMensagem, lidoEmMensagem, origemMensagem, tbCliente.fotoCliente as fotoCliente, tbVendedora.fotoNegocioVendedora as fotoVendedora FROM tbMensagem
+                        INNER JOIN tbCliente ON tbCliente.idCliente = tbMensagem.idCliente
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbMensagem.idVendedora
+                        WHERE tbMensagem.idCliente = ? AND tbMensagem.idVendedora = ?';
 
         $prepareStatement = $connection->prepare($querySelect);
         $prepareStatement->bindValue(1, $conversa->getCliente()->getIdCliente());
@@ -119,7 +121,7 @@ class daoMensagem
 
         while ($linha = $prepareStatement->fetch(PDO::FETCH_ASSOC)) {
 
-            $prepareStatementMessage = $connection->prepare("SELECT conteudoMensagem as ultimaMensagem, imagemMensagem, origemMensagem as remetente FROM tbMensagem
+            $prepareStatementMessage = $connection->prepare("SELECT conteudoMensagem as ultimaMensagem, arquivoMensagem, origemMensagem as remetente FROM tbMensagem
                             WHERE idCliente = ? AND idVendedora = ?
                             ORDER BY idMensagem desc
                             LIMIT 1");
@@ -131,7 +133,19 @@ class daoMensagem
             $consulta = $prepareStatementMessage->fetch(PDO::FETCH_ASSOC);
 
             $ultimaMensagem = !empty($consulta['ultimaMensagem']) ? $consulta['ultimaMensagem'] : '';
-            $ultimaMensagem = !empty($consulta['imagemMensagem']) ? 'imagem' : $ultimaMensagem;
+
+            if(!empty($consulta['arquivoMensagem'])){
+                $extensao = strtolower(pathinfo($consulta['arquivoMensagem'],PATHINFO_EXTENSION));
+
+                if($extensao == 'mp3'){
+                    $ultimaMensagem = 'áudio';
+                }else if($extensao == 'png'){
+                    $ultimaMensagem = 'imagem';
+                }else{
+                    $ultimaMensagem = 'arquivo';
+                }
+            }
+
             $origem = $consulta['remetente'];
 
             $dados = [
@@ -163,7 +177,7 @@ class daoMensagem
 
         while ($linha = $prepareStatement->fetch(PDO::FETCH_ASSOC)) {
 
-            $prepareStatementMessage = $connection->prepare("SELECT conteudoMensagem as ultimaMensagem, imagemMensagem, origemMensagem as remetente FROM tbMensagem
+            $prepareStatementMessage = $connection->prepare("SELECT conteudoMensagem as ultimaMensagem, arquivoMensagem, origemMensagem as remetente FROM tbMensagem
                             WHERE idVendedora = ? AND idCliente = ?
                             ORDER BY idMensagem desc
                             LIMIT 1");
@@ -175,7 +189,18 @@ class daoMensagem
             $consulta = $prepareStatementMessage->fetch(PDO::FETCH_ASSOC);
 
             $ultimaMensagem = !empty($consulta['ultimaMensagem']) ? $consulta['ultimaMensagem'] : '';
-            $ultimaMensagem = !empty($consulta['imagemMensagem']) ? 'imagem' : $ultimaMensagem;
+            if(!empty($consulta['arquivoMensagem'])){
+                $extensao = strtolower(pathinfo($consulta['arquivoMensagem'],PATHINFO_EXTENSION));
+
+                if($extensao == 'mp3'){
+                    $ultimaMensagem = 'áudio';
+                }else if($extensao == 'png'){
+                    $ultimaMensagem = 'imagem';
+                }else{
+                    $ultimaMensagem = 'arquivo';
+                }
+            }
+            
             $origem = $consulta['remetente'];
 
             $dados = [
