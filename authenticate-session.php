@@ -7,10 +7,9 @@ $tipoLogin = $_POST['tipo-login'];
 if($tipoLogin==1){
     $cliente = new Cliente();
     $cliente->setEmailCliente($_POST['email']);
-    $cliente->setSenhaCliente($_POST['pass']);
 
-    $consultaCliente = daoCliente::consultaLogin($cliente);
-    if($consultaCliente == 0){
+    $consultaCliente = daoCliente::consultarPorEmail($cliente);
+    if($consultaCliente == 0 || !password_verify($_POST['pass'], $consultaCliente['senhaCliente'])){
         header("Location: login.php");
     }else{
         session_start();
@@ -37,10 +36,9 @@ if($tipoLogin==1){
 }else{
     $vendedora = new Vendedora();
     $vendedora->setEmailVendedora($_POST['email']);
-    $vendedora->setSenhaVendedora($_POST['pass']);
 
-    $consultaVendedora = daoVendedora::consultaLogin($vendedora);
-    if($consultaVendedora == 0){
+    $consultaVendedora = daoVendedora::consultarPorEmail($vendedora);
+    if($consultaVendedora == 0 || !password_verify($_POST['pass'], $consultaVendedora['senhaVendedora'])){
         header("Location: login.php");
     }else{
         session_start();

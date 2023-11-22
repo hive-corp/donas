@@ -200,6 +200,19 @@ class daoVendedora
         return $dados;
     }
 
+    public static function consultarPorEmail($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT * FROM tbVendedora
+                            WHERE emailVendedora = ?');
+        $stmt->bindValue(1, $Vendedora->getEmailVendedora());
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
     public static function consultarPorId($id)
     {
         $connection = Conexao::conectar();
@@ -233,12 +246,11 @@ class daoVendedora
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare('SELECT statusVendedora FROM tbVendedora
-                            WHERE emailVendedora = ? AND senhaVendedora = ?');
+                            WHERE emailVendedora = ?');
         $stmt->bindValue(1, $Vendedora->getEmailVendedora());
-        $stmt->bindValue(2, $Vendedora->getSenhaVendedora());
         $stmt->execute();
 
-        $status = $stmt->fetch()[0];
+        $status = $stmt->fetch();
 
         return $status;
     }

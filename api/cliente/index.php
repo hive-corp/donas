@@ -34,7 +34,7 @@ switch ($method) {
         $cliente->setNomeCliente($_POST['nome']);
         $cliente->setEmailCliente($_POST['email']);
         $cliente->setNomeUsuarioCliente($_POST['username']);
-        $cliente->setSenhaCliente($_POST['pass']);
+        $cliente->setSenhaCliente(password_hash($_POST['pass'], PASSWORD_BCRYPT));
 
         $cep = str_replace('-', '', $_POST['cep']);
         $cliente->setCepCliente($cep);

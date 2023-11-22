@@ -32,7 +32,7 @@ switch ($method) {
 
         $vendedora->setNomeVendedora($_POST['nome']);
         $vendedora->setEmailVendedora($_POST['email']);
-        $vendedora->setSenhaVendedora($_POST['pass']);
+        $vendedora->setSenhaVendedora(password_hash($_POST['pass'], PASSWORD_BCRYPT));
         $vendedora->setDtNascVendedora($_POST['nasc']);
         $vendedora->setStatusVendedora(1);
         $vendedora->setNomeNegocioVendedora($_POST['nome-empresa']);

@@ -149,14 +149,26 @@ class daoCliente
         return $dados;
     }
 
+    public static function consultarPorEmail($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT * FROM tbCliente
+                            WHERE emailCliente = ?');
+        $stmt->bindValue(1, $cliente->getEmailCliente());
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
     public static function verificaLogin($cliente)
     {
         $connection = Conexao::conectar();
 
         $stmt = $connection->prepare('SELECT COUNT(idCliente) FROM tbCliente
-                            WHERE emailCliente = ? AND senhaCliente = ?');
+                            WHERE emailCliente = ?');
         $stmt->bindValue(1, $cliente->getEmailCliente());
-        $stmt->bindValue(2, $cliente->getSenhaCliente());
         $stmt->execute();
 
         $count = $stmt->fetch()[0];

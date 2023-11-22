@@ -6,9 +6,9 @@ require_once('../global.php');
 $vendedora = new Vendedora();
 
 $vendedora->setEmailVendedora($_POST['email']);
-$vendedora->setSenhaVendedora($_POST['pass']);
 
-if(daoVendedora::verificaLogin($vendedora)){
+$consultaVendedora = daoVendedora::consultarPorEmail($vendedora);
+if($consultaVendedora == 0 || password_verify($_POST['pass'], $consultaVendedora['senhaVendedora'])){
     if(daoVendedora::consultaStatus($vendedora)){
         echo 1;
     }else{

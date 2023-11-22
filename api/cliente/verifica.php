@@ -7,6 +7,11 @@ require_once('../global.php');
 $cliente = new Cliente();
 
 $cliente->setEmailCliente($_POST['email']);
-$cliente->setSenhaCliente($_POST['pass']);
 
-echo daoCliente::verificaLogin($cliente);
+$consultaCliente = daoCliente::consultarPorEmail($cliente);
+if($consultaCliente == 0 || password_verify($_POST['pass'], $consultaCliente['senhaCliente'])){
+    echo daoCliente::verificaLogin($cliente);
+}else{
+    echo 0;
+}
+
