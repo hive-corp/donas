@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Nov-2023 às 11:20
--- Versão do servidor: 10.4.28-MariaDB
--- versão do PHP: 8.2.4
+-- Tempo de geração: 22-Nov-2023 às 21:55
+-- Versão do servidor: 10.4.25-MariaDB
+-- versão do PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,9 +36,20 @@ CREATE TABLE `tbanuncio` (
   `imagemPrincipalAnuncio` varchar(100) DEFAULT NULL,
   `tipoAnuncio` int(11) DEFAULT NULL,
   `qtdProduto` int(11) DEFAULT NULL,
-  `idVendedora` int(11) DEFAULT NULL,
+  `idVendedora` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tbanunciosubcategoria`
+--
+
+CREATE TABLE `tbanunciosubcategoria` (
+  `idAnuncioSubCategoria` int(11) NOT NULL,
+  `idAnuncio` int(11) DEFAULT NULL,
   `idSubCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -52,7 +63,7 @@ CREATE TABLE `tbavaliacao` (
   `estrelasAvaliacao` int(11) NOT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -64,7 +75,7 @@ CREATE TABLE `tbcategoria` (
   `idCategoria` int(11) NOT NULL,
   `nomeCategoria` varchar(50) DEFAULT NULL,
   `fotoCategoria` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -88,7 +99,7 @@ CREATE TABLE `tbcliente` (
   `complementoCliente` varchar(100) DEFAULT NULL,
   `cepCliente` char(8) DEFAULT NULL,
   `cpfCliente` char(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -102,7 +113,7 @@ CREATE TABLE `tbdenuncia` (
   `descricaoDenuncia` varchar(100) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -115,7 +126,7 @@ CREATE TABLE `tbentradaproduto` (
   `dataEntradaProduto` date DEFAULT NULL,
   `qtdEntradaProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -127,7 +138,7 @@ CREATE TABLE `tbimagemanuncio` (
   `idImagemAnuncio` int(11) NOT NULL,
   `enderecoImagem` varchar(100) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -138,13 +149,13 @@ CREATE TABLE `tbimagemanuncio` (
 CREATE TABLE `tbmensagem` (
   `idMensagem` int(11) NOT NULL,
   `conteudoMensagem` varchar(512) DEFAULT NULL,
-  `imagemMensagem` varchar(100) DEFAULT NULL,
+  `arquivoMensagem` varchar(100) DEFAULT NULL,
   `horaMensagem` time DEFAULT current_timestamp(),
   `lidoEmMensagem` int(11) DEFAULT 0,
   `origemMensagem` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -160,7 +171,7 @@ CREATE TABLE `tbnotifccliente` (
   `tipoNotificacao` int(11) DEFAULT NULL,
   `statusNotificacao` int(11) DEFAULT NULL,
   `dataNotificacao` date DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -177,7 +188,7 @@ CREATE TABLE `tbpedidoproduto` (
   `statusPedidoProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -192,7 +203,7 @@ CREATE TABLE `tbpedidoservico` (
   `dataServicoMarcado` date DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -204,7 +215,7 @@ CREATE TABLE `tbpreferencias` (
   `idPreferencias` int(11) NOT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -217,7 +228,7 @@ CREATE TABLE `tbsaidaproduto` (
   `dataSaidaProduto` date DEFAULT NULL,
   `qtdSaidaProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -229,7 +240,7 @@ CREATE TABLE `tbseguidor` (
   `idSeguidor` int(11) NOT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -241,7 +252,7 @@ CREATE TABLE `tbsubcategoria` (
   `idSubCategoria` int(11) NOT NULL,
   `nomeSubCategoria` varchar(50) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -272,7 +283,7 @@ CREATE TABLE `tbvendedora` (
   `nivelNegocioVendedora` int(11) DEFAULT NULL,
   `telefoneNegocioVendedora` varchar(11) NOT NULL,
   `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tabelas despejadas
@@ -283,7 +294,14 @@ CREATE TABLE `tbvendedora` (
 --
 ALTER TABLE `tbanuncio`
   ADD PRIMARY KEY (`idAnuncio`),
-  ADD KEY `idVendedora` (`idVendedora`),
+  ADD KEY `idVendedora` (`idVendedora`);
+
+--
+-- Índices para tabela `tbanunciosubcategoria`
+--
+ALTER TABLE `tbanunciosubcategoria`
+  ADD PRIMARY KEY (`idAnuncioSubCategoria`),
+  ADD KEY `idAnuncio` (`idAnuncio`),
   ADD KEY `idSubCategoria` (`idSubCategoria`);
 
 --
@@ -409,6 +427,12 @@ ALTER TABLE `tbanuncio`
   MODIFY `idAnuncio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `tbanunciosubcategoria`
+--
+ALTER TABLE `tbanunciosubcategoria`
+  MODIFY `idAnuncioSubCategoria` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `tbavaliacao`
 --
 ALTER TABLE `tbavaliacao`
@@ -418,7 +442,7 @@ ALTER TABLE `tbavaliacao`
 -- AUTO_INCREMENT de tabela `tbcategoria`
 --
 ALTER TABLE `tbcategoria`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbcliente`
