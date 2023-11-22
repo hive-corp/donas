@@ -19,7 +19,7 @@ if (isset($_GET['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo isset($dados['nomeNegocioVendedora']) ? $dados['nomeNegocioVendedora'] :  'Nada foi encontrado.' ?></title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
@@ -99,8 +99,8 @@ if (isset($_GET['user'])) {
         </div>
         <nav id="nav">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -166,7 +166,7 @@ if (isset($_GET['user'])) {
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
@@ -228,7 +228,7 @@ if (isset($_GET['user'])) {
                             </div>
                             <div id="bio-dropdown">
                                 <div class="dropdown-start dropdown">
-                                    <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="options-button" id="options-bio" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-start dropdown-sobe">
@@ -257,32 +257,25 @@ if (isset($_GET['user'])) {
                                 echo $qtdseguidores != 1 ? $qtdseguidores . " seguidores" : $qtdseguidores . " seguidor";
                                 ?>
                             </div>
-
                             <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
-                            <div id="bio-follow-share">
-                                <?php
+                            <?php
 
-                                $seguidor = new Seguidor();
+                            $seguidor = new Seguidor();
 
-                                $vendedora = new Vendedora();
-                                $vendedora->setIdVendedora($dados['idVendedora']);
+                            $vendedora = new Vendedora();
+                            $vendedora->setIdVendedora($dados['idVendedora']);
 
-                                $cliente = new Cliente();
-                                $cliente->setIdCliente($_SESSION['id']);
+                            $cliente = new Cliente();
+                            $cliente->setIdCliente($_SESSION['id']);
 
-                                $seguidor->setCliente($cliente);
-                                $seguidor->setVendedora($vendedora);
+                            $seguidor->setCliente($cliente);
+                            $seguidor->setVendedora($vendedora);
 
-                                $isFollowed = daoSeguidor::consultaSeguidor($seguidor);
-                                ?>
-                                <a href="<?php echo $isFollowed ? "unfollow" : "follow" ?>.php?user=<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>" class="button <?php echo $isFollowed ? "button-secondary" : "" ?> bio-option">
-                                    <?php echo $isFollowed ? "Parar de seguir" : "Seguir" ?>
-                                </a>
-                                <a type="button" class="button bio-option">
-                                    Compartilhar
-                                    <i class="bi bi-share-fill"></i>
-                                </a>
-                            </div>
+                            $isFollowed = daoSeguidor::consultaSeguidor($seguidor);
+                            ?>
+                            <a href="<?php echo $isFollowed ? "unfollow" : "follow" ?>.php?user=<?php echo $dados['nomeUsuarioNegocioVendedora'] ?>" class="button <?php echo $isFollowed ? "button-secondary" : "" ?> bio-option" id="bio-follow">
+                                <?php echo $isFollowed ? "Parar de seguir" : "Seguir" ?>
+                            </a>
                         </div>
                     </div>
                     <div id="negocio-info">

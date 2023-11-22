@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="port-br">
 <head>
-    <link rel="shortcut icon" type="imagex/png" href="assets/img/Logo-menor.png">
+    <link rel="shortcut icon" type="imagex/png" href="assets/media/Logo-menor.png">
     
 	<title>Donas</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/styles-adm.css">
@@ -12,10 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<img class="wave" src="assets/img/Onda.png">
+	<img class="wave" src="assets/media/Onda.png">
 	<div class="container">
 		<div class="img">
-			<img src="assets/img/LOGO.png">
+			<img src="assets/media/LOGO.png">
             <div id="linha-vertical"></div>
 		</div>
 		<div class="login-content">

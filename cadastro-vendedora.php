@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de vendedora</title>
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/media/favicon.ico" type="image/x-icon">
 
     <link rel='stylesheet' href='assets/vendor/cropperjs/css/cropper.css'>
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -108,7 +108,7 @@
                     <h1 class="modal-title fs-5">Informações da vendedora</h1>
                 </div>
                 <div class="modal-body">
-                    <img src="assets/img/foto.png" alt="" class="foto-modal">
+                    <img src="assets/media/foto.png" alt="" class="foto-modal">
                     <div class="nome-modal">
                         <div class="form-label">Nome</div>
                         <div class="input-wrapper">
@@ -140,7 +140,7 @@
                     <h1 class="modal-title fs-5">Informações do negócio</h1>
                 </div>
                 <div class="modal-body">
-                    <img src="assets/img/foto.png" alt="" class="foto-modal">
+                    <img src="assets/media/foto.png" alt="" class="foto-modal">
                     <div class="nome-modal">
                         <div class="form-label">Nome</div>
                         <div class="input-wrapper">
@@ -188,10 +188,10 @@
 
     <div id="cadastro">
         <div id="imagem-login-cadastro">
-            <img src="assets/img/logo.svg">
+            <img src="assets/media/logo.svg">
         </div>
         <div id="login-cadastro">
-            <img src="assets/img/rosas.svg" class="rosa-fundo">
+            <img src="assets/media/rosas.svg" class="rosa-fundo">
             <form class="needs-validation" action="dona/index.html" id="form-cadastro" enctype="multipart/form-data" novalidate>
                 <div class="form-box" id="register-dona-box">
                     <div class="form-title">
@@ -278,7 +278,7 @@
                     <div class="form">
                         <div class="input">
                             <label for="foto-user" class="foto-circulo">
-                                <img src="assets/img/foto.png">
+                                <img src="assets/media/foto.png">
                             </label>
                             <input type="file" id="foto-user" accept="image/*" required>
                             <div class="invalid-feedback">
@@ -508,7 +508,7 @@
                     <div class="form">
                         <div class="input">
                             <label for="foto-empresa" class="foto-circulo">
-                                <img src="assets/img/foto.png">
+                                <img src="assets/media/foto.png">
                             </label>
                             <input type="file" id="foto-empresa" accept="image/*" required>
                             <div class="invalid-feedback">
@@ -527,7 +527,7 @@
                     </p>
                 </div>
             </form>
-            <img src="assets/img/rosas.svg" class="rosa-fundo">
+            <img src="assets/media/rosas.svg" class="rosa-fundo">
         </div>
 
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

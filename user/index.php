@@ -13,7 +13,7 @@ require_once "validador.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Home</title>
 	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="../assets/vendor/flickity/css/flickity.css" />
 	<link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css" />
 	<link rel="stylesheet" href="../assets/css/styles.css" />
@@ -23,8 +23,8 @@ require_once "validador.php";
 	<div id="user">
 		<nav id="nav">
 			<picture id="nav-logo">
-				<source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-				<img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+				<source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+				<img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
 			</picture>
 			<div id="nav-list">
 				<a href="index.php" class="nav-link active">
@@ -91,7 +91,7 @@ require_once "validador.php";
 				</div>
 
 				<div class="dropup-center dropup">
-					<button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<i class="bi bi-three-dots-vertical"></i>
 					</button>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
@@ -113,7 +113,7 @@ require_once "validador.php";
 		</nav>
 		<main id="main">
 			<div id="pesquisa">
-				<img class="logo-pesquisa" src="../assets/img/Logo-menor.png" alt="">
+				<img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
 				<div class="search-container search-square">
 					<input type="text" role="search" placeholder="Pesquisa" class="search-field" />
 					<button class="search-button">
@@ -121,16 +121,16 @@ require_once "validador.php";
 					</button>
 				</div>
 			</div>
-			<!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
+			<!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
 
 			<div id="content">
 				<h2>Bem vindo(a), <span class="highlight"><?php echo explode(" ", $_SESSION['nome'])[0] ?></span>!</h2>
 				<div id="carrossel">
 					<div class="carousel-cell">
-						<img src="../assets/img/carousel/1.png" alt="">
+						<img src="../assets/media/carousel/1.png" alt="">
 					</div>
 					<div class="carousel-cell">
-						<img src="../assets/img/carousel/2.png" alt="">
+						<img src="../assets/media/carousel/2.png" alt="">
 					</div>
 				</div>
 				<div class="section">
@@ -871,7 +871,7 @@ require_once "validador.php";
 				}
 				?>
 			</div>
-			<!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
+			<!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
 		</main>
 	</div>
 

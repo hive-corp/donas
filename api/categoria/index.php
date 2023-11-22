@@ -30,7 +30,7 @@ switch ($method) {
             $extensao = substr($nomeimagem, -4);
             $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
-            $arquivo = "assets/img/categories/" . $id . $extensao;
+            $arquivo = "assets/media/categories/" . $id . $extensao;
 
             move_uploaded_file($_FILES['foto']['tmp_name'], "../../" . $arquivo);
 

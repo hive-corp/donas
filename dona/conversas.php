@@ -14,7 +14,7 @@ require_once "validador.php";
     <title>Conversas</title>
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -23,8 +23,8 @@ require_once "validador.php";
     <div id="user-chats">
         <nav id="nav" class="nav-dona">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -180,7 +180,7 @@ require_once "validador.php";
                     <i class="bi bi-arrow-left"></i>
                 </button>
                 <a id="link-destino" class="hide">
-                    <img src="../assets/img/foto.png" alt="" id="foto-chat">
+                    <img src="../assets/media/foto.png" alt="" id="foto-chat">
                 </a>
                 <div>Escolha uma conversa ao lado</div>
                 <div class="dropdown-start dropdown d-flex justify-content-end" id="config-chat">
@@ -204,7 +204,7 @@ require_once "validador.php";
                 </div>
             </div>
             <div id="content">
-                <img src="../assets/img/rosas.svg" class="rosa-fundo">
+                <img src="../assets/media/rosas.svg" class="rosa-fundo">
 
                 <div id="crop-image" class="hide">
                     <div class="crop-title">
@@ -246,7 +246,7 @@ require_once "validador.php";
                     </button>
                 </div>
 
-                <img src="../assets/img/rosas.svg" class="rosa-fundo">
+                <img src="../assets/media/rosas.svg" class="rosa-fundo">
             </div>
         </main>
     </div>

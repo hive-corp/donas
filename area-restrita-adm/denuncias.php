@@ -11,7 +11,7 @@
     
     <title>Denúncias - Donas</title>
 
-    <link rel="shortcut icon" type="imagex/png" href="../assets/img/Logo-menor.png">
+    <link rel="shortcut icon" type="imagex/png" href="../assets/media/Logo-menor.png">
 
     <link href="../assets/css/styles-dash.css" rel="stylesheet">
 
@@ -28,7 +28,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Dashboard.php">
                 <div class="sidebar-brand-icon ">
-                    <img src="../assets/img/LogoDash.png" class="Logo">
+                    <img src="../assets/media/LogoDash.png" class="Logo">
                 </div>
                 <div class="sidebar-brand-text mx-3">Donas</div>
             </a>
@@ -217,7 +217,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="../assets/img/novasMensagens.jpg"
+                                        <img class="rounded-circle" src="../assets/media/novasMensagens.jpg"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -250,7 +250,7 @@
                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span class="mr-2 d-none d-lg-inline text-gray-600 small">Heloisa Martins</span>
                           <img class="img-profile rounded-circle"
-                              src="../assets/img/Adm-dash.jpg">
+                              src="../assets/media/Adm-dash.jpg">
                       </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -308,7 +308,7 @@
                                             <td>
                                               <div class="d-flex px-2 py-1">
                                                 <div>
-                                                  <img src="../assets/img/Perfil1.jpg" class="avatar avatar-sm me-3" alt="user6">
+                                                  <img src="../assets/media/Perfil1.jpg" class="avatar avatar-sm me-3" alt="user6">
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
                                                   <h6 class="mb-0 text-sm">Luana Pinheiro Ferreira</h6>

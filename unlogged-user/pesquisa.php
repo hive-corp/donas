@@ -25,7 +25,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesquisa</title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/vendor/flickity/css/flickity.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
@@ -54,8 +54,8 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
     <div id="user">
         <nav id="nav">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -87,7 +87,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
         <main id="main">
             
             <form id="pesquisa" action="pesquisa.php">
-                <img class="logo-pesquisa" src="../assets/img/Logo-menor.png" alt="">
+                <img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
                 <div class="search-container search-square ">
                     <select name="tipo" id="tipo">
                         <option value="" selected>Tipo</option>

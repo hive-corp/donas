@@ -77,7 +77,7 @@ switch ($method) {
         $extensao = substr($nomeimagem, -4);
         $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
-        $arquivo = "assets/img/users/donas/" . $id . $extensao;
+        $arquivo = "assets/media/users/donas/" . $id . $extensao;
 
         move_uploaded_file($_FILES['foto-vendedora']['tmp_name'], "../../" . $arquivo);
 
@@ -91,7 +91,7 @@ switch ($method) {
         $extensao = substr($nomeimagem, -4);
         $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
-        $arquivo = "assets/img/users/negocios/" . $id . $extensao;
+        $arquivo = "assets/media/users/negocios/" . $id . $extensao;
 
         move_uploaded_file($_FILES['foto-empresa']['tmp_name'], "../../" . $arquivo);
 

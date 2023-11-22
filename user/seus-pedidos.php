@@ -13,7 +13,7 @@ require_once "validador.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seus pedidos</title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -38,8 +38,8 @@ require_once "validador.php";
         </div>
         <nav id="nav">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -104,7 +104,7 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
@@ -125,7 +125,7 @@ require_once "validador.php";
             </div>
         </nav>
         <main id="main">
-            <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
+            <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
             <div id="main-title">
                 Seus pedidos
             </div>
@@ -185,7 +185,7 @@ require_once "validador.php";
                 </div>
 
             </div>
-            <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
+            <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
         </main>
     </div>
 

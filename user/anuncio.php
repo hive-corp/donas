@@ -22,7 +22,7 @@ date_default_timezone_set('America/Sao_Paulo');
     <title><?php echo isset($anuncio['nomeAnuncio']) ? $anuncio['nomeAnuncio'] :  'Nada foi encontrado.' ?></title>
 
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -156,8 +156,8 @@ date_default_timezone_set('America/Sao_Paulo');
 
         <nav id="nav">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -224,7 +224,7 @@ date_default_timezone_set('America/Sao_Paulo');
                 </div>
 
                 <div class="dropup-center dropup">
-                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
@@ -245,7 +245,7 @@ date_default_timezone_set('America/Sao_Paulo');
             </div>
         </nav>
         <main id="main">
-            <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
+            <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
             <?php if (isset($anuncio['nomeAnuncio'])) { ?>
 
                 <div id="content">
@@ -462,7 +462,7 @@ date_default_timezone_set('America/Sao_Paulo');
                 <h2 class="mx-auto my-auto">Nenhum anúncio foi encontrado.</h2>
             <?php
             } ?>
-            <!-- <img src="../assets/img/rosas.svg" class="rosa-fundo"> -->
+            <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
         </main>
 
     </div>

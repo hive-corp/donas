@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/media/favicon.ico" type="image/x-icon">
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
@@ -69,10 +69,10 @@
 
     <div id="login">
         <div id="imagem-login-cadastro">
-            <img src="assets/img/logo.svg">
+            <img src="assets/media/logo.svg">
         </div>
         <div id="login-cadastro">
-            <img src="assets/img/rosas.svg" class="rosa-fundo">
+            <img src="assets/media/rosas.svg" class="rosa-fundo">
             <form class="form-box needs-validation" action="authenticate-session.php" id="login-box" method="post" novalidate>
                 <div class="form-title">
                     Login
@@ -132,11 +132,11 @@
                 </div>
                 <div id="choices">
                     <a href="cadastro.php" class="account-type">
-                        <img src="assets/img/cliente.png" alt="">
+                        <img src="assets/media/cliente.png" alt="">
                         Cliente
                     </a>
                     <a href="cadastro-vendedora.php" class="account-type">
-                        <img src="assets/img/vendedora.png" alt="">
+                        <img src="assets/media/vendedora.png" alt="">
                         Vendedora
                     </a>
                 </div>
@@ -144,7 +144,7 @@
                     Já possui uma conta? <a href="#" id="escolha-new">Faça login!</a>
                 </p>
             </div>
-            <img src="assets/img/rosas.svg" class="rosa-fundo">
+            <img src="assets/media/rosas.svg" class="rosa-fundo">
         </div>
     </div>
 

@@ -12,7 +12,7 @@ require_once "global.php"
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de cliente</title>
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/media/favicon.ico" type="image/x-icon">
 
     <link rel='stylesheet' href='assets/vendor/cropperjs/css/cropper.css'>
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -81,7 +81,7 @@ require_once "global.php"
                     <h1 class="modal-title fs-5">Informações do cliente</h1>
                 </div>
                 <div class="modal-body">
-                    <img src="assets/img/foto.png" alt="" class="foto-modal">
+                    <img src="assets/media/foto.png" alt="" class="foto-modal">
                     <div class="nome-modal">
                         <div class="form-label">Nome</div>
                         <div class="input-wrapper">
@@ -123,10 +123,10 @@ require_once "global.php"
 
     <div id="cadastro">
         <div id="imagem-login-cadastro">
-            <img src="assets/img/logo.svg">
+            <img src="assets/media/logo.svg">
         </div>
         <div id="login-cadastro">
-            <img src="assets/img/rosas.svg" class="rosa-fundo">
+            <img src="assets/media/rosas.svg" class="rosa-fundo">
             <form class="needs-validation" action="user/index.html" id="form-cadastro" enctype="multipart/form-data" novalidate>
                 <div class="form-box" id="register-box">
                     <div class="form-title">
@@ -300,7 +300,7 @@ require_once "global.php"
                     <div class="form">
                         <div class="input">
                             <label for="foto" class="foto-circulo">
-                                <img src="assets/img/foto.png">
+                                <img src="assets/media/foto.png">
                             </label>
                             <input type="file" id="foto" accept="image/*" required>
                             <div class="invalid-feedback">
@@ -355,7 +355,7 @@ require_once "global.php"
                     </div>
                 </div>
             </form>
-            <img src="assets/img/rosas.svg" class="rosa-fundo">
+            <img src="assets/media/rosas.svg" class="rosa-fundo">
         </div>
     </div>
 

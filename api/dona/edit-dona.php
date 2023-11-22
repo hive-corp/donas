@@ -27,7 +27,7 @@ if (isset($_FILES["foto-vendedora"]) && !empty($_FILES["foto-vendedora"]["name"]
         $extensao = substr($nomeimagem, -4);
         $extensao == 'jpeg' ? $extensao = substr($nomeimagem, -5) : $extensao;
 
-        $arquivo = "assets/img/users/donas/" . $id . $extensao;
+        $arquivo = "assets/media/users/donas/" . $id . $extensao;
 
         move_uploaded_file($_FILES['foto-vendedora']['tmp_name'], "../../" . $arquivo);
 

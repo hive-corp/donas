@@ -15,7 +15,7 @@ include_once("global.php");
     <title>Cadastrar Categoria - Donas</title>
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
 
-    <link rel="shortcut icon" type="imagex/png" href="../assets/img/Logo-menor.png">
+    <link rel="shortcut icon" type="imagex/png" href="../assets/media/Logo-menor.png">
 
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/css/styles-dash.css" rel="stylesheet">
@@ -29,7 +29,7 @@ include_once("global.php");
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Dashboard.php">
                 <div class="sidebar-brand-icon ">
-                    <img src="../assets/img/LogoDash.png" class="Logo">
+                    <img src="../assets/media/LogoDash.png" class="Logo">
                 </div>
                 <div class="sidebar-brand-text mx-3">Donas</div>
             </a>
@@ -198,7 +198,7 @@ include_once("global.php");
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="../assets/img/novasMensagens.jpg" alt="...">
+                                        <img class="rounded-circle" src="../assets/media/novasMensagens.jpg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -227,7 +227,7 @@ include_once("global.php");
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Heloisa Martins</span>
-                                <img class="img-profile rounded-circle" src="../assets/img/Adm-dash.jpg">
+                                <img class="img-profile rounded-circle" src="../assets/media/Adm-dash.jpg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -265,7 +265,7 @@ include_once("global.php");
                                 <div class="d-flex flex-column justify-content-center">
                                     <div class="max-width d-flex justify-content-center">
                                         <div class="imagemContainer">
-                                            <img src="../assets/img/foto.png" alt="Selecione uma imagem" id="imgPhoto">
+                                            <img src="../assets/media/foto.png" alt="Selecione uma imagem" id="imgPhoto">
                                         </div>
                                     </div>
                                     <div class="input-div one">
