@@ -15,7 +15,7 @@
         public function __construct()
         {
             $this->Vendedora = new Vendedora();
-        }        
+        }
 
         public function getIdAnuncio() {
             return $this->idAnuncio;
