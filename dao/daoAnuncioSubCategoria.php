@@ -77,7 +77,7 @@ class daoAnuncioSubcategoria
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT idSubCategoria FROM tbAnuncioSubCategorias WHERE idAnuncio = ?";
+        $querySelect = "SELECT idSubCategoria FROM tbAnuncioSubCategoria WHERE idAnuncio = ?";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $id);

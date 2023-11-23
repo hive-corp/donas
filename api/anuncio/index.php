@@ -19,7 +19,7 @@ switch ($method) {
         $anuncio->setEstrelasAnuncio(0);
         $anuncio->setTipoAnuncio($_POST['tipo']);
         $anuncio->setQtdProduto($_POST['tipo'] == 2 ? $_POST['qtd'] : 0);
-        
+
         session_start();
 
         $vendedora = new Vendedora();
@@ -45,6 +45,20 @@ switch ($method) {
         $anuncio->setImagemPrincipalAnuncio($arquivo);
 
         daoAnuncio::editarFoto($anuncio);
+
+
+        $AnuncioSubCategoria = json_decode($_POST['AnuncioSubCategoria']);
+
+        foreach ($AnuncioSubCategoria as $sub) {
+            $SubCategoria = new SubCategoria();
+            $SubCategoria->setIdSubCategoria($sub);
+
+            $AnuncioSubCategoria = new AnuncioSubCategoria();
+            $AnuncioSubCategoria->setSubCategoria($SubCategoria);
+            $AnuncioSubCategoria->setAnuncio($anuncio);
+
+            daoAnuncioSubcategoria::cadastrar($AnuncioSubCategoria);
+        }
 
         break;
 

@@ -117,8 +117,8 @@ require_once "validador.php";
     <div id="user-new">
         <nav id="nav" class="nav-dona">
             <picture id="nav-logo">
-                <source srcset="../assets/img/logo-letra.svg" media="(max-width:1200px)" />
-                <img src="../assets/img/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
+                <source srcset="../assets/media/logo-letra.svg" media="(max-width:1200px)" />
+                <img src="../assets/media/logo-h.svg" alt="Logo do DONAS" class="mobile-hide">
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
@@ -204,30 +204,13 @@ require_once "validador.php";
                     <img src="../assets/img/rosas.svg" class="rosa-fundo">
                     <div id="imagens-form">
                         <label for="foto-principal" id="foto-anuncio-cadastro">
-                            <img src="../assets/img/foto.png" id="preview-foto">
+                            <img src="../assets/media/foto.png" id="preview-foto">
                         </label>
                         <input type="file" accept="image/*" name="foto-principal" id="foto-principal" required>
                         <div class="invalid-feedback">
                             Insira uma foto
                         </div>
                     </div>
-                    <div class="input">
-                            <label class="form-label" for="subCategoria-new">Subcategorias<span>*</span></label>
-                            <div class="input-wrapper">
-                                <?php
-                                    $subCategorias = daoSubCategoria::listar();
-
-                                    foreach($subCategorias as $sub) {
-                                        ?> 
-                                        <input type="checkbox" class="checkbox-subCategoria" name="subCategorias" id="<?php echo $sub['nomeSubCategoria']?>" value="<?php echo $sub['idSubCategoria']?>">
-                                            <label class="card-categoria" for="<?php echo $sub['nomeSubCategoria']?>">
-                                                <p class="nome-categoria"><?php echo $sub['nomeSubCategoria']?></p>
-                                            </label>
-                                    <?php
-                                    }
-                                    ?>
-                            </div>
-                        </div>
                     <div id="info-form">
                         <div class="input">
                             <label class="form-label" for="nome-anuncio">Nome<span>*</span></label>
@@ -274,6 +257,24 @@ require_once "validador.php";
                                 Insira a descrição do seu anúncio
                             </div>
                         </div>
+                        <div class="input">
+                            <label class="form-label">Subcategorias<span>*</span></label>
+                            <div id="subcategorias">
+
+                                <?php
+                                $subCategorias = daoSubCategoria::listar();
+
+                                foreach ($subCategorias as $sub) {
+                                ?>
+                                    <label for="<?php echo $sub['nomeSubCategoria'] ?>">
+                                        <input type="checkbox" class="form-check-input checkbox-subCategoria" name="subCategorias" id="<?php echo $sub['nomeSubCategoria'] ?>" value="<?php echo $sub['idSubCategoria'] ?>">
+                                        <?php echo $sub['nomeSubCategoria'] ?>
+                                    </label>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                     <button class="button button-square" id="salvar">
                         Criar anúncio
@@ -310,10 +311,10 @@ require_once "validador.php";
                     precoModal = document.querySelector('.preco-modal .input-wrapper'),
                     tipoModal = document.querySelector('.tipo-modal .input-wrapper'),
                     estoqueModal = document.querySelector('.estoque-modal .input-wrapper'),
-                    descModal = document.querySelector('.desc-modal .input-wrapper')
+                    descModal = document.querySelector('.desc-modal .input-wrapper'),
                     AnuncioSubCategoriaCheck = document.querySelectorAll('input[name=subCategorias]:checked')
 
-                let AnuncioSubCategoria= []
+                let AnuncioSubCategoria = []
 
                 AnuncioSubCategoriaCheck.forEach(item => {
                     AnuncioSubCategoria.push(item.value)

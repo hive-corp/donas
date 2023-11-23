@@ -2209,7 +2209,8 @@ a.veja-mais {
         "titulo titulo"
         "nome tipo"
         "preco estoque"
-        "descricao descricao";
+        "descricao descricao"
+        "subcategorias subcategorias";
     gap: 12px;
     align-self: center;
 
@@ -2240,6 +2241,10 @@ a.veja-mais {
     grid-area: descricao;
 }
 
+#info-form .input:nth-child(6) {
+    grid-area: subcategorias;
+}
+
 #tipo-new option {
     color: black;
 }
@@ -2260,6 +2265,21 @@ a.veja-mais {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+}
+
+#subcategorias{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.checkbox-subCategoria{
+    border-color: lightslategray;
+}
+
+.form-check-input:checked{
+    background-color: #CB6CE6;
+    border-color: #CB6CE6;
 }
 
 #salvar {

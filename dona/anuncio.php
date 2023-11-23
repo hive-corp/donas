@@ -110,6 +110,26 @@ if (isset($_GET['a'])) {
                                         Insira a descrição do seu anúncio
                                     </div>
                                 </div>
+                                <div class="input">
+                                    <label class="form-label">Subcategorias<span>*</span></label>
+                                    <div id="subcategorias">
+
+                                        <?php
+                                        $subCategorias = daoSubCategoria::listar();
+
+                                        $subCategoriasAnuncio = daoAnuncioSubCategoria::listarAnuncio($anuncio['idAnuncio']);
+
+                                        foreach ($subCategorias as $sub) {
+                                        ?>
+                                            <label for="<?php echo $sub['nomeSubCategoria'] ?>">
+                                                <input type="checkbox" class="form-check-input checkbox-subCategoria" name="subCategorias" id="<?php echo $sub['nomeSubCategoria'] ?>" value="<?php echo $sub['idSubCategoria'] ?>" <?php if (in_array($sub['idSubCategoria'], array_column($subCategoriasAnuncio, 'idSubCategoria'))) echo "checked" ?>>
+                                                <?php echo $sub['nomeSubCategoria'] ?>
+                                            </label>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -388,7 +408,14 @@ if (isset($_GET['a'])) {
             if (!form.checkValidity()) {
                 form.classList.add('was-validated')
             } else {
-                let inputFoto = document.querySelector('#foto-principal')
+                let inputFoto = document.querySelector('#foto-principal'),
+                    AnuncioSubCategoriaCheck = document.querySelectorAll('input[name=subCategorias]:checked')
+
+                let AnuncioSubCategoria = []
+
+                AnuncioSubCategoriaCheck.forEach(item => {
+                    AnuncioSubCategoria.push(item.value)
+                })
 
                 if (inputFoto.value != '') {
                     let canvas = cropper.getCroppedCanvas({
@@ -404,6 +431,7 @@ if (isset($_GET['a'])) {
                         formData.append('desc', document.getElementById('desc').value)
                         formData.append('valor', document.getElementById('preco').value)
                         formData.append('qtd', document.getElementById('estoque').value)
+                        formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
 
                         fetch('../api/anuncio/editar-anuncio.php?a=<?php echo $anuncio['idAnuncio'] ?>', {
                             method: 'POST',
@@ -424,6 +452,7 @@ if (isset($_GET['a'])) {
                     formData.append('desc', document.getElementById('desc').value)
                     formData.append('valor', document.getElementById('preco').value)
                     formData.append('qtd', document.getElementById('estoque').value)
+                    formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
 
                     fetch('../api/anuncio/editar-anuncio.php?a=<?php echo $anuncio['idAnuncio'] ?>', {
                         method: 'POST',
