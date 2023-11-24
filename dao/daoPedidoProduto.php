@@ -6,16 +6,18 @@
         public static function criar($PedidoProduto){
             $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, idAnuncio, idCliente)
-                            VALUES (?,?,?,?)";
+            $queryInsert = "INSERT tbPedidoProduto(statusPedidoProduto, valorTotal, qtdProdutoPedido, dataPedidoEntregue, dataPedidoFeito, idAnuncio, idCliente)
+                            VALUES (?,?,?,?,?,?,?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
             $prepareStatement->bindValue(1, $PedidoProduto->getStatusPedidoProduto());
             $prepareStatement->bindValue(2, $PedidoProduto->getValorTotal());
-            //$prepareStatement->bindValue(3, $PedidoProduto->getQtdProdutoPedido());
-            $prepareStatement->bindValue(3, $PedidoProduto->getAnuncio()->getIdAnuncio());
-            $prepareStatement->bindValue(4, $PedidoProduto->getCliente()->getIdCliente());
+            $prepareStatement->bindValue(3, $PedidoProduto->getQtdProdutoPedido());
+            $prepareStatement->bindValue(4, $PedidoProduto->getDataPedidoEntregue());
+            $prepareStatement->bindValue(5, $PedidoProduto->getDataPedidoFeito());
+            $prepareStatement->bindValue(6, $PedidoProduto->getAnuncio()->getIdAnuncio());
+            $prepareStatement->bindValue(7, $PedidoProduto->getCliente()->getIdCliente());
 
             $prepareStatement->execute();
         }
@@ -66,12 +68,26 @@
 
             $prepareStatement->execute();
         }
+        public static function cancelarAuto($idPedidoProduto){
+            $connection = Conexao::conectar();
+        
+            $queryUpdate = "UPDATE tbPedidoProduto
+                            SET statusPedidoProduto = 2
+                            WHERE idPedidoProduto = ?";
+        
+            $prepareStatement = $connection->prepare($queryUpdate);
+        
+            $prepareStatement->bindValue(1, $idPedidoProduto);
+        
+            $prepareStatement->execute();
+        }
+
 
         public static function finalizar($PedidoProduto){
             $connection = Conexao::conectar();
 
             $queryInsert = "UPDATE tbPedidoProduto
-                            SET statusPedidoProduto = 3
+                            SET statusPedidoProduto = 4
                             WHERE idPedidoProduto = ?";
 
             $prepareStatement = $connection->prepare($queryInsert);
@@ -80,6 +96,20 @@
 
             $prepareStatement->execute();
         }
+        public static function Aceitar($dddPedidoProduto){
+            $connection = Conexao::conectar();
+
+            $queryInsert = "UPDATE tbPedidoProduto
+                            SET statusPedidoProduto = 3
+                            WHERE idPedidoProduto = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $dddPedidoProduto->getIdPedidoProduto());
+
+            $prepareStatement->execute();
+        }
+
 
         public static function listar(){
             $connection = Conexao::conectar();
@@ -92,13 +122,24 @@
             $lista = $resultado->fetchAll();
             return $lista;
         }
+public static function verificarStatus($PedidoProduto){
+            $connection = Conexao::conectar();
 
+            $queryInsert = "SELECT statusPedidoProduto FROM tbPedidoProduto
+                            WHERE idPedidoProduto = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $PedidoProduto->getIdPedidoProduto());
+
+            $prepareStatement->execute();
+        }
         public static function listarPedidosCliente($id){
             $connection = Conexao::conectar();
 
             $querySelect = "SELECT tbPedidoProduto.*, nomeAnuncio, imagemPrincipalAnuncio FROM tbPedidoProduto
                             INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
-                            WHERE idCliente = ? AND statusPedidoProduto = 1";
+                            WHERE idCliente = ? AND statusPedidoProduto = 1 OR statusPedidoProduto = 3";
 
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $id);
@@ -145,7 +186,7 @@
             $querySelect = "SELECT tbPedidoProduto.*, nomeCliente, nomeUsuarioCliente, fotoCliente, nomeAnuncio, imagemPrincipalAnuncio FROM tbPedidoProduto
                             INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
                             INNER JOIN tbCliente ON tbCliente.idCliente = tbPedidoProduto.idCliente
-                            WHERE idVendedora = ? AND statusPedidoProduto = 1";
+                            WHERE idVendedora = ? AND statusPedidoProduto = 1 OR statusPedidoProduto = 3";
 
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $id);
@@ -204,7 +245,7 @@
         public static function consultaTemPedidoAtivo($PedidoProduto){
             $connection = Conexao::conectar();
 
-            $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoProduto = 1";
+            $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoProduto = 1 OR statusPedidoProduto = 3";
     
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $PedidoProduto->getAnuncio()->getIdAnuncio());
@@ -219,7 +260,7 @@
         public static function foiFinalizada($PedidoProduto){
             $connection = Conexao::conectar();
 
-            $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoProduto = 3";
+            $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoProduto = 4";
     
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $PedidoProduto->getAnuncio()->getIdAnuncio());

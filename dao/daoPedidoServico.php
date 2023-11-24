@@ -6,16 +6,17 @@
         public static function criar($PedidoServico){
             $connection = Conexao::conectar();
 
-            $queryInsert = "INSERT tbPedidoServico(statusPedidoServico, valorTotal, dataServicoMarcado, idAnuncio, idCliente)
-                            VALUES (?,?,?,?,?)";
+            $queryInsert = "INSERT tbPedidoServico(statusPedidoServico, valorTotal, dataServicoMarcado, dataServicoContratado, idAnuncio, idCliente)
+                            VALUES (?,?,?,?,?,?)";
 
             $prepareStatement = $connection->prepare($queryInsert);
 
             $prepareStatement->bindValue(1, $PedidoServico->getStatusPedidoServico());
             $prepareStatement->bindValue(2, $PedidoServico->getValorTotal());
             $prepareStatement->bindValue(3, $PedidoServico->getDataServicoMarcado());
-            $prepareStatement->bindValue(4, $PedidoServico->getAnuncio()->getIdAnuncio());
-            $prepareStatement->bindValue(5, $PedidoServico->getCliente()->getIdCliente());
+            $prepareStatement->bindValue(4, $PedidoServico->getDataServicoContratado());
+            $prepareStatement->bindValue(5, $PedidoServico->getAnuncio()->getIdAnuncio());
+            $prepareStatement->bindValue(6, $PedidoServico->getCliente()->getIdCliente());
 
             $prepareStatement->execute();
         }
@@ -66,12 +67,38 @@
 
             $prepareStatement->execute();
         }
+        public static function cancelarAuto($idPedidoServico){
+            $connection = Conexao::conectar();
+        
+            $queryUpdate = "UPDATE tbPedidoServico
+                            SET statusPedidoServico = 2
+                            WHERE idPedidoServico= ?";
+        
+            $prepareStatement = $connection->prepare($queryUpdate);
+        
+            $prepareStatement->bindValue(1, $idPedidoServico);
+        
+            $prepareStatement->execute();
+        }
 
-        public static function finalizar($PedidoServico){
+        public static function Aceitar($dddPedidoServico){
             $connection = Conexao::conectar();
 
             $queryInsert = "UPDATE tbPedidoServico
                             SET statusPedidoServico = 3
+                            WHERE idPedidoServico = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $dddPedidoServico->getIdPedidoServico());
+
+            $prepareStatement->execute();
+        }
+        public static function finalizar($PedidoServico){
+            $connection = Conexao::conectar();
+
+            $queryInsert = "UPDATE tbPedidoServico
+                            SET statusPedidoServico = 4
                             WHERE idPedidoServico = ?";
 
             $prepareStatement = $connection->prepare($queryInsert);
@@ -97,8 +124,8 @@
             $connection = Conexao::conectar();
 
             $querySelect = "SELECT tbPedidoServico.*, nomeAnuncio, imagemPrincipalAnuncio FROM tbPedidoServico
-                            INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
-                            WHERE idCliente = ? AND statusPedidoProduto = 1";
+                            INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoServico.idAnuncio
+                            WHERE idCliente = ? AND statusPedidoServico = 1 OR statusPedidoServico = 3 ";
 
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $id);
@@ -122,7 +149,18 @@
             $lista = $resultado->fetchAll();
             return $lista;
         }
+        public static function verificarStatus($PedidoServico){
+            $connection = Conexao::conectar();
 
+            $queryInsert = "SELECT statusPedidoServico FROM tbPedidoServico
+                            WHERE idPedidoServico = ?";
+
+            $prepareStatement = $connection->prepare($queryInsert);
+
+            $prepareStatement->bindValue(1, $PedidoServico->getIdPedidoServico());
+
+            $prepareStatement->execute();
+        }
         public static function listarPedidosAnuncio($id){
             $connection = Conexao::conectar();
 
@@ -145,7 +183,7 @@
             $querySelect = "SELECT tbPedidoServico.*, nomeCliente, nomeUsuarioCliente, fotoCliente, nomeAnuncio, imagemPrincipalAnuncio FROM tbPedidoServico
                             INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoServico.idAnuncio
                             INNER JOIN tbCliente ON tbCliente.idCliente = tbPedidoServico.idCliente
-                            WHERE idVendedora = ? AND statusPedidoServico = 1";
+                            WHERE idVendedora = ? AND statusPedidoServico = 1 OR statusPedidoServico = 3";
 
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $id);
@@ -204,7 +242,7 @@
         public static function consultaTemPedidoAtivo($PedidoServico){
             $connection = Conexao::conectar();
 
-            $querySelect = "SELECT COUNT(idPedidoServico) FROM tbPedidoServico WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoServico = 1";
+            $querySelect = "SELECT COUNT(idPedidoServico) FROM tbPedidoServico WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoServico = 1 OR statusPedidoServico = 3";
     
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $PedidoServico->getAnuncio()->getIdAnuncio());
@@ -219,7 +257,7 @@
         public static function foiFinalizada($PedidoServico){
             $connection = Conexao::conectar();
 
-            $querySelect = "SELECT COUNT(idPedidoServico) FROM tbPedidoServico WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoServico = 3";
+            $querySelect = "SELECT COUNT(idPedidoServico) FROM tbPedidoServico WHERE idAnuncio = ? AND idCliente = ? AND statusPedidoServico = 4";
     
             $resultado = $connection->prepare($querySelect);
             $resultado->bindValue(1, $PedidoServico->getAnuncio()->getIdAnuncio());
