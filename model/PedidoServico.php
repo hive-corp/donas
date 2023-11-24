@@ -2,8 +2,8 @@
 class PedidoServico {
     private $idPedidoServico;
     private $valorTotal;
-    private $dataPedidoContratado;
-    private $dataPedidoMarcado
+    private $dataServicoContratado;
+    private $dataServicoMarcado;
     private $statusPedidoServico;
     
 
@@ -22,11 +22,11 @@ class PedidoServico {
     public function getValorTotal() {
         return $this->valorTotal;
     }
-    public function getDataPedidoContratado() {
-        return $this->dataPedidoContratado;
+    public function getDataServicoContratado() {
+        return $this->dataServicoContratado;
     }
-    public function getDataPedidoMarcado() {
-        return $this->dataPedidoMarcado;
+    public function getDataServicoMarcado() {
+        return $this->dataServicoMarcado;
     }
     public function getStatusPedidoServico() {
         return $this->statusPedidoServico;
@@ -43,11 +43,11 @@ class PedidoServico {
     public function setValorTotal($valorTotal) {
         $this->valorTotal = $valorTotal;
     }
-    public function setDataPedidoContratado($dataPedidoContratado) {
-        $this->dataPedidoContratado = $dataPedidoContratado;
+    public function setDataServicoContratado($dataServicoContratado) {
+        $this->dataServicoContratado = $dataServicoContratado;
     }
-    public function setDataPedidoMarcado($dataPedidoMarcado) {
-        $this->dataPedidoMarcado = $dataPedidoMarcado;
+    public function setDataServicoMarcado($dataServicoMarcado) {
+        $this->dataServicoMarcado = $dataServicoMarcado;
     }
     public function setStatusPedidoServico($statusPedidoServico) {
         $this->statusPedidoServico= $statusPedidoServico;
