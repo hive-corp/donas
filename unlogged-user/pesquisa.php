@@ -89,20 +89,20 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
             <form id="pesquisa" action="pesquisa.php">
                 <img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
                 <div class="search-container search-square ">
-                    <select name="tipo" id="tipo">
-                        <option value="" selected>Tipo</option>
-                        <option value="2">Produto</option>
-                        <option value="1">Serviço</option>
+                    <select name="tipo" id="tipo" >
+                        <option  value="" selected>Tipo</option>
+                        <option  value="2">Produto</option>
+                        <option  value="1">Serviço</option>
                     </select>
                    
                     <select name="categoria" id="categoria">
-                        <option value="" selected>Categoria</option>
+                        <option value=""  selected>Categoria</option>
                         <?php
                         $categorias = daoCategoria::listar();
 
                         foreach ($categorias as $c) {
                         ?>
-                            <option value="<?php echo $c['idCategoria'] ?>" <?php echo $c['idCategoria'] == $categorias ? "selected" : ""?>>
+                            <option  value="<?php echo $c['idCategoria'] ?>" <?php echo $c['idCategoria'] == $categorias ? "selected" : ""?>>
                                 <?php echo $c['nomeCategoria'] ?>
                             </option>
                         <?php
