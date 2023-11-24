@@ -36,6 +36,22 @@ require_once "validador.php";
                 </div>
             </div>
         </div>
+        <div class="modal pop" id="modal-cancelar-servico" tabindex="-1" aria-labelledby="modal-cancelar-servico" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Cancelar serviço</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a cancelar a serviço <h5 class="highlight"></h5>. Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="cancelar-servico.php" class="button button-red" id="cancelar-servico">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal pop" id="modal-concluir" tabindex="-1" aria-labelledby="modal-concluir" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -48,6 +64,54 @@ require_once "validador.php";
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <a href="concluir-pedido.php" class="button" id="concluir-pedido">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal pop" id="modal-concluir-servico" tabindex="-1" aria-labelledby="modal-concluir-servico" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Concluir serviço</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a concluir a serviço <h5 class="highlight"></h5> Tem certeza? Ao finalizar, não será mais possível ter acesso a ele novamente.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="concluir-servico.php" class="button" id="concluir-servico">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal pop" id="modal-aceitar" tabindex="-1" aria-labelledby="modal-aceitar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Aceitar encomenda</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a aceitar a encomenda <h5 class="highlight"></h5> Tem certeza? Ao Aceitar, não será mais possível cancelar a encomenda.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="aceitar-pedido.php" class="button" id="aceitar-pedido">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal pop" id="modal-aceitar-servico" tabindex="-1" aria-labelledby="modal-aceitar-servico" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Aceitar serviço</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a aceitar a serviço <h5 class="highlight"></h5> Tem certeza? Ao Aceitar, não será mais possível cancelar a encomenda.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="aceitar-servico.php" class="button" id="aceitar-servico">OK</a>
                     </div>
                 </div>
             </div>
@@ -113,24 +177,24 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-                        <li>
-                            <a class="dropdown-item" href="../logout.php">
-                                <i class="bi bi-box-arrow-right"></i>
-                                Sair
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
-                                <i class="bi bi-moon"></i>
-                                Modo noturno
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="bi bi-three-dots-vertical"></i>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+						<li>
+							<a class="dropdown-item" href="../logout.php">
+								<i class="bi bi-box-arrow-right"></i>
+								Sair
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-theme-toggle="dark">
+								<i class="bi bi-moon"></i>
+								Modo noturno
+							</a>
+						</li>
+					</ul>
+				</div>
             </div>
         </nav>
         <main id="main">
@@ -163,13 +227,64 @@ require_once "validador.php";
                                 <div class="data-encomenda-anuncio">
                                     <label for="" class="form-label">Data do pedido</label>
                                     <div class="input-wrapper">
-                                        <?php echo $p['dataPedidoFeito'] ?>
+                                        <?php echo $p['dataPedidoEntregue'] ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="opcoes-encomenda">
+                            <?php if ($p['statusPedidoProduto'] == 3) { ?>
                                 <button class="button concluir-pedido" data-bs-toggle="modal" data-bs-target="#modal-concluir" data-id="<?php echo $p['idPedidoProduto'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Concluir</button>
+                                <?php
+                                }else {
+                                ?>
+                                <button class="button aceitar-pedido" data-bs-toggle="modal" data-bs-target="#modal-aceitar" data-id="<?php echo $p['idPedidoProduto'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Aceitar</button>
+                                <?php
+                                }
+                                ?>
                                 <button class="button button-red cancelar-pedido" data-bs-toggle="modal" data-bs-target="#modal-cancelar" data-id="<?php echo $p['idPedidoProduto'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Cancelar</button>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                     <?php
+                    $pedidos = daoPedidoServico::listarPedidosAtivosVendedora($_SESSION['id']);
+
+                    foreach ($pedidos as $p) {
+                    ?>
+                        <div class="encomenda">
+                            <div class="info-encomenda">
+                                <img src="../<?php echo $p['fotoCliente'] ?>" alt="" class="foto-encomenda">
+                                <div class="nome-username">
+                                    <div class="nome-encomenda"><?php echo $p['nomeCliente'] ?></div>
+                                    <div class="username-encomenda">@<?php echo $p['nomeUsuarioCliente'] ?></div>
+                                </div>
+                            </div>
+                            <div class="dados-encomenda">
+                                <div class="nome-encomenda-anuncio">
+                                    <label for="" class="form-label">Serviço</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['nomeAnuncio'] ?>
+                                    </div>
+                                </div>
+                                <div class="data-encomenda-anuncio">
+                                    <label for="" class="form-label">Data do serviço</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['dataServicoMarcado'] ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="opcoes-encomenda">
+                            <?php if ($p['statusPedidoServico'] == 3) { ?>
+                                <button class="button concluir-servico" data-bs-toggle="modal" data-bs-target="#modal-concluir-servico" data-id="<?php echo $p['idPedidoServico'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Concluir</button>
+                                <?php
+                                }else {
+                                ?>
+                                <button class="button aceitar-servico" data-bs-toggle="modal" data-bs-target="#modal-aceitar-servico" data-id="<?php echo $p['idPedidoServico'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Aceitar</button>
+                                <?php
+                                }
+                                ?>
+                                <button class="button button-red cancelar-servico" data-bs-toggle="modal" data-bs-target="#modal-cancelar-servico" data-id="<?php echo $p['idPedidoServico'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Cancelar</button>
                             </div>
                         </div>
                     <?php
@@ -186,7 +301,10 @@ require_once "validador.php";
     <script>
         let cancelarPedido = document.querySelectorAll('.cancelar-pedido')
         let concluirPedido = document.querySelectorAll('.concluir-pedido')
-
+        let aceitarPedido = document.querySelectorAll('.aceitar-pedido')
+        let cancelarServico = document.querySelectorAll('.cancelar-servico')
+        let concluirServico = document.querySelectorAll('.concluir-servico')
+        let aceitarServico = document.querySelectorAll('.aceitar-servico')
         cancelarPedido.forEach(item => {
             let id = item.getAttribute('data-id')
             let cliente = item.getAttribute('data-nome')
@@ -198,7 +316,17 @@ require_once "validador.php";
                 document.querySelector('#modal-cancelar h5.highlight').innerText = `${cliente} - ${anuncio}`
             })
         })
-        
+        cancelarServico.forEach(item => {
+            let id = item.getAttribute('data-id')
+            let cliente = item.getAttribute('data-nome')
+            let anuncio = item.getAttribute('data-anuncio')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#cancelar-servico').href=`cancelar-servico.php?e=${id}`
+
+                document.querySelector('#modal-cancelar-servico h5.highlight').innerText = `${cliente} - ${anuncio}`
+            })
+        })
         concluirPedido.forEach(item => {
             let id = item.getAttribute('data-id')
             let cliente = item.getAttribute('data-nome')
@@ -208,6 +336,37 @@ require_once "validador.php";
                 document.querySelector('#concluir-pedido').href=`concluir-encomenda.php?e=${id}`
 
                 document.querySelector('#modal-concluir h5.highlight').innerText = `${cliente} - ${anuncio}`
+            })
+        }) 
+        concluirServico.forEach(item => {
+            let id = item.getAttribute('data-id')
+            let cliente = item.getAttribute('data-nome')
+            let anuncio = item.getAttribute('data-anuncio')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#concluir-servico').href=`concluir-servico.php?e=${id}`
+
+                document.querySelector('#modal-concluir-servico h5.highlight').innerText = `${cliente} - ${anuncio}`
+            })
+        })
+        aceitarPedido.forEach(item => {
+            let id = item.getAttribute('data-id')
+            let cliente = item.getAttribute('data-nome')
+            let anuncio = item.getAttribute('data-anuncio')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#aceitar-pedido').href=`aceitar-encomenda.php?e=${id}`
+              
+            })
+        })
+        aceitarServico.forEach(item => {
+            let id = item.getAttribute('data-id')
+            let cliente = item.getAttribute('data-nome')
+            let anuncio = item.getAttribute('data-anuncio')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#aceitar-servico').href=`aceitar-servico.php?e=${id}`
+              
             })
         })
     </script>
