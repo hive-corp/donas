@@ -37,7 +37,7 @@ date_default_timezone_set('America/Sao_Paulo');
                     </div>
                     <div class="modal-body d-flex flex-column text-center">
                         <i class="bi bi-box-seam"></i>
-                        Você está prestes a encomendar esse <?php echo $anuncio['tipoAnuncio'] == 1 ? "serviço" : "produto"; ?>. Tem certeza?
+                        Você está prestes a <?php echo $anuncio['tipoAnuncio'] == 1 ? "agendar esse serviço" : "encomendar esse produto"; ?>. Tem certeza?
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Não</button>
@@ -46,96 +46,134 @@ date_default_timezone_set('America/Sao_Paulo');
                 </div>
             </div>
         </div>
-
-        <div class="modal pop" id="modal-encomenda" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">Realizar encomenda</h1>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input input-cliente">
-                            <label class="form-label">Cliente</label>
-                            <div class="input-wrapper">
-                                <input type="text" disabled value="<?php echo $_SESSION['nome'] ?>">
-                            </div>
+        <form action="<?php echo $anuncio['tipoAnuncio'] == 1 ? "agendar-servico.php?a=" . $anuncio['idAnuncio'] : "fazer-encomenda.php?a=" . $anuncio['idAnuncio']; ?>" method="POST">
+            <div class="modal pop" id="modal-encomenda" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5"><?php echo $anuncio['tipoAnuncio'] == 1 ? "Agendar serviço" : "Realizar encomenda"; ?></h1>
                         </div>
-                        <div class="input input-dona">
-                            <label class="form-label">Negócio</label>
-                            <div class="input-wrapper">
-                                <input type="text" disabled value="<?php echo $anuncio['nomeNegocioVendedora'] ?>">
-                            </div>
+                        <div class="modal-body">
+                            <?php if ($anuncio['tipoAnuncio'] == 1) { ?>
+                                <div class="input input-cliente">
+                                    <label class="form-label">Cliente</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" disabled value="<?php echo $_SESSION['nome'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-dona">
+                                    <label class="form-label">Negócio</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" disabled value="<?php echo $anuncio['nomeNegocioVendedora'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-produto">
+                                    <label class="form-label">Serviço</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" disabled value="<?php echo $anuncio['nomeAnuncio'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-valor">
+                                    <label class="form-label">Valor<span>*</span></label>
+                                    <div class="input-wrapper">
+                                        <input type="text" name="valor" id="valor" required disabled value="<?php echo $anuncio['valorAnuncio'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-data">
+                                    <label class="form-label" for="data-entrega">Data de Agendamento<span>*</span></label>
+                                    <div class="input-wrapper">
+                                        <input type="datetime-local" name="data-entrega-serviço" id="data-entrega-serviço" required value="<?php echo date("o-m-d\TH:i", time() + 60 * 60 * 24) ?>">
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Insira uma data de entrega para o produto
+                                    </div>
+                                </div>
+                            <?php } else { ?>
+                                <div class="input input-cliente">
+                                    <label class="form-label">Cliente</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" disabled value="<?php echo $_SESSION['nome'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-dona">
+                                    <label class="form-label">Negócio</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" disabled value="<?php echo $anuncio['nomeNegocioVendedora'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-produto">
+                                    <label class="form-label">Produto</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" disabled value="<?php echo $anuncio['nomeAnuncio'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-valor">
+                                    <label class="form-label">Valor<span>*</span></label>
+                                    <div class="input-wrapper">
+                                        <input type="text" name="valor" id="valor" required disabled value="<?php echo $anuncio['valorAnuncio'] ?>" value="<?php echo $anuncio['valorAnuncio'] ?>">
+                                    </div>
+                                </div>
+                                <div class="input input-data">
+                                    <label class="form-label" for="data-entrega">Data de entrega<span>*</span></label>
+                                    <div class="input-wrapper">
+                                        <input type="date" name="data-entrega" id="data-entrega" required value="<?php echo date("o-m-d", time() + 60 * 60 * 24) ?>">
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Insira uma data de entrega para o produto
+                                    </div>
+                                </div>
+                                <div class="input input-qtd">
+                                    <label class="form-label" for="qtd">Quantidade<span>*</span></label>
+                                    <div class="input-wrapper">
+                                        <input type="number" name="qtd" id="qtd" required value="1" min="1" oninput="atualizarValor()">
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Insira uma quantidade para a encomenda
+                                    </div>
+                                </div>
+                            <?php
+                            } ?>
                         </div>
-                        <div class="input input-produto">
-                            <label class="form-label">Produto</label>
-                            <div class="input-wrapper">
-                                <input type="text" disabled value="<?php echo $anuncio['nomeAnuncio'] ?>">
-                            </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="button" id="iniciar-pagamento" data-bs-target="#modal-pagamento" data-bs-toggle="modal">Avançar</button>
                         </div>
-                        <div class="input input-valor">
-                            <label class="form-label">Valor<span>*</span></label>
-                            <div class="input-wrapper">
-                                <input type="text" name="valor" id="valor" required disabled value="<?php echo $anuncio['valorAnuncio'] ?>">
-                            </div>
-                        </div>
-                        <div class="input input-data">
-                            <label class="form-label" for="data-entrega">Data de entrega<span>*</span></label>
-                            <div class="input-wrapper">
-                                <input type="date" name="data-entrega" id="data-entrega" required value="<?php echo date("o-m-d", time() + 60 * 60 * 24) ?>">
-                            </div>
-                            <div class="invalid-feedback">
-                                Insira uma data de entrega para o produto
-                            </div>
-                        </div>
-                        <div class="input input-qtd">
-                            <label class="form-label" for="qtd">Quantidade<span>*</span></label>
-                            <div class="input-wrapper">
-                                <input type="number" name="qtd" id="qtd" required value="1" min="1">
-                            </div>
-                            <div class="invalid-feedback">
-                                Insira uma quantidade para a encomenda
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="button" id="iniciar-pagamento" data-bs-target="#modal-pagamento" data-bs-toggle="modal">Avançar</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal pop" id="modal-pagamento" tabindex="-1" aria-labelledby="modal-pagamento" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">Tem certeza?</h1>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-center">Estamos quase no final! Escolha sua <span class="highlight">forma de pagamento</span>.</p>
-                        <div class="input input-pagamento">
-                            <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
-                            <div class="input-wrapper">
-                                <select name="forma-pagamento" id="forma-pagamento" required>
-                                    <option value="1">PIX</option>
-                                    <option value="2">Boleto</option>
-                                </select>
-                            </div>
-                            <div class="invalid-feedback">
-                                Insira uma quantidade para a encomenda
-                            </div>
+            <div class="modal pop" id="modal-pagamento" tabindex="-1" aria-labelledby="modal-pagamento" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">Tem certeza?</h1>
                         </div>
-                        <div id="qrcode-pix">
-                            <div id="loading-pix"></div>
-                            <img src="" alt="QR Code do PIX" id="qr-code" class="hide">
+                        <div class="modal-body">
+                            <p class="text-center">Estamos quase no final! Escolha sua <span class="highlight">forma de pagamento</span>.</p>
+                            <div class="input input-pagamento">
+                                <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
+                                <div class="input-wrapper">
+                                    <select name="forma-pagamento" id="forma-pagamento" required>
+                                        <option value="1">PIX</option>
+                                        <option value="2">Boleto</option>
+                                    </select>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Insira uma quantidade para a encomenda
+                                </div>
+                            </div>
+                            <div id="qrcode-pix">
+                                <div id="loading-pix"></div>
+                                <img src="" alt="QR Code do PIX" id="qr-code" class="hide">
+                            </div>
+                            <p class="text-center">Você tem <span class="highlight" id="tempo-restante">8 minutos e 0 segundos</span> restantes</p>
                         </div>
-                        <p class="text-center">Você tem <span class="highlight" id="tempo-restante">8 minutos e 0 segundos</span> restantes</p>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-around">
-                        <button type="button" class="button" data-bs-dismiss="modal">Confirmar</button>
+                        <div class="modal-footer d-flex justify-content-around">
+                            <button type="submit" class="button">Confirmar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div class="modal pop" id="modal-cancelado" tabindex="-1" aria-labelledby="modal-cancelado" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -280,13 +318,22 @@ date_default_timezone_set('America/Sao_Paulo');
                                 $temEncomenda = daoPedidoProduto::consultaTemPedidos($encomenda);
                                 $temEncomendaAtiva = daoPedidoProduto::consultaTemPedidoAtivo($encomenda);
 
-                                if (!$temEncomenda || !$temEncomendaAtiva) {
+
                             ?>
-                                    <button class="button button-square" id="encomendar" data-bs-target="#modal-confirma" data-bs-toggle="modal">Encomendar</button>
                                 <?php
-                                } else if ($temEncomendaAtiva) {
+
+
+                                if ($anuncio['tipoAnuncio'] == 1) {
+
                                 ?>
-                                    <button class="button button-square button-secondary" id="encomendar">Encomendado</button>
+
+                                    <button class="button button-square" id="encomendar" data-bs-target="#modal-confirma" data-bs-toggle="modal">Agendar</button>
+
+
+                                <?php
+                                } else {
+                                ?> <button class="button button-square" id="encomendar" data-bs-target="#modal-confirma" data-bs-toggle="modal">Encomendar</button>
+
                             <?php
                                 }
                             }
@@ -505,6 +552,7 @@ date_default_timezone_set('America/Sao_Paulo');
                     clearInterval(cronometro);
 
                     document.getElementById('modal-pagamento').classList.remove('show')
+                    document.getElementById('modal-pagamento2').classList.remove('show')
                     document.querySelector('.modal-backdrop').remove()
                     new bootstrap.Modal(document.getElementById('modal-cancelado')).toggle();
                 }
@@ -538,6 +586,29 @@ date_default_timezone_set('America/Sao_Paulo');
                 inputComentario.submit();
             }
         })
+    </script>
+    <script>
+        function atualizarValor() {
+            // Obtém referências aos elementos DOM
+            var quantidadeInput = document.getElementById("qtd");
+            var valorInput = document.getElementById("valor");
+
+            // Obtém o valor original e a quantidade
+            var valorItem = parseFloat(document.getElementById("valor").getAttribute("value"));
+            var quantidade = parseInt(quantidadeInput.value);
+
+            // Verifica se a quantidade é válida (maior que 0)
+            if (quantidade > 0) {
+                // Calcula o novo valor multiplicando a quantidade pelo valor do item
+                var novoValor = valorItem * quantidade;
+
+                // Atualiza o campo de valor com o novo valor calculado
+                valorInput.value = novoValor.toFixed(2); // Arredonda para duas casas decimais
+            } else {
+                // Se a quantidade for 0 ou menor, define o valor como 0
+                valorInput.value = 0;
+            }
+        }
     </script>
 </body>
 

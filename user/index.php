@@ -2,6 +2,19 @@
 
 require_once "validador.php";
 
+if (isset($_GET['pesquisa']) && !empty($_GET['pesquisa'])) {
+    $pesquisa = $_GET['pesquisa'];
+
+}
+if (isset($_GET['categoria']) && !empty($_GET['categoria'])) {
+    $categoria = $_GET['categoria'];
+}
+if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
+    $tipo = $_GET['tipo'];
+}
+if (isset($_GET['preco']) && !empty($_GET['preco'])) {
+    $preco = $_GET['preco'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -112,15 +125,17 @@ require_once "validador.php";
 			</div>
 		</nav>
 		<main id="main">
+		<form action="pesquisa.php">
 			<div id="pesquisa">
 				<img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
 				<div class="search-container search-square">
-					<input type="text" role="search" placeholder="Pesquisa" class="search-field" />
+					<input type="text" role="search" placeholder="Pesquisa" class="search-field" name="pesquisa" value="<?php echo isset($pesquisa) ? $pesquisa : "" ?>"/>
 					<button class="search-button">
 						<i class="bi bi-search"></i>
 					</button>
 				</div>
 			</div>
+					</form>
 			<!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
 
 			<div id="content">

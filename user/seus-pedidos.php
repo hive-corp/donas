@@ -131,12 +131,19 @@ require_once "validador.php";
             </div>
             <div id="content">
                 <div id="encomendas">
+                    
                     <?php
+                   
+                 
+                  
 
                     $pedidos = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
 
                     foreach ($pedidos as $p) {
+
+                        
                     ?>
+                    
                         <div class="pedido">
                             <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
                             <div class="nome-pedido">
@@ -154,7 +161,7 @@ require_once "validador.php";
                             <div class="data-pedido">
                                 <label for="" class="form-label">Data do pedido</label>
                                 <div class="input-wrapper">
-                                    <?php echo $p['$dataPedidoFeito'] ?>
+                                    <?php echo date('d/m/Y', strtotime($p['dataPedidoEntregue'])) ?>
                                 </div>
                             </div>
                             <div class="status-pedido">
@@ -163,25 +170,92 @@ require_once "validador.php";
                                     <?php
                                     switch ($p['statusPedidoProduto']) {
                                         case 1:
-                                            echo 'Fazendo';
+                                            echo 'Analise';
                                             break;
-
                                         case 2:
                                             echo 'Cancelado';
                                             break;
-
                                         case 3:
+                                            echo 'Fazendo';
+                                        break;
+                                        case 4:
                                             echo 'Concluído';
                                             break;
                                     }
                                     ?>
                                 </div>
                             </div>
+                            <?php if ($p['statusPedidoProduto'] == 1) { ?>
                             <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idPedidoProduto'] ?>">CANCELAR</button>
+                        <?php
+                            }
+                        ?>
                         </div>
                     <?php
                     }
                     ?>
+                    <?php
+                   
+                 
+                  
+
+                   $pedidos = daoPedidoServico::listarPedidosCliente($_SESSION['id']);
+
+                   foreach ($pedidos as $p) {
+
+                       
+                   ?>
+                   
+                       <div class="pedido">
+                           <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
+                           <div class="nome-pedido">
+                               <label for="" class="form-label">Serviço</label>
+                               <div class="input-wrapper">
+                                   <?php echo $p['nomeAnuncio'] ?>
+                               </div>
+                           </div>
+                           <div class="preco-pedido">
+                               <label for="" class="form-label">Valor</label>
+                               <div class="input-wrapper">
+                                   <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
+                               </div>
+                           </div>
+                           <div class="data-pedido">
+                               <label for="" class="form-label">Data do serviço</label>
+                               <div class="input-wrapper">
+                                   <?php echo date('d/m/Y', strtotime($p['dataServicoMarcado'])) ?>
+                               </div>
+                           </div>
+                           <div class="status-pedido">
+                               <label for="" class="form-label">Estado do serviço</label>
+                               <div class="input-wrapper">
+                                   <?php
+                                   switch ($p['statusPedidoServico']) {
+                                       case 1:
+                                           echo 'Analise';
+                                           break;
+                                       case 2:
+                                           echo 'Cancelado';
+                                           break;
+                                       case 3:
+                                           echo 'Fazendo';
+                                       break;
+                                       case 4:
+                                           echo 'Concluído';
+                                           break;
+                                   }
+                                   ?>
+                               </div>
+                           </div>
+                           <?php if ($p['statusPedidoServico'] == 1) { ?>
+                           <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idPedidoServico'] ?>">CANCELAR</button>
+                       <?php
+                           }
+                       ?>
+                       </div>
+                   <?php
+                   }
+                   ?>
                 </div>
 
             </div>
@@ -203,6 +277,7 @@ require_once "validador.php";
             })
         })
     </script>
+    
 </body>
 
 </html>
