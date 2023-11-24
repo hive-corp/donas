@@ -279,7 +279,16 @@ svg {
         "data qtd";
     gap: 16px
 }
-
+#modal-servico .modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "cliente dona"
+        "produto valor"
+        "data qtd";
+    gap: 16px
+}
 #qrcode-pix{
     display: flex;
     justify-content: center;
@@ -1646,6 +1655,17 @@ a.dropdown-item {
 
 .search-square {
     border-radius: 8px;
+}
+.search-container > select {
+    background-color:transparent;
+    border-right: 1px solid var(--bd-color);
+    padding: 2px;
+    color: var(--text-color);
+    accent-color: red;
+}
+.search-container > select > option {
+    background: var(--select-bg);
+    color: var(--text-color);
 }
 
 .search-container:hover,
