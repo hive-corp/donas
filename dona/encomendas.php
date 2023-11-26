@@ -2,6 +2,7 @@
 
 require_once "validador.php";
 
+$dados = daoVendedora::consultarPorId($_SESSION['id']);
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +21,96 @@ require_once "validador.php";
 
 <body>
     <div id="user-encomenda">
+    <div class="modal pop" id="modal-premium" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Plano Premium</h1>
+                    </div>
+                    <div class="modal-body" style="grid-template-columns: 0fr 0fr;">
+                        <div class="row">
+                            <div class="col d-flex flex-column align-items-center justify-content-center">
+                            <p class="section-title load" style="text-align: center">Confira tudo que o nosso plano premium <span class="highlight"> oferece</span></p>
+                            
+                        </button>    
+                        </div>
+                            <div class="col">
+                            <div class="tipo-plano mx-auto" style="width: 280px">
+
+                                <div class="titulo-plano">
+                                    Premium
+                                </div>
+                                <div class="preco-plano" style="color:black">
+                                    R$49/mês
+                                </div>
+                                <div class="lista-plano" style="color:black">
+                                    <div>
+                                        <i class="bi bi-check"></i>
+                                        Postar produtos a toda a rede de clientes
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-check"></i>
+                                        Encomenda dos produtos através da plataforma Donas
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-check"></i>
+                                        Painel de encomendas
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-check"></i>
+                                        Engajamento maior dentro da plataforma
+                                    </div>
+                                </div>
+                                <button class="aceitar-plano" type="button" class="button" id="iniciar-pagamento" data-bs-target="#modal-pagamento" data-bs-toggle="modal" for="premium">
+                                Comprar
+                            </button>
+                            </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="button button-secondary" data-bs-dismiss="modal">Não tenho interresse</button>
+                         <!-- <button type="button" class="button" id="iniciar-pagamento" data-bs-target="#modal-pagamento" data-bs-toggle="modal">Avançar</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form action="pagar-encomendas.php" method="POST">
+        <div class="modal pop" id="modal-pagamento" tabindex="-1" aria-labelledby="modal-pagamento" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Tem certeza?</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">Estamos quase no final! Escolha sua <span class="highlight">forma de pagamento</span>.</p>
+                        <div class="input input-pagamento">
+                            <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
+                            <div class="input-wrapper">
+                                <select name="forma-pagamento" id="forma-pagamento" style="background: var(--select-bg);
+    color: var(--text-color);" required>
+                                    <option value="1">PIX</option>
+                                    <option value="2">Boleto</option>
+                                </select>
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira uma quantidade para a encomenda
+                            </div>
+                        </div>
+                        <div id="qrcode-pix" >
+                            <div id="loading-pix"></div>
+                            <img src="../assets/media/PagamentoPraGnete.png" alt="QR Code do PIX" id="qr-code" class="hide m-3">
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="submit" class="button">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
         <div class="modal pop" id="modal-cancelar" tabindex="-1" aria-labelledby="modal-cancelar" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -165,7 +256,7 @@ require_once "validador.php";
             </a>
 
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -202,11 +293,23 @@ require_once "validador.php";
             <div id="main-title">
                 Painel de encomendas
             </div>
+            <?php if ($dados['nivelNegocioVendedora'] == 1) {
+                                ?>
             <div id="content">
+                <?php
+                $encomenda = daoPedidoProduto::listarPedidosAtivosVendedora($_SESSION['id']);
+                $servicos = daoPedidoServico::listarPedidosAtivosVendedora($_SESSION['id']);
+                if (empty($encomenda) && empty($servicos)) {
+                    ?>
+                      <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+<p class="section-title load" style="text-align: center">Nenhum pedido ou serviço encontrado</p>
+</div>
+                    <?php
+                }else {?>
                 <div id="encomendas">
                     <?php
                     $pedidos = daoPedidoProduto::listarPedidosAtivosVendedora($_SESSION['id']);
-
+                    
                     foreach ($pedidos as $p) {
                     ?>
                         <div class="encomenda">
@@ -245,7 +348,7 @@ require_once "validador.php";
                             </div>
                         </div>
                     <?php
-                    }
+                    } 
                     ?>
                      <?php
                     $pedidos = daoPedidoServico::listarPedidosAtivosVendedora($_SESSION['id']);
@@ -291,20 +394,39 @@ require_once "validador.php";
                     }
                     ?>
                 </div>
+                <?php
+            }
+            ?>
             </div>
             <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
+            <?php
+            } else {
+                ?>
+                <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+<p class="section-title load" style="text-align: center">Upgrade para o plano premium para obter benefícios as encomendas!</p>
+<button id="new-product" data-bs-target="#modal-premium" data-bs-toggle="modal" class="button">
+<i class="bi bi-cash"></i>
+<span>Comprar Plano Premium</span>
+            </button>
+
+</div>
+                <?php 
+                }
+                ?>
         </main>
     </div>
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script>
+         var iniciarPagamento = document.getElementById('iniciar-pagamento')
         let cancelarPedido = document.querySelectorAll('.cancelar-pedido')
         let concluirPedido = document.querySelectorAll('.concluir-pedido')
         let aceitarPedido = document.querySelectorAll('.aceitar-pedido')
         let cancelarServico = document.querySelectorAll('.cancelar-servico')
         let concluirServico = document.querySelectorAll('.concluir-servico')
         let aceitarServico = document.querySelectorAll('.aceitar-servico')
+      
         cancelarPedido.forEach(item => {
             let id = item.getAttribute('data-id')
             let cliente = item.getAttribute('data-nome')
@@ -369,6 +491,25 @@ require_once "validador.php";
               
             })
         })
+        iniciarPagamento.addEventListener('click', () => {
+         
+
+         let qrCodeImg = document.querySelector('#qr-code')
+         let loadingQrCode = document.querySelector('#loading-pix')
+       
+
+         qrCodeImg.classList.add('hide')
+         loadingQrCode.classList.remove('hide')
+
+       
+
+         setTimeout(() => {
+                     qrCodeImg.classList.remove('hide')
+                     loadingQrCode.classList.add('hide')
+                 }, 2000)
+
+        
+         })
     </script>
 </body>
 

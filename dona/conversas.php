@@ -70,7 +70,7 @@ require_once "validador.php";
             </a>
 
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">

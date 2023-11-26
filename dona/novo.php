@@ -12,12 +12,14 @@ require_once "validador.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo produto/serviço</title>
-    <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon" />
+    
 
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
+   
 </head>
 
 <body>
@@ -95,11 +97,15 @@ require_once "validador.php";
                         <div class="input-wrapper">
                         </div>
                     </div>
+                    
                     <div class="estoque-modal">
+                   
                         <div class="form-label">Estoque</div>
-                        <div class="input-wrapper">
+                        <div class="input-wrapper" >
                         </div>
+                        
                     </div>
+                  
                     <div class="desc-modal">
                         <div class="form-label">Descrição</div>
                         <div class="input-wrapper">
@@ -163,7 +169,7 @@ require_once "validador.php";
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-                <a href="../">
+                <a >
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -200,7 +206,7 @@ require_once "validador.php";
                 Novo anúncio
             </div>
             <div id="content">
-                <form class="needs-validation" method='post' id="new-form" novalidate>
+                <form class="needs-validation" method='POST' id="new-form" novalidate>
                     <img src="../assets/img/rosas.svg" class="rosa-fundo">
                     <div id="imagens-form">
                         <label for="foto-principal" id="foto-anuncio-cadastro">
@@ -242,7 +248,7 @@ require_once "validador.php";
                         <div class="input" id="qtd-anuncio">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="number" name="estoque" id="estoque" value="0">
+                                <input type="number" name="estoque" id="estoque" min="1" value="1">
                             </div>
                             <div class="invalid-feedback">
                                 Informe um valor inicial de estoque
@@ -296,8 +302,8 @@ require_once "validador.php";
             result = document.querySelector('.result-crop'),
             confirmarFoto = document.querySelector('#confirmar-foto'),
             fotoPreview = document.querySelector('#preview-foto'),
-            confirmarCadastro = document.querySelector('#cadastrar')
-
+            confirmarCadastro = document.querySelector('#cadastrar'),
+            estoqueModalssss = document.querySelector('.estoque-modal')
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
@@ -368,7 +374,23 @@ require_once "validador.php";
 
             estoque.classList.remove('show')
             document.querySelector('#estoque').setAttribute('required', false)
+          
         })
+        function atualizarVisibilidadeEstoque() {
+        if (tipoAnuncio.value === '2') {
+            // Se o tipo de anúncio for "Produto", mostrar a seção de estoque
+            estoqueModalssss.style.display = 'block';
+        } else {
+            // Se não for "Produto", esconder a seção de estoque
+            estoqueModalssss.style.display = 'none';
+        }
+    }
+
+    tipoAnuncio.addEventListener('change', atualizarVisibilidadeEstoque);
+
+    // Chamar a função para definir a visibilidade inicial com base no valor inicial do tipo
+    atualizarVisibilidadeEstoque();
+
 
         fotoInput.addEventListener('change', e => {
             new bootstrap.Modal('#modal-foto').toggle()

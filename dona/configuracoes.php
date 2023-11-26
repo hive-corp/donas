@@ -239,7 +239,7 @@ require_once "global.php";
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -353,7 +353,7 @@ require_once "global.php";
                         <div class="input input-senha">
                             <label class="form-label" for="senha">Senha</label>
                             <div class="input-wrapper">
-                                <input type="password" name="senha" id="senha" value="<?php echo $_SESSION['senha'] ?>" disabled>
+                                <input type="password" name="senha" id="senha" value="<?php echo $_SESSION['senha-normal'] ?>" disabled>
                             </div>
                             <div class="invalid-feedback" id="email-feedback">
                                 Insira uma senha válida.

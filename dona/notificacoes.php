@@ -68,7 +68,7 @@ require_once "validador.php";
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-                <a href="../">
+                <a >
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
