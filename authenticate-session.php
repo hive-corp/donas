@@ -29,6 +29,7 @@ if($tipoLogin==1){
         $_SESSION['comp']=$consultaCliente['complementoCliente'];
         $_SESSION['cep']=$consultaCliente['cepCliente'];
         $_SESSION['cpf']=$consultaCliente['cpfCliente'];
+        $_SESSION['senha-normal'] = $_POST['pass'];
         $_SESSION['tipo-login']=0;
 
         header("Location: user/");
@@ -64,6 +65,7 @@ if($tipoLogin==1){
         $_SESSION['nivel-vendedora']=$consultaVendedora['nivelNegocioVendedora'];
         $_SESSION['tel']=$consultaVendedora['telefoneNegocioVendedora'];
         $_SESSION['categoria-id']=$consultaVendedora['idCategoria'];
+        $_SESSION['senha-normal'] = $_POST['pass'];
         $_SESSION['tipo-login']=1;
 
         header("Location: dona/");
