@@ -88,7 +88,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                 </a>
             </div>
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -550,7 +550,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                     <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>" />
                                 </div>
 
-                                <p class="nome-categoria" style="margin-top: 15%;"><?php echo $a['nomeNegocioVendedora'];
+                                <p class="nome-categoria" style="margin-top: 15%; margin-bottom: 0rem;"><?php echo $a['nomeNegocioVendedora'];
                                                                                     if ($a['nivelNegocioVendedora'] == 1) {
                                                                                     ?>
                                         <i class="bi bi-gem highlight" id="bio-star"></i>
@@ -558,7 +558,10 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                                                                     }
                                     ?>
                                 </p>
-                                <div style="margin-top: -15%; color: #CB6CE6; display: flex; flex-direction: row;">
+                                <?php
+                                                                                    if ($a['nivelNegocioVendedora'] == 1) {
+                                                                                    ?>
+                                <div style=" color: #CB6CE6;">
                                     <?php
 
                                     for ($i = 0; $i < $estrelas; $i += 1) {
@@ -573,10 +576,15 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                     }
 
                                     ?>
-
                                 </div>
-                                <div style="color: lightslategray; margin-top: -10%"><?php echo $totalanuncios ?> anúncios</div>
+                                
+                                <div style="color: lightslategray;"><?php echo $totalanuncios ?> anúncios</div>
 
+                                <?php
+                                                                                    }else {
+                                    ?> <div style="color: lightslategray; margin-top: -20%"><?php echo $totalanuncios ?> anúncios</div><?php
+                                    }
+                                    ?>
                             </a>
 
 
@@ -932,6 +940,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                             <div class="info-card">
                                 <div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
                                 <div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.') ?></div>
+                                <?php if ($a['nivelNegocioVendedora'] == 1) { ?>
                                 <div class="avaliacao-card">
                                     <?php
 
@@ -950,6 +959,14 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                 </div>
                                 <div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
                                 <div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
+                                <?php }else {?>
+                                <div class="avaliacao-card" style="color: lightslategray">
+                                    <?php echo $a['nomeCategoria'] ?>
+                                </div>
+                                <div class="negocio-card">
+                                    <?php echo $a['nomeNegocioVendedora'] ?>
+                                </div><?php
+                                }?>
                             </div>
                         </a>
                     <?php
@@ -1287,7 +1304,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
                         foreach ($vendedoras as $a) {
                             $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
-
+                            $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
                         ?>
 
 
@@ -1296,7 +1313,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                     <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>" />
                                 </div>
 
-                                <p class="nome-categoria" style="margin-top: 15%;"><?php echo $a['nomeNegocioVendedora'];
+                                <p class="nome-categoria" style="margin-top: 15%; margin-bottom: 0rem;"><?php echo $a['nomeNegocioVendedora'];
                                                                                     if ($a['nivelNegocioVendedora'] == 1) {
                                                                                     ?>
                                         <i class="bi bi-gem highlight" id="bio-star"></i>
@@ -1304,7 +1321,10 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                                                                     }
                                     ?>
                                 </p>
-                                <div style="margin-top: -20%; color: #CB6CE6;">
+                                <?php
+                                                                                    if ($a['nivelNegocioVendedora'] == 1) {
+                                                                                    ?>
+                                <div style=" color: #CB6CE6;">
                                     <?php
 
                                     for ($i = 0; $i < $estrelas; $i += 1) {
@@ -1320,8 +1340,14 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
                                     ?>
                                 </div>
+                                
+                                <div style="color: lightslategray; "><?php echo $totalanuncios ?> anúncios</div>
 
-
+                                <?php
+                                                                                    }else {
+                                    ?> <div style="color: lightslategray; margin-top: -20%"><?php echo $totalanuncios ?> anúncios</div><?php
+                                    }
+                                    ?>
                             </a>
 
 
