@@ -109,6 +109,24 @@ class daoCliente
         return $lista;
     }
 
+    public static function mudarStatusConta($statusConta)
+    {
+        $connection = Conexao::conectar();
+    
+        $queryInsert = "UPDATE tbCliente
+                        SET statusConta = ?
+                        WHERE idCliente = ?";  
+    
+        $prepareStatement = $connection->prepare($queryInsert);
+    
+        $prepareStatement->bindValue(1, $statusConta->getStatusConta());
+        $prepareStatement->bindValue(2, $statusConta->getIdCliente()); 
+    
+        $prepareStatement->execute();
+    }
+
+
+
     public static function consultarIdPorEmail($cliente)
     {
         $connection = Conexao::conectar();
@@ -260,5 +278,53 @@ class daoCliente
         $countCliente = $stmt->fetch()[0];
 
         return $countCliente;
+    }
+
+    public static function consultaStatus($cliente)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT statusConta FROM tbcliente
+                            WHERE emailCliente = ?');
+        $stmt->bindValue(1, $cliente->getEmailCliente());
+        $stmt->execute();
+
+        $status = $stmt->fetch()[0];
+
+        return $status;
+    }
+    public static function consultarStatus($cliente) {
+        $connection = Conexao::conectar();
+    
+        // Verifica o status atual da vendedora
+        $stmt = $connection->prepare('SELECT statusConta FROM tbcliente WHERE idCliente = ?');
+        $stmt->bindValue(1, $cliente->getIdCliente()); // Corrigido para usar $vendedora->getIdConta()
+        $stmt->execute();
+    
+        return $stmt->fetchColumn();
+    }
+public static function alterarStatus($cliente)
+    {
+        $connection = Conexao::conectar();
+    
+        // Altera o status da vendedora
+        $stmt = $connection->prepare('UPDATE tbcliente SET statusConta = ? WHERE idCliente = ?');
+        $stmt->bindValue(1, $cliente->getStatusConta());
+        $stmt->bindValue(2, $cliente->getIdCliente());
+
+        if (!$stmt->execute()) {
+            echo json_encode(['error' => $stmt->errorInfo()]);
+        }
+    }
+    public static function contarCliBloq()
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare("SELECT COUNT(idCliente) FROM tbcliente WHERE statusConta = 0");
+        $stmt->execute();
+
+        $countVendBloq = $stmt->fetch()[0];
+
+        return $countVendBloq;
     }
 }

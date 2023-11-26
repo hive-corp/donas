@@ -16,6 +16,8 @@
         private $complementoCliente;
         private $cepCliente;
         private $cpfCliente;
+        private $dataCadastro;
+        private $statusConta;
 
         
         public function getIdCliente() {
@@ -63,6 +65,12 @@
         public function getCpfCliente() {
             return $this->cpfCliente;
         }
+        public function getDataCadastro() {
+            return $this->cpfCliente;
+        }
+        public function getStatusConta() {
+            return $this->statusConta;
+        }
         public function setIdCliente($idCliente) {
             $this->idCliente=$idCliente;
         }
@@ -107,6 +115,12 @@
         }
         public function setCpfCliente($cpfCliente) {
             $this->cpfCliente=$cpfCliente;
+        }
+        public function setDataCadastro($dataCadastro) {
+            return $this->cpfCliente;
+        }
+        public function setStatusConta($statusConta){
+            $this->statusConta=$statusConta;
         }
     }
     ?>

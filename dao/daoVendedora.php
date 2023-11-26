@@ -81,7 +81,7 @@ class daoVendedora
 
         $prepareStatement = $connection->prepare($queryInsert);
 
-        
+
 
         $prepareStatement->bindValue(1, $Vendedoras->getIdVendedora());
         $prepareStatement->execute();
@@ -267,7 +267,7 @@ class daoVendedora
         $stmt->bindValue(1, $Vendedora->getEmailVendedora());
         $stmt->execute();
 
-        $status = $stmt->fetch();
+        $status = $stmt->fetch()[0];
 
         return $status;
     }
@@ -414,21 +414,21 @@ class daoVendedora
 
         return $topVend;
     }
-     public static function pesquisarVendedoraNomeDescricaoCategoria($categoria, $string)
+    public static function pesquisarVendedoraNomeDescricaoCategoria($categoria, $string)
     {
         $connection = Conexao::conectar();
 
         $querySelect = "SELECT tbVendedora.*, idCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, fotoNegocioVendedora FROM tbVendedora
-                       
                         WHERE idCategoria = ? AND nomeNegocioVendedora LIKE ?";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $categoria);
-        $resultado->bindValue(2, "%".$string."%");
+        $resultado->bindValue(2, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
     public static function pesquisarVendedoraCategoria($categoria)
     {
         $connection = Conexao::conectar();
@@ -450,9 +450,68 @@ class daoVendedora
                         WHERE nomeNegocioVendedora LIKE ?";
 
         $resultado = $connection->prepare($querySelect);
-        $resultado->bindValue(1, "%".$string."%");
+        $resultado->bindValue(1, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public static function graficoCrescimento()
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT 
+                            v.idVendedora,
+                            v.nomeVendedora,
+                            v.nivelNegocioVendedora,
+                            COUNT(p.idPedidoProduto) as quantidadePedidos
+                        FROM tbvendedora v
+                        LEFT JOIN tbanuncio a ON v.idVendedora = a.idVendedora
+                        LEFT JOIN tbpedidoproduto p ON a.idAnuncio = p.idAnuncio
+                        GROUP BY v.idVendedora, v.nomeVendedora, v.nivelNegocioVendedora";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
+        $vendedoras = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        $connection = null;
+
+        // Separa os resultados entre vendedoras padrão (0) e premium (1)
+        $vendedorasPadrao = array_filter($vendedoras, function ($vendedora) {
+            return $vendedora['nivelNegocioVendedora'] == 0;
+        });
+
+        $vendedorasPremium = array_filter($vendedoras, function ($vendedora) {
+            return $vendedora['nivelNegocioVendedora'] == 1;
+        });
+
+        return [
+            'vendedorasPadrao' => $vendedorasPadrao,
+            'vendedorasPremium' => $vendedorasPremium
+        ];
+    }
+
+
+    public static function consultarStatus($vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        // Verifica o status atual da vendedora
+        $stmt = $connection->prepare('SELECT statusVendedora FROM tbVendedora WHERE idVendedora = ?');
+        $stmt->bindValue(1, $vendedora->getIdVendedora()); // Corrigido para usar $vendedora->getIdConta()
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+    public static function alterarStatus($vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        // Altera o status da vendedora
+        $stmt = $connection->prepare('UPDATE tbVendedora SET statusVendedora = ? WHERE idVendedora = ?');
+        $stmt->bindValue(1, $vendedora->getStatusVendedora());
+        $stmt->bindValue(2, $vendedora->getIdVendedora());
+        $stmt->execute();
+    }
+
 }

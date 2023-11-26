@@ -23,6 +23,9 @@ unset($_SESSION['nome-empresa']);
 unset($_SESSION['foto-empresa']);
 unset($_SESSION['cnpj']);
 unset($_SESSION['nivel-vendedora']);
+unset($_SESSION['tel']);
+unset($_SESSION['chave']);
+unset($_SESSION['senha-normal']);
 unset($_SESSION['categoria-id']);
 
 //a preencher

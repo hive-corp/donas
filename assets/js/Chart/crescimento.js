@@ -26,8 +26,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
+var grafcres = document.getElementById("myCresChart");
+var myCresChart = new Chart(grafcres, {
   type: 'line',
   data: {
     labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Aug", "Set", "Out", "Nov", "Dez"],

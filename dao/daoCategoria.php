@@ -137,4 +137,28 @@ class daoCategoria
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public static function graficoCategorias()
+    {
+        $connection = Conexao::conectar();
+    
+        $querySelect = "SELECT 
+                            c.nomeCategoria, 
+                            COUNT(v.idVendedora) as quantidade, 
+                            COUNT(v.idVendedora) / (SELECT COUNT(*) FROM tbVendedora) * 100 as percentual
+                        FROM tbcategoria c
+                        LEFT JOIN tbVendedora v ON c.idCategoria = v.idCategoria
+                        GROUP BY c.nomeCategoria";
+                        
+        $resultado = $connection->prepare($querySelect);
+        $resultado->execute();
+        $categorias = $resultado->fetchAll(PDO::FETCH_ASSOC);
+    
+        $connection = null; // Feche a conexão usando null
+    
+        return $categorias;
+    }
+    
+    
 }
+

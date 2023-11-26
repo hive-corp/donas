@@ -1,5 +1,11 @@
-<?php include_once("validador.php");
-require_once "global.php";
+<?php
+include_once("validador.php");
+include_once("global.php");
+$connection = Conexao::conectar();
+
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,23 +16,66 @@ require_once "global.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrin-to-fit=no">
 
-    <title>Denúncias - Donas</title>
+    <title>Cadastrar Subcategoria - Donas</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
 
     <link rel="shortcut icon" type="imagex/png" href="../assets/media/Logo-menor.png">
 
+    <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/css/styles-dash.css" rel="stylesheet">
+
 
 </head>
 
 <body id="page-top">
+    <style>
+        .custom-select-container {
+            margin-bottom: 20px;
+        }
 
-    <!-- Page Wrapper -->
+        .select-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .custom-select {
+            margin-left: 15px;
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            appearance: none;
+            /* Remove estilo padrão do navegador */
+        }
+
+        .custom-select:hover {
+            border-color: #666;
+        }
+
+        .custom-select:focus {
+            outline: none;
+
+            border-color: #971881;
+            box-shadow: 0 0 5px #971881;
+        }
+    </style>
+
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Dashboard.php">
                 <div class="sidebar-brand-icon ">
                     <img src="../assets/media/LogoDash.png" class="Logo">
@@ -34,12 +83,10 @@ require_once "global.php";
                 <div class="sidebar-brand-text mx-3">Donas</div>
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="dashboard.php">
+                <a class="nav-link" href="Dashboard.php">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-house-door" viewBox="0 0 16 16">
                         <path
@@ -48,7 +95,6 @@ require_once "global.php";
                     <span class="textoNav">Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
@@ -62,7 +108,6 @@ require_once "global.php";
                     <span class="textoNav">Donas</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
@@ -74,15 +119,14 @@ require_once "global.php";
                     </svg>
                     <span class="textoNav">Contas</span></a>
             </li>
-
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
                 <a class="nav-link" href="denuncias.php">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        class="bi bi-flag-fill" viewBox="0 0 16 16">
+                        class="bi bi-flag" viewBox="0 0 16 16">
                         <path
-                            d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
+                            d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z" />
                     </svg>
                     <span class="textoNav">Denúncias</span></a>
             </li>
@@ -119,17 +163,13 @@ require_once "global.php";
                 </a>
             </li>
 
+
             <hr class="sidebar-divider my-0">
 
-
         </ul>
-        <!-- End of Sidebar -->
 
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -301,13 +341,12 @@ require_once "global.php";
 
                 </nav>
 
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-                        <h1 class="h3 mb-0 text-gray-800">Denúncias</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Cadastrar Subcategoria</h1>
+
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-files" viewBox="0 0 16 16">
@@ -315,6 +354,68 @@ require_once "global.php";
                                     d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
                             </svg> Gerar Relatório</a>
                     </div>
+
+                    <br><br>
+                    <form method="POST" id="form-subcategoria" action="../api/subcategoria/index.php"
+                        onsubmit="showModal()">
+
+                        <div class="row justify-content-center" style="justify-content: center;">
+                            <div class="d-flex px-2 py-1">
+                                <div class="d-flex flex-column justify-content-center">
+                                <h5 style="text-align: center; margin-bottom: -25px;">Nome da Subcategoria</h5>
+                                    <div class="input-div one">
+                                        <div class="i">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="div">
+                                            <input type="text" class="input" id="nome-subcategoria"
+                                                name="nome-subcategoria" required>
+                                        </div>
+                                    </div>
+                                    <h5 style="text-align: center;">Categoria</h5>
+
+                                    <div class="list-categoria">
+
+                                        <div class="i">
+                                            <i class="fas fa-list"></i>
+                                        </div>
+                                        <?php
+
+                                        $listacategoria = daoCategoria::listar();
+
+                                        ?>
+                                        <div class="custom-select-container">
+                                            <select name="categoria-subcategoria"
+                                                id="categoria-subcategoria form-subcategoria" class="custom-select"
+                                                required onsubmit="showModal(event)" data-bs-toggle="modal"
+                                                data-bs-target="#alteraStatusVendedora" class="mr-3">
+                                                <option value="" disabled selected hidden>Escolha uma categoria</option>
+                                                <?php foreach ($listacategoria as $categoria) { ?>
+                                                    <option value="<?php echo $categoria['idCategoria']; ?>">
+                                                        <?php echo $categoria['nomeCategoria']; ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="linha3"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex px-2 py-1" style="text-align: center; justify-content: center;">
+                            <div class="d-flex flex-column justify-content-center">
+                                <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                    type="submit">Cadastrar Subcategoria</button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <br>
 
                     <div class="container-fluid py-4">
                         <div class="row">
@@ -327,139 +428,74 @@ require_once "global.php";
                                                 <thead>
                                                     <tr>
                                                         <th class="text-uppercase lista">ID</th>
-                                                        <th class="text-uppercase lista">Delator(a)</th>
-                                                        <th class="text-uppercase lista">Vendedora</th>
-                                                        <th class="text-uppercase lista">Motivo</th>
-                                                        <th class="text-uppercase lista">Data</th>
-                                                        <th class="text-uppercase lista">Ver Mais</th>
-                                                        <th class="text-uppercase lista">Status</th>
+                                                        <th class="text-uppercase lista">Subcategoria</th>
+                                                        <th class="text-uppercase lista">Categoria Principal</th>
+                                                        <th class="text-uppercase lista">Editar</th>
+                                                        <th class="text-uppercase lista">Excluir</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $denuncias = daoDenuncia::listar();
+                                                    $subcategorias = daoSubCategoria::listar();
 
-                                                    foreach ($denuncias as $d) {
+                                                    foreach ($subcategorias as $c) {
                                                         ?>
+
                                                         <tr>
                                                             <td class="align-middle text-center text-sm">
                                                                 <p>
-                                                                    <?php echo $d['idDenuncia']; ?>
+                                                                    <?php echo $c['idSubCategoria'] ?>
                                                                 </p>
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex px-2 py-1">
-                                                                    <div>
-                                                                        <img src="../<?php echo $d['fotoCliente'] ?>"
-                                                                            class="avatar avatar-sm me-3" alt="user6">
-                                                                    </div>
                                                                     <div class="d-flex flex-column justify-content-center">
                                                                         <h6 class="mb-0 text-sm">
-                                                                            <?php echo $d['nomeCliente']; ?>
+                                                                            <?php echo $c['nomeSubCategoria'] ?>
                                                                         </h6>
-                                                                        <p class="text-xs text-secondary mb-0">
-                                                                            <?php echo $d['emailCliente']; ?>
-                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex px-2 py-1">
                                                                     <div>
-                                                                        <img src="../<?php echo $d['fotoVendedora'] ?>"
+                                                                        <img src="../<?php echo $c['fotoCategoria'] ?>"
                                                                             class="avatar avatar-sm me-3" alt="user6">
                                                                     </div>
                                                                     <div class="d-flex flex-column justify-content-center">
                                                                         <h6 class="mb-0 text-sm">
-                                                                            <?php echo $d['nomeNegocioVendedora']; ?>
+                                                                            <?php echo $c['nomeCategoria']; ?>
                                                                         </h6>
-                                                                        <p class="text-xs text-secondary mb-0">
-                                                                            <?php echo $d['nomeVendedora']; ?>
-                                                                        </p>
                                                                     </div>
                                                                 </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                    height="25" fill="currentColor"
+                                                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                </svg>
                                                             </td>
                                                             <td class="align-middle text-center">
-                                                                <p class="text-xs font-weight-bold mb-0">
-                                                                    <?php
-                                                                    switch ($d['motivoDenuncia']) {
-                                                                        case 1:
-                                                                            echo 'Propaganda enganosa';
-                                                                            break;
-                                                                        case 2:
-                                                                            echo 'Assédio';
-                                                                            break;
-                                                                        case 3:
-                                                                            echo 'Atividades ilegais';
-                                                                            break;
-                                                                        case 4:
-                                                                            echo 'Ofensas';
-                                                                            break;
-                                                                        case 5:
-                                                                            echo 'Falta de segurança';
-                                                                            break;
-                                                                        case 6:
-                                                                            echo 'Se passando por outra pessoa';
-                                                                            break;
-                                                                        default:
-                                                                            echo 'Motivo desconhecido';
-                                                                    }
-                                                                    ?>
-                                                                </p>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                                    height="25" fill="currentColor" class="bi bi-x-square"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                    <path
+                                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                </svg>
                                                             </td>
-                                                            <td>
-                                                                <h6 class="mb-0 text-sm">
-                                                                    <?php echo $d['dataDenuncia']; ?>
-                                                                </h6>
-                                                            </td>
-
-                                                            <td class="align-middle text-center" style="text-align: center;">
-                                                                <a
-                                                                    href="ver-mais-denu.php?id=<?php echo $d['idDenuncia']; ?>">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                                                        height="25" fill="currentColor"
-                                                                        class="bi bi-zoom-in" viewBox="0 0 16 16">
-                                                                        <path fill-rule="evenodd"
-                                                                            d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                                                                        <path
-                                                                            d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z" />
-                                                                        <path fill-rule="evenodd"
-                                                                            d="M6.5 3a.5.5 0 0 1 .5.5V6h2.5a.5.5 0 0 1 0 1H7v2.5a.5.5 0 0 1-1 0V7H3.5a.5.5 0 0 1 0-1H6V3.5a.5.5 0 0 1 .5-.5z" />
-                                                                    </svg>
-                                                                </a>
-                                                            </td>
-
-
-                                                            <td class="text-center align-middle" style="    text-align: center;">
-    <?php
-    switch ($d['visualizadoDenuncia']) {
-        case 1:
-            echo '<p class="text-xs font-weight-bold mb-0" style="color:#11ae70;">Analisado</p>';
-            echo '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-patch-check" viewBox="0 0 16 16" style="color:#11ae70;">
-                <path fill-rule="evenodd" d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
-                <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"></path>
-            </svg>';
-            break;
-        case 0:
-            echo '<p class="text-xs font-weight-bold mb-0" style="color: #a30006;">Revisar</p>';
-            echo '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-patch-check" viewBox="0 0 16 16" style="color: #a30006; ">
-                <path fill-rule="evenodd" d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
-                <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"></path>
-            </svg>';
-            break;
-        default:
-            echo '<p class="text-xs font-weight-bold mb-0" style="color: #YOUR_COLOR_FOR_UNKNOWN_STATUS;">Status desconhecido</p>';
-    }
-    ?>
-</td>
-
-
                                                         </tr>
                                                         <?php
                                                     }
                                                     ?>
-                                                </tbody>
 
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -481,10 +517,79 @@ require_once "global.php";
             </svg>
         </a>
 
-        <!--LINKS-->
-        <script src="../assets/vendor/jquery/jquery.min.js"></script>
-        <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/sb-admin-2.min.js"></script>
+
+
+    </div>
+
+    <div class="modal pop" id="denunAceita" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title h3 mb-0 text-gray-800"
+                        style="display: block; margin-left: auto; margin-right: auto;"><a href="denuncias.php">Alteração
+                            de Status</a></h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 style="text-align: center; font-weight: bold;">Alterando status da Vendedora!</h5>
+                    <h6 style="text-align: center; font-weight: bold;">Aguarde!</h6>
+                    <div id="loading" style="display: none; text-align: center;">
+                        <div class="spinner-border" role="status">
+                        </div>
+                        <p>Carregando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Função para exibir o modal
+        function showModal() {
+            $('#denunAceita').modal('show');
+        }
+
+        // Função para fechar o modal com temporizador
+        function fecharModalComTemporizador(modalId, loadingId) {
+            $(loadingId).show(); // Mostra o botão de carregamento
+            setTimeout(function () {
+                $(modalId).modal('hide'); // Fecha o modal após 3 segundos
+            }, 3500);
+        }
+
+        // Chama a função quando o modal é exibido
+        $('#denunAceita').on('shown.bs.modal', function () {
+            fecharModalComTemporizador('#denunAceita', '#loading');
+        });
+
+        // Se você tiver outros modais, adicione eventos semelhantes aqui...
+
+        // Chama a função quando o segundo modal é exibido
+        $('#alteraStatusCliente').on('shown.bs.modal', function () {
+            fecharModalComTemporizador('#alteraStatusCliente', '#loadingCliente');
+        });
+
+        // Chama a função quando o terceiro modal é exibido
+        $('#alteraStatusVendedora').on('shown.bs.modal', function () {
+            fecharModalComTemporizador('#alteraStatusVendedora', '#loadingVendedora');
+        });
+
+    </script>
+    <!--LINKS-->
+    <script src="..//vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/sb-admin-2.min.js"></script>
+    <script>
+        document.getElementById('alterarStatusBtn').addEventListener('click', function () {
+            // Altera a classe 'ativado' dinamicamente
+            this.classList.toggle('ativado');
+        });
+    </script>
 
 </body>
 

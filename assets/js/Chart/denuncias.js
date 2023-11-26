@@ -1,8 +1,7 @@
 
-
-// Pie Chart Example
-var ctx = document.getElementById("myPieChart");
-var myPieChart = new Chart(ctx, {
+//Grafico de denuncias por motivo
+var grafdenun= document.getElementById("myDenunChart");
+var myDenunChart = new Chart(grafcatego, {
   type: 'doughnut',
   data: {
     labels: ["Atendimento", "Demora", "Entrega", "Pedido errado", "Pedido mal feito"],
@@ -31,5 +30,3 @@ var myPieChart = new Chart(ctx, {
     cutoutPercentage: 80,
   },
 });
-
-

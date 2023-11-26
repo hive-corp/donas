@@ -23,8 +23,8 @@
                     <h1 class="modal-title fs-5">Sua conta está em revisão!</h1>
                 </div>
                 <div class="modal-body d-flex flex-column text-center">
-                    <i class="bi bi-hourglass-split"></i>
-                    Sua conta de empreendedora está atualmente em revisão. Tente novamente mais tarde.
+                <i class="bi bi-x-circle"></i>
+                    Sua conta de empreendedora está atualmente bloqueada.
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button" data-bs-dismiss="modal">OK</button>
@@ -42,6 +42,23 @@
                 <div class="modal-body d-flex flex-column text-center">
                     <i class="bi bi-x-circle"></i>
                     Não conseguimos encontrar uma conta cliente associada a esse e-mail e senha.
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="button" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal pop" id="modal-bloqueado-cliente" tabindex="-1" aria-labelledby="modal-bloqueado-cliente" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Sua conta está em revisão!</h1>
+                </div>
+                <div class="modal-body d-flex flex-column text-center">
+                <i class="bi bi-x-circle"></i>
+                    Sua conta de cliente está atualmente bloqueada.
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button" data-bs-dismiss="modal">OK</button>
@@ -204,6 +221,8 @@
                             .then(data => {
                                 if (data == 1) {
                                     form.submit()
+                                } else if(data == 2){
+                                    new bootstrap.Modal('#modal-bloqueado-cliente').toggle()
                                 } else {
                                     new bootstrap.Modal('#modal-erro').toggle()
                                 }

@@ -1,6 +1,9 @@
 <?php
 include_once("validador.php");
 include_once("global.php");
+
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 ?>
 
 <!DOCTYPE html>
@@ -88,13 +91,17 @@ include_once("global.php");
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
-                <a class="nav-link" href="verificacao.php">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-patch-check" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                        <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+                <a class="nav-link" href="cadastra-subcate.php">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-custom-icon" viewBox="0 0 16 16">
+                        <!-- Substitua os caminhos abaixo pelos caminhos do seu ícone personalizado -->
+                        <path d="M1 8c0-1.104.896-2 2-2s2 .896 2 2c0 .745-.416 1.385-1 1.732V15a1 1 0 1 1-2 0V9.732A1.977 1.977 0 0 1 1 8z" />
+                        <path d="M12 8c0-1.104.896-2 2-2s2 .896 2 2c0 .745-.416 1.385-1 1.732V15a1 1 0 1 1-2 0V9.732A1.977 1.977 0 0 1 12 8z" />
+                        <path d="M8 1c-1.104 0-2 .896-2 2 0 .745.416 1.385 1 1.732V15a1 1 0 1 0 2 0V4.732A1.977 1.977 0 0 0 10 3c0-1.104-.896-2-2-2z" />
                     </svg>
-                    <span class="textoNav">Verificação de Donas</span></a>
+                    <span class="textoNav">Cadastrar Subcategoria</span>
+                </a>
             </li>
+
 
             <hr class="sidebar-divider my-0">
 
@@ -258,7 +265,7 @@ include_once("global.php");
 
                     <br><br>
 
-                    <form id="form-categoria">
+                    <form id="form-categoria" class="mr-3" onsubmit="showModal(event)">
 
                         <div class="row justify-content-center" style="justify-content: center;">
                             <div class="d-flex px-2 py-1">
@@ -284,11 +291,12 @@ include_once("global.php");
                             </div>
                         </div>
 
-                        <br><br>
+
 
                         <div class="d-flex px-2 py-1" style="text-align: center; justify-content: center;">
                             <div class="d-flex flex-column justify-content-center">
-                                <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Cadastrar categoria </button>
+                                <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Cadastrar
+                                    categoria </button>
                             </div>
                         </div>
                     </form>
@@ -338,12 +346,16 @@ include_once("global.php");
 
                                                         <tr>
                                                             <td class="align-middle text-center text-sm">
-                                                                <p><?php echo $c['idCategoria'] ?></p>
+                                                                <p>
+                                                                    <?php echo $c['idCategoria'] ?>
+                                                                </p>
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex px-2 py-1">
                                                                     <div class="d-flex flex-column justify-content-center">
-                                                                        <h6 class="mb-0 text-sm"><?php echo $c['nomeCategoria'] ?></h6>
+                                                                        <h6 class="mb-0 text-sm">
+                                                                            <?php echo $c['nomeCategoria'] ?>
+                                                                        </h6>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -392,36 +404,79 @@ include_once("global.php");
         </a>
 
         <!--MODAL-->
-
-        <div class="modal pop" id="modalCate" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+        <div class="modal pop" id="denunAceita" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="TituloModalCentralizado" style="display: block; margin-left: auto; margin-right: auto;">CADASTRADA</h5>
+                        <h3 class="modal-title h3 mb-0 text-gray-800" style="display: block; margin-left: auto; margin-right: auto;">
+                            Categoria cadastrada
+                        </h3>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h6 style="text-align: center; font-weight: bold;">Categoria <span id="nome-modal-categoria"></span></h6>
-                        <p style="text-align: center;">Categoria cadastrada com sucesso!</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+                        <h5 style="text-align: center; font-weight: bold;">Categoria cadastrada com sucesso!</h5>
+                        <h6 style="text-align: center; font-weight: bold;">Aguarde!</h6>
+                        <div id="loading" style="display: none; text-align: center;">
+                            <div class="spinner-border" role="status">
+                            </div>
+                            <p>Carregando...</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
 
-    <!--LINKS-->
-    <script src="../assets/vendor/cropperjs/js/cropper.js"></script>
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/sb-admin-2.min.js"></script>
-    <script src="../assets/js/photo.js"></script>
-    <script src="../assets/js/main.js"></script>
+
+        <script>
+            // Função para exibir o modal
+            function showModal() {
+                $('#denunAceita').modal('show');
+            }
+
+            // Função para fechar o modal com temporizador
+            function fecharModalComTemporizador(modalId, loadingId) {
+                $(loadingId).show(); // Mostra o botão de carregamento
+                setTimeout(function() {
+                    $(modalId).modal('hide'); // Fecha o modal após 3 segundos
+                }, 3500);
+            }
+
+            // Chama a função quando o modal é exibido
+            $('#denunAceita').on('shown.bs.modal', function() {
+                fecharModalComTemporizador('#denunAceita', '#loading');
+            });
+
+            // Se você tiver outros modais, adicione eventos semelhantes aqui...
+
+            // Chama a função quando o segundo modal é exibido
+            $('#alteraStatusCliente').on('shown.bs.modal', function() {
+                fecharModalComTemporizador('#alteraStatusCliente', '#loadingCliente');
+            });
+
+            // Chama a função quando o terceiro modal é exibido
+            $('#alteraStatusVendedora').on('shown.bs.modal', function() {
+                fecharModalComTemporizador('#alteraStatusVendedora', '#loadingVendedora');
+            });
+        </script>
+        <!--LINKS-->
+        <script src="..//vendor/jquery/jquery.min.js"></script>
+        <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/sb-admin-2.min.js"></script>
+        <script>
+            document.getElementById('alterarStatusBtn').addEventListener('click', function() {
+                // Altera a classe 'ativado' dinamicamente
+                this.classList.toggle('ativado');
+            });
+        </script>
+
+        <!--LINKS-->
+        <script src="../assets/vendor/cropperjs/js/cropper.js"></script>
+        <script src="../assets/vendor/jquery/jquery.min.js"></script>
+        <script src="../assets/js/photo.js"></script>
+        <script src="../assets/js/main.js"></script>
 </body>
 
 </html>

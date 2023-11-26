@@ -51,7 +51,6 @@ formCategoria.addEventListener('submit', e => {
     e.stopPropagation()
 
     const nomeCategoria = document.querySelector('#nome-categoria').value
-    document.querySelector('#nome-modal-categoria').innerText = nomeCategoria
 
     let canvas = cropper.getCroppedCanvas({
         width: 512,
@@ -72,8 +71,7 @@ formCategoria.addEventListener('submit', e => {
             },
             body: formData
         }).then(() => {
-            new bootstrap.Modal('#modalCate').toggle()
-            setTimeout(() => location.reload, 2500)
+            setTimeout(() => location.reload(), 1500)
         })
     })
 })

@@ -12,9 +12,8 @@ class daoSubCategoria
                             VALUES (?,?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
-        $prepareStatement->bindValue(1, $SubCategoria->getNomeSubCategoria());
-        $prepareStatement->bindValue(1, $SubCategoria->getCategoria()->getIdCategoria());
-
+        $prepareStatement->bindValue(1, $SubCategoria->getNomeSubCategoria());        
+        $prepareStatement->bindValue(2, $SubCategoria->getCategoria()->getIdCategoria());
         $prepareStatement->execute();
     }
 
@@ -46,17 +45,39 @@ class daoSubCategoria
         $prepareStatement->execute();
     }
 
-    public static function listar()
+    public static function editarFoto($SubCategoria)
     {
         $connection = Conexao::conectar();
 
-        $querySelect = "SELECT * FROM tbSubCategoria";
+        $queryInsert = "UPDATE tbSubCategoria
+                            SET fotoSubCategoria = ?
+                            WHERE idSubCategoria = ?";
 
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $SubCategoria->getFotoSubCategoria());
+        $prepareStatement->bindValue(2, $SubCategoria->getIdSubCategoria());
+
+        $prepareStatement->execute();
+    }
+
+    public static function listar()
+    {
+        $connection = Conexao::conectar();
+    
+        $querySelect = "SELECT s.*, c.idCategoria, c.nomeCategoria, c.fotoCategoria
+                        FROM tbSubCategoria s
+                        INNER JOIN tbCategoria c ON s.idCategoria = c.idCategoria
+                        ORDER BY s.idSubCategoria DESC";
+    
         $resultado = $connection->prepare($querySelect);
         $resultado->execute();
         $lista = $resultado->fetchAll();
+        
         return $lista;
     }
+    
+    
 
     public static function contarSubCategoria($SubCategoria)
     {
