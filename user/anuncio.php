@@ -9,7 +9,6 @@ if (isset($_GET['a'])) {
 
 date_default_timezone_set('America/Sao_Paulo');
 
-
 ?>
 
 <!DOCTYPE html>
@@ -527,7 +526,7 @@ date_default_timezone_set('America/Sao_Paulo');
             qrCodeImg.classList.add('hide')
             loadingQrCode.classList.remove('hide')
 
-            let tempoFinal = new Date().getTime() + 1 * 60 * 1000;
+            let tempoFinal = new Date().getTime() + 8 * 60 * 1000;
 
             cronometro = setInterval(() => {
 
