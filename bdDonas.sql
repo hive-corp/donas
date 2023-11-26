@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24/11/2023 às 02:56
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Tempo de geração: 27-Nov-2023 às 00:09
+-- Versão do servidor: 10.4.25-MariaDB
+-- versão do PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbanuncio`
+-- Estrutura da tabela `tbanuncio`
 --
 
 CREATE TABLE `tbanuncio` (
@@ -37,24 +37,24 @@ CREATE TABLE `tbanuncio` (
   `tipoAnuncio` int(11) DEFAULT NULL,
   `qtdProduto` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbanunciosubcategoria`
+-- Estrutura da tabela `tbanunciosubcategoria`
 --
 
 CREATE TABLE `tbanunciosubcategoria` (
   `idAnuncioSubCategoria` int(11) NOT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idSubCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbavaliacao`
+-- Estrutura da tabela `tbavaliacao`
 --
 
 CREATE TABLE `tbavaliacao` (
@@ -63,24 +63,24 @@ CREATE TABLE `tbavaliacao` (
   `estrelasAvaliacao` int(11) NOT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbcategoria`
+-- Estrutura da tabela `tbcategoria`
 --
 
 CREATE TABLE `tbcategoria` (
   `idCategoria` int(11) NOT NULL,
   `nomeCategoria` varchar(50) DEFAULT NULL,
   `fotoCategoria` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbcliente`
+-- Estrutura da tabela `tbcliente`
 --
 
 CREATE TABLE `tbcliente` (
@@ -98,13 +98,15 @@ CREATE TABLE `tbcliente` (
   `numeroCliente` int(11) DEFAULT NULL,
   `complementoCliente` varchar(100) DEFAULT NULL,
   `cepCliente` char(8) DEFAULT NULL,
-  `cpfCliente` char(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `cpfCliente` char(11) DEFAULT NULL,
+  `dataCadastro` date NOT NULL DEFAULT current_timestamp(),
+  `statusConta` varchar(100) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbdenuncia`
+-- Estrutura da tabela `tbdenuncia`
 --
 
 CREATE TABLE `tbdenuncia` (
@@ -112,13 +114,15 @@ CREATE TABLE `tbdenuncia` (
   `motivoDenuncia` varchar(100) DEFAULT NULL,
   `descricaoDenuncia` varchar(100) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL,
-  `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `idVendedora` int(11) DEFAULT NULL,
+  `dataDenuncia` date NOT NULL DEFAULT current_timestamp(),
+  `visualizadoDenuncia` varchar(50) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbentradaproduto`
+-- Estrutura da tabela `tbentradaproduto`
 --
 
 CREATE TABLE `tbentradaproduto` (
@@ -126,24 +130,24 @@ CREATE TABLE `tbentradaproduto` (
   `dataEntradaProduto` date DEFAULT NULL,
   `qtdEntradaProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbimagemanuncio`
+-- Estrutura da tabela `tbimagemanuncio`
 --
 
 CREATE TABLE `tbimagemanuncio` (
   `idImagemAnuncio` int(11) NOT NULL,
   `enderecoImagem` varchar(100) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbmensagem`
+-- Estrutura da tabela `tbmensagem`
 --
 
 CREATE TABLE `tbmensagem` (
@@ -155,12 +159,12 @@ CREATE TABLE `tbmensagem` (
   `origemMensagem` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbnotifccliente`
+-- Estrutura da tabela `tbnotifccliente`
 --
 
 CREATE TABLE `tbnotifccliente` (
@@ -171,12 +175,12 @@ CREATE TABLE `tbnotifccliente` (
   `tipoNotificacao` int(11) DEFAULT NULL,
   `statusNotificacao` int(11) DEFAULT NULL,
   `dataNotificacao` date DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbpedidoproduto`
+-- Estrutura da tabela `tbpedidoproduto`
 --
 
 CREATE TABLE `tbpedidoproduto` (
@@ -188,12 +192,12 @@ CREATE TABLE `tbpedidoproduto` (
   `statusPedidoProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbpedidoservico`
+-- Estrutura da tabela `tbpedidoservico`
 --
 
 CREATE TABLE `tbpedidoservico` (
@@ -204,24 +208,24 @@ CREATE TABLE `tbpedidoservico` (
   `dataServicoMarcado` datetime DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbpreferencias`
+-- Estrutura da tabela `tbpreferencias`
 --
 
 CREATE TABLE `tbpreferencias` (
   `idPreferencias` int(11) NOT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbsaidaproduto`
+-- Estrutura da tabela `tbsaidaproduto`
 --
 
 CREATE TABLE `tbsaidaproduto` (
@@ -229,36 +233,36 @@ CREATE TABLE `tbsaidaproduto` (
   `dataSaidaProduto` date DEFAULT NULL,
   `qtdSaidaProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbseguidor`
+-- Estrutura da tabela `tbseguidor`
 --
 
 CREATE TABLE `tbseguidor` (
   `idSeguidor` int(11) NOT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbsubcategoria`
+-- Estrutura da tabela `tbsubcategoria`
 --
 
 CREATE TABLE `tbsubcategoria` (
   `idSubCategoria` int(11) NOT NULL,
   `nomeSubCategoria` varchar(50) DEFAULT NULL,
   `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tbvendedora`
+-- Estrutura da tabela `tbvendedora`
 --
 
 CREATE TABLE `tbvendedora` (
@@ -283,22 +287,24 @@ CREATE TABLE `tbvendedora` (
   `cnpjNegocioVendedora` char(14) DEFAULT NULL,
   `nivelNegocioVendedora` int(11) DEFAULT NULL,
   `telefoneNegocioVendedora` varchar(11) NOT NULL,
-  `idCategoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `chavePixVendedora` varchar(255) DEFAULT NULL,
+  `idCategoria` int(11) DEFAULT NULL,
+  `dataCadastro` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `tbanuncio`
+-- Índices para tabela `tbanuncio`
 --
 ALTER TABLE `tbanuncio`
   ADD PRIMARY KEY (`idAnuncio`),
   ADD KEY `idVendedora` (`idVendedora`);
 
 --
--- Índices de tabela `tbanunciosubcategoria`
+-- Índices para tabela `tbanunciosubcategoria`
 --
 ALTER TABLE `tbanunciosubcategoria`
   ADD PRIMARY KEY (`idAnuncioSubCategoria`),
@@ -306,7 +312,7 @@ ALTER TABLE `tbanunciosubcategoria`
   ADD KEY `idSubCategoria` (`idSubCategoria`);
 
 --
--- Índices de tabela `tbavaliacao`
+-- Índices para tabela `tbavaliacao`
 --
 ALTER TABLE `tbavaliacao`
   ADD PRIMARY KEY (`idAvaliacao`),
@@ -314,19 +320,19 @@ ALTER TABLE `tbavaliacao`
   ADD KEY `idCliente` (`idCliente`);
 
 --
--- Índices de tabela `tbcategoria`
+-- Índices para tabela `tbcategoria`
 --
 ALTER TABLE `tbcategoria`
   ADD PRIMARY KEY (`idCategoria`);
 
 --
--- Índices de tabela `tbcliente`
+-- Índices para tabela `tbcliente`
 --
 ALTER TABLE `tbcliente`
   ADD PRIMARY KEY (`idCliente`);
 
 --
--- Índices de tabela `tbdenuncia`
+-- Índices para tabela `tbdenuncia`
 --
 ALTER TABLE `tbdenuncia`
   ADD PRIMARY KEY (`idDenuncia`),
@@ -334,21 +340,21 @@ ALTER TABLE `tbdenuncia`
   ADD KEY `idVendedora` (`idVendedora`);
 
 --
--- Índices de tabela `tbentradaproduto`
+-- Índices para tabela `tbentradaproduto`
 --
 ALTER TABLE `tbentradaproduto`
   ADD PRIMARY KEY (`idEntradaProduto`),
   ADD KEY `idAnuncio` (`idAnuncio`);
 
 --
--- Índices de tabela `tbimagemanuncio`
+-- Índices para tabela `tbimagemanuncio`
 --
 ALTER TABLE `tbimagemanuncio`
   ADD PRIMARY KEY (`idImagemAnuncio`),
   ADD KEY `idAnuncio` (`idAnuncio`);
 
 --
--- Índices de tabela `tbmensagem`
+-- Índices para tabela `tbmensagem`
 --
 ALTER TABLE `tbmensagem`
   ADD PRIMARY KEY (`idMensagem`),
@@ -356,7 +362,7 @@ ALTER TABLE `tbmensagem`
   ADD KEY `idVendedora` (`idVendedora`);
 
 --
--- Índices de tabela `tbnotifccliente`
+-- Índices para tabela `tbnotifccliente`
 --
 ALTER TABLE `tbnotifccliente`
   ADD PRIMARY KEY (`idNotifcCliente`),
@@ -365,7 +371,7 @@ ALTER TABLE `tbnotifccliente`
   ADD KEY `idCliente` (`idCliente`);
 
 --
--- Índices de tabela `tbpedidoproduto`
+-- Índices para tabela `tbpedidoproduto`
 --
 ALTER TABLE `tbpedidoproduto`
   ADD PRIMARY KEY (`idPedidoProduto`),
@@ -373,7 +379,7 @@ ALTER TABLE `tbpedidoproduto`
   ADD KEY `idCliente` (`idCliente`);
 
 --
--- Índices de tabela `tbpedidoservico`
+-- Índices para tabela `tbpedidoservico`
 --
 ALTER TABLE `tbpedidoservico`
   ADD PRIMARY KEY (`idPedidoServico`),
@@ -381,7 +387,7 @@ ALTER TABLE `tbpedidoservico`
   ADD KEY `idCliente` (`idCliente`);
 
 --
--- Índices de tabela `tbpreferencias`
+-- Índices para tabela `tbpreferencias`
 --
 ALTER TABLE `tbpreferencias`
   ADD PRIMARY KEY (`idPreferencias`),
@@ -389,14 +395,14 @@ ALTER TABLE `tbpreferencias`
   ADD KEY `idCategoria` (`idCategoria`);
 
 --
--- Índices de tabela `tbsaidaproduto`
+-- Índices para tabela `tbsaidaproduto`
 --
 ALTER TABLE `tbsaidaproduto`
   ADD PRIMARY KEY (`idSaidaProduto`),
   ADD KEY `idAnuncio` (`idAnuncio`);
 
 --
--- Índices de tabela `tbseguidor`
+-- Índices para tabela `tbseguidor`
 --
 ALTER TABLE `tbseguidor`
   ADD PRIMARY KEY (`idSeguidor`),
@@ -404,21 +410,21 @@ ALTER TABLE `tbseguidor`
   ADD KEY `idVendedora` (`idVendedora`);
 
 --
--- Índices de tabela `tbsubcategoria`
+-- Índices para tabela `tbsubcategoria`
 --
 ALTER TABLE `tbsubcategoria`
   ADD PRIMARY KEY (`idSubCategoria`),
   ADD KEY `idCategoria` (`idCategoria`);
 
 --
--- Índices de tabela `tbvendedora`
+-- Índices para tabela `tbvendedora`
 --
 ALTER TABLE `tbvendedora`
   ADD PRIMARY KEY (`idVendedora`),
   ADD KEY `idCategoria` (`idCategoria`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -524,50 +530,50 @@ ALTER TABLE `tbvendedora`
   MODIFY `idVendedora` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `tbanuncio`
+-- Limitadores para a tabela `tbanuncio`
 --
 ALTER TABLE `tbanuncio`
   ADD CONSTRAINT `tbanuncio_ibfk_1` FOREIGN KEY (`idVendedora`) REFERENCES `tbvendedora` (`idVendedora`);
 
 --
--- Restrições para tabelas `tbavaliacao`
+-- Limitadores para a tabela `tbavaliacao`
 --
 ALTER TABLE `tbavaliacao`
   ADD CONSTRAINT `tbavaliacao_ibfk_1` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`),
   ADD CONSTRAINT `tbavaliacao_ibfk_2` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
 
 --
--- Restrições para tabelas `tbdenuncia`
+-- Limitadores para a tabela `tbdenuncia`
 --
 ALTER TABLE `tbdenuncia`
   ADD CONSTRAINT `tbdenuncia_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`),
   ADD CONSTRAINT `tbdenuncia_ibfk_2` FOREIGN KEY (`idVendedora`) REFERENCES `tbvendedora` (`idVendedora`);
 
 --
--- Restrições para tabelas `tbentradaproduto`
+-- Limitadores para a tabela `tbentradaproduto`
 --
 ALTER TABLE `tbentradaproduto`
   ADD CONSTRAINT `tbentradaproduto_ibfk_1` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`);
 
 --
--- Restrições para tabelas `tbimagemanuncio`
+-- Limitadores para a tabela `tbimagemanuncio`
 --
 ALTER TABLE `tbimagemanuncio`
   ADD CONSTRAINT `tbimagemanuncio_ibfk_1` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`);
 
 --
--- Restrições para tabelas `tbmensagem`
+-- Limitadores para a tabela `tbmensagem`
 --
 ALTER TABLE `tbmensagem`
   ADD CONSTRAINT `tbmensagem_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`),
   ADD CONSTRAINT `tbmensagem_ibfk_2` FOREIGN KEY (`idVendedora`) REFERENCES `tbvendedora` (`idVendedora`);
 
 --
--- Restrições para tabelas `tbnotifccliente`
+-- Limitadores para a tabela `tbnotifccliente`
 --
 ALTER TABLE `tbnotifccliente`
   ADD CONSTRAINT `tbnotifccliente_ibfk_1` FOREIGN KEY (`idDenuncia`) REFERENCES `tbdenuncia` (`idDenuncia`),
@@ -575,47 +581,47 @@ ALTER TABLE `tbnotifccliente`
   ADD CONSTRAINT `tbnotifccliente_ibfk_3` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
 
 --
--- Restrições para tabelas `tbpedidoproduto`
+-- Limitadores para a tabela `tbpedidoproduto`
 --
 ALTER TABLE `tbpedidoproduto`
   ADD CONSTRAINT `tbpedidoproduto_ibfk_1` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`),
   ADD CONSTRAINT `tbpedidoproduto_ibfk_2` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
 
 --
--- Restrições para tabelas `tbpedidoservico`
+-- Limitadores para a tabela `tbpedidoservico`
 --
 ALTER TABLE `tbpedidoservico`
   ADD CONSTRAINT `tbpedidoservico_ibfk_1` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`),
   ADD CONSTRAINT `tbpedidoservico_ibfk_2` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
 
 --
--- Restrições para tabelas `tbpreferencias`
+-- Limitadores para a tabela `tbpreferencias`
 --
 ALTER TABLE `tbpreferencias`
   ADD CONSTRAINT `tbpreferencias_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`),
   ADD CONSTRAINT `tbpreferencias_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `tbcategoria` (`idCategoria`);
 
 --
--- Restrições para tabelas `tbsaidaproduto`
+-- Limitadores para a tabela `tbsaidaproduto`
 --
 ALTER TABLE `tbsaidaproduto`
   ADD CONSTRAINT `tbsaidaproduto_ibfk_1` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`);
 
 --
--- Restrições para tabelas `tbseguidor`
+-- Limitadores para a tabela `tbseguidor`
 --
 ALTER TABLE `tbseguidor`
   ADD CONSTRAINT `tbseguidor_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`),
   ADD CONSTRAINT `tbseguidor_ibfk_2` FOREIGN KEY (`idVendedora`) REFERENCES `tbvendedora` (`idVendedora`);
 
 --
--- Restrições para tabelas `tbsubcategoria`
+-- Limitadores para a tabela `tbsubcategoria`
 --
 ALTER TABLE `tbsubcategoria`
   ADD CONSTRAINT `tbsubcategoria_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `tbcategoria` (`idCategoria`);
 
 --
--- Restrições para tabelas `tbvendedora`
+-- Limitadores para a tabela `tbvendedora`
 --
 ALTER TABLE `tbvendedora`
   ADD CONSTRAINT `tbvendedora_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `tbcategoria` (`idCategoria`);
