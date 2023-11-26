@@ -11,8 +11,8 @@ class daoVendedora
         $queryInsert = "INSERT tbVendedora(nomeVendedora, emailVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
                             nomeUsuarioNegocioVendedora, bioNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
                             bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
-                            nivelNegocioVendedora, telefoneNegocioVendedora, idCategoria)
-                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            nivelNegocioVendedora, telefoneNegocioVendedora, chavePixVendedora, idCategoria)
+                            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
@@ -34,7 +34,8 @@ class daoVendedora
         $prepareStatement->bindvalue(16, $Vendedora->getCnpjNegocioVendedora());
         $prepareStatement->bindvalue(17, $Vendedora->getNivelNegocioVendedora());
         $prepareStatement->bindvalue(18, $Vendedora->getTelefoneNegocioVendedora());
-        $prepareStatement->bindvalue(19, $Vendedora->getCategoria()->getIdCategoria());
+        $prepareStatement->bindvalue(19, $Vendedora->getChavePixVendedora());
+        $prepareStatement->bindvalue(20, $Vendedora->getCategoria()->getIdCategoria());
 
         $prepareStatement->execute();
     }
@@ -79,7 +80,7 @@ class daoVendedora
                             SET nomeNegocioVendedora = ?,
                             nomeUsuarioNegocioVendedora = ?, bioNegocioVendedora = ?, logNegocioVendedora = ?, cidadeNegocioVendedora = ?, estadoNegocioVendedora = ?,
                             bairroNegocioVendedora = ?, numNegocioVendedora = ?, compNegocioVendedora = ?, cepNegocioVendedora = ?, cnpjNegocioVendedora = ?,
-                            nivelNegocioVendedora = ?, telefoneNegocioVendedora = ?, idCategoria = ?
+                            nivelNegocioVendedora = ?, telefoneNegocioVendedora = ?, chavePixVendedora = ?, idCategoria = ?
                             WHERE idVendedora = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
@@ -97,9 +98,10 @@ class daoVendedora
         $prepareStatement->bindvalue(11, $Vendedora->getCnpjNegocioVendedora());
         $prepareStatement->bindvalue(12, $Vendedora->getNivelNegocioVendedora());
         $prepareStatement->bindvalue(13, $Vendedora->getTelefoneNegocioVendedora());
-        $prepareStatement->bindvalue(14, $Vendedora->getCategoria()->getIdCategoria());
+        $prepareStatement->bindvalue(14, $Vendedora->getChavePixVendedora());
+        $prepareStatement->bindvalue(15, $Vendedora->getCategoria()->getIdCategoria());
 
-        $prepareStatement->bindValue(15, $Vendedora->getIdVendedora());
+        $prepareStatement->bindValue(16, $Vendedora->getIdVendedora());
 
         $prepareStatement->execute();
     }

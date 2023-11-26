@@ -25,8 +25,9 @@ $dados = daoVendedora::consultarPorNomeUsuario($vendedora);
 
 $nomeVendedora = $dados['nomeVendedora'];
 $cidadeVendedora = $dados['cidadeNegocioVendedora'];
+$chaveVendedora = $dados['chavePixVendedora'];
 
-$external_api_url = 'https://gerarqrcodepix.com.br/api/v1?nome='.$nomeVendedora.'&cidade='.$cidadeVendedora.'&saida=qr&valor='.$valor.'&chave=a';
+$external_api_url = 'https://gerarqrcodepix.com.br/api/v1?nome='.$nomeVendedora.'&cidade='.$cidadeVendedora.'&saida=qr&valor='.$valor.'&chave='.$chaveVendedora;
 
 $curl = curl_init($external_api_url);
 

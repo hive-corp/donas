@@ -23,6 +23,7 @@
         private $cnpjNegocioVendedora;
         private $nivelNegocioVendedora;
         private $telefoneNegocioVendedora;
+        private $chavePixVendedora;
         private $Categoria;
 
         public function __construct()
@@ -93,6 +94,9 @@
         public function getTelefoneNegocioVendedora(){
             return $this->telefoneNegocioVendedora;
         }
+        public function getChavePixVendedora(){
+            return $this->chavePixVendedora;
+        }
         public function getCategoria(){
             return $this->Categoria;
         }
@@ -159,6 +163,9 @@
         }
         public function setTelefoneNegocioVendedora($telefoneNegocioVendedora){
             $this->telefoneNegocioVendedora=$telefoneNegocioVendedora;
+        }
+        public function setChavePixVendedora($chavePixVendedora){
+            $this->chavePixVendedora=$chavePixVendedora;
         }
         public function setCategoria($Categoria){
             $this->Categoria=$Categoria;

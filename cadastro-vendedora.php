@@ -172,6 +172,11 @@
                             Simples
                         </div>
                     </div>
+                    <div class="chave-modal">
+                        <div class="form-label">Chave</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
                     <div class="endereco-modal">
                         <div class="form-label">Endereço</div>
                         <div class="input-wrapper">
@@ -517,7 +522,7 @@
                         </div>
                         <h5 class="escolha-foto">Tire ou escolha uma foto para colocar no seu negócio.</h5>
                         <div class="input">
-                            <button id="confirmar-cadastro" class="button">
+                            <button data-bs-toggle="modal" data-bs-target="#modal-chave" class="button" type="button">
                                 Cadastrar
                             </button>
                         </div>
@@ -525,6 +530,54 @@
                     <p class="create-new">
                         Já possui uma conta? <a href="./login.php">Faça login!</a>
                     </p>
+                </div>
+                <div class="modal pop" id="modal-chave" tabindex="-1" aria-labelledby="modal-chave" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Insira sua chave PIX</h1>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input">
+                                    <label class="form-label">Tipo de chave</label>
+                                    <div id="tipo-chave">
+                                        <input type="radio" name="tipo-chave" id="chave-cpf-cnpj" checked>
+                                        <label class="chave-pix" for="chave-cpf-cnpj">
+                                            CPF/CNPJ
+                                        </label>
+
+                                        <input type="radio" name="tipo-chave" id="chave-email">
+                                        <label class="chave-pix" for="chave-email">
+                                            E-mail
+                                        </label>
+
+                                        <input type="radio" name="tipo-chave" id="chave-telefone">
+                                        <label class="chave-pix" for="chave-telefone">
+                                            Número de telefone
+                                        </label>
+
+                                        <input type="radio" name="tipo-chave" id="chave-aleatoria">
+                                        <label class="chave-pix" for="chave-aleatoria">
+                                            Chave aleatória
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="input">
+                                    <label for="chave" class="form-label">PIX</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" name="chave" id="chave" required autocomplete>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Insira uma chave válida
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <a href="#" class="highlight" data-bs-dismiss="modal">Sair</a>
+                                <button class="button" id="confirmar-cadastro" data-bs-dismiss="modal">Concluir</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <img src="assets/media/rosas.svg" class="rosa-fundo">
@@ -561,15 +614,14 @@
                 genero = document.querySelector('#genero')
 
             genero.addEventListener('change', e => {
-
                 let target = e.target
 
                 genero = target.options[target.selectedIndex].value
 
-                if(genero==2){
+                if (genero == 2) {
                     new bootstrap.Modal('#modal-genero').toggle()
 
-                    target.value=1
+                    target.value = 1
                 }
             })
 
@@ -608,13 +660,15 @@
                         categoriaNegocioModal = document.querySelector('#modal-negocio .cat-modal .input-wrapper'),
                         planoNegocioModal = document.querySelector('#modal-negocio .plano-modal .input-wrapper'),
                         enderecoModal = document.querySelector('#modal-negocio .endereco-modal .input-wrapper'),
+                        chaveModal = document.querySelector('#modal-negocio .chave-modal .input-wrapper'),
                         logradouro = document.getElementById('log').value,
                         bairro = document.getElementById('bairro').value,
                         cidade = document.getElementById('cidade').value,
                         uf = document.getElementById('uf').value,
                         numero = document.getElementById('numero').value,
                         complemento = document.getElementById('complemento').value,
-                        cep = campoCep.value
+                        cep = campoCep.value,
+                        chave = document.getElementById('chave').value
 
                     nomeModal.innerText = document.getElementById('nome').value
                     cnpjModal.innerText = campoCnpj.value
@@ -640,6 +694,7 @@
                     telModal.innerText = document.getElementById('telefone').value
 
                     enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
+                    chaveModal.innerText = chave
 
                     confirmarCadastro.addEventListener('click', () => {
                         let canvasVendedora = cropperVendedora.getCroppedCanvas({
@@ -675,6 +730,7 @@
                                 formData.append('comp', complemento)
                                 formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
                                 formData.append('nivel', plano)
+                                formData.append('chave', chave)
                                 formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
 
                                 fetch('api/dona/index.php', {
@@ -831,6 +887,115 @@
 
                 input.value = formattedValue
             }
+
+            function applyMask(event) {
+                const input = event.target;
+
+                let value
+
+                let formattedValue = '';
+                let mask = '';
+
+                const tipoChave = document.querySelector('input[name="tipo-chave"]:checked').id;
+
+                let match;
+
+                switch (tipoChave) {
+                    case 'chave-cpf-cnpj':
+                        input.type = 'text'
+
+                        value = input.value.replace(/\D/g, '');
+                        const tipoDocumento = value.length <= 11 ? 'cpf' : 'cnpj';
+
+                        switch (tipoDocumento) {
+                            case 'cpf':
+                                match = value.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
+                                if (match) {
+                                    const [, firstGroup, secondGroup, thirdGroup, lastGroup] = match;
+                                    if (firstGroup) formattedValue += firstGroup;
+                                    if (secondGroup) formattedValue += '.' + secondGroup;
+                                    if (thirdGroup) formattedValue += '.' + thirdGroup;
+                                    if (lastGroup) formattedValue += '-' + lastGroup;
+                                }
+                                break;
+                            case 'cnpj':
+                                match = value.match(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})$/);
+                                if (match) {
+                                    const [, firstGroup, secondGroup, thirdGroup, fourthGroup, lastGroup] = match;
+                                    if (firstGroup) formattedValue += firstGroup;
+                                    if (secondGroup) formattedValue += '.' + secondGroup;
+                                    if (thirdGroup) formattedValue += '.' + thirdGroup;
+                                    if (fourthGroup) formattedValue += '/' + fourthGroup;
+                                    if (lastGroup) formattedValue += '-' + lastGroup;
+                                }
+                                break;
+                            default:
+                                formattedValue = value;
+                                break;
+                        }
+                        break;
+                    case 'chave-email':
+                        input.type = 'email'
+
+                        if (!input.checkValidity()) {
+                            input.classList.add('is-invalid');
+                        } else {
+                            input.classList.remove('is-invalid');
+                        }
+                        break;
+                    case 'chave-telefone':
+                        input.type = 'text'
+
+                        value = input.value.replace(/\D/g, '');
+                        const isPersonal = value.length > 10;
+
+                        if (isPersonal) {
+                            match = value.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
+                            if (match) {
+                                const [, firstGroup, secondGroup, thirdGroup] = match;
+                                if (firstGroup) formattedValue += `(${firstGroup})`;
+                                if (secondGroup) formattedValue += ' ' + secondGroup;
+                                if (thirdGroup) formattedValue += '-' + thirdGroup;
+                            }
+                        } else {
+                            match = value.match(/^(\d{0,2})(\d{0,4})(\d{0,4})$/);
+                            if (match) {
+                                const [, firstGroup, secondGroup, thirdGroup] = match;
+                                if (firstGroup) formattedValue += `(${firstGroup})`;
+                                if (secondGroup) formattedValue += ' ' + secondGroup;
+                                if (thirdGroup) formattedValue += '-' + thirdGroup;
+                            }
+                        }
+                        break;
+                    case 'chave-aleatoria':
+                        input.type = 'text'
+
+                        value = input.value.replace(/[^0-9a-fA-F]/g, '');
+
+                        match = value.match(/^([0-9a-fA-F]{0,8})([0-9a-fA-F]{0,4})([0-9a-fA-F]{0,4})([0-9a-fA-F]{0,4})([0-9a-fA-F]{0,12})$/);
+                        if (match) {
+                            const [, firstGroup, secondGroup, thirdGroup, fourthGroup, fifthGroup] = match;
+                            if (firstGroup) formattedValue += firstGroup;
+                            if (secondGroup) formattedValue += '-' + secondGroup;
+                            if (thirdGroup) formattedValue += '-' + thirdGroup;
+                            if (fourthGroup) formattedValue += '-' + fourthGroup;
+                            if (fifthGroup) formattedValue += '-' + fifthGroup;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                if (value.length == 0) {
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+
+                input.value = formattedValue;
+            }
+
+            document.getElementById('chave').addEventListener('input', applyMask);
 
             campoCnpj.addEventListener('input', maskCNPJ)
             campoCnpj.addEventListener('blur', e => {

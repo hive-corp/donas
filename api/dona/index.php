@@ -59,6 +59,7 @@ switch ($method) {
         $vendedora->setCnpjNegocioVendedora($cnpj);
 
         $vendedora->setNivelNegocioVendedora($_POST['nivel'] == "Premium" ? 1 : 0);
+        $vendedora->setChavePixVendedora($_POST['chave']);
 
         $categoria = new Categoria();
 
