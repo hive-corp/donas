@@ -260,9 +260,8 @@ require_once "validador.php";
                         <div class="input">
                             <label class="form-label">Subcategorias<span>*</span></label>
                             <div id="subcategorias">
-
                                 <?php
-                                $subCategorias = daoSubCategoria::listar();
+                                $subCategorias = daoSubCategoria::listarPorCategoria($_SESSION['categoria-id']);
 
                                 foreach ($subCategorias as $sub) {
                                 ?>

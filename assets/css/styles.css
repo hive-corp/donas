@@ -205,7 +205,7 @@ svg {
         "nome username"
         "cnpj telefone"
         "categoria plano"
-        "endereco endereco";
+        "chave endereco";
     gap: 16px
 }
 
@@ -399,6 +399,10 @@ svg {
 
 .plano-modal {
     grid-area: plano;
+}
+
+.chave-modal{
+    grid-area: chave;
 }
 
 .endereco-modal {
@@ -729,7 +733,7 @@ input:checked+.tipo-login:hover {
     position: absolute;
     height: 40px;
     aspect-ratio: 1/1;
-    background: url('../img/input-hover.svg');
+    background: url('../media/input-hover.svg');
     background-size: contain;
     bottom: 0;
     right: 0;
@@ -745,7 +749,7 @@ input:checked+.tipo-login:hover {
     position: absolute;
     height: 40px;
     aspect-ratio: 1/1;
-    background: url('../img/input-hover.svg');
+    background: url('../media/input-hover.svg');
     background-size: contain;
     top: 0;
     left: 0;
@@ -768,6 +772,36 @@ input:checked+.tipo-login:hover {
     filter: drop-shadow(0 0 6px #CB6CE633);
 }
 
+#modal-chave .modal-body{
+    display: flex;
+    flex-direction: column;
+    gap:8px
+}
+
+#tipo-chave{
+    display: grid;
+    grid-auto-flow: column;
+    gap: 2px;
+}
+
+#tipo-chave > input{
+    display: none;
+}
+
+.chave-pix{
+    padding: 4px;
+    display: grid;
+    place-items: center;
+    border-radius: 2px;
+    color: #CB6CE6;
+    border: 2px solid #CB6CE6;
+    cursor: pointer;
+}
+
+#tipo-chave > input:checked + .chave-pix{
+    background: #CB6CE6;
+    color: white;
+}
 
 .modal-title {
     color: var(--text-color);
@@ -986,7 +1020,7 @@ input:checked+.tipo-login:hover {
     position: absolute;
     top: 0%;
     left: -5px;
-    background: url('../img/input-hover.svg');
+    background: url('../media/input-hover.svg');
     background-size: contain;
     width: 25px;
     aspect-ratio: 1/1;
@@ -1000,7 +1034,7 @@ input:checked+.tipo-login:hover {
     position: absolute;
     top: 0px;
     right: -5px;
-    background: url('../img/input-hover.svg');
+    background: url('../media/input-hover.svg');
     background-size: contain;
     width: 25px;
     aspect-ratio: 1/1;
@@ -1661,10 +1695,9 @@ a.dropdown-item {
     border-right: 1px solid var(--bd-color);
     padding: 2px;
     color: var(--text-color);
-    accent-color: red;
 }
 .search-container > select > option {
-    background: var(--select-bg);
+    background: var(--bg-color);
     color: var(--text-color);
 }
 

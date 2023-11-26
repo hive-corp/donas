@@ -115,7 +115,7 @@ if (isset($_GET['a'])) {
                                     <div id="subcategorias">
 
                                         <?php
-                                        $subCategorias = daoSubCategoria::listar();
+                                        $subCategorias = daoSubCategoria::listarPorCategoria($_SESSION['categoria-id']);
 
                                         $subCategoriasAnuncio = daoAnuncioSubCategoria::listarAnuncio($anuncio['idAnuncio']);
 
@@ -235,7 +235,7 @@ if (isset($_GET['a'])) {
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-                    <button id="options-user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">

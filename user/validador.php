@@ -13,8 +13,6 @@ try {
     if ($consultaCliente == 0) {
         header("Location: ../login.php");
     } else {
-       
-
     $pedidos = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
 
     foreach ($pedidos as $p) {

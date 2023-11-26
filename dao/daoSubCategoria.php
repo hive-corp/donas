@@ -46,22 +46,6 @@ class daoSubCategoria
         $prepareStatement->execute();
     }
 
-    public static function editarFoto($SubCategoria)
-    {
-        $connection = Conexao::conectar();
-
-        $queryInsert = "UPDATE tbSubCategoria
-                            SET fotoSubCategoria = ?
-                            WHERE idSubCategoria = ?";
-
-        $prepareStatement = $connection->prepare($queryInsert);
-
-        $prepareStatement->bindValue(1, $SubCategoria->getFotoSubCategoria());
-        $prepareStatement->bindValue(2, $SubCategoria->getIdSubCategoria());
-
-        $prepareStatement->execute();
-    }
-
     public static function listar()
     {
         $connection = Conexao::conectar();
@@ -84,6 +68,19 @@ class daoSubCategoria
         $countSubCategoria = $stmt->fetchAll();
 
         return $countSubCategoria;
+    }
+
+    public static function listarPorCategoria($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT * FROM tbSubCategoria WHERE idCategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
     }
 
     public static function consultarIdPorNomeECategoria($SubCategoria)

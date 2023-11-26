@@ -80,7 +80,7 @@ date_default_timezone_set('America/Sao_Paulo');
                                     </div>
                                 </div>
                                 <div class="input input-data">
-                                    <label class="form-label" for="data-entrega">Data de Agendamento<span>*</span></label>
+                                    <label class="form-label" for="data-entrega">Data de agendamento<span>*</span></label>
                                     <div class="input-wrapper">
                                         <input type="datetime-local" name="data-entrega-serviço" id="data-entrega-serviço" required value="<?php echo date("o-m-d\TH:i", time() + 60 * 60 * 24) ?>">
                                     </div>
@@ -317,23 +317,14 @@ date_default_timezone_set('America/Sao_Paulo');
                             if ($anuncio['nivelNegocioVendedora'] == 1) {
                                 $temEncomenda = daoPedidoProduto::consultaTemPedidos($encomenda);
                                 $temEncomendaAtiva = daoPedidoProduto::consultaTemPedidoAtivo($encomenda);
-
-
                             ?>
                                 <?php
-
-
                                 if ($anuncio['tipoAnuncio'] == 1) {
-
                                 ?>
-
                                     <button class="button button-square" id="encomendar" data-bs-target="#modal-confirma" data-bs-toggle="modal">Agendar</button>
-
-
                                 <?php
                                 } else {
                                 ?> <button class="button button-square" id="encomendar" data-bs-target="#modal-confirma" data-bs-toggle="modal">Encomendar</button>
-
                             <?php
                                 }
                             }

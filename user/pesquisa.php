@@ -125,35 +125,20 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
             <form id="pesquisa" action="pesquisa.php">
                 <img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
                 <div class="search-container search-square ">
-                    <select name="tipo" id="tipo" style="    border-right: 1px solid lightgray;
-    padding: 2px;
-    color: var(--text-color);
-    accent-color: red;
-    background-color: transparent;
-">
-                        <option value="" style="background: var(--select-bg);
-    color: var(--text-color);" selected>Tipo</option>
-                        <option value="2" style="background: var(--select-bg);
-    color: var(--text-color);">Produto</option>
-                        <option value="1" style="background: var(--select-bg);
-    color: var(--text-color);">Serviço</option>
+                    <select name="tipo" id="tipo">
+                        <option value="" selected>Tipo</option>
+                        <option value="2">Produto</option>
+                        <option value="1">Serviço</option>
                     </select>
 
-                    <select name="categoria" id="categoria" style="    border-right: 1px solid lightgray;
-    padding: 2px;
-    color: var(--text-color);
-    accent-color: red;
-    background-color: transparent;
-">
-                        <option value="" style="background: var(--select-bg);
-    color: var(--text-color);" selected>Categoria</option>
+                    <select name="categoria" id="categoria">
+                        <option value="" selected>Categoria</option>
                         <?php
                         $categorias = daoCategoria::listar();
 
                         foreach ($categorias as $c) {
                         ?>
-                            <option style="background: var(--select-bg);
-    color: var(--text-color);" value="<?php echo $c['idCategoria'] ?>" <?php echo $c['idCategoria'] == $categorias ? "selected" : "" ?>>
+                            <option value="<?php echo $c['idCategoria'] ?>" <?php echo $c['idCategoria'] == $categorias ? "selected" : "" ?>>
                                 <?php echo $c['nomeCategoria'] ?>
                             </option>
                         <?php
@@ -526,7 +511,6 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                 } else {
                 ?>
                     <div class="carrossel-cards load">
-
                         <?php
                         if (isset($categoria) && isset($pesquisa)) {
                             $vendedoras = daoVendedora::pesquisarVendedoraNomeDescricaoCategoria($categoria, $pesquisa);
@@ -543,7 +527,6 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                             $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
                             $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
                         ?>
-
 
                             <a class="card-categoria" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> " style="width:20%; margin-top: 4%">
                                 <div class="img-categoria" style="width:70%;">
@@ -576,10 +559,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
                                 </div>
                                 <div style="color: lightslategray; margin-top: -10%"><?php echo $totalanuncios ?> anúncios</div>
-
                             </a>
-
-
                         <?php
                         }
 
@@ -1287,10 +1267,8 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
                         foreach ($vendedoras as $a) {
                             $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
-
+                            $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
                         ?>
-
-
                             <a class="card-categoria" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> " style="width:20%; margin-top: 4%">
                                 <div class="img-categoria" style="width:70%;">
                                     <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>" />
@@ -1317,19 +1295,13 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                         <i class="bi bi-star"></i>
                                     <?php
                                     }
-
                                     ?>
                                 </div>
-
-
+                                <div style="color: lightslategray; margin-top: -10%"><?php echo $totalanuncios ?> anúncios</div>
                             </a>
-
-
                         <?php
                         }
-
                         ?>
-
                     </div>
             </div>
         <?php

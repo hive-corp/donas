@@ -92,13 +92,18 @@ if (isset($_GET['a'])) {
                             <div id="preco-anuncio">
                                 R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',', '.') ?>
                             </div>
-                            <?php
-                            if ($anuncio['nivelNegocioVendedora'] == 1) {
+                            <?php if ($anuncio['nivelNegocioVendedora'] == 1) {
                             ?>
-                                <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
+                                <?php
+                                if ($anuncio['tipoAnuncio'] == 1) {
+                                ?>
+                                    <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Agendar</button>
+                                <?php
+                                } else {
+                                ?> <button class="button button-square" id="encomendar" data-bs-target="#modal-login" data-bs-toggle="modal">Encomendar</button>
                             <?php
-                            }
-                            ?>
+                                }
+                            }?>
                             <div id="avaliacao-anuncio">
                                 <?php
                                 $qtdestrelas = $anuncio['estrelasAnuncio'];
