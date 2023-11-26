@@ -91,7 +91,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 				</a>
 			</div>
 			<div id="user-info">
-				<a href="../">
+				<a>
 					<img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
 				</a>
 				<div id="info-user">
@@ -421,6 +421,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 								<div class="info-card">
 									<div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
 									<div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.') ?></div>
+									<?php if ($a['nivelNegocioVendedora'] == 1) { ?>
 									<div class="avaliacao-card">
 										<?php
 
@@ -437,8 +438,18 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
 										?>
 									</div>
+									
 									<div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
 									<div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
+									<?php
+								}else {?>
+                                <div class="avaliacao-card" style="color: lightslategray">
+                                    <?php echo $a['nomeCategoria'] ?>
+                                </div>
+                                <div class="negocio-card">
+                                    <?php echo $a['nomeNegocioVendedora'] ?>
+                                </div><?php
+                                }?>
 								</div>
 							</a>
 						<?php
@@ -636,6 +647,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 								<div class="info-card">
 									<div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
 									<div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.') ?></div>
+									<?php if ($a['nivelNegocioVendedora'] == 1) { ?>
 									<div class="avaliacao-card">
 										<?php
 
@@ -654,6 +666,14 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 									</div>
 									<div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
 									<div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
+								<?php }else {?>
+                                <div class="avaliacao-card" style="color: lightslategray">
+                                    <?php echo $a['nomeCategoria'] ?>
+                                </div>
+                                <div class="negocio-card">
+                                    <?php echo $a['nomeNegocioVendedora'] ?>
+                                </div><?php
+                                }?>
 								</div>
 							</a>
 						<?php

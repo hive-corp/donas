@@ -248,7 +248,7 @@ date_default_timezone_set('America/Sao_Paulo');
                 </a>
             </div>
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -329,6 +329,7 @@ date_default_timezone_set('America/Sao_Paulo');
                                 }
                             }
                             ?>
+                            <?php if ($anuncio['nivelNegocioVendedora'] == 1) { ?>
                             <div id="avaliacao-anuncio">
                                 <?php
                                 $qtdestrelas = $anuncio['estrelasAnuncio'];
@@ -349,6 +350,7 @@ date_default_timezone_set('America/Sao_Paulo');
                                 echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
                                 ?>
                             </div>
+                            <?php }?>
                             <div id="categoria-anuncio">
                                 <?php echo $anuncio['nomeCategoria'] ?>
                             </div>
@@ -525,7 +527,7 @@ date_default_timezone_set('America/Sao_Paulo');
             qrCodeImg.classList.add('hide')
             loadingQrCode.classList.remove('hide')
 
-            let tempoFinal = new Date().getTime() + 8 * 60 * 1000;
+            let tempoFinal = new Date().getTime() + 1 * 60 * 1000;
 
             cronometro = setInterval(() => {
 
@@ -543,7 +545,7 @@ date_default_timezone_set('America/Sao_Paulo');
                     clearInterval(cronometro);
 
                     document.getElementById('modal-pagamento').classList.remove('show')
-                    document.getElementById('modal-pagamento2').classList.remove('show')
+                    
                     document.querySelector('.modal-backdrop').remove()
                     new bootstrap.Modal(document.getElementById('modal-cancelado')).toggle();
                 }

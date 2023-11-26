@@ -71,6 +71,21 @@ class daoVendedora
         $prepareStatement->bindValue(6, $Vendedora->getIdVendedora());
         $prepareStatement->execute();
     }
+    public static function alterarNivel($Vendedoras)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbVendedora
+                            SET nivelNegocioVendedora = 1
+                            WHERE idVendedora = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        
+
+        $prepareStatement->bindValue(1, $Vendedoras->getIdVendedora());
+        $prepareStatement->execute();
+    }
 
     public static function editarNegocio($Vendedora)
     {

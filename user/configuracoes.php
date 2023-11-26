@@ -226,7 +226,7 @@ require_once "validador.php";
                 </a>
             </div>
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -345,7 +345,7 @@ require_once "validador.php";
                         <div class="input input-senha">
                             <label class="form-label" for="senha">Senha</label>
                             <div class="input-wrapper">
-                                <input type="password" name="senha" id="senha" value="<?php echo $_SESSION['senha'] ?>" disabled>
+                                <input type="password" name="senha" id="senha" value="<?php echo $_SESSION['senha-normal'] ?>" disabled>
                             </div>
                             <div class="invalid-feedback" id="email-feedback">
                                 Insira um e-mail válido.

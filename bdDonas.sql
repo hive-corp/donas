@@ -200,7 +200,7 @@ CREATE TABLE `tbpedidoservico` (
   `idPedidoServico` int(11) NOT NULL,
   `valorTotal` double DEFAULT NULL,
   `statusPedidoServico` int(11) NOT NULL,
-  `dataServicoContradado` datetime DEFAULT NULL,
+  `dataServicoContratado` datetime DEFAULT NULL,
   `dataServicoMarcado` datetime DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL

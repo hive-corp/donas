@@ -2,6 +2,7 @@
 
 require_once "validador.php";
 require_once "global.php";
+$dados = daoVendedora::consultarPorId($_SESSION['id']);
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +71,7 @@ require_once "global.php";
             </a>
 
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -358,6 +359,8 @@ require_once "global.php";
                                 <div class="preco-card">
                                     R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.')  ?>
                                 </div>
+                                <?php if ($dados['nivelNegocioVendedora'] == 1) {
+                        ?>
                                 <div class="avaliacao-card">
                                     <?php
 
@@ -374,12 +377,17 @@ require_once "global.php";
 
                                     ?>
                                 </div>
-                                <div class="categoria-card">
+                                
+                                
+                                <?php
+                                }else {?>
+                                <div class="avaliacao-card" style="color: lightslategray">
                                     <?php echo $a['nomeCategoria'] ?>
                                 </div>
                                 <div class="negocio-card">
                                     <?php echo $a['nomeNegocioVendedora'] ?>
-                                </div>
+                                </div><?php
+                                }?>
                             </div>
                         </a>
                     <?php

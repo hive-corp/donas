@@ -13,7 +13,7 @@ if (isset($_GET['a'])) {
 
     $anuncio = daoAnuncio::consultarPorVendedoraId($anuncio);
 }
-
+$dados = daoVendedora::consultarPorId($_SESSION['id']);
 ?>
 
 <!DOCTYPE html>
@@ -223,7 +223,7 @@ if (isset($_GET['a'])) {
             </a>
 
             <div id="user-info">
-                <a href="../">
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -235,24 +235,24 @@ if (isset($_GET['a'])) {
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-                        <li>
-                            <a class="dropdown-item" href="../logout.php">
-                                <i class="bi bi-box-arrow-right"></i>
-                                Sair
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
-                                <i class="bi bi-moon"></i>
-                                Modo noturno
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="bi bi-three-dots-vertical"></i>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+						<li>
+							<a class="dropdown-item" href="../logout.php">
+								<i class="bi bi-box-arrow-right"></i>
+								Sair
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-theme-toggle="dark">
+								<i class="bi bi-moon"></i>
+								Modo noturno
+							</a>
+						</li>
+					</ul>
+				</div>
             </div>
         </nav>
         <main id="main">
@@ -268,9 +268,10 @@ if (isset($_GET['a'])) {
                         </div>
                         <div id="info-anuncio">
                             <div class="dropdown" id="editar-anuncio">
-                                <button id="options-anuncio" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button id="options-anuncio" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
+                               
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
                                     <li>
                                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-editar">
@@ -292,6 +293,8 @@ if (isset($_GET['a'])) {
                             <div id="preco-anuncio">
                                 R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',', '.') ?>
                             </div>
+                            <?php if ($dados['nivelNegocioVendedora'] == 1) {
+                        ?>
                             <div id="avaliacao-anuncio">
                                 <?php
                                 $qtdestrelas = $anuncio['estrelasAnuncio'];
@@ -311,6 +314,8 @@ if (isset($_GET['a'])) {
                                 echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
                                 ?>
                             </div>
+                            <?php 
+                            }?>
                             <div id="categoria-anuncio">
                                 <?php echo $anuncio['nomeCategoria'] ?>
                             </div>
