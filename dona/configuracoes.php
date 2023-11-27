@@ -97,6 +97,55 @@ require_once "global.php";
         </div>
     </div>
 
+    <div class="modal pop" id="modal-chave" tabindex="-1" aria-labelledby="modal-chave" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Alterar a chave PIX</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="input">
+                        <label class="form-label">Tipo de chave</label>
+                        <div id="tipo-chave">
+                            <input type="radio" name="tipo-chave" id="chave-cpf-cnpj" value="1" checked>
+                            <label class="chave-pix" for="chave-cpf-cnpj">
+                                CPF/CNPJ
+                            </label>
+
+                            <input type="radio" name="tipo-chave" id="chave-email" value="2">
+                            <label class="chave-pix" for="chave-email">
+                                E-mail
+                            </label>
+
+                            <input type="radio" name="tipo-chave" id="chave-telefone" value="3">
+                            <label class="chave-pix" for="chave-telefone">
+                                Número de telefone
+                            </label>
+
+                            <input type="radio" name="tipo-chave" id="chave-aleatoria" value="4">
+                            <label class="chave-pix" for="chave-aleatoria">
+                                Chave aleatória
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input">
+                        <label for="chave" class="form-label">PIX</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="chave" id="chave" required autocomplete value="<?php echo $_SESSION['chave']?>">
+                        </div>
+                        <div class="invalid-feedback">
+                            Insira uma chave válida
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a href="#" class="highlight" data-bs-dismiss="modal">Sair</a>
+                    <button class="button" id="confirmar-pix" data-bs-dismiss="modal">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal pop" id="modal-alterar-dona" tabindex="-1" aria-labelledby="modal-alterar-dona" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -169,7 +218,7 @@ require_once "global.php";
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button button-secondary" data-bs-toggle="modal" data-bs-target="#modal-dona">Voltar</button>
-                    <button type="button" class="button" data-bs-dismiss="modal" id="confirmar-negocio">Cadastrar</button>
+                    <button type="button" class="button" data-bs-dismiss="modal" id="confirmar-negocio">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -251,24 +300,24 @@ require_once "global.php";
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <div id="config">
@@ -308,6 +357,9 @@ require_once "global.php";
                 <div class="config-box hide" id="seu-perfil">
                     <div class="config-item" data-config-target="#editar-perfil" data-config-name="Editar perfil">
                         Editar informações
+                    </div>
+                    <div class="config-item" data-bs-toggle="modal" data-bs-target="#modal-chave">
+                        Editar chave PIX
                     </div>
                     <div class="config-item" data-bs-toggle="modal" data-bs-target="#modal-confirma-excluir">
                         Excluir conta
@@ -545,7 +597,38 @@ require_once "global.php";
             confirmarFotoUser = document.querySelector('#confirmar-foto-user'),
             confirmarFotoEmpresa = document.querySelector('#confirmar-foto-empresa'),
             campoCep = document.querySelector('#cep'),
-            campoCnpj = document.querySelector('#cnpj')
+            campoCnpj = document.querySelector('#cnpj'),
+            confirmarPix = document.querySelector('#confirmar-pix')
+
+        confirmarPix.addEventListener('click', () => {
+            let formData = new FormData()
+
+            let chave = document.getElementById('chave').value
+            const tipoChave = document.querySelector('input[name="tipo-chave"]:checked').value
+
+            if (tipoChave == 1) {
+                chave = chave.replace(/\D/g, '')
+            } else if (tipoChave == 3) {
+                chave = chave.replace(/\D/g, '')
+                chave = "+" + chave
+            }
+
+            formData.append('tipo-chave', tipoChave)
+            formData.append('chave', chave)
+
+            fetch('../api/dona/edit-chave.php', {
+                method: 'POST',
+                header: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                },
+                body: formData
+            })
+            .then(() => {
+                new bootstrap.Modal('#modal-sucesso').toggle()
+                setTimeout(() => location.reload(), 2500)
+            })
+        })
 
         formDona.addEventListener('submit', event => {
             event.preventDefault()
@@ -858,6 +941,115 @@ require_once "global.php";
 
             input.value = formattedValue
         }
+
+        function applyMask(event) {
+            const input = event.target;
+
+            let value
+
+            let formattedValue = '';
+            let mask = '';
+
+            const tipoChave = document.querySelector('input[name="tipo-chave"]:checked').id;
+
+            let match;
+
+            switch (tipoChave) {
+                case 'chave-cpf-cnpj':
+                    input.type = 'text'
+
+                    value = input.value.replace(/\D/g, '');
+                    const tipoDocumento = value.length <= 11 ? 'cpf' : 'cnpj';
+
+                    switch (tipoDocumento) {
+                        case 'cpf':
+                            match = value.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
+                            if (match) {
+                                const [, firstGroup, secondGroup, thirdGroup, lastGroup] = match;
+                                if (firstGroup) formattedValue += firstGroup;
+                                if (secondGroup) formattedValue += '.' + secondGroup;
+                                if (thirdGroup) formattedValue += '.' + thirdGroup;
+                                if (lastGroup) formattedValue += '-' + lastGroup;
+                            }
+                            break;
+                        case 'cnpj':
+                            match = value.match(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})$/);
+                            if (match) {
+                                const [, firstGroup, secondGroup, thirdGroup, fourthGroup, lastGroup] = match;
+                                if (firstGroup) formattedValue += firstGroup;
+                                if (secondGroup) formattedValue += '.' + secondGroup;
+                                if (thirdGroup) formattedValue += '.' + thirdGroup;
+                                if (fourthGroup) formattedValue += '/' + fourthGroup;
+                                if (lastGroup) formattedValue += '-' + lastGroup;
+                            }
+                            break;
+                        default:
+                            formattedValue = value;
+                            break;
+                    }
+                    break;
+                case 'chave-email':
+                    input.type = 'email'
+
+                    if (!input.checkValidity()) {
+                        input.classList.add('is-invalid');
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                    break;
+                case 'chave-telefone':
+                    input.type = 'text'
+
+                    value = input.value.replace(/\D/g, '');
+                    const isPersonal = value.length > 10;
+
+                    if (isPersonal) {
+                        match = value.match(/^(\d{0,2})(\d{0,5})(\d{0,4})$/);
+                        if (match) {
+                            const [, firstGroup, secondGroup, thirdGroup] = match;
+                            if (firstGroup) formattedValue += `(${firstGroup})`;
+                            if (secondGroup) formattedValue += ' ' + secondGroup;
+                            if (thirdGroup) formattedValue += '-' + thirdGroup;
+                        }
+                    } else {
+                        match = value.match(/^(\d{0,2})(\d{0,4})(\d{0,4})$/);
+                        if (match) {
+                            const [, firstGroup, secondGroup, thirdGroup] = match;
+                            if (firstGroup) formattedValue += `(${firstGroup})`;
+                            if (secondGroup) formattedValue += ' ' + secondGroup;
+                            if (thirdGroup) formattedValue += '-' + thirdGroup;
+                        }
+                    }
+                    break;
+                case 'chave-aleatoria':
+                    input.type = 'text'
+
+                    value = input.value.replace(/[^0-9a-fA-F]/g, '');
+
+                    match = value.match(/^([0-9a-fA-F]{0,8})([0-9a-fA-F]{0,4})([0-9a-fA-F]{0,4})([0-9a-fA-F]{0,4})([0-9a-fA-F]{0,12})$/);
+                    if (match) {
+                        const [, firstGroup, secondGroup, thirdGroup, fourthGroup, fifthGroup] = match;
+                        if (firstGroup) formattedValue += firstGroup;
+                        if (secondGroup) formattedValue += '-' + secondGroup;
+                        if (thirdGroup) formattedValue += '-' + thirdGroup;
+                        if (fourthGroup) formattedValue += '-' + fourthGroup;
+                        if (fifthGroup) formattedValue += '-' + fifthGroup;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (value.length == 0) {
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+
+            input.value = formattedValue;
+        }
+
+        document.getElementById('chave').addEventListener('input', applyMask);
 
         campoCnpj.addEventListener('input', maskCNPJ)
         campoCep.addEventListener('input', maskCep)
