@@ -18,8 +18,9 @@
     $data = !empty($_POST['data-entrega']) ? $_POST['data-entrega'] : null;
     $dataFormatada = !empty($data) ? date('Y-m-d', strtotime($data)) : null;
     $dataFeito = date('Y-m-d H:i:s');
-// Calcula o valor total com base na quantidade
-$valorTotal = $dados['valorAnuncio'] * $qtd;
+
+    // Calcula o valor total com base na quantidade
+    $valorTotal = $dados['valorAnuncio'] * $qtd;
     $encomenda->setCliente($cliente);
     $encomenda->setAnuncio($anuncio);
     $encomenda->setValorTotal($valorTotal);

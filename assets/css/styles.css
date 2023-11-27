@@ -140,6 +140,7 @@ svg {
 #modal-sucesso i,
 #modal-revisao i,
 #modal-bloqueado-cliente i,
+#modal-confirma i,
 #modal-login i,
 #modal-genero i,
 #modal-encomenda i {
@@ -1325,6 +1326,7 @@ a.create-new:hover {
         grid-template-areas:
             "nome"
             "email"
+            "gen"
             "nasc"
             "senha"
             "confirm"
@@ -1840,12 +1842,37 @@ a.veja-mais {
 .card-categoria {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 90px auto;
+    grid-template-rows: 100px auto;
     width: 100px;
     aspect-ratio: 1/1;
     place-items: center;
     margin-right: 16px;
     cursor: pointer;
+}
+
+.card-vendedora{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 130px auto auto auto;
+    grid-template-areas:
+    "foto"
+    "nome"
+    "estrelas"
+    "anuncios";
+    width: 120px;
+    place-items: center;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.img-vendedora{
+    width: 120px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    transition: .3s background-color;
+    overflow: hidden;
+    background-color: #CB6CE6;
+    padding: 2px;
 }
 
 .img-categoria {
@@ -1859,12 +1886,23 @@ a.veja-mais {
 }
 
 .img-categoria img,
-.img-categoria .placeholder {
+.img-categoria .placeholder,
+.img-vendedora img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     border-radius: 50%;
+}
+
+.nome-vendedora {
+    color: #CB6CE6;
+    font-weight: bold;
+    text-align: center;
+}
+
+.anuncios-vendedora{
+    color: lightslategray;
 }
 
 .nome-categoria {
@@ -1883,6 +1921,11 @@ a.veja-mais {
 .card-categoria:hover .img-categoria {
     background-color: #5d0049;
     box-shadow: 0 0 0 6px #9D007A33;
+}
+
+.card-vendedora:hover .img-vendedora {
+    background-color: #5d0049;
+    box-shadow: 0 0 0 6px #CB6CE633;
 }
 
 .card-anuncio {
@@ -4101,7 +4144,7 @@ a.highlight {
     #foto-anuncio img {
         object-fit: cover;
         object-position: center;
-        width: 110%;
+        width: 100%;
         aspect-ratio: 1/1;
         position: fixed;
         border: 0;

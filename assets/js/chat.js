@@ -73,9 +73,9 @@ const mostrarMensagens = (dados) => {
 
                 const wavesurfer = WaveSurfer.create({
                     container: waveform,
-                    waveColor: item.origemMensagem == 0 ? '#ca35b0' : '#bbb',
+                    waveColor: item.origemMensagem == type ? '#ca35b0' : '#bbb',
                     height: 50,
-                    progressColor: item.origemMensagem == 0 ? 'white' : 'gray' ,
+                    progressColor: item.origemMensagem == type ? 'white' : 'gray' ,
                     dragToSeek: true,
                     cursorColor: 'white',
                     cursorWidth: 2,

@@ -377,17 +377,14 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
                                     ?>
                                 </div>
-                                
-                                
                                 <?php
-                                }else {?>
-                                <div class="avaliacao-card" style="color: lightslategray">
+                                }?>
+                                <div class="categoria-card" style="color: lightslategray">
                                     <?php echo $a['nomeCategoria'] ?>
                                 </div>
                                 <div class="negocio-card">
                                     <?php echo $a['nomeNegocioVendedora'] ?>
-                                </div><?php
-                                }?>
+                                </div>
                             </div>
                         </a>
                     <?php

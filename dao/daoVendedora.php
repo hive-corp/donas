@@ -153,6 +153,22 @@ class daoVendedora
         $prepareStatement->execute();
     }
 
+    public static function editarChavePix($Vendedora)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbVendedora
+                            SET chavePixVendedora = ?
+                            WHERE idVendedora = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $Vendedora->getChavePixVendedora());
+        $prepareStatement->bindValue(2, $Vendedora->getIdVendedora());
+
+        $prepareStatement->execute();
+    }
+
     public static function listar()
     {
         $connection = Conexao::conectar();
@@ -276,10 +292,7 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare('SELECT idVendedora, nomeVendedora, emailVendedora, fotoVendedora, senhaVendedora, dtNascVendedora, statusVendedora, nomeNegocioVendedora,
-                                    nomeUsuarioNegocioVendedora, bioNegocioVendedora, fotoNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora,
-                                    bairroNegocioVendedora, numNegocioVendedora, compNegocioVendedora, cepNegocioVendedora, cnpjNegocioVendedora,
-                                    nivelNegocioVendedora, telefoneNegocioVendedora, idCategoria FROM tbVendedora
+        $stmt = $connection->prepare('SELECT * FROM tbVendedora
                                     WHERE emailVendedora = ? AND senhaVendedora = ?');
         $stmt->bindValue(1, $Vendedora->getEmailVendedora());
         $stmt->bindValue(2, $Vendedora->getSenhaVendedora());

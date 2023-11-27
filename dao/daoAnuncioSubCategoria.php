@@ -36,7 +36,7 @@ class daoAnuncioSubcategoria
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "DELETE FROM tbAnuncioSubCategorias WHERE idAnuncio = ?";
+        $queryInsert = "DELETE FROM tbAnuncioSubCategoria WHERE idAnuncio = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
         $prepareStatement->bindValue(1, $id);

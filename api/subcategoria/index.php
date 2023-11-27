@@ -48,7 +48,7 @@ switch ($method) {
             // Aqui, você precisa ajustar para lidar com a atualização de subcategorias
             $id = $_PUT['id'];
             $novaNomeSubCategoria = $_PUT['novo_nome'];
-            daoSubCategoria::atualizar($id, $novaNomeSubCategoria);
+            daoSubCategoria::editar($id, $novaNomeSubCategoria);
         } else {
             http_response_code(404);
             echo json_encode(["message" => "Você não tem acesso a esse recurso."]);
@@ -61,7 +61,7 @@ switch ($method) {
         if (isset($_SESSION['login-sessao']) && isset($_SESSION['senha-sessao'])) {
             // Aqui, você precisa ajustar para lidar com a exclusão de subcategorias
             $id = $_DELETE['id'];
-            daoSubCategoria::excluir($id);
+            daoSubCategoria::deletar($id);
         } else {
             http_response_code(404);
             echo json_encode(["message" => "Você não tem acesso a esse recurso."]);

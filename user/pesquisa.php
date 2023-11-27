@@ -528,46 +528,44 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                             $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
                         ?>
 
-                            <a class="card-categoria" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> " style="width:20%; margin-top: 4%">
-                                <div class="img-categoria" style="width:70%;">
+                            <a class="card-vendedora" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> ">
+                                <div class="img-vendedora">
                                     <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>" />
                                 </div>
 
-                                <p class="nome-categoria" style="margin-top: 15%; margin-bottom: 0rem;"><?php echo $a['nomeNegocioVendedora'];
-                                                                                    if ($a['nivelNegocioVendedora'] == 1) {
-                                                                                    ?>
-                                        <i class="bi bi-gem highlight" id="bio-star"></i>
+                                <div class="nome-vendedora"><?php echo $a['nomeNegocioVendedora'];
+                                                            if ($a['nivelNegocioVendedora'] == 1) {
+                                                            ?>
+                                        <i class="bi bi-gem highlight"></i>
                                     <?php
-                                                                                    }
-                                    ?>
-                                </p>
-                                <?php
-                                                                                    if ($a['nivelNegocioVendedora'] == 1) {
-                                                                                    ?>
-                                <div style=" color: #CB6CE6;">
-                                    <?php
-
-                                    for ($i = 0; $i < $estrelas; $i += 1) {
-                                    ?>
-                                        <i class="bi bi-star-fill"></i>
-                                    <?php
-                                    }
-                                    for ($i = 0; $i < 5 - $estrelas; $i++) {
-                                    ?>
-                                        <i class="bi bi-star"></i>
-                                    <?php
-                                    }
-
+                                                            }
                                     ?>
                                 </div>
-                                
-                                <div style="color: lightslategray;"><?php echo $totalanuncios ?> anúncios</div>
-
                                 <?php
-                                                                                    }else {
-                                    ?> <div style="color: lightslategray; margin-top: -20%"><?php echo $totalanuncios ?> anúncios</div><?php
-                                    }
-                                    ?>
+                                if ($a['nivelNegocioVendedora'] == 1) {
+                                ?>
+                                    <div class="estrelas-vendedora highlight">
+                                        <?php
+
+                                        for ($i = 0; $i < $estrelas; $i += 1) {
+                                        ?>
+                                            <i class="bi bi-star-fill"></i>
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < 5 - $estrelas; $i++) {
+                                        ?>
+                                            <i class="bi bi-star"></i>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="anuncios-vendedora"><?php echo $totalanuncios ?> anúncios</div>
+                                <?php
+                                } else {
+                                ?> <div class="anuncios-vendedora"><?php echo $totalanuncios ?> anúncios</div>
+                                <?php
+                                }
+                                ?>
                             </a>
                         <?php
                         }
@@ -922,32 +920,32 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                 <div class="nome-card"><?php echo $a['nomeAnuncio'] ?></div>
                                 <div class="preco-card">R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.') ?></div>
                                 <?php if ($a['nivelNegocioVendedora'] == 1) { ?>
-                                <div class="avaliacao-card">
-                                    <?php
+                                    <div class="avaliacao-card">
+                                        <?php
 
-                                    for ($i = 0; $i < $qtdestrelas; $i += 1) {
-                                    ?>
-                                        <i class="bi bi-star-fill"></i>
-                                    <?php
-                                    }
-                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
-                                    ?>
-                                        <i class="bi bi-star"></i>
-                                    <?php
-                                    }
+                                        for ($i = 0; $i < $qtdestrelas; $i += 1) {
+                                        ?>
+                                            <i class="bi bi-star-fill"></i>
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                        ?>
+                                            <i class="bi bi-star"></i>
+                                        <?php
+                                        }
 
-                                    ?>
-                                </div>
-                                <div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
-                                <div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
-                                <?php }else {?>
-                                <div class="avaliacao-card" style="color: lightslategray">
-                                    <?php echo $a['nomeCategoria'] ?>
-                                </div>
-                                <div class="negocio-card">
-                                    <?php echo $a['nomeNegocioVendedora'] ?>
-                                </div><?php
-                                }?>
+                                        ?>
+                                    </div>
+                                    <div class="categoria-card"><?php echo $a['nomeCategoria'] ?></div>
+                                    <div class="negocio-card"><?php echo $a['nomeNegocioVendedora'] ?></div>
+                                <?php } else { ?>
+                                    <div class="avaliacao-card" style="color: lightslategray">
+                                        <?php echo $a['nomeCategoria'] ?>
+                                    </div>
+                                    <div class="negocio-card">
+                                        <?php echo $a['nomeNegocioVendedora'] ?>
+                                    </div><?php
+                                        } ?>
                             </div>
                         </a>
                     <?php
@@ -1287,45 +1285,44 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                             $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
                             $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
                         ?>
-                            <a class="card-categoria" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> " style="width:20%; margin-top: 4%">
-                                <div class="img-categoria" style="width:70%;">
+                            <a class="card-vendedora" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> ">
+                                <div class="img-vendedora">
                                     <img src="../<?php echo $a['fotoNegocioVendedora'] ?>" alt="<?php echo $a['nomeNegocioVendedora'] ?>" />
                                 </div>
 
-                                <p class="nome-categoria" style="margin-top: 15%; margin-bottom: 0rem;"><?php echo $a['nomeNegocioVendedora'];
-                                                                                    if ($a['nivelNegocioVendedora'] == 1) {
-                                                                                    ?>
-                                        <i class="bi bi-gem highlight" id="bio-star"></i>
+                                <div class="nome-vendedora"><?php echo $a['nomeNegocioVendedora'];
+                                                            if ($a['nivelNegocioVendedora'] == 1) {
+                                                            ?>
+                                        <i class="bi bi-gem highlight"></i>
                                     <?php
-                                                                                    }
-                                    ?>
-                                </p>
-                                <?php
-                                                                                    if ($a['nivelNegocioVendedora'] == 1) {
-                                                                                    ?>
-                                <div style=" color: #CB6CE6;">
-                                    <?php
-
-                                    for ($i = 0; $i < $estrelas; $i += 1) {
-                                    ?>
-                                        <i class="bi bi-star-fill"></i>
-                                    <?php
-                                    }
-                                    for ($i = 0; $i < 5 - $estrelas; $i++) {
-                                    ?>
-                                        <i class="bi bi-star"></i>
-                                    <?php
-                                    }
+                                                            }
                                     ?>
                                 </div>
-                                
-                                <div style="color: lightslategray; "><?php echo $totalanuncios ?> anúncios</div>
-
                                 <?php
-                                                                                    }else {
-                                    ?> <div style="color: lightslategray; margin-top: -20%"><?php echo $totalanuncios ?> anúncios</div><?php
-                                    }
-                                    ?>
+                                if ($a['nivelNegocioVendedora'] == 1) {
+                                ?>
+                                    <div class="estrelas-vendedora highlight">
+                                        <?php
+
+                                        for ($i = 0; $i < $estrelas; $i += 1) {
+                                        ?>
+                                            <i class="bi bi-star-fill"></i>
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < 5 - $estrelas; $i++) {
+                                        ?>
+                                            <i class="bi bi-star"></i>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="anuncios-vendedora"><?php echo $totalanuncios ?> anúncios</div>
+                                <?php
+                                } else {
+                                ?> <div class="anuncios-vendedora"><?php echo $totalanuncios ?> anúncios</div>
+                                <?php
+                                }
+                                ?>
                             </a>
                         <?php
                         }

@@ -182,7 +182,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <h1 class="modal-title fs-5">Aceitar encomenda</h1>
                     </div>
                     <div class="modal-body d-flex flex-column text-center">
-                        Você está prestes a aceitar a encomenda <h5 class="highlight"></h5> Tem certeza? Ao Aceitar, não será mais possível cancelar a encomenda.
+                        Você está prestes a aceitar a encomenda <h5 class="highlight"></h5> Tem certeza? Ao aceitar, não será mais possível cancelar a encomenda.
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -198,7 +198,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <h1 class="modal-title fs-5">Aceitar serviço</h1>
                     </div>
                     <div class="modal-body d-flex flex-column text-center">
-                        Você está prestes a aceitar a serviço <h5 class="highlight"></h5> Tem certeza? Ao Aceitar, não será mais possível cancelar a encomenda.
+                        Você está prestes a aceitar o serviço <h5 class="highlight"></h5> Tem certeza? Ao aceitar, não será mais possível cancelar a encomenda.
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -478,6 +478,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
             item.addEventListener('click', () => {
                 document.querySelector('#aceitar-pedido').href=`aceitar-encomenda.php?e=${id}`
+
+                document.querySelector('#modal-aceitar h5.highlight').innerText = `${cliente} - ${anuncio}`
               
             })
         })
@@ -488,6 +490,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
             item.addEventListener('click', () => {
                 document.querySelector('#aceitar-servico').href=`aceitar-servico.php?e=${id}`
+
+                document.querySelector('#modal-aceitar-servico h5.highlight').innerText = `${cliente} - ${anuncio}`
               
             })
         })
