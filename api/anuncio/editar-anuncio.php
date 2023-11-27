@@ -6,6 +6,8 @@ header("Access-Control-Allow-Methods: *");
 
 require_once('../global.php');
 
+session_start();
+
 $anuncio = new Anuncio();
 
 $anuncio->setNomeAnuncio($_POST['nome']);
@@ -35,4 +37,22 @@ if (isset($_FILES["foto"]) && !empty($_FILES["foto"]["name"])) {
 
         daoAnuncio::editarFoto($anuncio);
     }
+}
+
+$AnuncioSubCategoria = json_decode($_POST['AnuncioSubCategoria']);
+
+daoAnuncioSubCategoria::deletarPorAnuncio($_SESSION['id']);
+
+$cliente = new Cliente();
+$cliente->setIdCliente($_SESSION['id']);
+
+foreach ($AnuncioSubCategoria as $sub) {
+    $SubCategoria = new SubCategoria();
+    $SubCategoria->setIdSubCategoria($sub);
+
+    $AnuncioSubCategoria = new AnuncioSubCategoria();
+    $AnuncioSubCategoria->setSubCategoria($SubCategoria);
+    $AnuncioSubCategoria->setAnuncio($anuncio);
+
+    daoAnuncioSubcategoria::cadastrar($AnuncioSubCategoria);
 }
