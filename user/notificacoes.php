@@ -76,7 +76,7 @@ require_once "validador.php";
                 </a>
             </div>
             <div id="user-info">
-                <a >
+                <a>
                     <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -120,8 +120,7 @@ require_once "validador.php";
 
                 foreach ($notificacoes as $n) {
                 ?>
-                    <a class="notificacao <?php echo $n['statusNotificacao'] == 0 ? "new" : "" ?> " <?php
-
+                    <a class="notificacao<?php echo $n['statusNotificacao'] == 0 ? " new" : "" ?>" <?php
                                                                                                     switch ($n['tipoNotificacao']) {
                                                                                                         case 0:
                                                                                                             break;
@@ -129,104 +128,126 @@ require_once "validador.php";
                                                                                                         case 2:
                                                                                                             $dados = daoDenuncia::consultaDenuncia($n['idDenuncia']);
                                                                                                             $vendedora = daoVendedora::consultarPorId($dados['idVendedora']);
+                                                                                                    ?> href="profile.php?user=<?php echo $vendedora['nomeUsuarioNegocioVendedora'] ?>" <?php
+                                                                                                                                                                                        break;
+                                                                                                                                                                                    case 3:
+                                                                                                                                                                                    case 4:
+                                                                                                                                                                                    case 5:
+                                                                                                                                                                                    case 6:
+                                                                                                                                                                                        case 7:
+                                                                                                                                                                                            case 8:
+                                                                                                                                                                                            case 9:
+                                                                                                                                                                                            case 10:
+                                                                                                                                                                                        $dados = daoAnuncio::consultarPorId($n['idAnuncio']);
+                                                                                                                                                                                        ?> href="anuncio.php?a=<?php echo $dados['idAnuncio'] ?>" <?php
+                                                                                                                                                                                                                                                    break;
+                                                                                                                                                                                                                                                default:
+                                                                                                                                                                                                                                                    $src = '';
+                                                                                                                                                                                                                                                    break;
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                    ?>>
+                        <div class="notificacao-img">
+                            <?php
+                            switch ($n['tipoNotificacao']) {
+                                case 0:
+                                    $src = 'assets/media/logo-letra.svg';
+                                    break;
+                                case 1:
+                                case 2:
+                                    $src = $vendedora['fotoNegocioVendedora'];
+                                    break;
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                case 8:
+                                case 9:
+                                case 10:
+                                    $src = $dados['imagemPrincipalAnuncio'];
+                                    break;
+                                default:
+                                    $src = '';
+                                    break;
+                            }
 
-                                                                                                    ?> href="profile.php?user=<?php echo $vendedora['nomeUsuarioNegocioVendedora'];
-                                                                                                            break;
-                                                                                                        case 3:
+                            ?>
+                            <img src="../<?php echo $src ?>" alt="">
+                        </div>
+                        <div class="notificacao-content">
+                            <?php
 
-                                                                                                            break;
-                                                                                                        case 4:
+                            switch ($n['tipoNotificacao']) {
+                                case 0:
+                            ?>
+                                    Seja bem vindo à plataforma!
+                                <?php
+                                    break;
+                                case 1:
+                                ?>
+                                    Sua denúncia foi recebida.
+                                <?php
+                                    break;
+                                case 2:
+                                ?>
+                                    Sua denúncia foi aceita.
+                                <?php
+                                    break;
+                                case 3:
+                                ?>
+                                    Sua encomenda foi recebida.
+                                <?php
+                                    break;
+                                case 4:
+                                ?>
+                                    Sua encomenda foi cancelada pela vendedora.
+                                <?php
+                                    break;
+                                case 5:
+                                ?>
+                                    Sua encomenda foi cancelada pela plataforma.
+                                <?php
+                                    break;
+                                case 6:
+                                ?>
+                                    Sua encomenda foi finalizada.
+                                <?php
+                                case 7:
+                                ?>
+                                    Seu serviço foi recebido.
+                                <?php
+                                    break;
+                                case 8:
+                                ?>
+                                    Seu serviço foi cancelado pela vendedora.
+                                <?php
+                                    break;
+                                case 9:
+                                ?>
+                                    Seu serviço foi cancelado pela plataforma.
+                                <?php
+                                    break;
+                                case 10:
+                                ?>
+                                    Seu serviço foi finalizado.
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
 
+                            ?>
+                        </div>
 
-                                                                                                            break;
-                                                                                                        case 5:
-
-                                                                                                            break;
-                                                                                                        default:
-                                                                                                            $src = '';
-                                                                                                            break;
-                                                                                                    }
-
-                                                                                ?> >
-                        <div class=" notificacao-img">
-                        <?php
-
-                        switch ($n['tipoNotificacao']) {
-                            case 0:
-                                $src = 'assets/media/logo-letra.svg';
-                                break;
-                            case 1:
-                            case 2:
-                                $src = $vendedora['fotoNegocioVendedora'];
-                                break;
-                            case 3:
-
-                                break;
-                            case 4:
-
-
-                                break;
-                            case 5:
-
-                                break;
-                            default:
-                                $src = '';
-                                break;
-                        }
-
-                        ?>
-                        <img src="../<?php echo $src ?>" alt="">
-            </div>
-            <div class="notificacao-content">
+                    </a>
                 <?php
-
-                    switch ($n['tipoNotificacao']) {
-                        case 0:
-                ?>
-                        Seja bem vindo à plataforma!
-                    <?php
-                            break;
-                        case 1:
-                    ?>
-                        Sua denúncia foi recebida.
-                    <?php
-                            break;
-                        case 2:
-                    ?>
-                        Sua denúncia foi aceita.
-                    <?php
-                            break;
-                        case 3:
-                    ?>
-                        Sua encomenda foi recebida.
-                    <?php
-                            break;
-                        case 4:
-                    ?>
-                        Sua encomenda foi cancelada.
-                    <?php
-                            break;
-                        case 5:
-                    ?>
-                        Sua encomenda foi finalizada.
-                <?php
-                            break;
-                        default:
-                            break;
-                    }
-
-                ?>
-            </div>
-
-            </a>
-        <?php
                 }
 
                 daoNotifcCliente::visualizarNotificacoes($_SESSION['id']);
-        ?>
-    </div>
-    <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
-    </main>
+                ?>
+            </div>
+            <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
+        </main>
     </div>
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

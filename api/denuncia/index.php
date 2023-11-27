@@ -32,7 +32,7 @@ switch ($method) {
 
         daoDenuncia::cadastrar($denuncia);
 
-        $notific = new NotificCliente();
+        $notific = new NotifcCliente();
         $notific->setCliente($cliente);
 
         $iddenuncia = daoDenuncia::consultaUltimaDenunciaCliente($_SESSION['id']);
@@ -46,7 +46,7 @@ switch ($method) {
         $notific->setTipoNotificacao(1);
         $notific->setStatusNotificacao(0);
 
-        daoNotificCliente::cadastrar($notific);
+        daoNotifcCliente::cadastrar($notific);
 
         break;
 
