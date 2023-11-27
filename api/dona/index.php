@@ -59,7 +59,23 @@ switch ($method) {
         $vendedora->setCnpjNegocioVendedora($cnpj);
 
         $vendedora->setNivelNegocioVendedora($_POST['nivel'] == "Premium" ? 1 : 0);
-        $vendedora->setChavePixVendedora($_POST['chave']);
+
+        $tipoChave = $_POST['tipo-chave'];
+    
+        $chave = $_POST['chave'];
+
+        if($tipoChave == 1){
+            $chave = str_replace('-', '', $chave);
+            $chave = str_replace('.', '', $chave);
+            $chave = str_replace('/', '', $chave);
+        }else if($tipoChave == 3){
+            $chave = str_replace('-', '', $chave);
+            $chave = str_replace('(', '', $chave);
+            $chave = str_replace(')', '', $chave);
+            $chave = str_replace(' ', '', $chave);
+        }
+
+        $vendedora->setChavePixVendedora($chave);
 
         $categoria = new Categoria();
 

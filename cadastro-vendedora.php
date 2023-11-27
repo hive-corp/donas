@@ -541,22 +541,22 @@
                                 <div class="input">
                                     <label class="form-label">Tipo de chave</label>
                                     <div id="tipo-chave">
-                                        <input type="radio" name="tipo-chave" id="chave-cpf-cnpj" checked>
+                                        <input type="radio" name="tipo-chave" id="chave-cpf-cnpj" value="1" checked>
                                         <label class="chave-pix" for="chave-cpf-cnpj">
                                             CPF/CNPJ
                                         </label>
 
-                                        <input type="radio" name="tipo-chave" id="chave-email">
+                                        <input type="radio" name="tipo-chave" id="chave-email" value="2">
                                         <label class="chave-pix" for="chave-email">
                                             E-mail
                                         </label>
 
-                                        <input type="radio" name="tipo-chave" id="chave-telefone">
+                                        <input type="radio" name="tipo-chave" id="chave-telefone" value="3">
                                         <label class="chave-pix" for="chave-telefone">
                                             Número de telefone
                                         </label>
 
-                                        <input type="radio" name="tipo-chave" id="chave-aleatoria">
+                                        <input type="radio" name="tipo-chave" id="chave-aleatoria" value="4">
                                         <label class="chave-pix" for="chave-aleatoria">
                                             Chave aleatória
                                         </label>
@@ -667,8 +667,9 @@
                         uf = document.getElementById('uf').value,
                         numero = document.getElementById('numero').value,
                         complemento = document.getElementById('complemento').value,
-                        cep = campoCep.value,
-                        chave = document.getElementById('chave').value
+                        cep = campoCep.value
+                        
+                    let chave = document.getElementById('chave').value
 
                     nomeModal.innerText = document.getElementById('nome').value
                     cnpjModal.innerText = campoCnpj.value
@@ -730,7 +731,18 @@
                                 formData.append('comp', complemento)
                                 formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
                                 formData.append('nivel', plano)
+
+                                const tipoChave = document.querySelector('input[name="tipo-chave"]:checked').value
+
+                                if (tipoChave == 1) {
+                                    chave = chave.replace(/\D/g, '')
+                                } else if (tipoChave == 3) {
+                                    chave = chave.replace(/\D/g, '')
+                                    chave = "+"+chave
+                                }
+
                                 formData.append('chave', chave)
+                                formData.append('tipo-chave', tipoChave)
                                 formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
 
                                 fetch('api/dona/index.php', {
