@@ -986,6 +986,7 @@ input:checked+.tipo-login:hover {
 .input-wrapper:has(textarea.is-valid) {
     background-color: #f2fff1;
     border-bottom: 1px solid green;
+    color:#050505
 }
 
 .was-validated .input:has(input:invalid) .invalid-feedback,
