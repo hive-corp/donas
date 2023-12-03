@@ -2094,6 +2094,10 @@ a.veja-mais {
     width: fit-content;
 }
 
+.select-filtro.hide{
+    display: none;
+}
+
 .select-filtro:hover {
     background: #8f95a3;
 }

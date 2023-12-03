@@ -125,9 +125,8 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                                 ?>
                             </select>
 
-                            <select class="select-filtro" name="subcategoria" id="subcategoria">
+                            <select class="select-filtro hide" name="subcategoria" id="subcategoria">
                                 <option value="" selected>Subcategoria</option>
-
                             </select>
                         </div>
                     </div>
@@ -1353,14 +1352,15 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
     });
 </script>
 <script>
-    function atualizarSubcategorias() {
+      function atualizarSubcategorias() {
         var categoriaSelecionada = document.getElementById("categoria").value;
         var subcategoriaDropdown = document.getElementById("subcategoria");
 
-        subcategoriaDropdown.innerHTML = '<option value="" selected>SubCategoria</option>';
+        subcategoriaDropdown.innerHTML = '<option value="" selected>Subcategoria</option>';
 
         if (categoriaSelecionada !== "") {
-            // Use Ajax para buscar subcategorias com base na categoria selecionada
+            subcategoriaDropdown.classList.remove('hide')
+
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -1377,6 +1377,8 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
             xhr.open("GET", "../api/subcategoria/search.php?categoria=" + categoriaSelecionada, true);
             xhr.send();
+        }else{
+            subcategoriaDropdown.classList.add('hide')
         }
     }
 </script>
