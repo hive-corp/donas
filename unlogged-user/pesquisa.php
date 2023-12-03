@@ -1321,36 +1321,65 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
             }
 ?>
 
-</main>    </div>
+</main>
+</div>
 
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
-    <script>
-        var elem = document.querySelectorAll(".carrossel-cards")
+<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/script.js"></script>
+<script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
+<script>
+    var elem = document.querySelectorAll(".carrossel-cards")
 
-        elem.forEach((item) => {
-            new Flickity(item, {
-                cellAlign: "left",
-                prevNextButtons: false,
-                pageDots: false,
-                resize: false,
-                contain: true,
-            });
-        });
-
-        var carro = document.querySelector("#carrossel")
-
-        new Flickity(carro, {
+    elem.forEach((item) => {
+        new Flickity(item, {
+            cellAlign: "left",
             prevNextButtons: false,
-            pageDots: true,
-            resize: true,
-            contain: false,
-            lazyLoad: true,
-            wrapAround: true,
-            autoPlay: 1500
+            pageDots: false,
+            resize: false,
+            contain: true,
         });
-    </script>
+    });
+
+    var carro = document.querySelector("#carrossel")
+
+    new Flickity(carro, {
+        prevNextButtons: false,
+        pageDots: true,
+        resize: true,
+        contain: false,
+        lazyLoad: true,
+        wrapAround: true,
+        autoPlay: 1500
+    });
+</script>
+<script>
+    function atualizarSubcategorias() {
+        var categoriaSelecionada = document.getElementById("categoria").value;
+        var subcategoriaDropdown = document.getElementById("subcategoria");
+
+        subcategoriaDropdown.innerHTML = '<option value="" selected>SubCategoria</option>';
+
+        if (categoriaSelecionada !== "") {
+            // Use Ajax para buscar subcategorias com base na categoria selecionada
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var subcategorias = JSON.parse(xhr.responseText);
+
+                    subcategorias.forEach(function(sub) {
+                        var option = document.createElement("option");
+                        option.value = sub.idSubCategoria;
+                        option.text = sub.nomeSubCategoria;
+                        subcategoriaDropdown.add(option);
+                    });
+                }
+            };
+
+            xhr.open("GET", "../api/subcategoria/search.php?categoria=" + categoriaSelecionada, true);
+            xhr.send();
+        }
+    }
+</script>
 </body>
 
 </html>

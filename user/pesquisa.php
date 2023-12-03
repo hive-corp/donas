@@ -1412,7 +1412,7 @@ if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
                 }
             };
 
-            xhr.open("GET", "buscar_subcategorias.php?categoria=" + categoriaSelecionada, true);
+            xhr.open("GET", "../api/subcategoria/search.php?categoria=" + categoriaSelecionada, true);
             xhr.send();
         }
     }
