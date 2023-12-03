@@ -137,7 +137,7 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare('SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora, fotoNegocioVendedora FROM tbAnuncio
+        $stmt = $connection->prepare('SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora, fotoNegocioVendedora, cnpjNegocioVendedora, cepNegocioVendedora, logNegocioVendedora, cidadeNegocioVendedora, estadoNegocioVendedora, bairroNegocioVendedora, numNegocioVendedora FROM tbAnuncio
                             INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                             INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
                             WHERE idAnuncio = ? ');
@@ -483,12 +483,72 @@ class daoAnuncio
         $lista = $resultado->fetchAll();
         return $lista;
     }
-    public static function pesquisarAnunciosNomeDescricaoTipo($tipo, $string)
+    public static function pesquisarAnunciosNomeDescricaoCategoriaTipoSubcatergoria($categoria, $string, $tipo, $subcategoria)
     {
         $connection = Conexao::conectar();
 
         $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
                         INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        INNER JOIN tbSubCategoria ON tbCategoria.idCategoria = tbSubCategoria.idCategoria
+                        INNER JOIN tbAnuncioSubCategoria ON tbSubCategoria.idSubCategoria = tbAnuncioSubCategoria.idSubCategoria
+                        WHERE tbCategoria.idCategoria = ? AND tipoAnuncio = ? AND tbAnuncioSubCategoria.idSubCategoria = ? AND (nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?) ";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, $tipo);
+        $resultado->bindValue(3, $subcategoria);
+        $resultado->bindValue(4, "%".$string."%");
+        $resultado->bindValue(5, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarAnunciosCategoriaTipoSubcatergoria($categoria, $tipo, $subcategoria)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        INNER JOIN tbSubCategoria ON tbCategoria.idCategoria = tbSubCategoria.idCategoria
+                        INNER JOIN tbAnuncioSubCategoria ON tbSubCategoria.idSubCategoria = tbAnuncioSubCategoria.idSubCategoria
+                        WHERE tbCategoria.idCategoria = ? AND tipoAnuncio = ? AND tbAnuncioSubCategoria.idSubCategoria = ? ";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, $tipo);
+        $resultado->bindValue(3, $subcategoria);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarAnunciosNomeDescricaoCategoriaSubcategoria($categoria, $string, $subcategoria)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        INNER JOIN tbSubCategoria ON tbCategoria.idCategoria = tbSubCategoria.idCategoria
+                        INNER JOIN tbAnuncioSubCategoria ON tbSubCategoria.idSubCategoria = tbAnuncioSubCategoria.idSubCategoria
+                        WHERE tbCategoria.idCategoria = ? AND tbAnuncioSubCategoria.idSubCategoria = ? AND (nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?) ";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $categoria);
+        $resultado->bindValue(2, $subcategoria);
+        $resultado->bindValue(3, "%".$string."%");
+        $resultado->bindValue(4, "%".$string."%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarAnunciosNomeDescricaoTipo($tipo, $string)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                       INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                         INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
                         WHERE tipoAnuncio = ? AND nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?";
 
@@ -511,6 +571,25 @@ class daoAnuncio
 
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $tipo);
+        $resultado->bindValue(2, $categoria);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    
+    public static function pesquisarSubCategoriaCategoria($Subcategoria, $categoria)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                      INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        INNER JOIN tbSubCategoria ON tbCategoria.idCategoria = tbSubCategoria.idCategoria
+                        INNER JOIN tbAnuncioSubCategoria ON tbSubCategoria.idSubCategoria = tbAnuncioSubCategoria.idSubCategoria
+                        WHERE tbAnuncioSubCategoria.idSubCategoria = ? AND tbCategoria.idCategoria = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $Subcategoria);
         $resultado->bindValue(2, $categoria);
         $resultado->execute();
         $lista = $resultado->fetchAll();

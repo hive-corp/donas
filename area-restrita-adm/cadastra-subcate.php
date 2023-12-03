@@ -527,14 +527,13 @@ error_reporting(E_ALL);
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title h3 mb-0 text-gray-800"
-                        style="display: block; margin-left: auto; margin-right: auto;"><a href="denuncias.php">Alteração
-                            de Status</a></h3>
+                        style="display: block; margin-left: auto; margin-right: auto;"><a href="denuncias.php">Subcategoria cadastrada</a></h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h5 style="text-align: center; font-weight: bold;">Alterando status da Vendedora!</h5>
+                    <h5 style="text-align: center; font-weight: bold;">Subcategoria cadastrada com sucesso!</h5>
                     <h6 style="text-align: center; font-weight: bold;">Aguarde!</h6>
                     <div id="loading" style="display: none; text-align: center;">
                         <div class="spinner-border" role="status">

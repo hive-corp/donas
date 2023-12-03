@@ -6,6 +6,7 @@ require_once "global.php";
 if (isset($_GET['a'])) {
     $anuncio = daoAnuncio::consultarPorId($_GET['a']);
 }
+$clien = daoCliente::consultarPorId($_SESSION['id']);
 
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -152,8 +153,10 @@ date_default_timezone_set('America/Sao_Paulo');
                                 <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
                                 <div class="input-wrapper">
                                     <select name="forma-pagamento" id="forma-pagamento" required>
-                                        <option value="1">PIX</option>
-                                        <option value="2">Boleto</option>
+                                        <option value="1" selected style="background: var(--select-bg);
+    color: var(--text-color);">PIX</option>
+                                        <option value="2" style="background: var(--select-bg);
+    color: var(--text-color);">Boleto</option>
                                     </select>
                                 </div>
                                 <div class="invalid-feedback">
@@ -163,6 +166,19 @@ date_default_timezone_set('America/Sao_Paulo');
                             <div id="qrcode-pix">
                                 <div id="loading-pix"></div>
                                 <img src="" alt="QR Code do PIX" id="qr-code" class="hide">
+                            </div>
+                            <div id="boleto" style="display: none;">
+                                <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                                    <p class="section-title load" style="text-align: center">Clique no botão para gerar o boleto</p>
+                                    <div class=" d-flex justify-content-around">
+                                        <a target="_blank" onclick="gerarBoleto()" class="button">
+                                            <i class="bi bi-card-heading"></i>
+                                            <span>Gerar boleto</span>
+                                        </a>
+                                    </div>
+
+
+                                </div>
                             </div>
                             <p class="text-center">Você tem <span class="highlight" id="tempo-restante">8 minutos e 0 segundos</span> restantes</p>
                         </div>
@@ -329,27 +345,27 @@ date_default_timezone_set('America/Sao_Paulo');
                             }
                             ?>
                             <?php if ($anuncio['nivelNegocioVendedora'] == 1) { ?>
-                            <div id="avaliacao-anuncio">
-                                <?php
-                                $qtdestrelas = $anuncio['estrelasAnuncio'];
+                                <div id="avaliacao-anuncio">
+                                    <?php
+                                    $qtdestrelas = $anuncio['estrelasAnuncio'];
 
-                                for ($i = 0; $i < $qtdestrelas; $i++) {
-                                ?>
-                                    <i class="bi bi-star-fill"></i>
-                                <?php
-                                }
+                                    for ($i = 0; $i < $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
 
-                                for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
-                                ?>
-                                    <i class="bi bi-star"></i>
-                                <?php
-                                }
-                                $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
+                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+                                    $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
 
-                                echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
-                                ?>
-                            </div>
-                            <?php }?>
+                                    echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
+                                    ?>
+                                </div>
+                            <?php } ?>
                             <div id="categoria-anuncio">
                                 <?php echo $anuncio['nomeCategoria'] ?>
                             </div>
@@ -544,7 +560,7 @@ date_default_timezone_set('America/Sao_Paulo');
                     clearInterval(cronometro);
 
                     document.getElementById('modal-pagamento').classList.remove('show')
-                    
+
                     document.querySelector('.modal-backdrop').remove()
                     new bootstrap.Modal(document.getElementById('modal-cancelado')).toggle();
                 }
@@ -579,7 +595,11 @@ date_default_timezone_set('America/Sao_Paulo');
             }
         })
     </script>
+
     <script>
+        var valorAtualizado = "<?php echo $anuncio['valorAnuncio'] ?>";
+        var quantidadeSalva = 1; // Declara uma variável para armazenar a quantidade
+
         function atualizarValor() {
             // Obtém referências aos elementos DOM
             var quantidadeInput = document.getElementById("qtd");
@@ -588,7 +608,7 @@ date_default_timezone_set('America/Sao_Paulo');
             // Obtém o valor original e a quantidade
             var valorItem = parseFloat(document.getElementById("valor").getAttribute("value"));
             var quantidade = parseInt(quantidadeInput.value);
-
+            quantidadeSalva = parseInt(quantidadeInput.value); // Salva a quantidade
             // Verifica se a quantidade é válida (maior que 0)
             if (quantidade > 0) {
                 // Calcula o novo valor multiplicando a quantidade pelo valor do item
@@ -596,11 +616,41 @@ date_default_timezone_set('America/Sao_Paulo');
 
                 // Atualiza o campo de valor com o novo valor calculado
                 valorInput.value = novoValor.toFixed(2); // Arredonda para duas casas decimais
+                valorAtualizado = novoValor;
+
             } else {
                 // Se a quantidade for 0 ou menor, define o valor como 0
                 valorInput.value = 0;
+                valorAtualizado = 0;
             }
+
         }
+
+        function gerarBoleto() {
+            // Obtém o valor atualizado
+            var url = "../api/boleto/boleto_bb.php?v=<?php echo $_SESSION['nome'] ?>&bairroCliente=<?php echo $clien['bairroCliente'] ?>&numCliente=<?php echo $clien['numeroCliente'] ?>&negocio=<?php echo $anuncio['nomeNegocioVendedora'] ?>&cnpj=<?php echo $anuncio['cnpjNegocioVendedora'] ?>&cidade=<?php echo $anuncio['cidadeNegocioVendedora'] ?>&valorUni=<?php echo $anuncio['valorAnuncio'] ?>&estado=<?php echo $anuncio['estadoNegocioVendedora'] ?>&cep=<?php echo $anuncio['cepNegocioVendedora'] ?>&bairro=<?php echo $anuncio['bairroNegocioVendedora'] ?>&num=<?php echo $anuncio['numNegocioVendedora'] ?>&qtd=" + quantidadeSalva + "&valor=" + valorAtualizado;
+
+            // Abre a URL em outra aba
+            window.open(url, '_blank');
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Quando o valor do select mudar
+            $("#forma-pagamento").change(function() {
+                // Verifique se o valor selecionado é "Boleto"
+                if ($(this).val() === "2") {
+                    // Se for, mostre o elemento #boleto e esconda #qrcode-pix
+                    $("#boleto").show();
+                    $("#qrcode-pix").hide();
+                } else {
+                    // Caso contrário, mostre o elemento #qrcode-pix e esconda #boleto
+                    $("#qrcode-pix").show();
+                    $("#boleto").hide();
+                }
+            });
+        });
     </script>
 </body>
 

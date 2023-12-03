@@ -28,7 +28,7 @@
     $anuncio->setIdAnuncio($id);
     $notific->setAnuncio($anuncio);
 
-    $notific->setTipoNotificacao(5);
+    $notific->setTipoNotificacao(6);
     $notific->setStatusNotificacao(0);
 
     daoNotifcCliente::cadastrar($notific);

@@ -327,4 +327,16 @@ public static function alterarStatus($cliente)
 
         return $countVendBloq;
     }
+        public static function consultarPorId($id)
+    {
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT * FROM tbCliente
+                            WHERE idCliente = ?');
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        $dados = $stmt->fetch();
+
+        return $dados;
+    }
 }

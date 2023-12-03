@@ -525,7 +525,7 @@ $denuncias = daoDenuncia::graficoDenuncias();
                                 <div class="card-body">
                                     <?php foreach ($ultimasDenuncias as $denuncia): ?>
                                         <h5>
-                                            <?php echo $denuncia['nomeVendedora']; ?>
+                                            <?php echo $denuncia['nomeCliente']; ?>
                                         </h5>
                                         <a href="ver-mais-denu.php?id=<?php echo $denuncia['idDenuncia']; ?>">
                                             <div class="customer-wrapper">

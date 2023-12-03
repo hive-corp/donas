@@ -88,10 +88,12 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <div class="input input-pagamento">
                             <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
                             <div class="input-wrapper">
-                                <select name="forma-pagamento" id="forma-pagamento" style="background: var(--select-bg);
+                                 <select name="forma-pagamento" id="forma-pagamento" style="background: var(--select-bg);
     color: var(--text-color);" required>
-                                    <option value="1">PIX</option>
-                                    <option value="2">Boleto</option>
+                                    <option selected value="1" style="background: var(--select-bg);
+    color: var(--text-color);">PIX</option>
+                                    <option value="2" style="background: var(--select-bg);
+    color: var(--text-color);">Boleto</option>
                                 </select>
                             </div>
                             <div class="invalid-feedback">
@@ -102,7 +104,19 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             <div id="loading-pix"></div>
                             <img src="../assets/media/PagamentoPraGnete.png" alt="QR Code do PIX" id="qr-code" class="hide m-3">
                         </div>
-                       
+                        <div id="boleto"  style="display: none;">
+                            <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                        <p class="section-title load" style="text-align: center">Clique no botão para gerar o boleto</p>
+                        <div class=" d-flex justify-content-around">
+                        <a id="new-product" target="_blank" onclick="gerarBoleto()" class="button">
+                        <i class="bi bi-card-heading"></i>
+                            <span>gerar boleto</span>
+                        </a>
+                        </div>
+                        
+
+                    </div>
+                            </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="submit" class="button">Confirmar</button>
@@ -330,8 +344,22 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <div class="data-encomenda-anuncio">
                                     <label for="" class="form-label">Data do pedido</label>
                                     <div class="input-wrapper">
-                                        <?php echo $p['dataPedidoEntregue'] ?>
+                                        <?php
+                                      $dataPedido = new DateTime($p['dataPedidoEntregue']);
+                                        echo $dataPedido->format("d/m/Y");?>
                                     </div>
+					  <div class="data-encomenda-anuncio">
+                                    <label for="" class="form-label">Quantidade</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['qtdProdutoPedido'] ?>
+                                    </div>
+                                </div>
+                                <div class="data-encomenda-anuncio">
+                                    <label for="" class="form-label">Valor</label>
+                                    <div class="input-wrapper">
+                                    <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                             <div class="opcoes-encomenda">
@@ -370,10 +398,26 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                         <?php echo $p['nomeAnuncio'] ?>
                                     </div>
                                 </div>
-                                <div class="data-encomenda-anuncio">
+                               <div class="data-encomenda-anuncio">
                                     <label for="" class="form-label">Data do serviço</label>
                                     <div class="input-wrapper">
-                                        <?php echo $p['dataServicoMarcado'] ?>
+                                        <?php $dataServicoContratado = new DateTime($p['dataServicoContratado']);
+echo $dataServicoContratado->format("d/m/Y H:i:s");?>
+                                    </div>
+                                </div>
+                                <div class="data-encomenda-anuncio">
+                                    <label for="" class="form-label">Data do serviço marcado</label>
+                                    <div class="input-wrapper">
+                                        <?php 
+                                        $dataServicoMarcado = new DateTime($p['dataServicoMarcado']);
+                                        echo $dataServicoMarcado->format("d/m/Y H:i:s")?>
+                                    </div>
+                                </div>
+                                
+                                <div class="data-encomenda-anuncio">
+                                    <label for="" class="form-label">Valor</label>
+                                    <div class="input-wrapper">
+                                    <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
                                     </div>
                                 </div>
                             </div>
@@ -515,6 +559,36 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
         
          })
     </script>
+	     <script>
+        function gerarBoleto() {
+        // Obtém o valor atualizado
+        var url = "../api/boleto/boleto_bb.php?v=<?php echo $_SESSION['username'] ?>&bairroCliente=<?php echo $dados['bairroNegocioVendedora'] ?>&numCliente=<?php echo $dados['numNegocioVendedora'] ?>&negocio=Hive&cnpj=79798353000139&cidade=São Paulo&valorUni=49&estado=SP&cep=&bairro=&num=&qtd=1&valor=49" ;
+
+    // Abre a URL em outra aba
+    window.open(url, '_blank');
+    }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Quando o valor do select mudar
+        $("#forma-pagamento").change(function() {
+            // Verifique se o valor selecionado é "Boleto"
+            if ($(this).val() === "2") {
+                // Se for, mostre o elemento #boleto e esconda #qrcode-pix
+                $("#boleto").show();
+                $("#qrcode-pix").hide();
+            } else {
+                // Caso contrário, mostre o elemento #qrcode-pix e esconda #boleto
+                $("#qrcode-pix").show();
+                $("#boleto").hide();
+            }
+        });
+    });
+   
+
+
+</script>
 </body>
 
 </html>

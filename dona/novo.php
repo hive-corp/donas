@@ -111,6 +111,11 @@ require_once "validador.php";
                         <div class="input-wrapper">
                         </div>
                     </div>
+                    <div class="sub-modal">
+                        <div class="form-label">Subcategorias</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="button button-secondary" data-bs-dismiss="modal">Voltar</button>
@@ -245,6 +250,7 @@ require_once "validador.php";
                                 Insira um preço para o anúncio
                             </div>
                         </div>
+                        
                         <div class="input" id="qtd-anuncio">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
@@ -254,6 +260,7 @@ require_once "validador.php";
                                 Informe um valor inicial de estoque
                             </div>
                         </div>
+                      
                         <div class="input">
                             <label class="form-label" for="desc">Descrição<span>*</span></label>
                             <div class="input-wrapper">
@@ -317,19 +324,26 @@ require_once "validador.php";
                     tipoModal = document.querySelector('.tipo-modal .input-wrapper'),
                     estoqueModal = document.querySelector('.estoque-modal .input-wrapper'),
                     descModal = document.querySelector('.desc-modal .input-wrapper'),
+                    subModal = document.querySelector('.sub-modal .input-wrapper'),
                     AnuncioSubCategoriaCheck = document.querySelectorAll('input[name=subCategorias]:checked')
+
+                let subcategorias = ""
 
                 let AnuncioSubCategoria = []
 
                 AnuncioSubCategoriaCheck.forEach(item => {
                     AnuncioSubCategoria.push(item.value)
+                    subcategorias+=`${item.id}, `
                 })
+
+                subcategorias = subcategorias.slice(0, -2)
 
                 nomeModal.innerText = document.getElementById('nome-anuncio-cadastro').value
                 precoModal.innerText = document.getElementById('preco').value
                 tipoModal.innerText = document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].text
                 estoqueModal.innerText = document.getElementById('estoque').value
                 descModal.innerText = document.getElementById('desc').value
+                subModal.innerText = subcategorias
 
                 confirmarCadastro.addEventListener('click', () => {
                     let canvas = cropper.getCroppedCanvas({
@@ -338,6 +352,8 @@ require_once "validador.php";
                     })
 
                     canvas.toBlob(function(blob) {
+                        
+
                         let formData = new FormData()
 
                         formData.append('foto', blob, 'photo.png')
@@ -347,7 +363,7 @@ require_once "validador.php";
                         formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
                         formData.append('qtd', document.getElementById('estoque').value)
                         formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
-
+         
                         fetch('../api/anuncio/', {
                             method: 'POST',
                             header: {

@@ -212,6 +212,7 @@ require_once "validador.php";
                                 ?>
                                     Sua encomenda foi finalizada.
                                 <?php
+                                    break;
                                 case 7:
                                 ?>
                                     Seu serviço foi recebido.

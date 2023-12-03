@@ -376,7 +376,7 @@ class daoVendedora
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE statusVendedora = 2");
+        $stmt = $connection->prepare("SELECT COUNT(idVendedora) FROM tbVendedora WHERE statusVendedora = 0");
         $stmt->execute();
 
         $countVendBloq = $stmt->fetch()[0];

@@ -129,7 +129,19 @@ require_once "validador.php";
             <div id="main-title">
                 Seus pedidos
             </div>
+            
+                 
             <div id="content">
+            <?php
+                $encomenda = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
+                $servicos = daoPedidoServico::listarPedidosCliente($_SESSION['id']);
+                if (empty($encomenda) && empty($servicos)) {
+                    ?>
+                      <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+<p class="section-title load" style="text-align: center">Nenhum pedido ou serviço encontrado</p>
+</div>
+                    <?php
+                }else {?>
                 <div id="encomendas">
                     
                     <?php
@@ -256,6 +268,9 @@ require_once "validador.php";
                    <?php
                    }
                    ?>
+                   <?php
+            }
+            ?>
                 </div>
 
             </div>
