@@ -242,7 +242,7 @@ require_once "validador.php";
                         <div class="input">
                             <label class="form-label" for="preco">Preço<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="number" name="preco" id="preco" required>
+                                <input type="number" name="preco" id="preco" required  step="0.01" onblur="adicionarCasasDecimais(this)">
                             </div>
                             <div class="invalid-feedback">
                                 Insira um preço para o anúncio
@@ -449,6 +449,22 @@ require_once "validador.php";
             document.querySelector('.foto-modal').src = imgSrc
         });
     </script>
+<script>
+
+function adicionarCasasDecimais(input) {
+    // Adiciona .00 se não houver casas decimais
+    if (input.value && !/\.\d{2}$/.test(input.value)) {
+        // Adiciona .0 se houver apenas uma casa decimal
+        if (/\.\d$/.test(input.value)) {
+            input.value += '0';
+        }
+        input.value += '.00';
+    }
+}
+
+
+</script>
+
 </body>
 
 </html>
