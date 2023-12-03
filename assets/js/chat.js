@@ -75,7 +75,7 @@ const mostrarMensagens = (dados) => {
                     container: waveform,
                     waveColor: item.origemMensagem == type ? '#ca35b0' : '#bbb',
                     height: 50,
-                    progressColor: item.origemMensagem == type ? 'white' : 'gray' ,
+                    progressColor: item.origemMensagem == type ? 'white' : 'gray',
                     dragToSeek: true,
                     cursorColor: 'white',
                     cursorWidth: 2,
@@ -132,12 +132,12 @@ const mostrarMensagens = (dados) => {
                 msg.append(start)
                 msg.append(waveform)
                 msg.append(audioDuration)
-            }else if(extension == ".png") {
+            } else if (extension == ".png") {
                 let img = document.createElement('img')
                 img.src = '../' + item.arquivoMensagem
 
                 msg.append(img)
-            }else{
+            } else {
                 let documentElement = document.createElement('a')
                 documentElement.className = "document"
 
@@ -151,7 +151,7 @@ const mostrarMensagens = (dados) => {
                 let documentName = document.createElement('div')
                 documentName.className = "document-name"
 
-                documentName.innerText = "document"+extension
+                documentName.innerText = "document" + extension
 
                 documentElement.append(documentIcon)
                 documentElement.append(documentName)
@@ -188,8 +188,6 @@ const resgatarMensagens = async (nome, foto, apelido) => {
     conversas.classList.toggle('hide')
     main.classList.toggle('hide')
 
-
-    optionsChat.classList.remove('hide')
     chat.classList.remove('hide')
     mainMessageContainer.classList.remove('hide')
 
@@ -200,11 +198,13 @@ const resgatarMensagens = async (nome, foto, apelido) => {
     nomeConversa.innerText = nome
     username = apelido
 
-    linkDestino.href = "profile.php?user=" + apelido
     linkDestino.classList.remove('hide')
 
-    document.querySelector('#acessar-perfil') != null ? document.querySelector('#acessar-perfil').href = "profile.php?user=" + apelido : null
-
+    if (type == 0) {
+        optionsChat.classList.remove('hide')
+        linkDestino.href = "profile.php?user=" + apelido
+        document.querySelector('#acessar-perfil') != null ? document.querySelector('#acessar-perfil').href = "profile.php?user=" + apelido : null
+    }
     var dadosAnteriores = await consultaMensagens(apelido)
 
     mostrarMensagens(dadosAnteriores)

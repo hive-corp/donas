@@ -183,25 +183,6 @@ require_once "validador.php";
                     <img src="../assets/media/foto.png" alt="" id="foto-chat">
                 </a>
                 <div>Escolha uma conversa ao lado</div>
-                <div class="dropdown-start dropdown d-flex justify-content-end" id="config-chat">
-                    <button class="options-button hide" id="options-chat" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-                        <li>
-                            <a class="dropdown-item" href="product.php">
-                                <i class="bi bi-person"></i>
-                                Acessar perfil
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item">
-                                <i class="bi bi-x"></i>
-                                Excluir conversa
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
             <div id="content">
                 <img src="../assets/media/rosas.svg" class="rosa-fundo">
