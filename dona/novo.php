@@ -12,14 +12,14 @@ require_once "validador.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novo produto/serviço</title>
-    
+
 
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
-   
+
 </head>
 
 <body>
@@ -97,15 +97,13 @@ require_once "validador.php";
                         <div class="input-wrapper">
                         </div>
                     </div>
-                    
+
                     <div class="estoque-modal">
-                   
                         <div class="form-label">Estoque</div>
-                        <div class="input-wrapper" >
+                        <div class="input-wrapper">
                         </div>
-                        
                     </div>
-                  
+
                     <div class="desc-modal">
                         <div class="form-label">Descrição</div>
                         <div class="input-wrapper">
@@ -174,7 +172,7 @@ require_once "validador.php";
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-                <a >
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -186,24 +184,24 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <main id="main">
@@ -250,7 +248,7 @@ require_once "validador.php";
                                 Insira um preço para o anúncio
                             </div>
                         </div>
-                        
+
                         <div class="input" id="qtd-anuncio">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
@@ -260,7 +258,7 @@ require_once "validador.php";
                                 Informe um valor inicial de estoque
                             </div>
                         </div>
-                      
+
                         <div class="input">
                             <label class="form-label" for="desc">Descrição<span>*</span></label>
                             <div class="input-wrapper">
@@ -333,7 +331,7 @@ require_once "validador.php";
 
                 AnuncioSubCategoriaCheck.forEach(item => {
                     AnuncioSubCategoria.push(item.value)
-                    subcategorias+=`${item.id}, `
+                    subcategorias += `${item.id}, `
                 })
 
                 subcategorias = subcategorias.slice(0, -2)
@@ -343,7 +341,12 @@ require_once "validador.php";
                 tipoModal.innerText = document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].text
                 estoqueModal.innerText = document.getElementById('estoque').value
                 descModal.innerText = document.getElementById('desc').value
-                subModal.innerText = subcategorias
+
+                if(subcategorias != ""){
+                    subModal.innerText = subcategorias
+                }else{
+                    subModal.innerText = "Nenhum"
+                }
 
                 confirmarCadastro.addEventListener('click', () => {
                     let canvas = cropper.getCroppedCanvas({
@@ -352,7 +355,7 @@ require_once "validador.php";
                     })
 
                     canvas.toBlob(function(blob) {
-                        
+
 
                         let formData = new FormData()
 
@@ -363,7 +366,7 @@ require_once "validador.php";
                         formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
                         formData.append('qtd', document.getElementById('estoque').value)
                         formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
-         
+
                         fetch('../api/anuncio/', {
                             method: 'POST',
                             header: {
@@ -389,22 +392,23 @@ require_once "validador.php";
 
             estoque.classList.remove('show')
             document.querySelector('#estoque').setAttribute('required', false)
-          
+
         })
+
         function atualizarVisibilidadeEstoque() {
-        if (tipoAnuncio.value === '2') {
-            // Se o tipo de anúncio for "Produto", mostrar a seção de estoque
-            estoqueModalssss.style.display = 'block';
-        } else {
-            // Se não for "Produto", esconder a seção de estoque
-            estoqueModalssss.style.display = 'none';
+            if (tipoAnuncio.value === '2') {
+                // Se o tipo de anúncio for "Produto", mostrar a seção de estoque
+                estoqueModalssss.style.display = 'block';
+            } else {
+                // Se não for "Produto", esconder a seção de estoque
+                estoqueModalssss.style.display = 'none';
+            }
         }
-    }
 
-    tipoAnuncio.addEventListener('change', atualizarVisibilidadeEstoque);
+        tipoAnuncio.addEventListener('change', atualizarVisibilidadeEstoque);
 
-    // Chamar a função para definir a visibilidade inicial com base no valor inicial do tipo
-    atualizarVisibilidadeEstoque();
+        // Chamar a função para definir a visibilidade inicial com base no valor inicial do tipo
+        atualizarVisibilidadeEstoque();
 
 
         fotoInput.addEventListener('change', e => {

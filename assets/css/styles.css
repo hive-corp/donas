@@ -220,7 +220,8 @@ svg {
         "foto foto"
         "nome tipo"
         "preco estoque"
-        "desc desc";
+        "desc desc"
+        "sub sub";
     gap: 16px
 }
 
@@ -410,6 +411,10 @@ svg {
 
 .endereco-modal {
     grid-area: endereco;
+}
+
+.sub-modal{
+    grid-area: sub;
 }
 
 #form-cadastro {
