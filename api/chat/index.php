@@ -48,7 +48,7 @@ if (isset($_GET['type']) && isset($_GET['username'])) {
     }
 }
 
-if (isset($_GET['type']) && $_GET['type']=='chats') {
+if (isset($_GET['type']) && $_GET['type'] == 'chats') {
     session_start();
     if ($_SESSION['tipo-login'] == 0) {
         $cliente = new Cliente();
@@ -75,7 +75,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case "POST":
-
         $mensagem = new Mensagem();
         $mensagem->setConteudoMensagem(isset($_POST['conteudo']) ? $_POST['conteudo'] : "");
 
@@ -113,6 +112,23 @@ switch ($method) {
             $mensagem->setCliente($cliente);
         }
 
+        if (!daoMensagem::consultaTemConversa($mensagem)) {
+            $notific = new NotifcVendedora();
+
+            $notific->setCliente($cliente);
+
+            $anuncio = new Anuncio();
+            $anuncio->setIdAnuncio(null);
+            $notific->setAnuncio($anuncio);
+
+            $notific->setVendedora($vendedora);
+
+            $notific->setTipoNotificacao(1);
+            $notific->setStatusNotificacao(0);
+
+            daoNotifcVendedora::cadastrar($notific);
+        }
+
         daoMensagem::criar($mensagem);
 
         if (isset($_FILES["arquivo"]) && !empty($_FILES["arquivo"]["name"])) {
@@ -121,7 +137,7 @@ switch ($method) {
 
                 $nomearquivo = $_FILES['arquivo']['name'];
 
-                $extensao = strtolower(pathinfo($nomearquivo,PATHINFO_EXTENSION));
+                $extensao = strtolower(pathinfo($nomearquivo, PATHINFO_EXTENSION));
                 $arquivo = "assets/media/messages/" . $id . "." . $extensao;
 
                 move_uploaded_file($_FILES['arquivo']['tmp_name'], "../../" . $arquivo);
@@ -131,7 +147,12 @@ switch ($method) {
 
                 daoMensagem::editarArquivo($mensagem);
 
-                echo $arquivo;
+                if (isset($_POST['nome-arquivo'])) {
+                    $nomearquivo = $_POST['nome-arquivo'];
+                    $mensagem->setNomeArquivoMensagem($nomearquivo);
+
+                    daoMensagem::editarNomeArquivo($mensagem);
+                }
             }
         }
 

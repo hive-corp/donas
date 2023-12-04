@@ -6,12 +6,13 @@ header("Location: seus-pedidos.php");
 
 session_start();
 
-$encomenda = new PedidoProduto();
-$encomenda->setIdPedidoProduto($_GET['p']);
+$agendar = new PedidoServico();
 
-daoPedidoProduto::cancelar($encomenda);
+$agendar->setIdPedidoServico($_GET['e']);
 
-$id = daoPedidoProduto::consultarPorId($_GET['p'])['idAnuncio'];
+daoPedidoServico::cancelar($agendar);
+
+$id = daoPedidoServico::consultarPorId($_GET['e'])['idAnuncio'];
 $idcliente = $_SESSION['id'];
 $idvendedora = daoAnuncio::consultarPorId($id)['idVendedora'];
 
@@ -21,7 +22,6 @@ $cliente = new Cliente();
 $cliente->setIdCliente($idcliente);
 $notific->setCliente($cliente);
 
-
 $anuncio = new Anuncio();
 $anuncio->setIdAnuncio($id);
 $notific->setAnuncio($anuncio);
@@ -30,7 +30,7 @@ $vendedora = new Vendedora();
 $vendedora->setIdVendedora($idvendedora);
 $notific->setVendedora($vendedora);
 
-$notific->setTipoNotificacao(4);
+$notific->setTipoNotificacao(5);
 $notific->setStatusNotificacao(0);
 
 daoNotifcVendedora::cadastrar($notific);

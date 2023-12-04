@@ -141,7 +141,7 @@ const mostrarMensagens = (dados) => {
                 let documentElement = document.createElement('a')
                 documentElement.className = "document"
 
-                documentElement.download = "documento"
+                documentElement.download = item.nomeArquivoMensagem
 
                 documentElement.href = `../${item.arquivoMensagem}`
 
@@ -151,7 +151,7 @@ const mostrarMensagens = (dados) => {
                 let documentName = document.createElement('div')
                 documentName.className = "document-name"
 
-                documentName.innerText = "document" + extension
+                documentName.innerText = item.nomeArquivoMensagem
 
                 documentElement.append(documentIcon)
                 documentElement.append(documentName)
@@ -602,6 +602,8 @@ messageDocument.addEventListener('change', e => {
 
         var extension = e.target.files[0].name.match(/\.[0-9a-z]+$/i);
 
+        var nomeArquivo = e.target.files[0].name
+
         const reader = new FileReader();
         reader.onload = async e => {
             if (e.target.result) {
@@ -611,6 +613,7 @@ messageDocument.addEventListener('change', e => {
                 let formData = new FormData()
 
                 formData.append('arquivo', docBlob, `document${extension}`)
+                formData.append('nome-arquivo', nomeArquivo)
                 formData.append('username', username)
 
                 fetch('../api/chat/', {

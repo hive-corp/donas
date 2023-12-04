@@ -8,6 +8,7 @@
         private $lidoEmMensagem ;
         private $origemMensagem;
         private $arquivoMensagem;
+        private $nomeArquivoMensagem;
         private $Cliente ;
         private $Vendedora ;
  
@@ -41,6 +42,9 @@
         public function getArquivoMensagem() {
             return $this->arquivoMensagem;
         }
+        public function getNomeArquivoMensagem() {
+            return $this->nomeArquivoMensagem;
+        }
         public function setIdMensagem($idMensagem) {
             $this->idMensagem=$idMensagem;
         }
@@ -64,6 +68,9 @@
         }
         public function setArquivoMensagem($arquivoMensagem) {
             $this->arquivoMensagem=$arquivoMensagem;
+        }
+        public function setNomeArquivoMensagem($nomeArquivoMensagem) {
+            $this->nomeArquivoMensagem=$nomeArquivoMensagem;
         }
     }
 

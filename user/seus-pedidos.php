@@ -20,7 +20,7 @@ require_once "validador.php";
 
 <body>
     <div id="user-encomenda">
-        <div class="modal pop" id="modal-pedido" tabindex="-1" aria-labelledby="modal-pedido" aria-hidden="true">
+        <div class="modal pop" id="modal-cancelar" tabindex="-1" aria-labelledby="modal-pedido" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -32,6 +32,22 @@ require_once "validador.php";
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <a href="cancelar-pedido.php" class="button button-red" id="cancelar-pedido">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal pop" id="modal-cancelar-servico" tabindex="-1" aria-labelledby="modal-cancelar-servico" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Cancelar serviço</h1>
+                    </div>
+                    <div class="modal-body d-flex flex-column text-center">
+                        Você está prestes a cancelar esse serviço. Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="cancelar-servico.php" class="button button-red" id="cancelar-servico">OK</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +108,7 @@ require_once "validador.php";
                 </a>
             </div>
             <div id="user-info">
-                <a >
+                <a>
                     <img src="../<?php echo $_SESSION['foto'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -129,149 +145,143 @@ require_once "validador.php";
             <div id="main-title">
                 Seus pedidos
             </div>
-            
-                 
+
+
             <div id="content">
-            <?php
+                <?php
                 $encomenda = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
                 $servicos = daoPedidoServico::listarPedidosCliente($_SESSION['id']);
                 if (empty($encomenda) && empty($servicos)) {
-                    ?>
-                      <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
-<p class="section-title load" style="text-align: center">Nenhum pedido ou serviço encontrado</p>
-</div>
-                    <?php
-                }else {?>
-                <div id="encomendas">
-                    
-                    <?php
-                   
-                 
-                  
+                ?>
+                    <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                        <p class="section-title load" style="text-align: center">Nenhum pedido ou serviço encontrado</p>
+                    </div>
+                <?php
+                } else { ?>
+                    <div id="encomendas">
 
-                    $pedidos = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
-
-                    foreach ($pedidos as $p) {
-
-                        
-                    ?>
-                    
-                        <div class="pedido">
-                            <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
-                            <div class="nome-pedido">
-                                <label for="" class="form-label">Pedido</label>
-                                <div class="input-wrapper">
-                                    <?php echo $p['nomeAnuncio'] ?>
-                                </div>
-                            </div>
-                            <div class="preco-pedido">
-                                <label for="" class="form-label">Valor</label>
-                                <div class="input-wrapper">
-                                    <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
-                                </div>
-                            </div>
-                            <div class="data-pedido">
-                                <label for="" class="form-label">Data do pedido</label>
-                                <div class="input-wrapper">
-                                    <?php echo date('d/m/Y', strtotime($p['dataPedidoEntregue'])) ?>
-                                </div>
-                            </div>
-                            <div class="status-pedido">
-                                <label for="" class="form-label">Estado do pedido</label>
-                                <div class="input-wrapper">
-                                    <?php
-                                    switch ($p['statusPedidoProduto']) {
-                                        case 1:
-                                            echo 'Analise';
-                                            break;
-                                        case 2:
-                                            echo 'Cancelado';
-                                            break;
-                                        case 3:
-                                            echo 'Fazendo';
-                                        break;
-                                        case 4:
-                                            echo 'Concluído';
-                                            break;
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <?php if ($p['statusPedidoProduto'] == 1) { ?>
-                            <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idPedidoProduto'] ?>">CANCELAR</button>
                         <?php
-                            }
+
+
+
+
+                        $pedidos = daoPedidoProduto::listarPedidosCliente($_SESSION['id']);
+
+                        foreach ($pedidos as $p) {
+
+
                         ?>
-                        </div>
+
+                            <div class="pedido">
+                                <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
+                                <div class="nome-pedido">
+                                    <label for="" class="form-label">Pedido</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['nomeAnuncio'] ?>
+                                    </div>
+                                </div>
+                                <div class="preco-pedido">
+                                    <label for="" class="form-label">Valor</label>
+                                    <div class="input-wrapper">
+                                        <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
+                                    </div>
+                                </div>
+                                <div class="data-pedido">
+                                    <label for="" class="form-label">Data do pedido</label>
+                                    <div class="input-wrapper">
+                                        <?php echo date('d/m/Y', strtotime($p['dataPedidoEntregue'])) ?>
+                                    </div>
+                                </div>
+                                <div class="status-pedido">
+                                    <label for="" class="form-label">Estado do pedido</label>
+                                    <div class="input-wrapper">
+                                        <?php
+                                        switch ($p['statusPedidoProduto']) {
+                                            case 1:
+                                                echo 'Analise';
+                                                break;
+                                            case 2:
+                                                echo 'Cancelado';
+                                                break;
+                                            case 3:
+                                                echo 'Fazendo';
+                                                break;
+                                            case 4:
+                                                echo 'Concluído';
+                                                break;
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <?php if ($p['statusPedidoProduto'] == 1) { ?>
+                                    <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-cancelar" data-id="<?php echo $p['idPedidoProduto'] ?>">CANCELAR</button>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+
+                        $pedidos = daoPedidoServico::listarPedidosCliente($_SESSION['id']);
+                        foreach ($pedidos as $p) {
+                        ?>
+
+                            <div class="pedido">
+                                <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
+                                <div class="nome-pedido">
+                                    <label for="" class="form-label">Serviço</label>
+                                    <div class="input-wrapper">
+                                        <?php echo $p['nomeAnuncio'] ?>
+                                    </div>
+                                </div>
+                                <div class="preco-pedido">
+                                    <label for="" class="form-label">Valor</label>
+                                    <div class="input-wrapper">
+                                        <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
+                                    </div>
+                                </div>
+                                <div class="data-pedido">
+                                    <label for="" class="form-label">Data do serviço</label>
+                                    <div class="input-wrapper">
+                                        <?php echo date('d/m/Y', strtotime($p['dataServicoMarcado'])) ?>
+                                    </div>
+                                </div>
+                                <div class="status-pedido">
+                                    <label for="" class="form-label">Estado do serviço</label>
+                                    <div class="input-wrapper">
+                                        <?php
+                                        switch ($p['statusPedidoServico']) {
+                                            case 1:
+                                                echo 'Analise';
+                                                break;
+                                            case 2:
+                                                echo 'Cancelado';
+                                                break;
+                                            case 3:
+                                                echo 'Fazendo';
+                                                break;
+                                            case 4:
+                                                echo 'Concluído';
+                                                break;
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <?php if ($p['statusPedidoServico'] == 1) { ?>
+                                    <button type="button" class="button button-red cancelar-servico mx-auto" data-bs-toggle="modal" data-bs-target="#modal-cancelar-servico" data-id="<?php echo $p['idPedidoServico'] ?>">CANCELAR</button>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
                     <?php
-                    }
+                }
                     ?>
-                    <?php
-                   
-                 
-                  
-
-                   $pedidos = daoPedidoServico::listarPedidosCliente($_SESSION['id']);
-
-                   foreach ($pedidos as $p) {
-
-                       
-                   ?>
-                   
-                       <div class="pedido">
-                           <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="" class="foto-pedido">
-                           <div class="nome-pedido">
-                               <label for="" class="form-label">Serviço</label>
-                               <div class="input-wrapper">
-                                   <?php echo $p['nomeAnuncio'] ?>
-                               </div>
-                           </div>
-                           <div class="preco-pedido">
-                               <label for="" class="form-label">Valor</label>
-                               <div class="input-wrapper">
-                                   <?php echo number_format($p['valorTotal'], 2, ',', '.') ?>
-                               </div>
-                           </div>
-                           <div class="data-pedido">
-                               <label for="" class="form-label">Data do serviço</label>
-                               <div class="input-wrapper">
-                                   <?php echo date('d/m/Y', strtotime($p['dataServicoMarcado'])) ?>
-                               </div>
-                           </div>
-                           <div class="status-pedido">
-                               <label for="" class="form-label">Estado do serviço</label>
-                               <div class="input-wrapper">
-                                   <?php
-                                   switch ($p['statusPedidoServico']) {
-                                       case 1:
-                                           echo 'Analise';
-                                           break;
-                                       case 2:
-                                           echo 'Cancelado';
-                                           break;
-                                       case 3:
-                                           echo 'Fazendo';
-                                       break;
-                                       case 4:
-                                           echo 'Concluído';
-                                           break;
-                                   }
-                                   ?>
-                               </div>
-                           </div>
-                           <?php if ($p['statusPedidoServico'] == 1) { ?>
-                           <button type="button" class="button button-red cancelar-pedido mx-auto" data-bs-toggle="modal" data-bs-target="#modal-pedido" data-id="<?php echo $p['idPedidoServico'] ?>">CANCELAR</button>
-                       <?php
-                           }
-                       ?>
-                       </div>
-                   <?php
-                   }
-                   ?>
-                   <?php
-            }
-            ?>
-                </div>
+                    </div>
 
             </div>
             <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
@@ -282,7 +292,8 @@ require_once "validador.php";
     <script src="../assets/js/script.js"></script>
 
     <script>
-        let cancelarPedido = document.querySelectorAll('.cancelar-pedido')
+        let cancelarPedido = document.querySelectorAll('.cancelar-pedido'),
+            cancelarServico = document.querySelectorAll('.cancelar-servico')
 
         cancelarPedido.forEach(item => {
             let id = item.getAttribute('data-id')
@@ -291,8 +302,15 @@ require_once "validador.php";
                 document.querySelector('#cancelar-pedido').href = `cancelar-pedido.php?p=${id}`
             })
         })
+        cancelarServico.forEach(item => {
+            let id = item.getAttribute('data-id')
+
+            item.addEventListener('click', () => {
+                document.querySelector('#cancelar-servico').href = `cancelar-servico.php?e=${id}`
+            })
+        })
     </script>
-    
+
 </body>
 
 </html>

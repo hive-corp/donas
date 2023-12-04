@@ -51,7 +51,20 @@ require_once "validador.php";
                     </span>
                 </a>
                 <a href="notificacoes.php" class="nav-link active">
-                    <i class="bi bi-bell-fill"></i> <span>
+                    <i class="bi bi-bell">
+                        <?php
+                        if (daoNotifcVendedora::contarNotificacoes($_SESSION['id'])) {
+                        ?>
+                            <span class="counter">
+                                <?php
+                                echo daoNotifcVendedora::contarNotificacoes($_SESSION['id']);
+                                ?>
+                            </span>
+                        <?php
+                        }
+                        ?>
+                    </i>
+                    <span>
                         Notificações
                     </span>
                 </a>
@@ -74,7 +87,7 @@ require_once "validador.php";
                 <span>Criar novo anúncio</span>
             </a>
             <div id="user-info">
-                <a >
+                <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
                 </a>
                 <div id="info-user">
@@ -86,24 +99,24 @@ require_once "validador.php";
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <main id="main">
@@ -112,6 +125,110 @@ require_once "validador.php";
                 Notificações
             </div>
             <div id="content">
+                <?php
+
+                $notificacoes = daoNotifcVendedora::listarNotificacoes($_SESSION['id']);
+
+                foreach ($notificacoes as $n) {
+                ?>
+                    <a class="notificacao<?php echo $n['statusNotificacao'] == 0 ? " new" : "" ?>" <?php
+                                                                                                    switch ($n['tipoNotificacao']) {
+                                                                                                        case 0:
+                                                                                                            break;
+                                                                                                        case 1:
+                                                                                                            $cliente = daoCliente::consultarPorId($n['idCliente']);
+                                                                                                            break;
+                                                                                                        case 2:
+                                                                                                        case 3:
+                                                                                                        case 4:
+                                                                                                        case 5:
+                                                                                                        case 6:
+                                                                                                        case 7:
+                                                                                                            $cliente = daoCliente::consultarPorId($n['idCliente']);
+                                                                                                            $anuncio = daoAnuncio::consultarPorId($n['idAnuncio']);
+                                                                                                            break;
+                                                                                                    } ?>>
+                        <div class="notificacao-img">
+                            <?php
+                            switch ($n['tipoNotificacao']) {
+                                case 0:
+                                    $src = 'assets/media/logo-letra.svg';
+                                    break;
+                                case 1:
+                                    $src = $cliente['fotoCliente'];
+                                    break;
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                    $src = $anuncio['imagemPrincipalAnuncio'];
+                                    break;
+                                default:
+                                    $src = '';
+                                    break;
+                            }
+
+                            ?>
+                            <img src="../<?php echo $src ?>" alt="">
+                        </div>
+                        <div class="notificacao-content">
+                            <?php
+
+                            switch ($n['tipoNotificacao']) {
+                                case 0:
+                            ?>
+                                    Seja bem vinda à plataforma!
+                                <?php
+                                    break;
+                                case 1:
+                                ?>
+                                    Você tem uma nova mensagem!
+                                <?php
+                                    break;
+                                case 2:
+                                ?>
+                                    Você tem uma nova encomenda! - <span class="highlight"><?php echo $anuncio['nomeAnuncio'] ?></span>
+                                <?php
+                                    break;
+                                case 3:
+                                ?>
+                                    Você tem um novo agendamento de serviço! - <span class="highlight"><?php echo $anuncio['nomeAnuncio'] ?></span>
+                                <?php
+                                    break;
+                                case 4:
+                                ?>
+                                    Sua encomenda foi cancelada pelo cliente. - <span class="highlight"><?php echo $anuncio['nomeAnuncio'] ?></span>
+                                <?php
+                                    break;
+                                case 5:
+                                ?>
+                                    Seu serviço foi cancelado pelo cliente. - <span class="highlight"><?php echo $anuncio['nomeAnuncio'] ?></span>
+                                <?php
+                                    break;
+                                case 6:
+                                ?>
+                                    Sua encomenda foi cancelada pela plataforma. - <span class="highlight"><?php echo $anuncio['nomeAnuncio'] ?></span>
+                                <?php
+                                    break;
+                                case 7:
+                                ?>
+                                    Seu serviço foi cancelado pelo cliente. - <span class="highlight"><?php echo $anuncio['nomeAnuncio'] ?></span>
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+                        </div>
+
+                    </a>
+                <?php
+                }
+
+                daoNotifcVendedora::visualizarNotificacoes($_SESSION['id']);
+                ?>
             </div>
             <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
         </main>

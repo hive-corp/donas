@@ -74,6 +74,22 @@ class daoMensagem
         $prepareStatement->execute();
     }
 
+    public static function editarNomeArquivo($Mensagem)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbMensagem
+                            SET nomeArquivoMensagem = ?
+                            WHERE idMensagem = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $Mensagem->getNomeArquivoMensagem());
+        $prepareStatement->bindValue(2, $Mensagem->getIdMensagem());
+
+        $prepareStatement->execute();
+    }
+
     public static function listar()
     {
         $connection = Conexao::conectar();
@@ -90,7 +106,7 @@ class daoMensagem
     {
         $connection = Conexao::conectar();
 
-        $querySelect = 'SELECT conteudoMensagem, arquivoMensagem, TIME_FORMAT(horaMensagem, "%H:%i") as horaMensagem, lidoEmMensagem, origemMensagem, tbCliente.fotoCliente as fotoCliente, tbVendedora.fotoNegocioVendedora as fotoVendedora FROM tbMensagem
+        $querySelect = 'SELECT conteudoMensagem, arquivoMensagem, TIME_FORMAT(horaMensagem, "%H:%i") as horaMensagem, lidoEmMensagem, origemMensagem, nomeArquivoMensagem, tbCliente.fotoCliente as fotoCliente, tbVendedora.fotoNegocioVendedora as fotoVendedora FROM tbMensagem
                         INNER JOIN tbCliente ON tbCliente.idCliente = tbMensagem.idCliente
                         INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbMensagem.idVendedora
                         WHERE tbMensagem.idCliente = ? AND tbMensagem.idVendedora = ?';
@@ -231,5 +247,20 @@ class daoMensagem
         $id = $stmt->fetch()[0];
 
         return $id;
+    }
+
+    public static function consultaTemConversa($mensagem){
+        $connection = Conexao::conectar();
+
+        $stmt = $connection->prepare('SELECT COUNT(idMensagem) FROM tbMensagem
+                                        WHERE idCliente = ? AND idVendedora = ?');
+        $stmt->bindValue(1, $mensagem->getCliente()->getIdCliente());
+        $stmt->bindValue(2, $mensagem->getVendedora()->getIdVendedora());
+        
+        $stmt->execute();
+
+        $qtd = $stmt->fetch()[0];
+
+        return $qtd!=0;
     }
 }
