@@ -128,7 +128,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <h1 class="modal-title fs-5">Cancelar encomenda</h1>
                     </div>
                     <div class="modal-body d-flex flex-column text-center">
-                        Você está prestes a cancelar a encomenda <h5 class="highlight"></h5>. Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
+                        Você está prestes a cancelar a encomenda <h5 class="highlight"></h5> Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -144,7 +144,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <h1 class="modal-title fs-5">Cancelar serviço</h1>
                     </div>
                     <div class="modal-body d-flex flex-column text-center">
-                        Você está prestes a cancelar a serviço <h5 class="highlight"></h5>. Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
+                        Você está prestes a cancelar a serviço <h5 class="highlight"></h5> Tem certeza? Ao cancelar, não será mais possível ter acesso a ele novamente.
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>

@@ -3830,12 +3830,20 @@ a.config-item {
     grid-row: span 1;
 }
 
-.stats-encomendado, .stats-lucro{
+.stats-encomendado{
     display: grid;
     gap: 16px;
     grid-template-columns: auto 1fr;
     align-items: center;
     grid-column: span 5;
+}
+
+.stats-lucro{
+    display:flex;
+    align-items: center;
+    justify-content:space-around;
+    grid-column: span 5;
+    gap: 16px;
 }
 
 .stats-encomendado .preco-card{

@@ -428,19 +428,30 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     $valorTotalCusto = $dadosLucroProduto['valorTotalCusto'] + $dadosLucroServico['valorTotalCusto'];
                     $valorTotalVenda = $dadosLucroProduto['valorTotalVenda'] + $dadosLucroServico['valorTotalVenda'];
 
-                    $margemLucro = ($valorTotalVenda - $valorTotalCusto) / $valorTotalVenda * 100;
+                    if ($valorTotalCusto != 0 && $valorTotalVenda != 0) {
+
+                        $margemLucro = ($valorTotalVenda - $valorTotalCusto) / $valorTotalVenda * 100;
                     ?>
-                    <h4>
-                        Sua taxa de lucro é: <span class="highlight"><?php echo number_format($margemLucro, 0, ',', '.') ?>%</span>
-                    </h4>
-                    <div class="stats-valores">
-                        <div>
-                            Valor de custo: <span class="highlight">R$<?php echo number_format($valorTotalCusto, 2, ',', '.')  ?></span>
+                        <h4>
+                            Sua taxa de lucro é: <span class="highlight"><?php echo number_format($margemLucro, 0, ',', '.') ?>%</span>
+                        </h4>
+                        <div class="stats-valores">
+                            <div>
+                                Valor de custo: <span class="highlight">R$<?php echo number_format($valorTotalCusto, 2, ',', '.')  ?></span>
+                            </div>
+                            <div>
+                                Valor de venda: <span class="highlight">R$<?php echo number_format($valorTotalVenda, 2, ',', '.')  ?></span>
+                            </div>
                         </div>
-                        <div>
-                            Valor de venda: <span class="highlight">R$<?php echo number_format($valorTotalVenda, 2, ',', '.')  ?></span>
-                        </div>
-                    </div>
+                    <?php
+                    } else {
+                    ?>
+                        <h4>
+                            Sem dados suficientes
+                        </h4>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
 
