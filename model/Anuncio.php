@@ -6,6 +6,7 @@
         private $nomeAnuncio ;
         private $descricaoAnuncio ;
         private $valorAnuncio ;
+        private $precoCustoAnuncio ;
         private $estrelasAnuncio ;
         private $imagemPrincipalAnuncio ;
         private $tipoAnuncio ;
@@ -28,6 +29,9 @@
         }
         public function getValorAnuncio() {
             return $this->valorAnuncio;
+        }
+        public function getPrecoCustoAnuncio() {
+            return $this->precoCustoAnuncio;
         }
         public function getEstrelasAnuncio() {
             return $this->estrelasAnuncio;
@@ -55,6 +59,9 @@
         }
         public function setValorAnuncio($valorAnuncio) {
             $this->valorAnuncio = $valorAnuncio;
+        }
+        public function setPrecoCustoAnuncio($precoCustoAnuncio) {
+            $this->precoCustoAnuncio = $precoCustoAnuncio;
         }
         public function setEstrelasAnuncio($estrelasAnuncio) {
             $this->estrelasAnuncio = $estrelasAnuncio;

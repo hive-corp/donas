@@ -97,7 +97,11 @@ require_once "validador.php";
                         <div class="input-wrapper">
                         </div>
                     </div>
-
+                    <div class="preco-custo-modal">
+                        <div class="form-label">Preço de custo</div>
+                        <div class="input-wrapper">
+                        </div>
+                    </div>
                     <div class="estoque-modal">
                         <div class="form-label">Estoque</div>
                         <div class="input-wrapper">
@@ -140,6 +144,12 @@ require_once "validador.php";
                     <i class="bi bi-grid"></i>
                     <span>
                         Encomendas
+                    </span>
+                </a>
+                <a href="faturamento.php" class="nav-link">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>
+                        Faturamento
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link">
@@ -240,15 +250,23 @@ require_once "validador.php";
                             </div>
                         </div>
                         <div class="input">
-                            <label class="form-label" for="preco">Preço<span>*</span></label>
+                            <label class="form-label" for="preco">Preço de venda<span>*</span></label>
                             <div class="input-wrapper">
-                                <input type="number" name="preco" id="preco" required  step="0.01" onblur="adicionarCasasDecimais(this)">
+                                <input type="number" name="preco" id="preco" required step="0.01" onblur="adicionarCasasDecimais(this)">
                             </div>
                             <div class="invalid-feedback">
-                                Insira um preço para o anúncio
+                                Insira um preço de venda para o anúncio
                             </div>
                         </div>
-
+                        <div class="input">
+                            <label class="form-label" for="preco-custo">Preço de custo<span>*</span></label>
+                            <div class="input-wrapper">
+                                <input type="number" name="preco-custo" id="preco-custo" required step="0.01" onblur="adicionarCasasDecimais(this)">
+                            </div>
+                            <div class="invalid-feedback">
+                                Insira um preço de custo para o anúncio
+                            </div>
+                        </div>
                         <div class="input" id="qtd-anuncio">
                             <label class="form-label" for="estoque">Estoque<span>*</span></label>
                             <div class="input-wrapper">
@@ -319,6 +337,7 @@ require_once "validador.php";
 
                 const nomeModal = document.querySelector('.nome-modal .input-wrapper'),
                     precoModal = document.querySelector('.preco-modal .input-wrapper'),
+                    precoCustoModal = document.querySelector('.preco-custo-modal .input-wrapper'),
                     tipoModal = document.querySelector('.tipo-modal .input-wrapper'),
                     estoqueModal = document.querySelector('.estoque-modal .input-wrapper'),
                     descModal = document.querySelector('.desc-modal .input-wrapper'),
@@ -338,13 +357,14 @@ require_once "validador.php";
 
                 nomeModal.innerText = document.getElementById('nome-anuncio-cadastro').value
                 precoModal.innerText = document.getElementById('preco').value
+                precoCustoModal.innerText = document.getElementById('preco-custo').value
                 tipoModal.innerText = document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].text
                 estoqueModal.innerText = document.getElementById('estoque').value
                 descModal.innerText = document.getElementById('desc').value
 
-                if(subcategorias != ""){
+                if (subcategorias != "") {
                     subModal.innerText = subcategorias
-                }else{
+                } else {
                     subModal.innerText = "Nenhum"
                 }
 
@@ -356,13 +376,13 @@ require_once "validador.php";
 
                     canvas.toBlob(function(blob) {
 
-
                         let formData = new FormData()
 
                         formData.append('foto', blob, 'photo.png')
                         formData.append('nome', document.getElementById('nome-anuncio-cadastro').value)
                         formData.append('desc', document.getElementById('desc').value)
                         formData.append('valor', document.getElementById('preco').value)
+                        formData.append('preco-custo', document.getElementById('preco-custo').value)
                         formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
                         formData.append('qtd', document.getElementById('estoque').value)
                         formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
@@ -449,21 +469,18 @@ require_once "validador.php";
             document.querySelector('.foto-modal').src = imgSrc
         });
     </script>
-<script>
-
-function adicionarCasasDecimais(input) {
-    // Adiciona .00 se não houver casas decimais
-    if (input.value && !/\.\d{2}$/.test(input.value)) {
-        // Adiciona .0 se houver apenas uma casa decimal
-        if (/\.\d$/.test(input.value)) {
-            input.value += '0';
+    <script>
+        function adicionarCasasDecimais(input) {
+            // Adiciona .00 se não houver casas decimais
+            if (input.value && !/\.\d{2}$/.test(input.value)) {
+                // Adiciona .0 se houver apenas uma casa decimal
+                if (/\.\d$/.test(input.value)) {
+                    input.value += '0';
+                }
+                input.value += '.00';
+            }
         }
-        input.value += '.00';
-    }
-}
-
-
-</script>
+    </script>
 
 </body>
 

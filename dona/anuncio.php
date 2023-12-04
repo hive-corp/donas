@@ -92,6 +92,16 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                         Insira um preço para o anúncio
                                     </div>
                                 </div>
+
+                                <div class="input">
+                                    <label class="form-label" for="preco-custo">Preço de custo<span>*</span></label>
+                                    <div class="input-wrapper">
+                                        <input type="number" name="preco-custo" id="preco-custo" required step="0.01" onblur="adicionarCasasDecimais(this)" value="<?php echo $anuncio['precoCustoAnuncio'] ?>">
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Insira um preço de custo para o anúncio
+                                    </div>
+                                </div>
                                 <div class="input" id="qtd-anuncio" <?php echo $anuncio['tipoAnuncio'] == 1 ? "" : "style='display: block;'" ?>>
                                     <label class="form-label" for="estoque">Estoque<span>*</span></label>
                                     <div class="input-wrapper">
@@ -192,6 +202,12 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         Encomendas
                     </span>
                 </a>
+                <a href="faturamento.php" class="nav-link">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>
+                        Faturamento
+                    </span>
+                </a>
                 <a href="meus-anuncios.php" class="nav-link">
                     <i class="bi bi-box-seam"></i>
                     <span>
@@ -235,24 +251,24 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <main id="main">
@@ -271,7 +287,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <button id="options-anuncio" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
-                               
+
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
                                     <li>
                                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-editar">
@@ -294,28 +310,28 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 R$<?php echo number_format($anuncio['valorAnuncio'], 2, ',', '.') ?>
                             </div>
                             <?php if ($dados['nivelNegocioVendedora'] == 1) {
-                        ?>
-                            <div id="avaliacao-anuncio">
-                                <?php
-                                $qtdestrelas = $anuncio['estrelasAnuncio'];
+                            ?>
+                                <div id="avaliacao-anuncio">
+                                    <?php
+                                    $qtdestrelas = $anuncio['estrelasAnuncio'];
 
-                                for ($i = 0; $i < $qtdestrelas; $i++) {
-                                ?>
-                                    <i class="bi bi-star-fill"></i>
-                                <?php
-                                }
-                                for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
-                                ?>
-                                    <i class="bi bi-star"></i>
-                                <?php
-                                }
-                                $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
+                                    for ($i = 0; $i < $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star-fill"></i>
+                                    <?php
+                                    }
+                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                    ?>
+                                        <i class="bi bi-star"></i>
+                                    <?php
+                                    }
+                                    $qtdavaliacoes = daoAvaliacao::contarAvaliacaoAnuncio($anuncio['idAnuncio']);
 
-                                echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
-                                ?>
-                            </div>
-                            <?php 
-                            }?>
+                                    echo $qtdavaliacoes != 1 ? "(" . $qtdavaliacoes . " avaliações)" : "(" . $qtdavaliacoes . " avaliação)";
+                                    ?>
+                                </div>
+                            <?php
+                            } ?>
                             <div id="categoria-anuncio">
                                 <?php echo $anuncio['nomeCategoria'] ?>
                             </div>
@@ -435,6 +451,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         formData.append('nome', document.getElementById('nome-anuncio-cadastro').value)
                         formData.append('desc', document.getElementById('desc').value)
                         formData.append('valor', document.getElementById('preco').value)
+                        formData.append('preco-custo', document.getElementById('preco-custo').value)
                         formData.append('qtd', document.getElementById('estoque').value)
                         formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
 
@@ -456,6 +473,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     formData.append('nome', document.getElementById('nome-anuncio-cadastro').value)
                     formData.append('desc', document.getElementById('desc').value)
                     formData.append('valor', document.getElementById('preco').value)
+                    formData.append('preco-custo', document.getElementById('preco-custo').value)
                     formData.append('qtd', document.getElementById('estoque').value)
                     formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
 

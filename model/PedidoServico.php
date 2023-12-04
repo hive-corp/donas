@@ -6,7 +6,6 @@ class PedidoServico {
     private $dataServicoMarcado;
     private $statusPedidoServico;
     
-
     private $Anuncio ;
     private $Cliente ;
     

@@ -134,6 +134,12 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         Encomendas
                     </span>
                 </a>
+                <a href="faturamento.php" class="nav-link">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>
+                        Faturamento
+                    </span>
+                </a>
                 <a href="meus-anuncios.php" class="nav-link">
                     <i class="bi bi-box-seam"></i>
                     <span>
@@ -163,7 +169,6 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 <i class="bi bi-plus-lg"></i>
                 <span>Criar novo anúncio</span>
             </a>
-
             <div id="user-info">
                 <a>
                     <img src="../<?php echo $_SESSION['foto-empresa'] ?>" id="foto-info">
@@ -597,14 +602,14 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                         ?>
                                     </div>
                                 <?php
-                                }?>
-                                    <div class="categoria-card">
-                                        <?php echo $a['nomeCategoria'] ?>
-                                    </div>
-                                    <div class="negocio-card">
-                                        <?php echo $a['nomeNegocioVendedora'] ?>
-                                    </div><?php
-                                ?>
+                                } ?>
+                                <div class="categoria-card">
+                                    <?php echo $a['nomeCategoria'] ?>
+                                </div>
+                                <div class="negocio-card">
+                                    <?php echo $a['nomeNegocioVendedora'] ?>
+                                </div><?php
+                                        ?>
                             </div>
                         </a>
                     <?php

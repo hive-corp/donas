@@ -247,7 +247,7 @@ class daoPedidoProduto
 
         $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto
                         INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
-                        WHERE idVendedora = ? AND DATE(dataPedidoFeito) = CURDATE();";
+                        WHERE idVendedora = ? AND DATE(dataPedidoFeito) = CURDATE() AND statusPedidoProduto = 4";
 
         $resultado = $connection->prepare($querySelect);
 
@@ -264,13 +264,133 @@ class daoPedidoProduto
 
         $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto
                         INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
-                        WHERE idVendedora = ? AND MONTH(dataPedidoFeito) = MONTH(CURDATE()) AND YEAR(dataPedidoFeito) = YEAR(CURDATE());";
+                        WHERE idVendedora = ? AND MONTH(dataPedidoFeito) = MONTH(CURDATE()) AND YEAR(dataPedidoFeito) = YEAR(CURDATE()) AND statusPedidoProduto = 4";
 
         $resultado = $connection->prepare($querySelect);
 
         $resultado->bindValue(1, $id);
         $resultado->execute();
         $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function contarPedidosEstaSemana($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+                        WHERE idVendedora = ? AND WEEK(dataPedidoFeito) = WEEK(CURDATE()) AND YEAR(dataPedidoFeito) = YEAR(CURDATE()) AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function contarPedidosEsteAno($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT COUNT(idPedidoProduto) FROM tbPedidoProduto
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+                        WHERE idVendedora = ? AND YEAR(dataPedidoFeito) = YEAR(CURDATE()) AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function valorPedidosHoje($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT SUM(valorTotal) FROM tbPedidoProduto
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+                        WHERE idVendedora = ? AND DATE(dataPedidoFeito) = CURDATE() AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function valorPedidosEsteMes($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT SUM(valorTotal) FROM tbPedidoProduto
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+                        WHERE idVendedora = ? AND MONTH(dataPedidoFeito) = MONTH(CURDATE()) AND YEAR(dataPedidoFeito) = YEAR(CURDATE()) AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function valorPedidosEstaSemana($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT SUM(valorTotal) FROM tbPedidoProduto
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+                        WHERE idVendedora = ? AND WEEK(dataPedidoFeito) = WEEK(CURDATE()) AND YEAR(dataPedidoFeito) = YEAR(CURDATE()) AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function valorPedidosEsteAno($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT SUM(valorTotal) FROM tbPedidoProduto
+                        INNER JOIN tbAnuncio ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+                        WHERE idVendedora = ? AND YEAR(dataPedidoFeito) = YEAR(CURDATE()) AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch()[0];
+
+        return $count;
+    }
+
+    public static function consultaLucro($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT SUM(tbAnuncio.valorAnuncio * tbPedidoProduto.qtdProdutoPedido) AS valorTotalVenda,
+        SUM(tbAnuncio.precoCustoAnuncio * tbPedidoProduto.qtdProdutoPedido) AS valorTotalCusto FROM tbAnuncio
+        JOIN tbPedidoProduto ON tbAnuncio.idAnuncio = tbPedidoProduto.idAnuncio
+        WHERE idVendedora = ? AND statusPedidoProduto = 4";
+
+        $resultado = $connection->prepare($querySelect);
+
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $count = $resultado->fetch();
 
         return $count;
     }

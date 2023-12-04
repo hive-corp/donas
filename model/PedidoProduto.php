@@ -6,8 +6,6 @@ class PedidoProduto {
     private $dataPedidoFeito;
     private $dataPedidoEntregue;
     private $statusPedidoProduto;
-    
-
     private $Anuncio ;
     private $Cliente ;
     

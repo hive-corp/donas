@@ -219,7 +219,8 @@ svg {
     grid-template-areas:
         "foto foto"
         "nome tipo"
-        "preco estoque"
+        "preco preco-custo"
+        "estoque estoque"
         "desc desc"
         "sub sub";
     gap: 16px
@@ -359,6 +360,10 @@ svg {
 
 .preco-modal {
     grid-area: preco;
+}
+
+.preco-custo-modal {
+    grid-area: preco-custo;
 }
 
 .estoque-modal {
@@ -736,7 +741,8 @@ input:checked+.tipo-login:hover {
 .account-type::before,
 .modal-content::before,
 .stats-box::before,
-.pedido::before {
+.pedido::before,
+.stats-faturamento::before {
     content: '';
     position: absolute;
     height: 40px;
@@ -752,7 +758,8 @@ input:checked+.tipo-login:hover {
 .account-type::after,
 .modal-content::after,
 .stats-box::after,
-.pedido::after {
+.pedido::after,
+.stats-faturamento::after {
     content: '';
     position: absolute;
     height: 40px;
@@ -772,7 +779,9 @@ input:checked+.tipo-login:hover {
 .stats-box:hover::after,
 .stats-box:hover::before,
 .pedido:hover::before,
-.pedido:hover::after {
+.pedido:hover::after,
+.stats-faturamento:hover::before,
+.stats-faturamento:hover::after {
     opacity: 0.5;
 }
 
@@ -1385,7 +1394,8 @@ a.create-new:hover {
 #user-profile,
 #user-encomenda,
 #user-dashboard,
-#user-ads {
+#user-ads,
+#user-faturamento {
     height: 100dvh;
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -1703,7 +1713,7 @@ a.dropdown-item {
 .search-container > select {
     background-color:transparent;
     border-right: 1px solid var(--bd-color);
-    padding: 2px;
+    padding: 8px;
     color: var(--text-color);
 }
 .search-container > select > option {
@@ -2316,7 +2326,8 @@ a.veja-mais {
     grid-template-areas:
         "titulo titulo"
         "nome tipo"
-        "preco estoque"
+        "preco preco-custo"
+        "estoque estoque"
         "descricao descricao"
         "subcategorias subcategorias";
     gap: 12px;
@@ -2337,19 +2348,23 @@ a.veja-mais {
 }
 
 #info-form .input:nth-child(4) {
+    grid-area: preco-custo;
+}
+
+#info-form .input:nth-child(5) {
     grid-area: estoque;
     display: none;
 }
 
-#info-form .input:nth-child(4).show {
+#info-form .input:nth-child(5).show {
     display: block;
 }
 
-#info-form .input:nth-child(5) {
+#info-form .input:nth-child(6) {
     grid-area: descricao;
 }
 
-#info-form .input:nth-child(6) {
+#info-form .input:nth-child(7) {
     grid-area: subcategorias;
 }
 
@@ -3750,6 +3765,9 @@ a.config-item {
 #welcome {
     background: var(--bg-color);
     padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: min-content;
 }
 
 #welcome h6 {
@@ -3770,6 +3788,60 @@ a.config-item {
     padding: 18px;
 }
 
+#user-faturamento #main{
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+#user-faturamento #content{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(3, min-content);
+    gap: 16px;
+}
+.stats-faturamento,
+.stats-encomendado,
+.stats-lucro{
+    padding:32px;
+    border-radius: 8px;
+    background: var(--input-bg);
+    border: 1px solid var(--bd-color);
+    transition: .3s box-shadow, .3s border-color;
+    position: relative;
+}
+
+.stats-faturamento{
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.stats-encomendado, .stats-lucro{
+    display: grid;
+    gap: 16px;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    grid-column: span 5;
+}
+
+.stats-lucro{
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+.stats-valores{
+    color: lightslategray;
+}
+
+.faturamento-periodo{
+    color: lightslategray;
+}
+
+.faturamento-valor{
+    font-weight: bold;
+    color: #CB6CE6;
+    font-size: 1.5em;
+}
+
 .stats-box {
     border-radius: 8px;
     background: var(--input-bg);
@@ -3783,18 +3855,27 @@ a.config-item {
         "footer";
 }
 
-.stats-box:hover {
+.stats-box.mais-encomendados{
+    grid-column: -4 / span 3;
+    grid-row: -1 / 2;
+    height: min-content;
+}
+
+.stats-box:hover,
+.stats-faturamento:hover {
     box-shadow: 0 0 0 4px #CB6CE633;
     border-color: #CB6CE6;
 }
 
-.stats-box::before {
+.stats-box::before,
+.stats-faturamento::before {
     height: 30px;
     bottom: -25px;
     right: -15px;
 }
 
-.stats-box::after {
+.stats-box::after,
+.stats-faturamento::after {
     height: 30px;
     top: -25px;
     left: -15px;
@@ -3840,6 +3921,10 @@ a.config-item {
     border-radius: 50%;
     overflow: hidden;
     aspect-ratio: 1/1;
+}
+
+.stats-box.mais-encomendados .stats-foto{
+    border-radius: 8px;
 }
 
 .stats-foto img,
@@ -3936,7 +4021,8 @@ a.highlight {
     #user-encomenda,
     #user-new,
     #user-dashboard,
-    #user-ads {
+    #user-ads,
+    #user-faturamento {
         grid-template-columns: auto 1fr;
         grid-template-areas:
             "nav main";

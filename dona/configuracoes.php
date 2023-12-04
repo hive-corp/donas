@@ -258,6 +258,12 @@ require_once "global.php";
                         Encomendas
                     </span>
                 </a>
+                <a href="faturamento.php" class="nav-link">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>
+                        Faturamento
+                    </span>
+                </a>
                 <a href="meus-anuncios.php" class="nav-link">
                     <i class="bi bi-box-seam"></i>
                     <span>

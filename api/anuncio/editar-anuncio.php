@@ -13,6 +13,7 @@ $anuncio = new Anuncio();
 $anuncio->setNomeAnuncio($_POST['nome']);
 $anuncio->setDescricaoAnuncio(($_POST['desc']));
 $anuncio->setValorAnuncio($_POST['valor']);
+$anuncio->setPrecoCustoAnuncio($_POST['preco-custo']);
 $anuncio->setIdAnuncio($_GET['a']);
 $anuncio->setQtdProduto($_POST['qtd']);
 

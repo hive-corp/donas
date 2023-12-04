@@ -16,6 +16,7 @@ switch ($method) {
         $anuncio->setNomeAnuncio($_POST['nome']);
         $anuncio->setDescricaoAnuncio(($_POST['desc']));
         $anuncio->setValorAnuncio($_POST['valor']);
+        $anuncio->setPrecoCustoAnuncio($_POST['preco-custo']);
         $anuncio->setEstrelasAnuncio(0);
         $anuncio->setTipoAnuncio($_POST['tipo']);
         $anuncio->setQtdProduto($_POST['tipo'] == 2 ? $_POST['qtd'] : 0);
