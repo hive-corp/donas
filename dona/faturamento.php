@@ -396,7 +396,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                     <div class="stats-body load">
                         <?php
-                        $procurados = daoAnuncio::consultarCincoMaisEncomendados($_SESSION['id']);
+                        $procurados = daoAnuncio::consultarCincoMaisEncomendadosPorEmcomendasFinalizadas($_SESSION['id']);
 
                         foreach ($procurados as $p) {
                         ?>

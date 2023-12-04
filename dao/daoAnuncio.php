@@ -234,6 +234,26 @@ class daoAnuncio
 
         return $dados;
     }
+    public static function consultarCincoMaisEncomendadosPorEmcomendasFinalizadas($id)
+    {
+        $connection = Conexao::conectar();
+
+
+        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
+                            INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
+                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                            INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
+                            WHERE tbVendedora.idVendedora = ? AND statusPedidoProduto = 4
+                            ORDER BY qtd DESC
+                            LIMIT 5');
+
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        $dados = $stmt->fetchAll();
+
+        return $dados;
+    }
 
     public static function contarAnuncio()
     {
