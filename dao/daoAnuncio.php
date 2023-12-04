@@ -8,18 +8,19 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "INSERT tbAnuncio(nomeAnuncio, descricaoAnuncio, valorAnuncio, estrelasAnuncio, tipoAnuncio, qtdProduto, idVendedora)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $queryInsert = "INSERT tbAnuncio(nomeAnuncio, descricaoAnuncio, valorAnuncio, precoCustoAnuncio, estrelasAnuncio, tipoAnuncio, qtdProduto, idVendedora)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
         $prepareStatement->bindvalue(1, $Anuncio->getNomeAnuncio());
         $prepareStatement->bindvalue(2, $Anuncio->getDescricaoAnuncio());
         $prepareStatement->bindvalue(3, $Anuncio->getValorAnuncio());
-        $prepareStatement->bindvalue(4, $Anuncio->getEstrelasAnuncio());
-        $prepareStatement->bindvalue(5, $Anuncio->getTipoAnuncio());
-        $prepareStatement->bindvalue(6, $Anuncio->getQtdProduto());
-        $prepareStatement->bindvalue(7, $Anuncio->getVendedora()->getIdVendedora());
+        $prepareStatement->bindvalue(4, $Anuncio->getPrecoCustoAnuncio());
+        $prepareStatement->bindvalue(5, $Anuncio->getEstrelasAnuncio());
+        $prepareStatement->bindvalue(6, $Anuncio->getTipoAnuncio());
+        $prepareStatement->bindvalue(7, $Anuncio->getQtdProduto());
+        $prepareStatement->bindvalue(8, $Anuncio->getVendedora()->getIdVendedora());
 
         $prepareStatement->execute();
     }
@@ -41,7 +42,7 @@ class daoAnuncio
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbAnuncio
-                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, qtdProduto = ?
+                            SET nomeAnuncio = ?, descricaoAnuncio = ?, valorAnuncio = ?, precoCustoAnuncio = ?, qtdProduto = ?
                             WHERE idAnuncio = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
@@ -49,8 +50,9 @@ class daoAnuncio
         $prepareStatement->bindValue(1, $Anuncio->getNomeAnuncio());
         $prepareStatement->bindValue(2, $Anuncio->getDescricaoAnuncio());
         $prepareStatement->bindValue(3, $Anuncio->getValorAnuncio());
-        $prepareStatement->bindvalue(4, $Anuncio->getQtdProduto());
-        $prepareStatement->bindValue(5, $Anuncio->getIdAnuncio());
+        $prepareStatement->bindvalue(4, $Anuncio->getPrecoCustoAnuncio());
+        $prepareStatement->bindvalue(5, $Anuncio->getQtdProduto());
+        $prepareStatement->bindValue(6, $Anuncio->getIdAnuncio());
 
         $prepareStatement->execute();
     }
@@ -185,9 +187,11 @@ class daoAnuncio
         $connection = Conexao::conectar();
 
 
-        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.* FROM tbAnuncio
+        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
                             INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
-                            WHERE idVendedora = ?
+                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                            INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
+                            WHERE tbVendedora.idVendedora = ?
                             ORDER BY qtd DESC
                             LIMIT 1');
 
@@ -195,6 +199,27 @@ class daoAnuncio
         $stmt->execute();
 
         $dados = $stmt->fetch();
+
+        return $dados;
+    }
+
+    public static function consultarCincoMaisEncomendados($id)
+    {
+        $connection = Conexao::conectar();
+
+
+        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
+                            INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
+                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                            INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
+                            WHERE tbVendedora.idVendedora = ?
+                            ORDER BY qtd DESC
+                            LIMIT 5');
+
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        $dados = $stmt->fetchAll();
 
         return $dados;
     }
@@ -388,7 +413,7 @@ class daoAnuncio
 
         return $avg;
     }
-      public static function contarAnuncioVendedora($id)
+    public static function contarAnuncioVendedora($id)
     {
         $connection = Conexao::conectar();
 
@@ -400,7 +425,8 @@ class daoAnuncio
 
         return $countAnuncio;
     }
-        public static function pesquisarAnunciosNomeDescricaoCategoria($categoria, $string)
+    
+    public static function pesquisarAnunciosNomeDescricaoCategoria($categoria, $string)
     {
         $connection = Conexao::conectar();
 
@@ -411,8 +437,8 @@ class daoAnuncio
 
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $categoria);
-        $resultado->bindValue(2, "%".$string."%");
-        $resultado->bindValue(3, "%".$string."%");
+        $resultado->bindValue(2, "%" . $string . "%");
+        $resultado->bindValue(3, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
@@ -428,8 +454,8 @@ class daoAnuncio
                         WHERE nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?";
 
         $resultado = $connection->prepare($querySelect);
-        $resultado->bindValue(1, "%".$string."%");
-        $resultado->bindValue(2, "%".$string."%");
+        $resultado->bindValue(1, "%" . $string . "%");
+        $resultado->bindValue(2, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
@@ -465,6 +491,38 @@ class daoAnuncio
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public static function pesquisarVendedora($id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbVendedora.idVendedora = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+    public static function pesquisarTipoVendedora($tipo, $id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbVendedora.idVendedora = ? AND tipoAnuncio = ?";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
+        $resultado->bindValue(2, $tipo);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
     public static function pesquisarAnunciosNomeDescricaoCategoriaTipo($categoria, $string, $tipo)
     {
         $connection = Conexao::conectar();
@@ -472,13 +530,13 @@ class daoAnuncio
         $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
                         INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                         INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
-                        WHERE tbCategoria.idCategoria = ? AND tipoAnuncio = ? AND (nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?) ";
+                        WHERE tbCategoria.idCategoria = ? AND tipoAnuncio = ? AND nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ? ";
 
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $categoria);
         $resultado->bindValue(2, $tipo);
-        $resultado->bindValue(3, "%".$string."%");
-        $resultado->bindValue(4, "%".$string."%");
+        $resultado->bindValue(3, "%" . $string . "%");
+        $resultado->bindValue(4, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
@@ -498,8 +556,8 @@ class daoAnuncio
         $resultado->bindValue(1, $categoria);
         $resultado->bindValue(2, $tipo);
         $resultado->bindValue(3, $subcategoria);
-        $resultado->bindValue(4, "%".$string."%");
-        $resultado->bindValue(5, "%".$string."%");
+        $resultado->bindValue(4, "%" . $string . "%");
+        $resultado->bindValue(5, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
@@ -537,8 +595,8 @@ class daoAnuncio
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $categoria);
         $resultado->bindValue(2, $subcategoria);
-        $resultado->bindValue(3, "%".$string."%");
-        $resultado->bindValue(4, "%".$string."%");
+        $resultado->bindValue(3, "%" . $string . "%");
+        $resultado->bindValue(4, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
@@ -554,12 +612,50 @@ class daoAnuncio
 
         $resultado = $connection->prepare($querySelect);
         $resultado->bindValue(1, $tipo);
-        $resultado->bindValue(2, "%".$string."%");
-        $resultado->bindValue(3, "%".$string."%");
+        $resultado->bindValue(2, "%" . $string . "%");
+        $resultado->bindValue(3, "%" . $string . "%");
         $resultado->execute();
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public static function pesquisarAnunciosNomeDescricaoTipoVendedora($tipo, $string, $id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                       INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbVendedora.idVendedora = ? AND (nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ? AND tipoAnuncio = ?)";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
+        $resultado->bindValue(2, "%" . $string . "%");
+        $resultado->bindValue(3, "%" . $string . "%");
+        $resultado->bindValue(4, $tipo);
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
+    public static function pesquisarAnunciosNomeDescricaoVendedora($string, $id)
+    {
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbVendedora.idVendedora = ? AND (nomeAnuncio LIKE ? OR descricaoAnuncio LIKE ?)";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $id);
+        $resultado->bindValue(2, "%" . $string . "%");
+        $resultado->bindValue(3, "%" . $string . "%");
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
+    }
+
     public static function pesquisarCategoriaTipo($tipo, $categoria)
     {
         $connection = Conexao::conectar();
@@ -576,7 +672,7 @@ class daoAnuncio
         $lista = $resultado->fetchAll();
         return $lista;
     }
-    
+
     public static function pesquisarSubCategoriaCategoria($Subcategoria, $categoria)
     {
         $connection = Conexao::conectar();

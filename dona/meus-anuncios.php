@@ -3,6 +3,13 @@
 require_once "validador.php";
 require_once "global.php";
 $dados = daoVendedora::consultarPorId($_SESSION['id']);
+
+if (isset($_GET['pesquisa']) && !empty($_GET['pesquisa'])) {
+    $pesquisa = $_GET['pesquisa'];
+}
+if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
+    $tipo = $_GET['tipo'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +19,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Meus anúncios</title>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/vendor/flickity/css/flickity.css" />
@@ -38,6 +45,12 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     <i class="bi bi-grid"></i>
                     <span>
                         Encomendas
+                    </span>
+                </a>
+                <a href="faturamento.php" class="nav-link">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>
+                        Faturamento
                     </span>
                 </a>
                 <a href="meus-anuncios.php" class="nav-link active">
@@ -83,29 +96,40 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                 </div>
                 <div class="dropup-center dropup">
-					<button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bi bi-three-dots-vertical"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
-						<li>
-							<a class="dropdown-item" href="../logout.php">
-								<i class="bi bi-box-arrow-right"></i>
-								Sair
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#" data-theme-toggle="dark">
-								<i class="bi bi-moon"></i>
-								Modo noturno
-							</a>
-						</li>
-					</ul>
-				</div>
+                    <button id="options-user" class="options-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-sobe">
+                        <li>
+                            <a class="dropdown-item" href="../logout.php">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sair
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-theme-toggle="dark">
+                                <i class="bi bi-moon"></i>
+                                Modo noturno
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <main id="main">
             <div id="welcome">
                 <h2>Seus anúncios</h2>
+                <form class="search-container" action="meus-anuncios.php" method="get">
+                    <select name="tipo" id="tipo">
+                        <option value="0">Todos</option>
+                        <option value="1" <?php echo !empty($_GET['tipo']) && $_GET['tipo'] == 1 ? "selected" : "" ?>>Serviço</option>
+                        <option value="2" <?php echo !empty($_GET['tipo']) && $_GET['tipo'] == 2 ? "selected" : "" ?>>Produto</option>
+                    </select>
+                    <input type="text" role="search" placeholder="Pesquisa" class="search-field" name="pesquisa" value="<?php echo isset($pesquisa) ? $pesquisa : "" ?>" />
+                    <button class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
             </div>
             <div id="content">
                 <div class="produtos placeholder-element">
@@ -343,10 +367,18 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 <div class="produtos load">
 
                     <?php
-                    foreach (daoAnuncio::listarAnunciosVendedora($_SESSION['id']) as $a) {
+                    if(isset($tipo) && isset($pesquisa)){
+                        $anuncios = daoAnuncio::pesquisarAnunciosNomeDescricaoTipoVendedora($tipo, $pesquisa, $_SESSION['id']);
+                    }else if (isset($pesquisa)) {
+                        $anuncios = daoAnuncio::pesquisarAnunciosNomeDescricaoVendedora($pesquisa, $_SESSION['id']);
+                    } else if (isset($tipo)) {
+                        $anuncios = daoAnuncio::pesquisarTipoVendedora($tipo, $_SESSION['id']);
+                    } else {
+                        $anuncios = daoAnuncio::listarAnunciosVendedora($_SESSION['id']);
+                    }
 
+                    foreach ($anuncios as $a) {
                         $qtdestrelas = $a['estrelasAnuncio'];
-
                     ?>
                         <a class="card-anuncio" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
                             <div class="img-card">
@@ -360,25 +392,24 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                     R$<?php echo number_format($a['valorAnuncio'], 2, ',', '.')  ?>
                                 </div>
                                 <?php if ($dados['nivelNegocioVendedora'] == 1) {
-                        ?>
-                                <div class="avaliacao-card">
-                                    <?php
+                                ?>
+                                    <div class="avaliacao-card">
+                                        <?php
 
-                                    for ($i = 0; $i < $qtdestrelas; $i += 1) {
-                                    ?>
-                                        <i class="bi bi-star-fill"></i>
-                                    <?php
-                                    }
-                                    for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
-                                    ?>
-                                        <i class="bi bi-star"></i>
-                                    <?php
-                                    }
-
-                                    ?>
-                                </div>
+                                        for ($i = 0; $i < $qtdestrelas; $i += 1) {
+                                        ?>
+                                            <i class="bi bi-star-fill"></i>
+                                        <?php
+                                        }
+                                        for ($i = 0; $i < 5 - $qtdestrelas; $i++) {
+                                        ?>
+                                            <i class="bi bi-star"></i>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
                                 <?php
-                                }?>
+                                } ?>
                                 <div class="categoria-card" style="color: lightslategray">
                                     <?php echo $a['nomeCategoria'] ?>
                                 </div>
@@ -397,8 +428,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
         </main>
     </div>
 
-
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/lodash/lodash.js"></script>
     <script src="../assets/js/script.js"></script>
 </body>
 
