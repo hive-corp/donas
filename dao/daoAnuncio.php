@@ -208,13 +208,24 @@ class daoAnuncio
         $connection = Conexao::conectar();
 
 
-        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
-                            INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
-                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
-                            INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
-                            WHERE tbVendedora.idVendedora = ? AND statusPedidoProduto = 4
-                            ORDER BY qtd DESC
-                            LIMIT 5');
+        $stmt = $connection->prepare('SELECT COUNT(*) AS qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora
+                                        FROM
+                                            (
+                                                SELECT tbPedidoProduto.idAnuncio
+                                                FROM tbPedidoProduto
+                                                WHERE tbPedidoProduto.statusPedidoProduto = 4
+                                                UNION ALL
+                                                SELECT tbPedidoServico.idAnuncio
+                                                FROM tbPedidoServico
+                                                WHERE tbPedidoServico.statusPedidoServico = 4
+                                            ) AS pedidos_unificados
+                                        INNER JOIN tbAnuncio ON pedidos_unificados.idAnuncio = tbAnuncio.idAnuncio
+                                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                                        INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
+                                        WHERE tbVendedora.idVendedora = ?
+                                        GROUP BY tbAnuncio.idAnuncio, nomeCategoria, nomeNegocioVendedora
+                                        ORDER BY qtd DESC
+                                        LIMIT 5;');
 
         $stmt->bindValue(1, $id);
         $stmt->execute();
@@ -425,7 +436,7 @@ class daoAnuncio
 
         return $countAnuncio;
     }
-    
+
     public static function pesquisarAnunciosNomeDescricaoCategoria($categoria, $string)
     {
         $connection = Conexao::conectar();
