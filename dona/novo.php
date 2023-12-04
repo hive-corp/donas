@@ -11,8 +11,7 @@ require_once "validador.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo produto/serviço</title>
-
+    <title>Novo anúncio</title>
 
     <link rel='stylesheet' href='../assets/vendor/cropperjs/css/cropper.css'>
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -254,7 +253,7 @@ require_once "validador.php";
                             <div class="input-wrapper">
                                 <input type="number" name="preco" id="preco" required step="0.01" onblur="adicionarCasasDecimais(this)">
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="invalid-venda">
                                 Insira um preço de venda para o anúncio
                             </div>
                         </div>
@@ -263,7 +262,7 @@ require_once "validador.php";
                             <div class="input-wrapper">
                                 <input type="number" name="preco-custo" id="preco-custo" required step="0.01" onblur="adicionarCasasDecimais(this)">
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" id="invalid-custo">
                                 Insira um preço de custo para o anúncio
                             </div>
                         </div>
@@ -325,11 +324,36 @@ require_once "validador.php";
             confirmarFoto = document.querySelector('#confirmar-foto'),
             fotoPreview = document.querySelector('#preview-foto'),
             confirmarCadastro = document.querySelector('#cadastrar'),
-            estoqueModalssss = document.querySelector('.estoque-modal')
+            estoqueModalssss = document.querySelector('.estoque-modal'),
+            precoVenda = document.querySelector('#preco'),
+            precoCusto = document.querySelector('#preco-custo')
+
+        const verificaPreco = () => {
+            let invalidVenda = document.getElementById('invalid-venda')
+            let invalidCusto = document.getElementById('invalid-custo')
+
+            if (precoCusto.value > precoVenda.value) {
+                precoVenda.classList.add('is-invalid')
+                precoCusto.classList.add('is-invalid')
+
+                invalidVenda.innerText = 'O preço de custo está superior ao preço de venda'
+                invalidCusto.innerText = 'O preço de custo está superior ao preço de venda'
+            } else {
+                precoVenda.classList.remove('is-invalid')
+                precoCusto.classList.remove('is-invalid')
+
+                invalidVenda.innerText = 'Insira um preço de venda para o anúncio'
+                invalidCusto.innerText = 'Insira um preço de custo para o anúncio'
+            }
+        }
+        
+        precoVenda.addEventListener('input', verificaPreco)
+        precoCusto.addEventListener('input', verificaPreco)
+
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
-            if (!form.checkValidity()) {
+            if (!form.checkValidity() || precoCusto.value >= precoVenda.value) {
                 new bootstrap.Modal('#modal-erro').toggle()
                 form.classList.add('was-validated')
             } else {
@@ -468,8 +492,7 @@ require_once "validador.php";
             fotoPreview.src = imgSrc;
             document.querySelector('.foto-modal').src = imgSrc
         });
-    </script>
-    <script>
+
         function adicionarCasasDecimais(input) {
             // Adiciona .00 se não houver casas decimais
             if (input.value && !/\.\d{2}$/.test(input.value)) {

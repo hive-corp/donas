@@ -86,9 +86,9 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <div class="input">
                                     <label class="form-label" for="preco">Preço<span>*</span></label>
                                     <div class="input-wrapper">
-                                        <input type="number" name="preco" id="preco" required step="0.01" value="<?php echo $anuncio['valorAnuncio'] ?>">
+                                        <input type="number" name="preco" id="preco" required step="0.01" onblur="adicionarCasasDecimais(this)" value="<?php echo $anuncio['valorAnuncio'] ?>">
                                     </div>
-                                    <div class="invalid-feedback">
+                                    <div class="invalid-feedback" id="invalid-venda">
                                         Insira um preço para o anúncio
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                     <div class="input-wrapper">
                                         <input type="number" name="preco-custo" id="preco-custo" required step="0.01" onblur="adicionarCasasDecimais(this)" value="<?php echo $anuncio['precoCustoAnuncio'] ?>">
                                     </div>
-                                    <div class="invalid-feedback">
+                                    <div class="invalid-feedback" id="invalid-custo">
                                         Insira um preço de custo para o anúncio
                                     </div>
                                 </div>
@@ -421,14 +421,38 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
             result = document.querySelector('.result-crop'),
             confirmarFoto = document.querySelector('#confirmar-foto'),
             fotoPreview = document.querySelector('#preview-foto'),
-            confirmarAlteracao = document.querySelector('#salvar')
+            confirmarAlteracao = document.querySelector('#salvar'),
+            precoVenda = document.querySelector('#preco'),
+            precoCusto = document.querySelector('#preco-custo')
+
+        const verificaPreco = () => {
+            let invalidVenda = document.getElementById('invalid-venda')
+            let invalidCusto = document.getElementById('invalid-custo')
+
+            if (precoCusto.value > precoVenda.value) {
+                precoVenda.classList.add('is-invalid')
+                precoCusto.classList.add('is-invalid')
+
+                invalidVenda.innerText = 'O preço de custo está superior ao preço de venda'
+                invalidCusto.innerText = 'O preço de custo está superior ao preço de venda'
+            } else {
+                precoVenda.classList.remove('is-invalid')
+                precoCusto.classList.remove('is-invalid')
+
+                invalidVenda.innerText = 'Insira um preço de venda para o anúncio'
+                invalidCusto.innerText = 'Insira um preço de custo para o anúncio'
+            }
+        }
+
+        precoVenda.addEventListener('input', verificaPreco)
+        precoCusto.addEventListener('input', verificaPreco)
+
 
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
 
-
-            if (!form.checkValidity()) {
+            if (!form.checkValidity() || precoCusto.value >= precoVenda.value) {
                 form.classList.add('was-validated')
             } else {
                 let inputFoto = document.querySelector('#foto-principal'),
@@ -531,8 +555,17 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
             fotoPreview.src = imgSrc;
         });
-      
 
+        function adicionarCasasDecimais(input) {
+            // Adiciona .00 se não houver casas decimais
+            if (input.value && !/\.\d{2}$/.test(input.value)) {
+                // Adiciona .0 se houver apenas uma casa decimal
+                if (/\.\d$/.test(input.value)) {
+                    input.value += '0';
+                }
+                input.value += '.00';
+            }
+        }
     </script>
 </body>
 
