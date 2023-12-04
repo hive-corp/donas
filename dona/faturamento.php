@@ -396,7 +396,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                     <div class="stats-body load">
                         <?php
-                        $procurados = daoAnuncio::consultarCincoMaisEncomendados($_SESSION['id']);
+                        $procurados = daoAnuncio::consultarCincoMaisEncomendadosPorEmcomendasFinalizadas($_SESSION['id']);
 
                         foreach ($procurados as $p) {
                         ?>
@@ -428,7 +428,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     $valorTotalCusto = $dadosLucroProduto['valorTotalCusto'] + $dadosLucroServico['valorTotalCusto'];
                     $valorTotalVenda = $dadosLucroProduto['valorTotalVenda'] + $dadosLucroServico['valorTotalVenda'];
 
-                    $margemLucro = $valorTotalCusto / $valorTotalVenda * 100;
+                    $margemLucro = ($valorTotalVenda - $valorTotalCusto) / $valorTotalVenda * 100;
                     ?>
                     <h4>
                         Sua taxa de lucro é: <span class="highlight"><?php echo number_format($margemLucro, 0, ',', '.') ?>%</span>
