@@ -86,7 +86,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <div class="input">
                                     <label class="form-label" for="preco">Preço<span>*</span></label>
                                     <div class="input-wrapper">
-                                        <input type="number" name="preco" id="preco" required value="<?php echo $anuncio['valorAnuncio'] ?>">
+                                        <input type="number" name="preco" id="preco" required step="0.01" value="<?php echo $anuncio['valorAnuncio'] ?>">
                                     </div>
                                     <div class="invalid-feedback">
                                         Insira um preço para o anúncio
@@ -410,6 +410,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
+
+
             if (!form.checkValidity()) {
                 form.classList.add('was-validated')
             } else {
@@ -511,6 +513,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
             fotoPreview.src = imgSrc;
         });
+      
+
     </script>
 </body>
 
