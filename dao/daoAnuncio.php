@@ -212,7 +212,7 @@ class daoAnuncio
                             INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
                             INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                             INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
-                            WHERE tbVendedora.idVendedora = ?
+                            WHERE tbVendedora.idVendedora = ? AND statusPedidoProduto = 4
                             ORDER BY qtd DESC
                             LIMIT 5');
 

@@ -46,7 +46,7 @@ date_default_timezone_set('America/Sao_Paulo');
                 </div>
             </div>
         </div>
-        <form action="<?php echo $anuncio['tipoAnuncio'] == 1 ? "agendar-servico.php?a=" . $anuncio['idAnuncio'] : "fazer-encomenda.php?a=" . $anuncio['idAnuncio']; ?>" method="POST">
+        <form action="<?php echo $anuncio['tipoAnuncio'] == 1 ? "agendar-servico.php?a=" . $anuncio['idAnuncio'] : "fazer-encomenda.php?a=" . $anuncio['idAnuncio']; ?>" method="POST" id="form-encomenda-servico">
             <div class="modal pop" id="modal-encomenda" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -82,10 +82,10 @@ date_default_timezone_set('America/Sao_Paulo');
                                 <div class="input input-data">
                                     <label class="form-label" for="data-entrega">Data de agendamento<span>*</span></label>
                                     <div class="input-wrapper">
-                                        <input type="datetime-local" name="data-entrega-serviço" id="data-entrega-serviço" required value="<?php echo date("o-m-d\TH:i", time() + 60 * 60 * 24) ?>">
+                                        <input type="datetime-local" name="data" id="data" required value="<?php echo date("o-m-d\TH:i", time() + 60 * 60 * 24) ?>">
                                     </div>
                                     <div class="invalid-feedback">
-                                        Insira uma data de entrega para o produto
+                                        Insira uma data de agendamento para o produto
                                     </div>
                                 </div>
                             <?php } else { ?>
@@ -116,7 +116,7 @@ date_default_timezone_set('America/Sao_Paulo');
                                 <div class="input input-data">
                                     <label class="form-label" for="data-entrega">Data de entrega<span>*</span></label>
                                     <div class="input-wrapper">
-                                        <input type="date" name="data-entrega" id="data-entrega" required value="<?php echo date("o-m-d", time() + 60 * 60 * 24) ?>">
+                                        <input type="date" name="data" id="data" required value="<?php echo date("o-m-d", time() + 60 * 60 * 24) ?>">
                                     </div>
                                     <div class="invalid-feedback">
                                         Insira uma data de entrega para o produto
@@ -176,8 +176,6 @@ date_default_timezone_set('America/Sao_Paulo');
                                             <span>Gerar boleto</span>
                                         </a>
                                     </div>
-
-
                                 </div>
                             </div>
                             <p class="text-center">Você tem <span class="highlight" id="tempo-restante">8 minutos e 0 segundos</span> restantes</p>
@@ -527,7 +525,27 @@ date_default_timezone_set('America/Sao_Paulo');
     <script>
         var iniciarPagamento = document.getElementById('iniciar-pagamento'),
             inputComentario = document.querySelector("#input-comentario"),
-            conteudoInputComentario = document.querySelector("#comentario")
+            conteudoInputComentario = document.querySelector("#comentario"),
+            dataInput = document.querySelector('#data');
+
+        dataInput.addEventListener('change', () => {
+            let dataAtual = new Date();
+
+            let dataInput = document.querySelector('#data');
+
+            if (dataInput.getAttribute('type') == 'datetime') {
+                var data = new Date(dataInput.value);
+            } else {
+                var data = new Date(dataInput.value + 'T00:00');
+            }
+
+            if (data < dataAtual) {
+                dataInput.classList.add('is-invalid')
+                dataInput.valueAsDate = dataAtual
+            }else{
+                dataInput.classList.remove('is-invalid');
+            }
+        })
 
         let cronometro;
 
