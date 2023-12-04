@@ -296,10 +296,25 @@ require_once "validador.php";
     <script src='../assets/vendor/cropperjs/js/cropper.js'></script>
     <script src='../assets/vendor/wavesurfer/js/wavesurfer.js'></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/chat.js"></script>
     <script>
         type = 1
+
+        <?php
+        if (isset($_GET['username'])) {
+            $cliente = new Cliente();
+            $cliente->setNomeUsuarioCliente($_GET['username']);
+            $dados = daoCliente::consultarPorNomeUsuario($cliente);
+
+            if (!empty($dados)) {
+        ?>
+                resgatarMensagens('<?php echo $dados['nomeCliente'] ?>', '../<?php echo $dados['fotoCliente'] ?>', '<?php echo $dados['nomeUsuarioCliente'] ?>')
+        <?php
+            }
+        }
+        ?>
+
     </script>
-    <script src="../assets/js/chat.js"></script>
 </body>
 
 </html>

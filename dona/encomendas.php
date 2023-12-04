@@ -306,32 +306,27 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
         </nav>
         <main id="main">
             <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
-              <div id="main-title" class="d-flex align-items-center justify-content-between">
+            <div id="main-title" class="d-flex align-items-center justify-content-between">
                 Painel de encomendas
                 <form action="pesquisa.php">
-                
-                <div id="content">
-                    <div class="filtro-pesquisa" style="gap:0px; font-size: 0.9em;">
-                        
-                        <div class="filtros">
-                            <select class="select-filtro" name="tipo" id="tipo" onchange="aplicarFiltros2()">
-                                <option value="" selected>Tipo</option>
-                                <option value="2">Produto</option>
-                                <option value="1">Serviço</option>
-                            </select>
 
-
-                            <select class="select-filtro" name="status" id="status" onchange="aplicarFiltros2()">
-                                <option value="" selected>Status</option>
-                                <option value="1">Análise</option>
-                                <option value="3">Fazendo</option>
-                            </select>
-
-                           
+                    <div id="content">
+                        <div class="filtro-pesquisa" style="gap:0px; font-size: 0.9em;">
+                            <div class="filtros">
+                                <select class="select-filtro" name="tipo" id="tipo" onchange="aplicarFiltros2()">
+                                    <option value="" selected>Tipo</option>
+                                    <option value="2">Produto</option>
+                                    <option value="1">Serviço</option>
+                                </select>
+                                <select class="select-filtro" name="status" id="status" onchange="aplicarFiltros2()">
+                                    <option value="" selected>Status</option>
+                                    <option value="1">Análise</option>
+                                    <option value="3">Fazendo</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </div>
             <?php if ($dados['nivelNegocioVendedora'] == 1) {
             ?>
@@ -367,18 +362,18 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                                 <?php echo $p['nomeAnuncio'] ?>
                                             </div>
                                         </div>
-                                          <div class="nome-encomenda-anuncio" style=" display: none;">
-                                
-                                    <div class="input-wrapper" id="status">
-                                        <?php echo $p['statusPedidoProduto'] ?>
-                                    </div>
-                                </div>
-                                <div class="nome-encomenda-anuncio" style=" display: none;">
-                                
-                                    <div class="input-wrapper" id="tipo">
-                                        2
-                                    </div>
-                                </div>
+                                        <div class="nome-encomenda-anuncio" style=" display: none;">
+
+                                            <div class="input-wrapper" id="status">
+                                                <?php echo $p['statusPedidoProduto'] ?>
+                                            </div>
+                                        </div>
+                                        <div class="nome-encomenda-anuncio" style=" display: none;">
+
+                                            <div class="input-wrapper" id="tipo">
+                                                2
+                                            </div>
+                                        </div>
                                         <div class="data-encomenda-anuncio">
                                             <label for="" class="form-label">Data do pedido</label>
                                             <div class="input-wrapper">
@@ -403,6 +398,9 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                     <div class="opcoes-encomenda">
                                         <?php if ($p['statusPedidoProduto'] == 3) { ?>
                                             <button class="button concluir-pedido" data-bs-toggle="modal" data-bs-target="#modal-concluir" data-id="<?php echo $p['idPedidoProduto'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Concluir</button>
+                                            <a href="conversas.php?username=<?php echo $p['nomeUsuarioCliente'] ?>" class="button button-chat">
+                                                <i class="bi bi-chat"></i>
+                                            </a>
                                         <?php
                                         } else {
                                         ?>
@@ -411,7 +409,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                         <?php
                                         }
                                         ?>
-                                       
+
                                     </div>
                                 </div>
                             <?php
@@ -437,19 +435,19 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                                 <?php echo $p['nomeAnuncio'] ?>
                                             </div>
                                         </div>
-                                         <div class="nome-encomenda-anuncio" style=" display: none;">
-                                
-                                <div class="input-wrapper" id="status">
-                                    <?php echo $p['statusPedidoServico'] ?>
-                                </div>
-                               
-                            </div>
-                            <div class="nome-encomenda-anuncio" style=" display: none;">
-                                
-                                <div class="input-wrapper" id="tipo">
-                                  1
-                                </div>
-                            </div>
+                                        <div class="nome-encomenda-anuncio" style=" display: none;">
+
+                                            <div class="input-wrapper" id="status">
+                                                <?php echo $p['statusPedidoServico'] ?>
+                                            </div>
+
+                                        </div>
+                                        <div class="nome-encomenda-anuncio" style=" display: none;">
+
+                                            <div class="input-wrapper" id="tipo">
+                                                1
+                                            </div>
+                                        </div>
                                         <div class="data-encomenda-anuncio">
                                             <label for="" class="form-label">Data do serviço</label>
                                             <div class="input-wrapper">
@@ -480,11 +478,11 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                         } else {
                                         ?>
                                             <button class="button aceitar-servico" data-bs-toggle="modal" data-bs-target="#modal-aceitar-servico" data-id="<?php echo $p['idPedidoServico'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Aceitar</button>
-                                             <button class="button button-red cancelar-servico" data-bs-toggle="modal" data-bs-target="#modal-cancelar-servico" data-id="<?php echo $p['idPedidoServico'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Cancelar</button>
+                                            <button class="button button-red cancelar-servico" data-bs-toggle="modal" data-bs-target="#modal-cancelar-servico" data-id="<?php echo $p['idPedidoServico'] ?>" data-nome="<?php echo $p['nomeCliente'] ?>" data-anuncio="<?php echo $p['nomeAnuncio'] ?>">Cancelar</button>
                                         <?php
                                         }
                                         ?>
-                                       
+
                                     </div>
                                 </div>
                             <?php
@@ -638,31 +636,32 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 }
             });
         });
+
         function aplicarFiltros2() {
-        let tipoFilter = document.getElementById('tipo').value.toLowerCase();
-        let statusFilter = document.getElementById('status').value.toLowerCase();
-        let cards = document.querySelectorAll('.encomenda');
+            let tipoFilter = document.getElementById('tipo').value.toLowerCase();
+            let statusFilter = document.getElementById('status').value.toLowerCase();
+            let cards = document.querySelectorAll('.encomenda');
 
-        for (let i = 0; i < cards.length; i++) {
-            let card = cards[i];
+            for (let i = 0; i < cards.length; i++) {
+                let card = cards[i];
 
-            let statusElement = card.querySelector('#status');
-            let status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
-            
-            let tipoElement = card.querySelector('#tipo');
-            let tipo = tipoElement ? tipoElement.textContent.trim().toLowerCase() : '';
-        
-            let matchStatus = (status.includes(statusFilter));
-            let matchTipo = (tipo.includes(tipoFilter));
-           
-          
-            if (matchStatus && matchTipo) {
-    card.style.display = "grid";
-} else {
-    card.style.display = "none";
-}
+                let statusElement = card.querySelector('#status');
+                let status = statusElement ? statusElement.textContent.trim().toLowerCase() : '';
+
+                let tipoElement = card.querySelector('#tipo');
+                let tipo = tipoElement ? tipoElement.textContent.trim().toLowerCase() : '';
+
+                let matchStatus = (status.includes(statusFilter));
+                let matchTipo = (tipo.includes(tipoFilter));
+
+
+                if (matchStatus && matchTipo) {
+                    card.style.display = "grid";
+                } else {
+                    card.style.display = "none";
+                }
+            }
         }
-    }
     </script>
 </body>
 
