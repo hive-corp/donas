@@ -396,11 +396,11 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                     <div class="stats-body load">
                         <?php
-                        $procurados = daoAnuncio::consultarCincoMaisEncomendadosPorEmcomendasFinalizadas($_SESSION['id']);
+                        $procurados = daoAnuncio::consultarCincoMaisEncomendados($_SESSION['id']);
 
                         foreach ($procurados as $p) {
                         ?>
-                            <a class="stats-item" href="anuncio.php">
+                            <a class="stats-item" href="anuncio.php?a=<?php echo $p['idAnuncio'] ?>">
                                 <div class="stats-foto placeholder-glow">
                                     <img src="../<?php echo $p['imagemPrincipalAnuncio'] ?>" alt="">
                                 </div>

@@ -742,7 +742,9 @@ input:checked+.tipo-login:hover {
 .modal-content::before,
 .stats-box::before,
 .pedido::before,
-.stats-faturamento::before {
+.stats-faturamento::before,
+.stats-encomendado::before,
+.stats-lucro::before {
     content: '';
     position: absolute;
     height: 40px;
@@ -759,7 +761,9 @@ input:checked+.tipo-login:hover {
 .modal-content::after,
 .stats-box::after,
 .pedido::after,
-.stats-faturamento::after {
+.stats-faturamento::after,
+.stats-encomendado::after,
+.stats-lucro::after {
     content: '';
     position: absolute;
     height: 40px;
@@ -781,7 +785,11 @@ input:checked+.tipo-login:hover {
 .pedido:hover::before,
 .pedido:hover::after,
 .stats-faturamento:hover::before,
-.stats-faturamento:hover::after {
+.stats-faturamento:hover::after,
+.stats-encomendado:hover::before,
+.stats-encomendado:hover::after,
+.stats-lucro:hover::before,
+.stats-lucro:hover::after {
     opacity: 0.5;
 }
 
@@ -985,7 +993,7 @@ input:checked+.tipo-login:hover {
 .was-validated .input-wrapper:has(textarea:invalid),
 .input-wrapper:has(input.is-invalid),
 .input-wrapper:has(textarea.is-invalid) {
-    background-color: #fff1f3;
+    background-color: rgba(255, 0, 38, 0.13);
     border-bottom: 1px solid red;
 }
 
@@ -993,9 +1001,8 @@ input:checked+.tipo-login:hover {
 .was-validated .input-wrapper:has(textarea:valid),
 .input-wrapper:has(input.is-valid),
 .input-wrapper:has(textarea.is-valid) {
-    background-color: #f2fff1;
+    background-color: rgba(17, 255, 0, 0.13);
     border-bottom: 1px solid green;
-    color:#050505
 }
 
 .was-validated .input:has(input:invalid) .invalid-feedback,
@@ -1124,6 +1131,14 @@ a.button-red:hover,
 a.button-red:focus {
     background-color: #890000;
     border-color: #890000;
+}
+
+a.button-chat{
+    padding: 0px;
+    width: 2.5em;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1/1;
 }
 
 .create-new,
@@ -3823,6 +3838,10 @@ a.config-item {
     grid-column: span 5;
 }
 
+.stats-encomendado .preco-card{
+    background: var(--input-bg);
+}
+
 .stats-lucro{
     grid-template-columns: 1fr 1fr;
     justify-items: center;
@@ -3862,20 +3881,26 @@ a.config-item {
 }
 
 .stats-box:hover,
-.stats-faturamento:hover {
+.stats-faturamento:hover,
+.stats-encomendado:hover,
+.stats-lucro:hover {
     box-shadow: 0 0 0 4px #CB6CE633;
     border-color: #CB6CE6;
 }
 
 .stats-box::before,
-.stats-faturamento::before {
+.stats-faturamento::before,
+.stats-encomendado::before,
+.stats-lucro::before {
     height: 30px;
     bottom: -25px;
     right: -15px;
 }
 
 .stats-box::after,
-.stats-faturamento::after {
+.stats-faturamento::after,
+.stats-encomendado::after,
+.stats-lucro::after {
     height: 30px;
     top: -25px;
     left: -15px;
