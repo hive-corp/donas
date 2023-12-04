@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Nov-2023 às 00:09
+-- Tempo de geração: 04-Dez-2023 às 16:13
 -- Versão do servidor: 10.4.25-MariaDB
 -- versão do PHP: 8.1.10
 
@@ -32,6 +32,7 @@ CREATE TABLE `tbanuncio` (
   `nomeAnuncio` varchar(100) DEFAULT NULL,
   `descricaoAnuncio` varchar(240) DEFAULT NULL,
   `valorAnuncio` double DEFAULT NULL,
+  `precoCustoAnuncio` double NOT NULL,
   `estrelasAnuncio` int(11) DEFAULT NULL,
   `imagemPrincipalAnuncio` varchar(100) DEFAULT NULL,
   `tipoAnuncio` int(11) DEFAULT NULL,
@@ -157,6 +158,7 @@ CREATE TABLE `tbmensagem` (
   `horaMensagem` time DEFAULT current_timestamp(),
   `lidoEmMensagem` int(11) DEFAULT 0,
   `origemMensagem` int(11) DEFAULT NULL,
+  `nomeArquivoMensagem` varchar(255) NOT NULL,
   `idCliente` int(11) DEFAULT NULL,
   `idVendedora` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -175,6 +177,21 @@ CREATE TABLE `tbnotifccliente` (
   `tipoNotificacao` int(11) DEFAULT NULL,
   `statusNotificacao` int(11) DEFAULT NULL,
   `dataNotificacao` date DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tbnotifcvendedora`
+--
+
+CREATE TABLE `tbnotifcvendedora` (
+  `idNotifcVendedora` int(11) NOT NULL,
+  `idVendedora` int(11) DEFAULT NULL,
+  `idAnuncio` int(11) DEFAULT NULL,
+  `idCliente` int(11) DEFAULT NULL,
+  `tipoNotificacao` int(11) DEFAULT NULL,
+  `statusNotificacao` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -371,6 +388,15 @@ ALTER TABLE `tbnotifccliente`
   ADD KEY `idCliente` (`idCliente`);
 
 --
+-- Índices para tabela `tbnotifcvendedora`
+--
+ALTER TABLE `tbnotifcvendedora`
+  ADD PRIMARY KEY (`idNotifcVendedora`),
+  ADD KEY `idVendedora` (`idVendedora`),
+  ADD KEY `idAnuncio` (`idAnuncio`),
+  ADD KEY `idCliente` (`idCliente`);
+
+--
 -- Índices para tabela `tbpedidoproduto`
 --
 ALTER TABLE `tbpedidoproduto`
@@ -488,6 +514,12 @@ ALTER TABLE `tbnotifccliente`
   MODIFY `idNotifcCliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `tbnotifcvendedora`
+--
+ALTER TABLE `tbnotifcvendedora`
+  MODIFY `idNotifcVendedora` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `tbpedidoproduto`
 --
 ALTER TABLE `tbpedidoproduto`
@@ -579,6 +611,14 @@ ALTER TABLE `tbnotifccliente`
   ADD CONSTRAINT `tbnotifccliente_ibfk_1` FOREIGN KEY (`idDenuncia`) REFERENCES `tbdenuncia` (`idDenuncia`),
   ADD CONSTRAINT `tbnotifccliente_ibfk_2` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`),
   ADD CONSTRAINT `tbnotifccliente_ibfk_3` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
+
+--
+-- Limitadores para a tabela `tbnotifcvendedora`
+--
+ALTER TABLE `tbnotifcvendedora`
+  ADD CONSTRAINT `tbnotifcvendedora_ibfk_1` FOREIGN KEY (`idVendedora`) REFERENCES `tbvendedora` (`idVendedora`),
+  ADD CONSTRAINT `tbnotifcvendedora_ibfk_2` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`),
+  ADD CONSTRAINT `tbnotifcvendedora_ibfk_3` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
 
 --
 -- Limitadores para a tabela `tbpedidoproduto`
