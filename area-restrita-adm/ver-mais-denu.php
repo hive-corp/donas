@@ -451,6 +451,9 @@ if (isset($_GET['id'])) {
 										case 6:
 											echo 'Se passando por outra pessoa';
 											break;
+										case 7:
+											echo 'Problemas com encomenda ou serviço';
+											break;
 										default:
 											echo 'Motivo desconhecido';
 									}

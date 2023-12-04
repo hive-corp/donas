@@ -58,6 +58,7 @@ if (isset($_GET['user'])) {
                                     <option value="4">Ofensas</option>
                                     <option value="5">Falta de segurança</option>
                                     <option value="6">Se passando por outra pessoa</option>
+                                    <option value="7">Problemas com encomenda ou serviço</option>
                                 </select>
                             </div>
                             <div class="invalid-feedback">
