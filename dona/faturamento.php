@@ -121,7 +121,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
             </picture>
             <div id="nav-list">
                 <a href="index.php" class="nav-link">
-                    <i class="bi bi-house-door-fill"></i>
+                    <i class="bi bi-house-door"></i>
                     <span>
                         Home
                     </span>
