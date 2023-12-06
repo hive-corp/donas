@@ -132,7 +132,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="cancelar-pedido.php" class="button button-red" id="cancelar-pedido">OK</a>
+                        <button class="button button-red" id="cancelar-servico" data-bs-toggle="modal" data-bs-target="#modal-motivo-pedido">OK</a>
                     </div>
                 </div>
             </div>
@@ -148,11 +148,61 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="cancelar-servico.php" class="button button-red" id="cancelar-servico">OK</a>
+                        <button class="button button-red" id="cancelar-servico" data-bs-toggle="modal" data-bs-target="#modal-motivo-servico">OK</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <form method="POST" class="modal pop" id="modal-motivo-pedido" tabindex="-1" aria-labelledby="modal-motivo-pedido" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Informe um motivo</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">
+                            Informe um motivo pelo qual você está <span class="highlight">cancelando essa encomenda</span>:
+                        </p>
+                        <div class="input">
+                            <label for="motivo-pedido" class="form-label">Motivo do cancelamento:</label>
+                            <div class="input-wrapper">
+                                <textarea name="motivo-pedido" id="motivo-pedido" maxlength="255" cols="30" rows="5" placeholder="Ex: Falta de material, cliente não pagou a encomenda etc..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="button">Confirmar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form method="POST" class="modal pop" id="modal-motivo-servico" tabindex="-1" aria-labelledby="modal-motivo-servico" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Informe um motivo</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">
+                            Informe um motivo pelo qual você está <span class="highlight">cancelando esse serviço</span>:
+                        </p>
+                        <div class="input">
+                            <label for="motivo-servico" class="form-label">Motivo do cancelamento:</label>
+                            <div class="input-wrapper">
+                                <textarea name="motivo-servico" id="motivo-servico" maxlength="255" cols="30" rows="5" placeholder="Ex: Falta de material, cliente não pagou a encomenda etc..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="button button-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="button">Confirmar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
         <div class="modal pop" id="modal-concluir" tabindex="-1" aria-labelledby="modal-concluir" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -449,14 +499,12 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                             </div>
                                         </div>
                                         <div class="nome-encomenda-anuncio" style=" display: none;">
-
                                             <div class="input-wrapper" id="status">
                                                 <?php echo $p['statusPedidoServico'] ?>
                                             </div>
 
                                         </div>
                                         <div class="nome-encomenda-anuncio" style=" display: none;">
-
                                             <div class="input-wrapper" id="tipo">
                                                 1
                                             </div>
@@ -516,7 +564,6 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <i class="bi bi-cash"></i>
                         <span>Comprar Plano Premium</span>
                     </button>
-
                 </div>
             <?php
             }
@@ -541,7 +588,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
             let anuncio = item.getAttribute('data-anuncio')
 
             item.addEventListener('click', () => {
-                document.querySelector('#cancelar-pedido').href = `cancelar-encomenda.php?e=${id}`
+                document.querySelector('#modal-motivo-pedido').action = `cancelar-encomenda.php?e=${id}`
 
                 document.querySelector('#modal-cancelar h5.highlight').innerText = `${cliente} - ${anuncio}`
             })
@@ -552,7 +599,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
             let anuncio = item.getAttribute('data-anuncio')
 
             item.addEventListener('click', () => {
-                document.querySelector('#cancelar-servico').href = `cancelar-servico.php?e=${id}`
+                document.querySelector('#modal-motivo-servico').action = `cancelar-servico.php?e=${id}`
 
                 document.querySelector('#modal-cancelar-servico h5.highlight').innerText = `${cliente} - ${anuncio}`
             })

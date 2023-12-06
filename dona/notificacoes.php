@@ -137,6 +137,7 @@ require_once "validador.php";
                                                                                                             break;
                                                                                                         case 1:
                                                                                                             $cliente = daoCliente::consultarPorId($n['idCliente']);
+                                                                                                            ?> href="conversas.php?username=<?php echo $cliente['nomeUsuarioCliente'] ?>" <?php
                                                                                                             break;
                                                                                                         case 2:
                                                                                                         case 3:
@@ -146,6 +147,7 @@ require_once "validador.php";
                                                                                                         case 7:
                                                                                                             $cliente = daoCliente::consultarPorId($n['idCliente']);
                                                                                                             $anuncio = daoAnuncio::consultarPorId($n['idAnuncio']);
+                                                                                                            ?> href="encomendas.php" <?php
                                                                                                             break;
                                                                                                     } ?>>
                         <div class="notificacao-img">

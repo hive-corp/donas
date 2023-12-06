@@ -5,7 +5,7 @@ class PedidoServico {
     private $dataServicoContratado;
     private $dataServicoMarcado;
     private $statusPedidoServico;
-    
+    private $motivoCancelamento;
     private $Anuncio ;
     private $Cliente ;
     
@@ -30,6 +30,9 @@ class PedidoServico {
     public function getStatusPedidoServico() {
         return $this->statusPedidoServico;
     }
+    public function getMotivoCancelamento() {
+        return $this->motivoCancelamento;
+    }
     public function getAnuncio() {
         return $this->Anuncio;
     }
@@ -50,6 +53,9 @@ class PedidoServico {
     }
     public function setStatusPedidoServico($statusPedidoServico) {
         $this->statusPedidoServico= $statusPedidoServico;
+    }
+    public function setMotivoCancelamento($motivoCancelamento) {
+        $this->motivoCancelamento = $motivoCancelamento;
     }
     public function setAnuncio($Anuncio) {
         $this->Anuncio = $Anuncio;

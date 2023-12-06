@@ -6,6 +6,7 @@ class PedidoProduto {
     private $dataPedidoFeito;
     private $dataPedidoEntregue;
     private $statusPedidoProduto;
+    private $motivoCancelamento;
     private $Anuncio ;
     private $Cliente ;
     
@@ -33,6 +34,9 @@ class PedidoProduto {
     public function getStatusPedidoProduto() {
         return $this->statusPedidoProduto;
     }
+    public function getMotivoCancelamento() {
+        return $this->motivoCancelamento;
+    }
     public function getAnuncio() {
         return $this->Anuncio;
     }
@@ -56,6 +60,9 @@ class PedidoProduto {
     }
     public function setStatusPedidoProduto($statusPedidoProduto) {
         $this->statusPedidoProduto = $statusPedidoProduto;
+    }
+    public function setMotivoCancelamento($motivoCancelamento) {
+        $this->motivoCancelamento = $motivoCancelamento;
     }
     public function setAnuncio($Anuncio) {
         $this->Anuncio = $Anuncio;

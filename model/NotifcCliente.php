@@ -7,12 +7,16 @@ class NotifcCliente {
     private $Denuncia  ;
     private $Anuncio ;
     private $Cliente ;
+    private $PedidoProduto ;
+    private $PedidoServico ;
     
     public function __construct()
     {
         $this->Denuncia = new Denuncia();
         $this->Anuncio = new Anuncio();
         $this->Cliente = new Cliente();
+        $this->PedidoProduto = new PedidoProduto();
+        $this->PedidoServico = new PedidoServico();
     }
 
     public function getIdNotifcCliente() {
@@ -36,6 +40,12 @@ class NotifcCliente {
     public function getDenuncia() {
         return $this->Denuncia;
     }
+    public function getPedidoProduto() {
+        return $this->PedidoProduto;
+    }
+    public function getPedidoServico() {
+        return $this->PedidoServico;
+    }
     public function setIdNotifcCliente($idNotifcCliente) {
         $this->idNotifcCliente=$idNotifcCliente;
     }
@@ -56,6 +66,12 @@ class NotifcCliente {
     }
     public function setDenuncia($Denuncia) {
         $this->Denuncia=$Denuncia;
+    }
+    public function setPedidoProduto($PedidoProduto) {
+        $this->PedidoProduto=$PedidoProduto;
+    }
+    public function setPedidoServico($PedidoServico) {
+        $this->PedidoServico=$PedidoServico;
     }
 }
 

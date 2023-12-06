@@ -200,7 +200,9 @@ require_once "validador.php";
                                     break;
                                 case 4:
                                 ?>
-                                    Sua encomenda foi cancelada pela vendedora.
+                                    Sua encomenda foi cancelada pela vendedora. Motivo: <?php
+                                        echo daoPedidoProduto::consultarPorId($n['idPedidoProduto'])['motivoCancelamento'];
+                                    ?>
                                 <?php
                                     break;
                                 case 5:
@@ -220,7 +222,9 @@ require_once "validador.php";
                                     break;
                                 case 8:
                                 ?>
-                                    Seu serviço foi cancelado pela vendedora.
+                                    Seu serviço foi cancelado pela vendedora. Motivo: <?php
+                                    echo daoPedidoServico::consultarPorId($n['idPedidoServico'])['motivoCancelamento'];
+                                    ?>
                                 <?php
                                     break;
                                 case 9:

@@ -2,13 +2,19 @@
 
     require_once 'global.php';
 
-    header("Location: encomendas.php");
+    // header("Location: encomendas.php");
 
     session_start();
 
     $agendar = new PedidoServico();
 
     $agendar->setIdPedidoServico($_GET['e']);
+
+    if(!empty($_POST['motivo-servico'])){
+        $agendar->setMotivoCancelamento($_POST['motivo-servico']);
+    }else{
+        $agendar->setMotivoCancelamento('Não especificado');
+    }
 
     daoPedidoServico::cancelar($agendar);
 
@@ -30,6 +36,7 @@
     $anuncio->setIdAnuncio($id);
     $notific->setAnuncio($anuncio);
 
+    $notific->setPedidoServico($agendar);
     $notific->setTipoNotificacao(8);
     $notific->setStatusNotificacao(0);
 

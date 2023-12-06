@@ -115,6 +115,16 @@ switch ($method) {
         $vendedora->setFotoNegocioVendedora($arquivo);
 
         daoVendedora::editarFotoNegocio($vendedora);
+
+        $notific = new NotifcVendedora();
+
+        $notific->setVendedora($vendedora);
+
+        $notific->setTipoNotificacao(0);
+        $notific->setStatusNotificacao(0);
+
+        daoNotifcVendedora::cadastrar($notific);
+
         break;
 
     case "PUT":

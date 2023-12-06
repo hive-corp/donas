@@ -8,16 +8,18 @@ class daoNotifcCliente
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "INSERT tbNotifcCliente(idDenuncia, idAnuncio, idCliente, tipoNotificacao, statusNotificacao, dataNotificacao)
-                            VALUES (?, ?, ?, ?, ?, ?)";
+        $queryInsert = "INSERT tbNotifcCliente(idDenuncia, idAnuncio, idCliente, idPedidoProduto, idPedidoServico, tipoNotificacao, statusNotificacao, dataNotificacao)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $prepareStatement = $connection->prepare($queryInsert);
         $prepareStatement->bindValue(1, $NotifcCliente->getDenuncia()->getIdDenuncia());
         $prepareStatement->bindValue(2, $NotifcCliente->getAnuncio()->getIdAnuncio());
         $prepareStatement->bindValue(3, $NotifcCliente->getCliente()->getIdCliente());
-        $prepareStatement->bindValue(4, $NotifcCliente->getTipoNotificacao());
-        $prepareStatement->bindValue(5, $NotifcCliente->getStatusNotificacao());
-        $prepareStatement->bindValue(6, $NotifcCliente->getDataNotificacao());
+        $prepareStatement->bindValue(4, $NotifcCliente->getPedidoProduto()->getIdPedidoProduto());
+        $prepareStatement->bindValue(5, $NotifcCliente->getPedidoServico()->getIdPedidoServico());
+        $prepareStatement->bindValue(6, $NotifcCliente->getTipoNotificacao());
+        $prepareStatement->bindValue(7, $NotifcCliente->getStatusNotificacao());
+        $prepareStatement->bindValue(8, $NotifcCliente->getDataNotificacao());
 
         $prepareStatement->execute();
     }

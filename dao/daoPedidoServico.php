@@ -63,12 +63,13 @@ class daoPedidoServico
         $connection = Conexao::conectar();
 
         $queryInsert = "UPDATE tbPedidoServico
-                            SET statusPedidoServico = 2
+                            SET statusPedidoServico = 2, motivoCancelamento = ?
                             WHERE idPedidoServico = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
 
-        $prepareStatement->bindValue(1, $PedidoServico->getIdPedidoServico());
+        $prepareStatement->bindValue(1, $PedidoServico->getMotivoCancelamento());
+        $prepareStatement->bindValue(2, $PedidoServico->getIdPedidoServico());
 
         $prepareStatement->execute();
     }
