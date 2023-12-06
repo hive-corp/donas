@@ -6,6 +6,8 @@ header("Access-Control-Allow-Methods: *");
 
 require_once('../global.php');
 
+date_default_timezone_set('America/Sao_Paulo');
+
 session_start();
 
 $anuncio = new Anuncio();
@@ -15,6 +17,30 @@ $anuncio->setDescricaoAnuncio(($_POST['desc']));
 $anuncio->setValorAnuncio($_POST['valor']);
 $anuncio->setPrecoCustoAnuncio($_POST['preco-custo']);
 $anuncio->setIdAnuncio($_GET['a']);
+
+$qtdAtual = daoAnuncio::consultarPorId($_GET['a'])['qtdProduto'];
+$diferenca = $qtdAtual - $_POST['qtd'];
+
+if($diferenca > 0){
+    $saida = new SaidaProduto();
+    $dataSaida = date('Y-m-d H:i:s');
+    
+    $saida->setAnuncio($anuncio);
+    $saida->setDataSaidaProduto($dataSaida);
+    $saida->setQtdSaidaProduto(abs($diferenca));
+
+    daoSaidaProduto::cadastrar($saida);
+}else if($diferenca < 0){
+    $entrada = new EntradaProduto();
+    $dataEntrada = date('Y-m-d H:i:s');
+    
+    $entrada->setAnuncio($anuncio);
+    $entrada->setDataEntradaProduto($dataEntrada);
+    $entrada->setQtdEntradaProduto(abs($diferenca));
+
+    daoEntradaProduto::cadastrar($entrada);
+}
+
 $anuncio->setQtdProduto($_POST['qtd']);
 
 daoAnuncio::editar($anuncio);

@@ -56,6 +56,21 @@ class daoAnuncio
 
         $prepareStatement->execute();
     }
+    public static function editarQuantidade($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbAnuncio
+                            SET qtdProduto = ?
+                            WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindvalue(1, $Anuncio->getQtdProduto());
+        $prepareStatement->bindValue(2, $Anuncio->getIdAnuncio());
+
+        $prepareStatement->execute();
+    }
 
     public static function editarEstrelas($Anuncio)
     {
@@ -169,16 +184,16 @@ class daoAnuncio
     public static function consultarPorVendedora($idVendedora)
     {
         $connection = Conexao::conectar();
-    
+
         $stmt = $connection->prepare('SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora, fotoNegocioVendedora FROM tbAnuncio
                             INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
                             INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
                             WHERE tbVendedora.idVendedora = ?');
         $stmt->bindValue(1, $idVendedora);
         $stmt->execute();
-    
+
         $dados = $stmt->fetch();
-    
+
         return $dados;
     }
 
@@ -217,7 +232,8 @@ class daoAnuncio
         return $dados;
     }
 
-    public static function consultarMaisVendedora($anuncio){
+    public static function consultarMaisVendedora($anuncio)
+    {
         $connection = Conexao::conectar();
 
         $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
@@ -266,7 +282,46 @@ class daoAnuncio
 
         return $dados;
     }
-    
+
+    public static function consultarEntradaSaida($id)
+    {
+        $connection = Conexao::conectar();
+
+
+        $stmt = $connection->prepare("SELECT 'E' as tipoOperacao, 
+        DATE_FORMAT(tbEntradaProduto.dataEntradaProduto, '%d/%m/%Y') as data,
+        TIME_FORMAT(tbEntradaProduto.dataEntradaProduto, '%H:%i') as hora,
+        tbEntradaProduto.idEntradaProduto, 
+        tbEntradaProduto.idAnuncio, 
+        tbEntradaProduto.qtdEntradaProduto AS qtd
+ FROM tbEntradaProduto
+ WHERE tbEntradaProduto.idAnuncio = ?
+ GROUP BY tipoOperacao, data, hora, tbEntradaProduto.idEntradaProduto, tbEntradaProduto.idAnuncio
+ 
+ UNION ALL
+ 
+ SELECT 'S' as tipoOperacao, 
+        DATE_FORMAT(tbSaidaProduto.dataSaidaProduto, '%d/%m/%Y') as data,
+        TIME_FORMAT(tbSaidaProduto.dataSaidaProduto, '%H:%i') as hora,
+        tbSaidaProduto.idSaidaProduto, 
+        tbSaidaProduto.idAnuncio, 
+        tbSaidaProduto.qtdSaidaProduto AS qtd
+ FROM tbSaidaProduto
+ WHERE tbSaidaProduto.idAnuncio = ?
+ GROUP BY tipoOperacao, data, hora, tbSaidaProduto.idSaidaProduto, tbSaidaProduto.idAnuncio
+ 
+ ORDER BY data DESC, hora DESC
+ LIMIT 6;");
+
+$stmt->bindValue(1, $id);
+$stmt->bindValue(2, $id);
+$stmt->execute();
+
+        $dados = $stmt->fetchAll();
+
+        return $dados;
+    }
+
     public static function contarAnuncio()
     {
         $connection = Conexao::conectar();

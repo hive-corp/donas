@@ -13,4 +13,17 @@
             $lista = $resultado->fetchAll();
             return $lista;
         }
+        public static function cadastrar($EntradaProduto)
+        {
+            $connection = Conexao::conectar();
+    
+            $queryInsert = "INSERT tbEntradaProduto(dataEntradaProduto, qtdEntradaProduto, idAnuncio)
+                                VALUES (?, ?, ?)";
+    
+            $prepareStatement = $connection->prepare($queryInsert);
+            $prepareStatement->bindValue(1, $EntradaProduto->getDataEntradaProduto());
+            $prepareStatement->bindValue(2, $EntradaProduto->getQtdEntradaProduto());
+            $prepareStatement->bindValue(3, $EntradaProduto->getAnuncio()->getIdAnuncio());
+            $prepareStatement->execute();
+        }
     }

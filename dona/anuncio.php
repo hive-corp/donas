@@ -410,6 +410,144 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             ?>
                         </div>
                     </div>
+                    <div class="stats-box" id="mais-anuncios">
+                        <div class="stats-header">
+                            <div class="section-title placeholder-element placeholder-glow">
+                                <span class="placeholder col-4"></span>
+                            </div>
+                            <div class="section-title load">Entrada e saída</div>
+                       </div>
+                        <div class="stats-body placeholder-element">
+                            <div class="stats-item">
+                                <div class="stats-foto placeholder-glow">
+                                    <span class="placeholder"></span>
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <span class="placeholder col-7"></span>
+                                </div>
+                                <div class="stats-avaliacao placeholder-glow">
+                                    <span class="placeholder col-5 highlight"></span>
+                                </div>
+                                <div class="stats-valor placeholder-glow">
+                                    <span class="placeholder col-3 highlight"></span>
+                                </div>
+                                <div class="stats-categoria placeholder-glow">
+                                    <span class="placeholder col-5"></span>
+                                </div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-foto placeholder-glow">
+                                    <span class="placeholder"></span>
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <span class="placeholder col-7"></span>
+                                </div>
+                                <div class="stats-avaliacao placeholder-glow">
+                                    <span class="placeholder col-5 highlight"></span>
+                                </div>
+                                <div class="stats-valor placeholder-glow">
+                                    <span class="placeholder col-3 highlight"></span>
+                                </div>
+                                <div class="stats-categoria placeholder-glow">
+                                    <span class="placeholder col-5"></span>
+                                </div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-foto placeholder-glow">
+                                    <span class="placeholder"></span>
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <span class="placeholder col-7"></span>
+                                </div>
+                                <div class="stats-encomenda placeholder-glow">
+                                    <span class="placeholder col-5 highlight"></span>
+                                </div>
+                                <div class="stats-valor placeholder-glow">
+                                    <span class="placeholder col-3 highlight"></span>
+                                </div>
+                                <div class="stats-categoria placeholder-glow">
+                                    <span class="placeholder col-5"></span>
+                                </div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-foto placeholder-glow">
+                                    <span class="placeholder"></span>
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <span class="placeholder col-7"></span>
+                                </div>
+                                <div class="stats-avaliacao placeholder-glow">
+                                    <span class="placeholder col-5 highlight"></span>
+                                </div>
+                                <div class="stats-valor placeholder-glow">
+                                    <span class="placeholder col-3 highlight"></span>
+                                </div>
+                                <div class="stats-categoria placeholder-glow">
+                                    <span class="placeholder col-5"></span>
+                                </div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-foto placeholder-glow">
+                                    <span class="placeholder"></span>
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <span class="placeholder col-7"></span>
+                                </div>
+                                <div class="stats-avaliacao placeholder-glow">
+                                    <span class="placeholder col-5 highlight"></span>
+                                </div>
+                                <div class="stats-valor placeholder-glow">
+                                    <span class="placeholder col-3 highlight"></span>
+                                </div>
+                                <div class="stats-categoria placeholder-glow">
+                                    <span class="placeholder col-5"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="stats-item">
+                                <div class="stats-foto placeholder-glow">
+                                    <span class="placeholder"></span>
+                                </div>
+                                <div class="stats-name placeholder-glow">
+                                    <span class="placeholder col-7"></span>
+                                </div>
+                                <div class="stats-avaliacao placeholder-glow">
+                                    <span class="placeholder col-5 highlight"></span>
+                                </div>
+                                <div class="stats-valor placeholder-glow">
+                                    <span class="placeholder col-3 highlight"></span>
+                                </div>
+                                <div class="stats-categoria placeholder-glow">
+                                    <span class="placeholder col-5"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stats-body load">
+                            <?php
+                            $anuncios = daoAnuncio::consultarEntradaSaida($anuncio['idAnuncio']);
+
+                            foreach ($anuncios as $a) {
+                            ?>
+                                <a class="stats-item <?php echo $a['tipoOperacao'] == 'E' ? 'entrada' : 'saida'?>">
+                                    <div class="stats-qtd">
+                                    <?php echo $a['tipoOperacao'] == 'E' ? '+' : '-'?><?php echo $a['qtd']?> unidades
+                                    </div>
+                                    <div class="stats-hora">
+                                        <?php echo $a['hora']?>
+                                    </div>
+                                    <div class="stats-data">
+                                        <?php echo $a['data']?>
+                                    </div>
+                                </a>
+                            <?php
+                            }
+                            ?>
+
+                        </div>
+                        <div class="stats-footer">
+
+                        </div>
+                    </div>
                 </div>
 
             <?php

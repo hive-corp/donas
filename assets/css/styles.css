@@ -3891,6 +3891,7 @@ a.config-item {
     transition: .3s box-shadow, .3s border-color;
     position: relative;
     display: grid;
+    grid-template-rows: min-content 1fr min-content;
     grid-template-areas:
         "header"
         "body"
@@ -3968,6 +3969,39 @@ a.config-item {
         "foto name valor"
         "foto avaliacao categoria";
     row-gap: 2px;
+}
+
+#mais-anuncios .stats-item.entrada,
+#mais-anuncios .stats-item.saida{
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+    'qtd hora'
+    'qtd data';
+}
+
+.stats-qtd{
+    grid-area: qtd;
+    font-size: 1.2em;
+    align-self: center;
+}
+
+.stats-item.entrada .stats-qtd{
+    color: green;
+}
+
+.stats-item.saida .stats-qtd{
+    color: red;
+}
+
+.stats-hora{
+    grid-area: hora;
+    font-size: 0.9em;
+    color: lightslategray;
+}
+
+.stats-data{
+    font-size: 0.9em;
+    color: lightslategray;
 }
 
 .stats-avaliacao {
