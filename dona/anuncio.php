@@ -92,7 +92,6 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                         Insira um preço para o anúncio
                                     </div>
                                 </div>
-
                                 <div class="input">
                                     <label class="form-label" for="preco-custo">Preço de custo<span>*</span></label>
                                     <div class="input-wrapper">

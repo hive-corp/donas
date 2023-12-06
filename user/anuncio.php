@@ -531,18 +531,21 @@ date_default_timezone_set('America/Sao_Paulo');
         dataInput.addEventListener('change', () => {
             let dataAtual = new Date();
 
+            const horas = dataAtual.getHours();
+            const minutos = dataAtual.getMinutes();
+
             let dataInput = document.querySelector('#data');
 
             if (dataInput.getAttribute('type') == 'datetime') {
                 var data = new Date(dataInput.value);
             } else {
-                var data = new Date(dataInput.value + 'T00:00');
+                var data = new Date(dataInput.value + `T23:59`);
             }
 
             if (data < dataAtual) {
                 dataInput.classList.add('is-invalid')
                 dataInput.valueAsDate = dataAtual
-            }else{
+            } else {
                 dataInput.classList.remove('is-invalid');
             }
         })

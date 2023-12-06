@@ -15,7 +15,7 @@ $cliente->setIdCliente($_SESSION['id']);
 
 $encomenda = new PedidoProduto();
 $qtd = isset($_POST['qtd']) ? intval($_POST['qtd']) : 1;
-$data = !empty($_POST['data-entrega']) ? $_POST['data-entrega'] : null;
+$data = !empty($_POST['data']) ? $_POST['data'] : null;
 $dataFormatada = !empty($data) ? date('Y-m-d', strtotime($data)) : null;
 $dataFeito = date('Y-m-d H:i:s');
 

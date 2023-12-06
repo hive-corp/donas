@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <div class="modal pop" id="modal-foto-empresa" tabindex="-1" aria-labelledby="modal-foto-empresa" aria-hidden="true">
+    <div class="modal pop" id="modal-foto-empresa" tabindex="-1" aria-labelledby="modal-foto-empresa" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -613,6 +613,8 @@
                 confirmarCadastro = document.querySelector('#cadastrar'),
                 genero = document.querySelector('#genero')
 
+            let chave, plano
+
             genero.addEventListener('change', e => {
                 let target = e.target
 
@@ -640,9 +642,76 @@
                 })
             })
 
+            const cadastrarVendedora = () => {
+                let canvasVendedora = cropperVendedora.getCroppedCanvas({
+                    width: 512,
+                    height: 512
+                })
+
+                let canvasEmpresa = cropperEmpresa.getCroppedCanvas({
+                    width: 512,
+                    height: 512
+                })
+
+                canvasVendedora.toBlob(function(blobVendedora) {
+                    canvasEmpresa.toBlob(function(blobEmpresa) {
+
+                        let formData = new FormData()
+
+                        formData.append('foto-vendedora', blobVendedora, 'photo-vendedora.png')
+                        formData.append('foto-empresa', blobEmpresa, 'photo-empresa.png')
+                        formData.append('nome', document.getElementById('nome').value)
+                        formData.append('email', document.getElementById('email').value)
+                        formData.append('pass', campoSenha.value)
+                        formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
+                        formData.append('nome-empresa', document.getElementById('nome-empresa').value)
+                        formData.append('username-empresa', campoUsername.value)
+                        formData.append('telefone', document.getElementById('telefone').value.replace(/\D/g, ''))
+                        formData.append('log', document.getElementById('log').value)
+                        formData.append('num', document.getElementById('numero').value)
+                        formData.append('bairro', document.getElementById('bairro').value)
+                        formData.append('cidade', document.getElementById('cidade').value)
+                        formData.append('uf', document.getElementById('uf').value)
+                        formData.append('cep', campoCep.value.replace(/\D/g, ''))
+                        formData.append('comp', document.getElementById('complemento').value)
+                        formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
+                        formData.append('nivel', plano)
+
+                        const tipoChave = document.querySelector('input[name="tipo-chave"]:checked').value
+
+                        if (tipoChave == 1) {
+                            chave = chave.replace(/\D/g, '')
+                        } else if (tipoChave == 3) {
+                            chave = chave.replace(/\D/g, '')
+                            chave = "+" + chave
+                        }
+
+                        formData.append('chave', chave)
+                        formData.append('tipo-chave', tipoChave)
+                        formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
+
+                        fetch('api/dona/index.php', {
+                            method: 'POST',
+                            header: {
+                                'Accept': 'application/json',
+                                'Content-type': 'application/json'
+                            },
+                            body: formData
+                        }).then(() => {
+                            new bootstrap.Modal('#modal-sucesso').toggle()
+                            setTimeout(() => location.replace('./login.php'), 2500)
+                        })
+
+                    })
+                })
+            }
+
             form.addEventListener('submit', event => {
                 event.preventDefault()
                 event.stopPropagation()
+
+                confirmarCadastro.removeEventListener('click', cadastrarVendedora)
+
                 if (!form.checkValidity() || campoCnpj.value.length < 14) {
                     new bootstrap.Modal('#modal-erro').toggle()
                     form.classList.add('was-validated')
@@ -668,8 +737,8 @@
                         numero = document.getElementById('numero').value,
                         complemento = document.getElementById('complemento').value,
                         cep = campoCep.value
-                        
-                    let chave = document.getElementById('chave').value
+
+                    chave = document.getElementById('chave').value
 
                     nomeModal.innerText = document.getElementById('nome').value
                     cnpjModal.innerText = campoCnpj.value
@@ -678,8 +747,6 @@
                     nomeNegocioModal.innerText = document.getElementById('nome-empresa').value
                     usernameNegocioModal.innerText = campoUsername.value
                     categoriaNegocioModal.innerText = document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].text
-
-                    let plano;
 
                     let radio = document.getElementsByName('plano-radio')
                     for (i = 0; i < radio.length; i++) {
@@ -697,70 +764,8 @@
                     enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
                     chaveModal.innerText = chave
 
-                    confirmarCadastro.addEventListener('click', () => {
-                        let canvasVendedora = cropperVendedora.getCroppedCanvas({
-                            width: 512,
-                            height: 512
-                        })
+                    confirmarCadastro.addEventListener('click', cadastrarVendedora)
 
-                        let canvasEmpresa = cropperEmpresa.getCroppedCanvas({
-                            width: 512,
-                            height: 512
-                        })
-
-                        canvasVendedora.toBlob(function(blobVendedora) {
-                            canvasEmpresa.toBlob(function(blobEmpresa) {
-
-                                let formData = new FormData()
-
-                                formData.append('foto-vendedora', blobVendedora, 'photo-vendedora.png')
-                                formData.append('foto-empresa', blobEmpresa, 'photo-empresa.png')
-                                formData.append('nome', document.getElementById('nome').value)
-                                formData.append('email', document.getElementById('email').value)
-                                formData.append('pass', campoSenha.value)
-                                formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
-                                formData.append('nome-empresa', document.getElementById('nome-empresa').value)
-                                formData.append('username-empresa', campoUsername.value)
-                                formData.append('telefone', document.getElementById('telefone').value.replace(/\D/g, ''))
-                                formData.append('log', logradouro)
-                                formData.append('num', numero)
-                                formData.append('bairro', bairro)
-                                formData.append('cidade', cidade)
-                                formData.append('uf', uf)
-                                formData.append('cep', cep.replace(/\D/g, ''))
-                                formData.append('comp', complemento)
-                                formData.append('cnpj', campoCnpj.value.replace(/\D/g, ''))
-                                formData.append('nivel', plano)
-
-                                const tipoChave = document.querySelector('input[name="tipo-chave"]:checked').value
-
-                                if (tipoChave == 1) {
-                                    chave = chave.replace(/\D/g, '')
-                                } else if (tipoChave == 3) {
-                                    chave = chave.replace(/\D/g, '')
-                                    chave = "+"+chave
-                                }
-
-                                formData.append('chave', chave)
-                                formData.append('tipo-chave', tipoChave)
-                                formData.append('categoria', document.getElementById('categoria').options[document.getElementById('categoria').selectedIndex].value)
-
-                                fetch('api/dona/index.php', {
-                                    method: 'POST',
-                                    header: {
-                                        'Accept': 'application/json',
-                                        'Content-type': 'application/json'
-                                    },
-                                    body: formData
-                                }).then(() => {
-                                    new bootstrap.Modal('#modal-sucesso').toggle()
-                                    setTimeout(() => location.replace('./login.php'), 2500)
-                                })
-
-                            })
-
-                        })
-                    })
                 }
             }, false)
 
@@ -1012,7 +1017,61 @@
             campoCnpj.addEventListener('input', maskCNPJ)
             campoCnpj.addEventListener('blur', e => {
 
-                let cnpj = e.target.value.replace(/\D/g, '')
+                campoCnpj.classList.remove('is-valid')
+                campoCnpj.classList.remove('is-invalid')
+
+                let cnpj = e.target.value.replace(/\D/g, '');
+
+                if (cnpj == '') return false;
+
+                if (cnpj.length != 14)
+                    return false;
+
+                if (cnpj == "00000000000000" ||
+                    cnpj == "11111111111111" ||
+                    cnpj == "22222222222222" ||
+                    cnpj == "33333333333333" ||
+                    cnpj == "44444444444444" ||
+                    cnpj == "55555555555555" ||
+                    cnpj == "66666666666666" ||
+                    cnpj == "77777777777777" ||
+                    cnpj == "88888888888888" ||
+                    cnpj == "99999999999999") {
+
+                    campoCnpj.classList.add('is-invalid')
+                    return false;
+                }
+
+                tamanho = cnpj.length - 2
+                numeros = cnpj.substring(0, tamanho);
+                digitos = cnpj.substring(tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (i = tamanho; i >= 1; i--) {
+                    soma += numeros.charAt(tamanho - i) * pos--;
+                    if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(0)) {
+                    campoCnpj.classList.add('is-invalid')
+                    return false;
+                }
+
+                tamanho = tamanho + 1;
+                numeros = cnpj.substring(0, tamanho);
+                soma = 0;
+                pos = tamanho - 7;
+                for (i = tamanho; i >= 1; i--) {
+                    soma += numeros.charAt(tamanho - i) * pos--;
+                    if (pos < 2)
+                        pos = 9;
+                }
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(1)) {
+                    campoCnpj.classList.add('is-invalid')
+                    return false;
+                }
 
                 fetch(`api/dona/?cnpj=${cnpj}`)
                     .then(response => response.json())
@@ -1022,7 +1081,9 @@
                             campoCnpj.classList.add('is-invalid')
                             campoCnpj.classList.remove('is-valid')
                         } else {
-                            campoCnpj.classList.add('is-valid')
+                            if (campoCnpj != '') {
+                                campoCnpj.classList.add('is-valid')
+                            }
                             campoCnpj.classList.remove('is-invalid')
                         }
                     })

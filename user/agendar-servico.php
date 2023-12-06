@@ -2,7 +2,7 @@
 
 require_once 'global.php';
 
-header("Location: anuncio.php?a=" . $_GET['a']);
+// header("Location: anuncio.php?a=" . $_GET['a']);
 session_start();
 
 $anuncio = new Anuncio();
@@ -14,7 +14,7 @@ $cliente = new Cliente();
 $cliente->setIdCliente($_SESSION['id']);
 
 $agendar = new PedidoServico();
-$data = !empty($_POST['data-entrega-serviço']) ? $_POST['data-entrega-serviço'] : null;
+$data = !empty($_POST['data']) ? $_POST['data'] : null;
 $dataFormatada = !empty($data) ? date('Y-m-d\TH:i', strtotime($data)) : null;
 $dataFeito = date('Y-m-d H:i:s');
 // Calcula o valor total com base na quantidade

@@ -341,6 +341,8 @@ require_once "validador.php";
             precoVenda = document.querySelector('#preco'),
             precoCusto = document.querySelector('#preco-custo')
 
+        let AnuncioSubCategoria
+
         const verificaPreco = () => {
             let invalidVenda = document.getElementById('invalid-venda')
             let invalidCusto = document.getElementById('invalid-custo')
@@ -359,13 +361,49 @@ require_once "validador.php";
                 invalidCusto.innerText = 'Insira um preço de custo para o anúncio'
             }
         }
-        
+
         precoVenda.addEventListener('input', verificaPreco)
         precoCusto.addEventListener('input', verificaPreco)
+
+        const cadastrarAnuncio = () => {
+            let canvas = cropper.getCroppedCanvas({
+                width: 512,
+                height: 512
+            })
+
+            canvas.toBlob(function(blob) {
+
+                let formData = new FormData()
+
+                formData.append('foto', blob, 'photo.png')
+                formData.append('nome', document.getElementById('nome-anuncio-cadastro').value)
+                formData.append('desc', document.getElementById('desc').value)
+                formData.append('valor', document.getElementById('preco').value)
+                formData.append('preco-custo', document.getElementById('preco-custo').value)
+                formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
+                formData.append('qtd', document.getElementById('estoque').value)
+                formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
+
+                fetch('../api/anuncio/', {
+                    method: 'POST',
+                    header: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: formData
+                }).then(() => {
+                    new bootstrap.Modal('#modal-sucesso').toggle()
+                    setTimeout(() => location.reload(), 1500)
+                })
+            })
+        }
 
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
+
+            confirmarCadastro.removeEventListener('click', cadastrarAnuncio)
+
             if (!form.checkValidity() || precoCusto.value >= precoVenda.value) {
                 new bootstrap.Modal('#modal-erro').toggle()
                 form.classList.add('was-validated')
@@ -383,7 +421,7 @@ require_once "validador.php";
 
                 let subcategorias = ""
 
-                let AnuncioSubCategoria = []
+                AnuncioSubCategoria = []
 
                 AnuncioSubCategoriaCheck.forEach(item => {
                     AnuncioSubCategoria.push(item.value)
@@ -405,38 +443,7 @@ require_once "validador.php";
                     subModal.innerText = "Nenhum"
                 }
 
-                confirmarCadastro.addEventListener('click', () => {
-                    let canvas = cropper.getCroppedCanvas({
-                        width: 512,
-                        height: 512
-                    })
-
-                    canvas.toBlob(function(blob) {
-
-                        let formData = new FormData()
-
-                        formData.append('foto', blob, 'photo.png')
-                        formData.append('nome', document.getElementById('nome-anuncio-cadastro').value)
-                        formData.append('desc', document.getElementById('desc').value)
-                        formData.append('valor', document.getElementById('preco').value)
-                        formData.append('preco-custo', document.getElementById('preco-custo').value)
-                        formData.append('tipo', document.getElementById('tipo-new').options[document.getElementById('tipo-new').selectedIndex].value)
-                        formData.append('qtd', document.getElementById('estoque').value)
-                        formData.append('AnuncioSubCategoria', JSON.stringify(AnuncioSubCategoria))
-
-                        fetch('../api/anuncio/', {
-                            method: 'POST',
-                            header: {
-                                'Accept': 'application/json',
-                                'Content-type': 'application/json'
-                            },
-                            body: formData
-                        }).then(() => {
-                            new bootstrap.Modal('#modal-sucesso').toggle()
-                            setTimeout(() => location.reload(), 1500)
-                        })
-                    })
-                })
+                confirmarCadastro.addEventListener('click', cadastrarAnuncio)
             }
         })
 

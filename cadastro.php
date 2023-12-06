@@ -57,7 +57,7 @@ require_once "global.php"
         </div>
     </div>
 
-    <div class="modal pop" id="modal-foto" tabindex="-1" aria-labelledby="modal-foto" aria-hidden="true">
+    <div class="modal pop" id="modal-foto" tabindex="-1" aria-labelledby="modal-foto" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -333,12 +333,12 @@ require_once "global.php"
 
                                         foreach ($categorias as $c) {
                                         ?>
-                                            <input type="checkbox" class="checkbox-preferencia" name="categoria" id="<?php echo $c['nomeCategoria']?>" value="<?php echo $c['idCategoria']?>">
-                                            <label class="card-categoria" for="<?php echo $c['nomeCategoria']?>">
+                                            <input type="checkbox" class="checkbox-preferencia" name="categoria" id="<?php echo $c['nomeCategoria'] ?>" value="<?php echo $c['idCategoria'] ?>">
+                                            <label class="card-categoria" for="<?php echo $c['nomeCategoria'] ?>">
                                                 <div class="img-categoria">
-                                                    <img src="<?php echo $c['fotoCategoria']?>" alt="<?php echo $c['nomeCategoria']?>" />
+                                                    <img src="<?php echo $c['fotoCategoria'] ?>" alt="<?php echo $c['nomeCategoria'] ?>" />
                                                 </div>
-                                                <p class="nome-categoria"><?php echo $c['nomeCategoria']?></p>
+                                                <p class="nome-categoria"><?php echo $c['nomeCategoria'] ?></p>
                                             </label>
                                         <?php
                                         }
@@ -379,6 +379,8 @@ require_once "global.php"
             confirmarFoto = document.querySelector('#confirmar-foto'),
             confirmarCadastro = document.querySelector('#cadastrar'),
             form = document.querySelector('#form-cadastro')
+
+        let preferencias
 
         nomeInput.addEventListener("input", () => {
             localStorage.setItem("nome", nomeInput.value)
@@ -428,9 +430,53 @@ require_once "global.php"
                 })
         })
 
+        const cadastrarCliente = () => {
+            let canvas = cropper.getCroppedCanvas({
+                width: 512,
+                height: 512
+            })
+
+            canvas.toBlob(function(blob) {
+                let formData = new FormData()
+
+                console.log(document.getElementById('nome').value)
+
+                formData.append('foto', blob, 'photo.png')
+                formData.append('nome', document.getElementById('nome').value)
+                formData.append('username', document.getElementById('username').value)
+                formData.append('email', document.getElementById('email').value)
+                formData.append('pass', campoSenha.value)
+                formData.append('cpf', campoCpf.value.replace(/\D/g, ''))
+                formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
+                formData.append('log', document.getElementById('log').value)
+                formData.append('num', document.getElementById('numero').value)
+                formData.append('bairro', document.getElementById('bairro').value)
+                formData.append('cidade', document.getElementById('cidade').value)
+                formData.append('uf', document.getElementById('uf').value)
+                formData.append('cep', campoCep.value.replace(/\D/g, ''))
+                formData.append('comp', document.getElementById('complemento').value)
+                formData.append('preferencias', JSON.stringify(preferencias))
+
+                fetch('api/cliente/index.php', {
+                    method: 'POST',
+                    header: {
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: formData
+                }).then(() => {
+                    new bootstrap.Modal('#modal-sucesso').toggle()
+                    setTimeout(() => location.replace('./login.php'), 2500)
+                })
+            })
+        }
+
         form.addEventListener('submit', event => {
             event.preventDefault()
             event.stopPropagation()
+
+            confirmarCadastro.removeEventListener('click', cadastrarCliente)
+
             if (!form.checkValidity() || campoCpf.value.length != 14) {
                 new bootstrap.Modal('#modal-erro').toggle()
                 form.classList.add('was-validated')
@@ -452,7 +498,7 @@ require_once "global.php"
                     cep = campoCep.value,
                     preferenciasCheck = document.querySelectorAll('input[name=categoria]:checked')
 
-                let preferencias = []
+                preferencias = []
 
                 preferenciasCheck.forEach(item => {
                     preferencias.push(item.value)
@@ -464,47 +510,8 @@ require_once "global.php"
                 emailModal.innerText = document.getElementById('email').value
                 nascModal.innerText = document.getElementById('date').value.replaceAll('-', '/')
                 enderecoModal.innerText = `${logradouro}, ${numero} - ${bairro}, ${cidade} - ${uf}, ${cep} ${complemento != '' ? ' - ' + complemento : ''}`
-            
-                confirmarCadastro.addEventListener('click', () => {
-                    let canvas = cropper.getCroppedCanvas({
-                        width: 512,
-                        height: 512
-                    })
 
-                    canvas.toBlob(function(blob) {
-                        let formData = new FormData()
-
-                        console.log(document.getElementById('nome').value)
-
-                        formData.append('foto', blob, 'photo.png')
-                        formData.append('nome', document.getElementById('nome').value)
-                        formData.append('username', document.getElementById('username').value)
-                        formData.append('email', document.getElementById('email').value)
-                        formData.append('pass', campoSenha.value)
-                        formData.append('cpf', campoCpf.value.replace(/\D/g, ''))
-                        formData.append('nasc', document.getElementById('date').value.replaceAll('-', '/'))
-                        formData.append('log', logradouro)
-                        formData.append('num', numero)
-                        formData.append('bairro', bairro)
-                        formData.append('cidade', cidade)
-                        formData.append('uf', uf)
-                        formData.append('cep', cep.replace(/\D/g, ''))
-                        formData.append('comp', complemento)
-                        formData.append('preferencias', JSON.stringify(preferencias))
-
-                        fetch('api/cliente/index.php', {
-                            method: 'POST',
-                            header: {
-                                'Accept': 'application/json',
-                                'Content-type': 'application/json'
-                            },
-                            body: formData
-                        }).then(() => {
-                            new bootstrap.Modal('#modal-sucesso').toggle()
-                            setTimeout(() => location.replace('./login.php'), 2500)
-                        })
-                    })
-                })
+                confirmarCadastro.addEventListener('click', cadastrarCliente)
             }
         })
 
