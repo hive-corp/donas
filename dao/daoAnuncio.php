@@ -166,6 +166,21 @@ class daoAnuncio
 
         return $dados;
     }
+    public static function consultarPorVendedora($idVendedora)
+    {
+        $connection = Conexao::conectar();
+    
+        $stmt = $connection->prepare('SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora, fotoNegocioVendedora FROM tbAnuncio
+                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                            INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                            WHERE tbVendedora.idVendedora = ?');
+        $stmt->bindValue(1, $idVendedora);
+        $stmt->execute();
+    
+        $dados = $stmt->fetch();
+    
+        return $dados;
+    }
 
     public static function consultarMelhorAvaliado($id)
     {
