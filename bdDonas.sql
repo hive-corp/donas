@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Dez-2023 às 16:13
+-- Tempo de geração: 06-Dez-2023 às 04:49
 -- Versão do servidor: 10.4.25-MariaDB
 -- versão do PHP: 8.1.10
 
@@ -174,6 +174,8 @@ CREATE TABLE `tbnotifccliente` (
   `idDenuncia` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL,
+  `idPedidoProduto` int(11) DEFAULT NULL,
+  `idPedidoServico` int(11) DEFAULT NULL,
   `tipoNotificacao` int(11) DEFAULT NULL,
   `statusNotificacao` int(11) DEFAULT NULL,
   `dataNotificacao` date DEFAULT current_timestamp()
@@ -207,6 +209,7 @@ CREATE TABLE `tbpedidoproduto` (
   `dataPedidoFeito` datetime DEFAULT NULL,
   `dataPedidoEntregue` date DEFAULT NULL,
   `statusPedidoProduto` int(11) DEFAULT NULL,
+  `motivoCancelamento` varchar(255) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -223,6 +226,7 @@ CREATE TABLE `tbpedidoservico` (
   `statusPedidoServico` int(11) NOT NULL,
   `dataServicoContratado` datetime DEFAULT NULL,
   `dataServicoMarcado` datetime DEFAULT NULL,
+  `motivoCancelamento` varchar(255) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL,
   `idCliente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -247,7 +251,7 @@ CREATE TABLE `tbpreferencias` (
 
 CREATE TABLE `tbsaidaproduto` (
   `idSaidaProduto` int(11) NOT NULL,
-  `dataSaidaProduto` date DEFAULT NULL,
+  `dataSaidaProduto` datetime DEFAULT NULL,
   `qtdSaidaProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -385,7 +389,9 @@ ALTER TABLE `tbnotifccliente`
   ADD PRIMARY KEY (`idNotifcCliente`),
   ADD KEY `idDenuncia` (`idDenuncia`),
   ADD KEY `idAnuncio` (`idAnuncio`),
-  ADD KEY `idCliente` (`idCliente`);
+  ADD KEY `idCliente` (`idCliente`),
+  ADD KEY `idPedidoProduto` (`idPedidoProduto`),
+  ADD KEY `idPedidoServico` (`idPedidoServico`);
 
 --
 -- Índices para tabela `tbnotifcvendedora`
@@ -610,7 +616,9 @@ ALTER TABLE `tbmensagem`
 ALTER TABLE `tbnotifccliente`
   ADD CONSTRAINT `tbnotifccliente_ibfk_1` FOREIGN KEY (`idDenuncia`) REFERENCES `tbdenuncia` (`idDenuncia`),
   ADD CONSTRAINT `tbnotifccliente_ibfk_2` FOREIGN KEY (`idAnuncio`) REFERENCES `tbanuncio` (`idAnuncio`),
-  ADD CONSTRAINT `tbnotifccliente_ibfk_3` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`);
+  ADD CONSTRAINT `tbnotifccliente_ibfk_3` FOREIGN KEY (`idCliente`) REFERENCES `tbcliente` (`idCliente`),
+  ADD CONSTRAINT `tbnotifccliente_ibfk_4` FOREIGN KEY (`idPedidoProduto`) REFERENCES `tbpedidoproduto` (`idPedidoProduto`),
+  ADD CONSTRAINT `tbnotifccliente_ibfk_5` FOREIGN KEY (`idPedidoServico`) REFERENCES `tbpedidoservico` (`idPedidoServico`);
 
 --
 -- Limitadores para a tabela `tbnotifcvendedora`
