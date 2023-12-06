@@ -56,6 +56,21 @@ class daoAnuncio
 
         $prepareStatement->execute();
     }
+    public static function editarQuantidade($Anuncio)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "UPDATE tbAnuncio
+                            SET qtdProduto = ?
+                            WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindvalue(1, $Anuncio->getQtdProduto());
+        $prepareStatement->bindValue(2, $Anuncio->getIdAnuncio());
+
+        $prepareStatement->execute();
+    }
 
     public static function editarEstrelas($Anuncio)
     {

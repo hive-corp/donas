@@ -1,7 +1,7 @@
 <?php
     require_once "global.php";
 
-    class daoEntradaProduto{
+    class daoSaidaProduto{
         public static function listar(){
             $connection = Conexao::conectar();
 
@@ -12,6 +12,20 @@
             $lista = $resultado->fetchAll();
             return $lista;
         }
+        public static function cadastrar($SaidaProduto)
+        {
+            $connection = Conexao::conectar();
+    
+            $queryInsert = "INSERT tbSaidaProduto(dataSaidaProduto, qtdSaidaProduto	, idAnuncio)
+                                VALUES (?, ?, ?)";
+    
+            $prepareStatement = $connection->prepare($queryInsert);
+            $prepareStatement->bindValue(1, $SaidaProduto->getDataSaidaProduto());
+            $prepareStatement->bindValue(2, $SaidaProduto->getQtdSaidaProduto());
+            $prepareStatement->bindValue(3, $SaidaProduto->getAnuncio()->getIdAnuncio());
+            $prepareStatement->execute();
+        }
     }
+    
 
 ?>
