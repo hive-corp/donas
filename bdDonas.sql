@@ -251,7 +251,7 @@ CREATE TABLE `tbpreferencias` (
 
 CREATE TABLE `tbsaidaproduto` (
   `idSaidaProduto` int(11) NOT NULL,
-  `dataSaidaProduto` date DEFAULT NULL,
+  `dataSaidaProduto` datetime DEFAULT NULL,
   `qtdSaidaProduto` int(11) DEFAULT NULL,
   `idAnuncio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
