@@ -342,25 +342,31 @@ require_once "validador.php";
             precoCusto = document.querySelector('#preco-custo')
 
         let AnuncioSubCategoria
-
         const verificaPreco = () => {
-            let invalidVenda = document.getElementById('invalid-venda')
-            let invalidCusto = document.getElementById('invalid-custo')
 
-            if (precoCusto.value > precoVenda.value) {
-                precoVenda.classList.add('is-invalid')
-                precoCusto.classList.add('is-invalid')
+    let invalidVenda = document.getElementById('invalid-venda');
+    let invalidCusto = document.getElementById('invalid-custo');
 
-                invalidVenda.innerText = 'O preço de custo está superior ao preço de venda'
-                invalidCusto.innerText = 'O preço de custo está superior ao preço de venda'
-            } else {
-                precoVenda.classList.remove('is-invalid')
-                precoCusto.classList.remove('is-invalid')
+    let precoVenda = document.getElementById('preco');
+    let precoCusto = document.getElementById('preco-custo');
 
-                invalidVenda.innerText = 'Insira um preço de venda para o anúncio'
-                invalidCusto.innerText = 'Insira um preço de custo para o anúncio'
-            }
-        }
+    if (parseFloat(precoCusto.value) > parseFloat(precoVenda.value)) {
+        precoVenda.classList.add('is-invalid');
+        precoCusto.classList.add('is-invalid');
+
+
+        invalidVenda.innerText = 'O preço de custo está superior ao preço de venda';
+        invalidCusto.innerText = 'O preço de custo está superior ao preço de venda';
+    } else {
+
+        precoVenda.classList.remove('is-invalid');
+        precoCusto.classList.remove('is-invalid');
+
+        invalidVenda.innerText = 'Insira um preço de venda para o anúncio';
+        invalidCusto.innerText = 'Insira um preço de custo para o anúncio';
+    }
+};
+
 
         precoVenda.addEventListener('input', verificaPreco)
         precoCusto.addEventListener('input', verificaPreco)
