@@ -145,6 +145,16 @@ if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
                 </form>
             </div>
             <div id="content">
+            <?php
+                    $anuncio = daoAnuncio::consultarPorVendedora($_SESSION['id']);
+
+                    if (empty($anuncio)) {
+                    ?>
+                        <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                            <p class="section-title load" style="text-align: center">Nenhum anúncio encontrado</p>
+                        </div>
+                    <?php
+                      } else { ?>
                 <div class="produtos placeholder-element">
                     <div class="card-anuncio" href="produto.php" aria-hidden="true">
                         <div class="img-card placeholder-glow">
@@ -436,6 +446,9 @@ if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
                     ?>
 
                 </div>
+                <?php
+                    }
+                    ?>
             </div>
 
         </main>

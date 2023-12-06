@@ -236,7 +236,7 @@ $denuncias = daoDenuncia::graficoDenuncias();
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">12/06/2023</div>
-                                        <span class="font-weight-bold">Nova denúncia de Ana Clara Rocha</span>
+                                        <span class="font-weight-bold">Nova denúncia de Julia Araujo</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="denuncias.php">Ver
@@ -244,36 +244,7 @@ $denuncias = daoDenuncia::graficoDenuncias();
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-chat-right-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14 0a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
-                                </svg>
-
-                                <span class="badge badge-danger badge-counter">1</span>
-                            </a>
-
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Novas Mensagens
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="../assets/media/novasMensagens.jpg" alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">A minha conta foi bloqueada sem motivos ...</div>
-                                        <div class="small text-gray-500">Ana Clara Rocha</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Ver Mais</a>
-                            </div>
-                        </li>
+                     
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -293,8 +264,8 @@ $denuncias = daoDenuncia::graficoDenuncias();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Heloisa Martins</span>
-                                <img class="img-profile rounded-circle" src="../assets/media/Adm-dash.jpg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Maurício Ferreira</span>
+                                <img class="img-profile rounded-circle" src="../assets/media/MauricioAdm.jpg">
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
