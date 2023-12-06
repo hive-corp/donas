@@ -150,7 +150,7 @@ svg {
 #modal-erro i,
 #modal-erro-vendedora i,
 #modal-genero i,
-#modal-bloqueado-cliente i{
+#modal-bloqueado-cliente i {
     color: #d50000;
 }
 
@@ -263,7 +263,7 @@ svg {
     gap: 16px
 }
 
-#modal-denuncia .modal-body{
+#modal-denuncia .modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
@@ -274,7 +274,7 @@ svg {
     gap: 16px
 }
 
-#modal-encomenda .modal-body{
+#modal-encomenda .modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
@@ -284,6 +284,7 @@ svg {
         "data qtd";
     gap: 16px
 }
+
 #modal-servico .modal-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -294,24 +295,25 @@ svg {
         "data qtd";
     gap: 16px
 }
-#qrcode-pix{
+
+#qrcode-pix {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#qr-code{
+#qr-code {
     transition: opacity .5s;
     width: 200px;
     aspect-ratio: 1/1;
 }
 
-#qr-code.hide{
+#qr-code.hide {
     opacity: 0;
     user-select: none;
 }
 
-#loading-pix{
+#loading-pix {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -323,7 +325,7 @@ svg {
     transition: opacity .5s
 }
 
-#loading-pix.hide{
+#loading-pix.hide {
     opacity: 0;
     user-select: none;
 }
@@ -410,7 +412,7 @@ svg {
     grid-area: plano;
 }
 
-.chave-modal{
+.chave-modal {
     grid-area: chave;
 }
 
@@ -418,7 +420,7 @@ svg {
     grid-area: endereco;
 }
 
-.sub-modal{
+.sub-modal {
     grid-area: sub;
 }
 
@@ -543,43 +545,43 @@ svg {
         "avancar avancar";
 }
 
-.input.input-cliente{
+.input.input-cliente {
     grid-area: cliente;
 }
 
-.input.input-dona{
+.input.input-dona {
     grid-area: dona;
 }
 
-.input.input-produto{
+.input.input-produto {
     grid-area: produto;
 }
 
-.input.input-valor{
-    grid-area:valor;
+.input.input-valor {
+    grid-area: valor;
 }
 
-.input.input-data{
+.input.input-data {
     grid-area: data;
 }
 
-.input.input-qtd{
+.input.input-qtd {
     grid-area: qtd;
 }
 
-.input.input-denunciante{
+.input.input-denunciante {
     grid-area: denunciante;
 }
 
-.input.input-denunciado{
+.input.input-denunciado {
     grid-area: denunciado;
 }
 
-.input.input-conteudo{
+.input.input-conteudo {
     grid-area: conteudo;
 }
 
-.input.input-motivo{
+.input.input-motivo {
     grid-area: motivo;
 }
 
@@ -797,23 +799,23 @@ input:checked+.tipo-login:hover {
     filter: drop-shadow(0 0 6px #CB6CE633);
 }
 
-#modal-chave .modal-body{
+#modal-chave .modal-body {
     display: flex;
     flex-direction: column;
-    gap:8px
+    gap: 8px
 }
 
-#tipo-chave{
+#tipo-chave {
     display: grid;
     grid-auto-flow: column;
     gap: 2px;
 }
 
-#tipo-chave > input{
+#tipo-chave>input {
     display: none;
 }
 
-.chave-pix{
+.chave-pix {
     padding: 4px;
     display: grid;
     place-items: center;
@@ -823,7 +825,7 @@ input:checked+.tipo-login:hover {
     cursor: pointer;
 }
 
-#tipo-chave > input:checked + .chave-pix{
+#tipo-chave>input:checked+.chave-pix {
     background: #CB6CE6;
     color: white;
 }
@@ -1120,7 +1122,8 @@ a.button-secondary:hover {
     color: white;
 }
 
-.button-red, a.button-red {
+.button-red,
+a.button-red {
     background-color: red;
     border-color: red;
 }
@@ -1133,7 +1136,7 @@ a.button-red:focus {
     border-color: #890000;
 }
 
-a.button-chat{
+a.button-chat {
     padding: 0px;
     width: 2.5em;
     display: grid;
@@ -1488,13 +1491,13 @@ a.create-new:hover {
     grid-area: title;
 }
 
-#nav-logo{
+#nav-logo {
     height: 80px;
-    justify-self:center;
+    justify-self: center;
     border-bottom: 1px solid var(--bd-color);
 }
 
-#nav-logo img{
+#nav-logo img {
     height: 100%;
 }
 
@@ -1530,11 +1533,11 @@ a.create-new:hover {
     background: #CB6CE633;
 }
 
-.nav-link i{
+.nav-link i {
     position: relative;
 }
 
-.nav-link .counter{
+.nav-link .counter {
     position: absolute;
     top: 0;
     left: -8px;
@@ -1557,7 +1560,7 @@ a.create-new:hover {
     border-color: #74396c
 }
 
-.nav-dona #nav-logo{
+.nav-dona #nav-logo {
     border-color: #74396c
 }
 
@@ -1725,13 +1728,15 @@ a.dropdown-item {
 .search-square {
     border-radius: 8px;
 }
-.search-container > select {
-    background-color:transparent;
+
+.search-container>select {
+    background-color: transparent;
     border-right: 1px solid var(--bd-color);
     padding: 8px;
     color: var(--text-color);
 }
-.search-container > select > option {
+
+.search-container>select>option {
     background: var(--bg-color);
     color: var(--text-color);
 }
@@ -1881,22 +1886,22 @@ a.veja-mais {
     cursor: pointer;
 }
 
-.card-vendedora{
+.card-vendedora {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 130px auto auto auto;
     grid-template-areas:
-    "foto"
-    "nome"
-    "estrelas"
-    "anuncios";
+        "foto"
+        "nome"
+        "estrelas"
+        "anuncios";
     width: 120px;
     place-items: center;
     margin-right: 16px;
     cursor: pointer;
 }
 
-.img-vendedora{
+.img-vendedora {
     width: 120px;
     aspect-ratio: 1/1;
     border-radius: 50%;
@@ -1932,7 +1937,7 @@ a.veja-mais {
     text-align: center;
 }
 
-.anuncios-vendedora{
+.anuncios-vendedora {
     color: lightslategray;
 }
 
@@ -2110,7 +2115,8 @@ a.veja-mais {
     gap: 8px;
 }
 
-.select-filtro, .select-status {
+.select-filtro,
+.select-status {
     background: var(--select-bg);
     padding: 4px 8px;
     border-radius: 4px;
@@ -2120,7 +2126,7 @@ a.veja-mais {
     width: fit-content;
 }
 
-.select-filtro.hide{
+.select-filtro.hide {
     display: none;
 }
 
@@ -2196,7 +2202,7 @@ a.veja-mais {
         "content";
 }
 
-#user-notifications #content{
+#user-notifications #content {
     padding: 0;
 }
 
@@ -2405,17 +2411,17 @@ a.veja-mais {
     gap: 4px;
 }
 
-#subcategorias{
+#subcategorias {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
 }
 
-.checkbox-subCategoria{
+.checkbox-subCategoria {
     border-color: lightslategray;
 }
 
-.form-check-input:checked{
+.form-check-input:checked {
     background-color: #CB6CE6;
     border-color: #CB6CE6;
 }
@@ -2440,7 +2446,7 @@ a.veja-mais {
     grid-template-rows: auto auto auto;
     padding: 20px;
     transition: .3s box-shadow, .3s border-color;
-    gap:12px
+    gap: 12px
 }
 
 .encomenda:hover {
@@ -2483,18 +2489,18 @@ a.veja-mais {
     place-self: center;
 }
 
-.opcoes-encomenda{
+.opcoes-encomenda {
     display: flex;
     gap: 4px;
     justify-content: space-around;
 }
 
-.opcoes-encomenda button{
+.opcoes-encomenda button {
     font-size: 16px;
     padding: 4px 24px;
 }
 
-.pedido{
+.pedido {
     width: 270px;
     border: 1px solid var(--bd-color);
     background: var(--input-bg);
@@ -2540,30 +2546,30 @@ a.veja-mais {
     right: 0;
 } */
 
-.foto-pedido{
+.foto-pedido {
     grid-area: foto;
     width: 100%;
     border-radius: 8px;
     align-self: center;
 }
 
-.nome-pedido{
+.nome-pedido {
     grid-area: nome;
 }
 
-.preco-pedido{
+.preco-pedido {
     grid-area: valor;
 }
 
-.data-pedido{
+.data-pedido {
     grid-area: data;
 }
 
-.status-pedido{
+.status-pedido {
     grid-area: status;
 }
 
-.cancelar-pedido{
+.cancelar-pedido, .cancelar-servico {
     grid-area: cancelar;
     justify-self: center;
 }
@@ -2743,29 +2749,29 @@ a.config-item {
     user-select: none;
 }
 
-.notificacao{
+.notificacao {
     display: grid;
-    grid-template-columns: minmax(0,60px) 1fr;
+    grid-template-columns: minmax(0, 60px) 1fr;
     border-bottom: 1px solid var(--bd-color);
     color: var(--text-color);
     transition: .3s background-color, .3s color;
-    gap:16px;
+    gap: 16px;
     padding: 24px 16px;
     cursor: pointer;
     user-select: none;
 }
 
-.notificacao.new{
+.notificacao.new {
     background: #CB6CE622;
 }
 
-.notificacao-img{
+.notificacao-img {
     display: grid;
     place-items: center;
     width: 55px;
 }
 
-.notificacao-img img{
+.notificacao-img img {
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 50%;
@@ -2773,14 +2779,14 @@ a.config-item {
     object-position: center;
 }
 
-.notificacao-content{
+.notificacao-content {
     display: flex;
     align-items: center;
 }
 
 
 .config-item:hover,
-.notificacao:hover{
+.notificacao:hover {
     background: #CB6CE633;
     color: #CB6CE6;
 }
@@ -3007,17 +3013,17 @@ a.config-item {
     display: block;
 }
 
-#preview-audio .preview-send{
+#preview-audio .preview-send {
     display: flex;
     justify-content: end;
 }
 
-#preview-audio .audio{
+#preview-audio .audio {
     display: grid;
     grid-template-columns: 50px 30px 1fr 1fr;
     grid-template-areas:
-    "foto start audio audio"
-    "foto nothing duration time";
+        "foto start audio audio"
+        "foto nothing duration time";
     column-gap: 4px;
     padding: 12px;
     background: #971881;
@@ -3026,7 +3032,7 @@ a.config-item {
     color: white;
 }
 
-#preview-audio .audio img{
+#preview-audio .audio img {
     width: 50px;
     aspect-ratio: 1/1;
     border-radius: 50%;
@@ -3175,12 +3181,12 @@ a.config-item {
     opacity: 0.5;
 }
 
-.document{
+.document {
     display: grid;
     column-gap: 2px;
     grid-template-columns: 50px 1fr;
     grid-template-areas:
-    "icon nome";
+        "icon nome";
     border-radius: 4px;
     background: #00000011;
     padding: 12px;
@@ -3188,22 +3194,22 @@ a.config-item {
     transition: .3s background-color;
 }
 
-.document:hover{
+.document:hover {
     background: #00000022;
 }
 
-.document-icon{
+.document-icon {
     font-size: 40px;
 }
 
-.document-name{
+.document-name {
     grid-area: nome;
     place-self: center;
     font-weight: bold;
 }
 
 .message-myself.audio,
-.message-other.audio{
+.message-other.audio {
     width: 100%;
     display: grid;
     column-gap: 4px;
@@ -3212,19 +3218,19 @@ a.config-item {
 .message-myself.audio {
     grid-template-columns: 50px 30px 1fr 1fr;
     grid-template-areas:
-    "foto start audio audio"
-    "foto nothing duration time";
+        "foto start audio audio"
+        "foto nothing duration time";
 }
 
-.message-other.audio{
-    grid-template-columns: 30px 1fr 1fr  50px;
+.message-other.audio {
+    grid-template-columns: 30px 1fr 1fr 50px;
     grid-template-areas:
-    "start audio audio foto"
-    "time duration duration foto";
+        "start audio audio foto"
+        "time duration duration foto";
 }
 
 .message-myself .audio-photo,
-.message-other .audio-photo{
+.message-other .audio-photo {
     grid-area: foto;
     width: 50px;
     aspect-ratio: 1/1;
@@ -3233,14 +3239,14 @@ a.config-item {
 }
 
 .message-myself .audio-options,
-.message-other .audio-options{
+.message-other .audio-options {
     grid-area: start;
     position: relative;
     display: grid;
     place-items: center;
 }
 
-.start-stop-audio{
+.start-stop-audio {
     border: none;
     background: transparent;
     cursor: pointer;
@@ -3248,27 +3254,27 @@ a.config-item {
     color: white;
 }
 
-.message-other .start-stop-audio{
+.message-other .start-stop-audio {
     justify-self: flex-start;
     color: gray;
 }
 
-.start-stop-audio.hide{
+.start-stop-audio.hide {
     display: none;
 }
 
-.duration{
+.duration {
     grid-area: duration;
     font-size: 0.8em;
     user-select: none;
     opacity: 0.8;
 }
 
-.message-other .duration{
+.message-other .duration {
     justify-self: end;
 }
 
-.audio-wave{
+.audio-wave {
     grid-area: audio;
     cursor: pointer;
 }
@@ -3282,17 +3288,17 @@ a.config-item {
     border: 1px solid var(--active-color);
 }
 
-.message-other .audio-wave ::part(cursor){
+.message-other .audio-wave ::part(cursor) {
     background: gray;
     border-color: var(--msg-other-bg);
 }
 
-.message-myself.audio .time{
+.message-myself.audio .time {
     grid-area: time;
     justify-self: flex-end;
 }
 
-.message-other.audio .time{
+.message-other.audio .time {
     grid-area: time;
     justify-self: flex-start;
 }
@@ -3338,7 +3344,7 @@ a.config-item {
     background: transparent;
 }
 
-.message-embeds:hover button{
+.message-embeds:hover button {
     color: #CB6CE6;
 }
 
@@ -3401,7 +3407,7 @@ a.config-item {
     font-size: 1.1em;
 }
 
-#preview-audio .message-button{
+#preview-audio .message-button {
     color: white;
     background: linear-gradient(-45deg, #971881 0%, #a4228e 50%, #85066f 100%);
     border-radius: 50%;
@@ -3412,7 +3418,7 @@ a.config-item {
     transition: .3s filter;
 }
 
-#preview-audio .message-button:active{
+#preview-audio .message-button:active {
     filter: brightness(0.6);
 }
 
@@ -3423,9 +3429,12 @@ a.config-item {
 
 #user-product #content {
     display: grid;
+    grid-template-columns: 5fr 3fr;
+    grid-template-rows: auto min-content auto;
     grid-template-areas:
-        "info-anuncio"
-        "comentarios";
+        "info-anuncio info-anuncio"
+        "carrossel outros"
+        "comentarios outros";
     gap: 16px;
 }
 
@@ -3486,13 +3495,13 @@ a.config-item {
     position: relative;
 }
 
-#editar-anuncio{
+#editar-anuncio {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-#options-anuncio{
+#options-anuncio {
     font-size: 1.6em;
 }
 
@@ -3568,7 +3577,7 @@ a.config-item {
     background: var(--bg-color);
     border: 0;
     box-shadow: none;
-    transition: .3s all;    
+    transition: .3s all;
 }
 
 .accordion-button::after,
@@ -3591,7 +3600,7 @@ a.config-item {
     column-gap: 12px;
 }
 
-#collapse-descricao .accordion-body{
+#collapse-descricao .accordion-body {
     white-space: pre-line;
 }
 
@@ -3624,12 +3633,17 @@ a.config-item {
     justify-self: end;
 }
 
+.carrossel-mais{
+    display: none;
+}
+
 #comentarios-anuncio {
     grid-area: comentarios;
     background-color: var(--bg-color);
     border: 1px solid var(--bd-color);
     border-radius: 8px;
     padding: 24px;
+    grid-row: 2;
 }
 
 #comentarios {
@@ -3803,21 +3817,22 @@ a.config-item {
     padding: 18px;
 }
 
-#user-faturamento #main{
+#user-faturamento #main {
     display: grid;
     grid-template-rows: auto 1fr;
 }
 
-#user-faturamento #content{
+#user-faturamento #content {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(3, min-content);
     gap: 16px;
 }
+
 .stats-faturamento,
 .stats-encomendado,
-.stats-lucro{
-    padding:32px;
+.stats-lucro {
+    padding: 32px;
     border-radius: 8px;
     background: var(--input-bg);
     border: 1px solid var(--bd-color);
@@ -3825,12 +3840,12 @@ a.config-item {
     position: relative;
 }
 
-.stats-faturamento{
+.stats-faturamento {
     grid-column: span 2;
     grid-row: span 1;
 }
 
-.stats-encomendado{
+.stats-encomendado {
     display: grid;
     gap: 16px;
     grid-template-columns: auto 1fr;
@@ -3838,32 +3853,32 @@ a.config-item {
     grid-column: span 5;
 }
 
-.stats-lucro{
-    display:flex;
+.stats-lucro {
+    display: flex;
     align-items: center;
-    justify-content:space-around;
+    justify-content: space-around;
     grid-column: span 5;
     gap: 16px;
 }
 
-.stats-encomendado .preco-card{
+.stats-encomendado .preco-card {
     background: var(--input-bg);
 }
 
-.stats-lucro{
+.stats-lucro {
     grid-template-columns: 1fr 1fr;
     justify-items: center;
 }
 
-.stats-valores{
+.stats-valores {
     color: lightslategray;
 }
 
-.faturamento-periodo{
+.faturamento-periodo {
     color: lightslategray;
 }
 
-.faturamento-valor{
+.faturamento-valor {
     font-weight: bold;
     color: #CB6CE6;
     font-size: 1.5em;
@@ -3882,7 +3897,7 @@ a.config-item {
         "footer";
 }
 
-.stats-box.mais-encomendados{
+.stats-box.mais-encomendados {
     grid-column: -4 / span 3;
     grid-row: -1 / 2;
     height: min-content;
@@ -3930,7 +3945,6 @@ a.config-item {
     transition: .5s opacity ease-in-out;
 }
 
-
 .stats-item {
     padding: 16px;
     cursor: pointer;
@@ -3942,6 +3956,36 @@ a.config-item {
         "foto encomenda";
     column-gap: 4px;
     transition: .3s background-color, .3s color, opacity .5s;
+}
+
+#mais-anuncios{
+    grid-area: outros;
+}
+
+#mais-anuncios .stats-item {
+    grid-template-columns: 60px 1fr 1fr;
+    grid-template-areas:
+        "foto name valor"
+        "foto avaliacao categoria";
+    row-gap: 2px;
+}
+
+.stats-avaliacao {
+    grid-area: avaliacao;
+    color: #CB6CE6;
+}
+
+.stats-valor {
+    grid-area: valor;
+    color: #CB6CE6;
+    justify-self: flex-end;
+    font-weight: bold;
+}
+
+.stats-categoria{
+    grid-area: categoria;
+    color: lightslategray;
+    justify-self: flex-end;
 }
 
 .stats-item:not(:last-child) {
@@ -3956,7 +4000,8 @@ a.config-item {
     aspect-ratio: 1/1;
 }
 
-.stats-box.mais-encomendados .stats-foto{
+.stats-box.mais-encomendados .stats-foto,
+.stats-box#mais-anuncios .stats-foto {
     border-radius: 8px;
 }
 
@@ -3993,7 +4038,7 @@ a.highlight {
     padding: 16px;
 }
 
-.chart-wrapper{
+.chart-wrapper {
     width: 100%;
 }
 
@@ -4142,14 +4187,14 @@ a.highlight {
         height: calc(100% - 70px);
         transition: .3s transform;
     }
-    
+
     #user-chats #conversas.hide,
-    #user-config #config.hide{
+    #user-config #config.hide {
         transform: translateX(-100%);
     }
 
     #user-chats #main.hide,
-    #user-config #main.hide{
+    #user-config #main.hide {
         transform: translateX(100%);
     }
 
@@ -4185,14 +4230,14 @@ a.highlight {
         display: none;
     }
 
-    .nav-link.active{
+    .nav-link.active {
         background: transparent;
     }
 
-    .nav-link.active::before{
+    .nav-link.active::before {
         content: '';
         position: absolute;
-        top:-12px;
+        top: -12px;
         background-color: #CB6CE6;
         width: 100%;
         height: 6px;
@@ -4248,6 +4293,12 @@ a.highlight {
     #user-product #content {
         padding: 0;
         gap: 0;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "info-anuncio"
+        "carrossel"
+        "comentarios"
+        "outros";
     }
 
     #produto {
@@ -4294,16 +4345,27 @@ a.highlight {
     #info-anuncio {
         position: relative;
         z-index: 1;
-        padding: 24px;
+        padding: 20px;
         border-radius: 24px 24px 0 0;
         transition: 0.3s border-radius ease-out;
     }
 
     #comentarios-anuncio {
         z-index: 1;
-        padding: 24px;
-        border: 0;
+        padding: 20px;
+        border-width: 0;
+        border-top-width: 1;
         border-radius: 0;
+        grid-row: 3;
+    }
+
+    .carrossel-mais{
+        padding: 20px;
+        display: grid;
+    }
+
+    #mais-anuncios{
+        display: none;
     }
 
     #user-bio {
@@ -4315,7 +4377,7 @@ a.highlight {
         place-self: auto;
     }
 
-    #encomendas{
+    #encomendas {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
         justify-items: center;
@@ -4323,21 +4385,22 @@ a.highlight {
 }
 
 @media (max-width:600px) {
-    .pedido{
+    .pedido {
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto auto auto auto auto;
         grid-template-areas:
-        "foto nome"
-        "foto valor"
-        "foto data"
-        "foto status"
-        "cancelar cancelar";
+            "foto nome"
+            "foto valor"
+            "foto data"
+            "foto status"
+            "cancelar cancelar";
         column-gap: 16px;
     }
 
-    .cancelar-pedido{
+    .cancelar-pedido,
+    .cancelar-servico {
         margin-top: 16px;
     }
 
@@ -4356,15 +4419,15 @@ a.highlight {
         place-items: center;
     }
 
-    #bio-info{
+    #bio-info {
         grid-template-columns: 1fr;
-        grid-template-areas: 
-        "name"
-        "rating"
-        "username"
-        "followers"
-        "bio"
-        "options";
+        grid-template-areas:
+            "name"
+            "rating"
+            "username"
+            "followers"
+            "bio"
+            "options";
     }
 
     #bio-photo {
@@ -4377,7 +4440,7 @@ a.highlight {
         position: relative;
     }
 
-    #bio-star{
+    #bio-star {
         position: absolute;
         right: -1.5em;
     }

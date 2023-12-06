@@ -186,7 +186,6 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-
         $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
                             INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
                             INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
@@ -201,6 +200,24 @@ class daoAnuncio
         $dados = $stmt->fetch();
 
         return $dados;
+    }
+
+    public static function consultarMaisVendedora($anuncio){
+        $connection = Conexao::conectar();
+
+        $querySelect = "SELECT tbAnuncio.*, nomeCategoria, nomeNegocioVendedora, nomeUsuarioNegocioVendedora, nivelNegocioVendedora FROM tbAnuncio
+                        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+                        INNER JOIN tbCategoria ON tbVendedora.idCategoria = tbCategoria.idCategoria
+                        WHERE tbAnuncio.idVendedora = ? AND idAnuncio != ?
+                        ORDER BY RAND()
+                        LIMIT 5";
+
+        $resultado = $connection->prepare($querySelect);
+        $resultado->bindValue(1, $anuncio->getVendedora()->getIdVendedora());
+        $resultado->bindValue(2, $anuncio->getIdAnuncio());
+        $resultado->execute();
+        $lista = $resultado->fetchAll();
+        return $lista;
     }
 
     public static function consultarCincoMaisEncomendados($id)
