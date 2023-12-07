@@ -508,7 +508,9 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
                     foreach ($vendedoras as $a) {
                         $estrelas = daoAnuncio::consultarMediaVendedora($a['idVendedora']);
-                        $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora'])
+                        $totalanuncios = daoAnuncio::contarAnuncioVendedora($a['idVendedora']);
+
+                        $estrelas = ceil($estrelas);
                     ?>
 
                         <a class="card-vendedora" href="profile.php?user=<?php echo $a['nomeUsuarioNegocioVendedora'] ?> ">

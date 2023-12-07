@@ -99,11 +99,11 @@
                     <div id="login-type">
                         <input type="radio" name="tipo-login" id="cliente" value="1" checked>
                         <label for="cliente" class="tipo-login">
-                            Cliente comum
+                            Quero comprar
                         </label>
                         <input type="radio" name="tipo-login" id="empreendedora" value="2">
                         <label for="empreendedora" class="tipo-login">
-                            Empreendedora
+                            Quero vender
                         </label>
                     </div>
                     <div class="input">

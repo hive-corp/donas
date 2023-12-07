@@ -5,6 +5,8 @@ require_once 'global.php';
 header("Location: anuncio.php?a=" . $_GET['a']);
 session_start();
 
+date_default_timezone_set('America/Sao_Paulo');
+
 $anuncio = new Anuncio();
 $anuncio->setIdAnuncio($_GET['a']);
 

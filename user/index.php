@@ -221,7 +221,7 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 
 						foreach ($categorias as $c) {
 						?>
-							<a class="card-categoria" href="pesquisa.php">
+							<a class="card-categoria" href="pesquisa.php?categoria=<?php echo $c['idCategoria']?>">
 								<div class="img-categoria">
 									<img src="../<?php echo $c['fotoCategoria'] ?>" alt="<?php echo $c['nomeCategoria'] ?>" />
 								</div>
