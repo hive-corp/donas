@@ -55,7 +55,7 @@ require_once "validador.php";
                                 <input type="checkbox" class="checkbox-preferencia" name="categoria" id="<?php echo $c['nomeCategoria'] ?>" value="<?php echo $c['idCategoria'] ?>" <?php if (in_array($c['idCategoria'], array_column($preferencias, 'idCategoria'))) echo "checked" ?>>
                                 <label class="card-categoria" for="<?php echo $c['nomeCategoria'] ?>">
                                     <div class="img-categoria">
-                                        <img src="<?php echo $c['fotoCategoria'] ?>" alt="<?php echo $c['nomeCategoria'] ?>" />
+                                        <img src="../<?php echo $c['fotoCategoria'] ?>" alt="<?php echo $c['nomeCategoria'] ?>" />
                                     </div>
                                     <p class="nome-categoria"><?php echo $c['nomeCategoria'] ?></p>
                                 </label>
