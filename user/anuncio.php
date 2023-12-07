@@ -757,7 +757,20 @@ date_default_timezone_set('America/Sao_Paulo');
                             <a href="profile.php?user=<?php echo $anuncio['nomeUsuarioNegocioVendedora'] ?>" class="veja-mais load"> veja mais </a>
                         </div>
                         <div class="stats-body placeholder-element">
-                            <div class="stats-item">
+                        <?php
+                            $a = new Anuncio;
+                            $a->setIdAnuncio($anuncio['idAnuncio']);
+
+                            $vendedora = new Vendedora;
+                            $vendedora->setIdVendedora($anuncio['idVendedora']);
+
+                            $a->setVendedora($vendedora);
+
+                            $anuncios = daoAnuncio::consultarMaisVendedora($a);
+
+                            foreach ($anuncios as $a) {
+                            ?>
+                                <div class="stats-item">
                                 <div class="stats-foto placeholder-glow">
                                     <span class="placeholder"></span>
                                 </div>
@@ -774,74 +787,12 @@ date_default_timezone_set('America/Sao_Paulo');
                                     <span class="placeholder col-5"></span>
                                 </div>
                             </div>
-                            <div class="stats-item">
-                                <div class="stats-foto placeholder-glow">
-                                    <span class="placeholder"></span>
-                                </div>
-                                <div class="stats-name placeholder-glow">
-                                    <span class="placeholder col-7"></span>
-                                </div>
-                                <div class="stats-avaliacao placeholder-glow">
-                                    <span class="placeholder col-5 highlight"></span>
-                                </div>
-                                <div class="stats-valor placeholder-glow">
-                                    <span class="placeholder col-3 highlight"></span>
-                                </div>
-                                <div class="stats-categoria placeholder-glow">
-                                    <span class="placeholder col-5"></span>
-                                </div>
-                            </div>
-                            <div class="stats-item">
-                                <div class="stats-foto placeholder-glow">
-                                    <span class="placeholder"></span>
-                                </div>
-                                <div class="stats-name placeholder-glow">
-                                    <span class="placeholder col-7"></span>
-                                </div>
-                                <div class="stats-encomenda placeholder-glow">
-                                    <span class="placeholder col-5 highlight"></span>
-                                </div>
-                                <div class="stats-valor placeholder-glow">
-                                    <span class="placeholder col-3 highlight"></span>
-                                </div>
-                                <div class="stats-categoria placeholder-glow">
-                                    <span class="placeholder col-5"></span>
-                                </div>
-                            </div>
-                            <div class="stats-item">
-                                <div class="stats-foto placeholder-glow">
-                                    <span class="placeholder"></span>
-                                </div>
-                                <div class="stats-name placeholder-glow">
-                                    <span class="placeholder col-7"></span>
-                                </div>
-                                <div class="stats-avaliacao placeholder-glow">
-                                    <span class="placeholder col-5 highlight"></span>
-                                </div>
-                                <div class="stats-valor placeholder-glow">
-                                    <span class="placeholder col-3 highlight"></span>
-                                </div>
-                                <div class="stats-categoria placeholder-glow">
-                                    <span class="placeholder col-5"></span>
-                                </div>
-                            </div>
-                            <div class="stats-item">
-                                <div class="stats-foto placeholder-glow">
-                                    <span class="placeholder"></span>
-                                </div>
-                                <div class="stats-name placeholder-glow">
-                                    <span class="placeholder col-7"></span>
-                                </div>
-                                <div class="stats-avaliacao placeholder-glow">
-                                    <span class="placeholder col-5 highlight"></span>
-                                </div>
-                                <div class="stats-valor placeholder-glow">
-                                    <span class="placeholder col-3 highlight"></span>
-                                </div>
-                                <div class="stats-categoria placeholder-glow">
-                                    <span class="placeholder col-5"></span>
-                                </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
+
+                            
+                            
                         </div>
                         <div class="stats-body load">
                             <?php

@@ -63,6 +63,10 @@
                     </span>
                 </a>
             </div>
+            <a id="new-product" href="login.php" class="button">
+				<i class="bi bi-box-arrow-in-right"></i>
+				<span>Fazer log-in</span>
+			</a>
         </nav>
 
         <div id="config">
@@ -78,7 +82,7 @@
                     </label>
                 </label>
                 <a href="../login.php" class="config-item">
-                    Sair
+                    Fazer log-in
                 </a>
             </div>
         </div>

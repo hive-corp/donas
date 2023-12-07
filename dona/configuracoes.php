@@ -255,7 +255,7 @@ require_once "global.php";
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Encomendas
+                        Pedidos
                     </span>
                 </a>
                 <a href="faturamento.php" class="nav-link">

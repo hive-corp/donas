@@ -26,7 +26,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
     <div id="user-dashboard">
 
-        <div class="modal pop" id="modal-premium" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+    <div class="modal pop" id="modal-premium" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -36,12 +36,10 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                         <div class="row">
                             <div class="col d-flex flex-column align-items-center justify-content-center">
                                 <p class="section-title load" style="text-align: center">Confira tudo que o nosso plano premium <span class="highlight"> oferece</span></p>
-
                                 </button>
                             </div>
                             <div class="col">
                                 <div class="tipo-plano mx-auto" style="width: 280px">
-
                                     <div class="titulo-plano">
                                         Premium
                                     </div>
@@ -81,7 +79,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 </div>
             </div>
         </div>
-        <form action="pagar.php" method="POST">
+        <form action="pagar-encomendas.php" method="POST">
             <div class="modal pop" id="modal-pagamento" tabindex="-1" aria-labelledby="modal-pagamento" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -93,9 +91,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             <div class="input input-pagamento">
                                 <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
                                 <div class="input-wrapper">
-                                    <select name="forma-pagamento" id="forma-pagamento" style="background: var(--select-bg);
-    color: var(--text-color);" required>
-                                        <option value="1">PIX</option>
+                                    <select name="forma-pagamento" id="forma-pagamento" required>
+                                        <option selected value="1">PIX</option>
                                         <option value="2">Boleto</option>
                                     </select>
                                 </div>
@@ -107,7 +104,17 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <div id="loading-pix"></div>
                                 <img src="../assets/media/PagamentoPraGnete.png" alt="QR Code do PIX" id="qr-code" class="hide m-3">
                             </div>
-
+                            <div id="boleto" style="display: none;">
+                                <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                                    <p class="section-title load" style="text-align: center">Clique no botão para gerar o boleto</p>
+                                    <div class=" d-flex justify-content-around">
+                                        <a id="new-product" target="_blank" onclick="gerarBoleto()" class="button">
+                                            <i class="bi bi-card-heading"></i>
+                                            <span>Gerar boleto</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-around">
                             <button type="submit" class="button">Confirmar</button>
@@ -131,7 +138,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Encomendas
+                        Pedidos
                     </span>
                 </a>
                 <a href="faturamento.php" class="nav-link">
@@ -725,7 +732,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             <div class="section-title placeholder-element placeholder-glow">
                                 <span class="placeholder col-4"></span>
                             </div>
-                            <div class="section-title load">Encomendas</div>
+                            <div class="section-title load">Pedidos</div>
                             <span class="veja-mais placeholder-element placeholder-glow">
                                 <span class="placeholder col-4"></span>
                             </span>
@@ -856,6 +863,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
     <script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/vendor/chartjs/js/chart.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script>
         var iniciarPagamento = document.getElementById('iniciar-pagamento')
         var elem = document.querySelector(".stats-carousel")
@@ -923,23 +931,36 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
         iniciarPagamento.addEventListener('click', () => {
 
-
             let qrCodeImg = document.querySelector('#qr-code')
             let loadingQrCode = document.querySelector('#loading-pix')
 
-
             qrCodeImg.classList.add('hide')
             loadingQrCode.classList.remove('hide')
-
-
 
             setTimeout(() => {
                 qrCodeImg.classList.remove('hide')
                 loadingQrCode.classList.add('hide')
             }, 2000)
-
-
         })
+
+        
+        function gerarBoleto() {
+            var url = "../api/boleto/boleto_bb.php?v=<?php echo $_SESSION['username'] ?>&bairroCliente=<?php echo $dados['bairroNegocioVendedora'] ?>&numCliente=<?php echo $dados['numNegocioVendedora'] ?>&negocio=Hive&cnpj=79798353000139&cidade=São Paulo&valorUni=49&estado=SP&cep=&bairro=&num=&qtd=1&valor=49";
+
+            window.open(url, '_blank');
+        }
+
+        $(document).ready(function() {
+            $("#forma-pagamento").change(function() {
+                if ($(this).val() === "2") {
+                    $("#boleto").show();
+                    $("#qrcode-pix").hide();
+                } else {
+                    $("#qrcode-pix").show();
+                    $("#boleto").hide();
+                }
+            });
+        });
     </script>
 </body>
 

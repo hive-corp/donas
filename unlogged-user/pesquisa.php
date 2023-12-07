@@ -82,6 +82,10 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
                     </span>
                 </a>
             </div>
+            <a id="new-product" href="login.php" class="button">
+				<i class="bi bi-box-arrow-in-right"></i>
+				<span>Fazer log-in</span>
+			</a>
         </nav>
         <main id="main">
 

@@ -2,17 +2,16 @@
 
 require_once "global.php";
 if (isset($_GET['pesquisa']) && !empty($_GET['pesquisa'])) {
-    $pesquisa = $_GET['pesquisa'];
-
+	$pesquisa = $_GET['pesquisa'];
 }
 if (isset($_GET['categoria']) && !empty($_GET['categoria'])) {
-    $categoria = $_GET['categoria'];
+	$categoria = $_GET['categoria'];
 }
 if (isset($_GET['tipo']) && !empty($_GET['tipo'])) {
-    $tipo = $_GET['tipo'];
+	$tipo = $_GET['tipo'];
 }
 if (isset($_GET['preco']) && !empty($_GET['preco'])) {
-    $preco = $_GET['preco'];
+	$preco = $_GET['preco'];
 }
 ?>
 
@@ -82,19 +81,23 @@ if (isset($_GET['preco']) && !empty($_GET['preco'])) {
 					</span>
 				</a>
 			</div>
+			<a id="new-product" href="login.php" class="button">
+				<i class="bi bi-box-arrow-in-right"></i>
+				<span>Fazer log-in</span>
+			</a>
 		</nav>
 		<main id="main">
-		<form action="pesquisa.php">
-			<div id="pesquisa">
-				<img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
-				<div class="search-container search-square">
-					<input type="text" role="search" placeholder="Pesquisa" class="search-field" name="pesquisa" value="<?php echo isset($pesquisa) ? $pesquisa : "" ?>" />
-					<button class="search-button">
-						<i class="bi bi-search"></i>
-					</button>
+			<form action="pesquisa.php">
+				<div id="pesquisa">
+					<img class="logo-pesquisa" src="../assets/media/Logo-menor.png" alt="">
+					<div class="search-container search-square">
+						<input type="text" role="search" placeholder="Pesquisa" class="search-field" name="pesquisa" value="<?php echo isset($pesquisa) ? $pesquisa : "" ?>" />
+						<button class="search-button">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
 			<!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
 
 			<div id="content">

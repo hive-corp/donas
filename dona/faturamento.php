@@ -25,7 +25,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 <body>
 
     <div id="user-faturamento">
-        <div class="modal pop" id="modal-premium" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
+    <div class="modal pop" id="modal-premium" tabindex="-1" aria-labelledby="modal-encomenda" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -39,7 +39,6 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             </div>
                             <div class="col">
                                 <div class="tipo-plano mx-auto" style="width: 280px">
-
                                     <div class="titulo-plano">
                                         Premium
                                     </div>
@@ -79,7 +78,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 </div>
             </div>
         </div>
-        <form action="pagar.php" method="POST">
+        <form action="pagar-encomendas.php" method="POST">
             <div class="modal pop" id="modal-pagamento" tabindex="-1" aria-labelledby="modal-pagamento" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -91,9 +90,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             <div class="input input-pagamento">
                                 <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
                                 <div class="input-wrapper">
-                                    <select name="forma-pagamento" id="forma-pagamento" style="background: var(--select-bg);
-    color: var(--text-color);" required>
-                                        <option value="1">PIX</option>
+                                    <select name="forma-pagamento" id="forma-pagamento" required>
+                                        <option selected value="1">PIX</option>
                                         <option value="2">Boleto</option>
                                     </select>
                                 </div>
@@ -105,7 +103,17 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <div id="loading-pix"></div>
                                 <img src="../assets/media/PagamentoPraGnete.png" alt="QR Code do PIX" id="qr-code" class="hide m-3">
                             </div>
-
+                            <div id="boleto" style="display: none;">
+                                <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                                    <p class="section-title load" style="text-align: center">Clique no botão para gerar o boleto</p>
+                                    <div class=" d-flex justify-content-around">
+                                        <a id="new-product" target="_blank" onclick="gerarBoleto()" class="button">
+                                            <i class="bi bi-card-heading"></i>
+                                            <span>Gerar boleto</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-around">
                             <button type="submit" class="button">Confirmar</button>
@@ -129,7 +137,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 <a href="encomendas.php" class="nav-link">
                     <i class="bi bi-grid"></i>
                     <span>
-                        Encomendas
+                        Pedidos
                     </span>
                 </a>
                 <a href="faturamento.php" class="nav-link active">
@@ -218,6 +226,8 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 <h2>Seu faturamento</h2>
                 <h6><span class="highlight"><?php echo explode(" ", $_SESSION['nome'])[0] ?></span>, aqui está o faturamento do seu negócio!</h6>
             </div>
+            <?php if ($dados['nivelNegocioVendedora'] == 1) {
+            ?>
             <div id="content">
                 <div class="stats-faturamento d-flex flex-column justify-content-center align-items-center">
                     <?php
@@ -289,19 +299,16 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                                                                 ?></span>
                     </h4>
                     <?php
-                    if (isset($mais)) {
+                    if (isset($mais['nomeAnuncio'])) {
                         $qtdestrelas = $mais['estrelasAnuncio'];
                     ?>
-                        <a class="card-anuncio" href="anuncio.php?a=<?php echo $a['idAnuncio'] ?>">
+                        <a class="card-anuncio" href="anuncio.php?a=<?php echo $mais['idAnuncio'] ?>">
                             <div class="img-card">
                                 <img src="../<?php echo $mais['imagemPrincipalAnuncio'] ?>">
                             </div>
                             <div class="info-card">
                                 <div class="nome-card">
                                     <?php echo $mais['nomeAnuncio'] ?>
-                                </div>
-                                <div class="preco-card">
-                                    R$20,00
                                 </div>
                                 <div class="preco-card">
                                     R$<?php echo number_format($mais['valorAnuncio'], 2, ',', '.')  ?>
@@ -467,6 +474,19 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                     ?>
                 </div>
             </div>
+            <?php
+            }else {
+                ?>
+                    <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
+                        <p class="section-title load" style="text-align: center">Upgrade para o plano premium para obter acesso as encomendas!</p>
+                        <button id="new-product" data-bs-target="#modal-premium" data-bs-toggle="modal" class="button">
+                            <i class="bi bi-cash"></i>
+                            <span>Comprar Plano Premium</span>
+                        </button>
+                    </div>
+                <?php
+                }
+                ?>
 
         </main>
     </div>
@@ -476,6 +496,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
     <script src="../assets/vendor/flickity/js/flickity.pkgd.min.js"></script>
     <script src="../assets/js/script.js"></script>
     <script src="../assets/vendor/chartjs/js/chart.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script>
         var iniciarPagamento = document.getElementById('iniciar-pagamento')
         var legendColor, borderColor
@@ -546,7 +567,25 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
 
         })
-    </script>
+
+        function gerarBoleto() {
+            var url = "../api/boleto/boleto_bb.php?v=<?php echo $_SESSION['username'] ?>&bairroCliente=<?php echo $dados['bairroNegocioVendedora'] ?>&numCliente=<?php echo $dados['numNegocioVendedora'] ?>&negocio=Hive&cnpj=79798353000139&cidade=São Paulo&valorUni=49&estado=SP&cep=&bairro=&num=&qtd=1&valor=49";
+
+            window.open(url, '_blank');
+        }
+
+        $(document).ready(function() {
+            $("#forma-pagamento").change(function() {
+                if ($(this).val() === "2") {
+                    $("#boleto").show();
+                    $("#qrcode-pix").hide();
+                } else {
+                    $("#qrcode-pix").show();
+                    $("#boleto").hide();
+                }
+            });
+        });
+        </script>
 </body>
 
 </html>

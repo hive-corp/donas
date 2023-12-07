@@ -2,7 +2,7 @@
 
 require_once 'global.php';
 
-// header("Location: anuncio.php?a=" . $_GET['a']);
+header("Location: anuncio.php?a=" . $_GET['a']);
 session_start();
 
 $anuncio = new Anuncio();

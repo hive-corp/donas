@@ -73,6 +73,10 @@ if (isset($_GET['a'])) {
                     </span>
                 </a>
             </div>
+            <a id="new-product" href="login.php" class="button">
+				<i class="bi bi-box-arrow-in-right"></i>
+				<span>Fazer log-in</span>
+			</a>
         </nav>
         <main id="main">
             <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->

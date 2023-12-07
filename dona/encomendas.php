@@ -12,7 +12,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encomendas</title>
+    <title>Pedidos</title>
     <link rel="shortcut icon" href="../assets/media/favicon.ico" type="image/x-icon" />
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
@@ -86,12 +86,9 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                             <div class="input input-pagamento">
                                 <label class="form-label" for="forma-pagamento">Forma de pagamento<span>*</span></label>
                                 <div class="input-wrapper">
-                                    <select name="forma-pagamento" id="forma-pagamento" style="background: var(--select-bg);
-    color: var(--text-color);" required>
-                                        <option selected value="1" style="background: var(--select-bg);
-    color: var(--text-color);">PIX</option>
-                                        <option value="2" style="background: var(--select-bg);
-    color: var(--text-color);">Boleto</option>
+                                    <select name="forma-pagamento" id="forma-pagamento" required>
+                                        <option selected value="1">PIX</option>
+                                        <option value="2">Boleto</option>
                                     </select>
                                 </div>
                                 <div class="invalid-feedback">
@@ -108,7 +105,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                     <div class=" d-flex justify-content-around">
                                         <a id="new-product" target="_blank" onclick="gerarBoleto()" class="button">
                                             <i class="bi bi-card-heading"></i>
-                                            <span>gerar boleto</span>
+                                            <span>Gerar boleto</span>
                                         </a>
                                     </div>
                                 </div>
@@ -282,7 +279,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 <a href="encomendas.php" class="nav-link active">
                     <i class="bi bi-grid-fill"></i>
                     <span>
-                        Encomendas
+                        Pedidos
                     </span>
                 </a>
                 <a href="faturamento.php" class="nav-link">
@@ -370,7 +367,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
         <main id="main">
             <!-- <img src="../assets/media/rosas.svg" class="rosa-fundo"> -->
             <div id="main-title" class="d-flex align-items-center justify-content-between">
-                Painel de encomendas
+                Painel de pedidos
                 <form action="pesquisa.php">
 
                     <div id="content">
@@ -559,7 +556,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
             } else {
             ?>
                 <div class="premium-plan-overlay d-flex flex-column align-items-center justify-content-center m-5">
-                    <p class="section-title load" style="text-align: center">Upgrade para o plano premium para obter benefícios as encomendas!</p>
+                    <p class="section-title load" style="text-align: center">Upgrade para o plano premium para obter acesso as encomendas!</p>
                     <button id="new-product" data-bs-target="#modal-premium" data-bs-toggle="modal" class="button">
                         <i class="bi bi-cash"></i>
                         <span>Comprar Plano Premium</span>
@@ -573,6 +570,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
 
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script>
         var iniciarPagamento = document.getElementById('iniciar-pagamento')
         let cancelarPedido = document.querySelectorAll('.cancelar-pedido')
@@ -635,7 +633,6 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                 document.querySelector('#aceitar-pedido').href = `aceitar-encomenda.php?e=${id}`
 
                 document.querySelector('#modal-aceitar h5.highlight').innerText = `${cliente} - ${anuncio}`
-
             })
         })
         aceitarServico.forEach(item => {
@@ -651,46 +648,30 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
             })
         })
         iniciarPagamento.addEventListener('click', () => {
-
-
             let qrCodeImg = document.querySelector('#qr-code')
             let loadingQrCode = document.querySelector('#loading-pix')
 
-
             qrCodeImg.classList.add('hide')
             loadingQrCode.classList.remove('hide')
-
-
 
             setTimeout(() => {
                 qrCodeImg.classList.remove('hide')
                 loadingQrCode.classList.add('hide')
             }, 2000)
-
-
         })
-    </script>
-    <script>
+        
         function gerarBoleto() {
-            // Obtém o valor atualizado
             var url = "../api/boleto/boleto_bb.php?v=<?php echo $_SESSION['username'] ?>&bairroCliente=<?php echo $dados['bairroNegocioVendedora'] ?>&numCliente=<?php echo $dados['numNegocioVendedora'] ?>&negocio=Hive&cnpj=79798353000139&cidade=São Paulo&valorUni=49&estado=SP&cep=&bairro=&num=&qtd=1&valor=49";
 
-            // Abre a URL em outra aba
             window.open(url, '_blank');
         }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
+
         $(document).ready(function() {
-            // Quando o valor do select mudar
             $("#forma-pagamento").change(function() {
-                // Verifique se o valor selecionado é "Boleto"
                 if ($(this).val() === "2") {
-                    // Se for, mostre o elemento #boleto e esconda #qrcode-pix
                     $("#boleto").show();
                     $("#qrcode-pix").hide();
                 } else {
-                    // Caso contrário, mostre o elemento #qrcode-pix e esconda #boleto
                     $("#qrcode-pix").show();
                     $("#boleto").hide();
                 }
