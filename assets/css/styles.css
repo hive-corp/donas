@@ -2605,11 +2605,12 @@ a.veja-mais {
     grid-template-rows: min-content min-content min-content 1fr min-content;
     grid-template-columns: auto min-content min-content;
     grid-template-areas:
-        "name rating dropdown"
-        "username username username"
-        "followers followers followers"
-        "bio bio bio"
-        "options options options";
+        "name dropdown"
+        "rating rating"
+        "username username"
+        "followers followers"
+        "bio bio"
+        "options options";
     column-gap: 4px;
 }
 
@@ -2624,7 +2625,7 @@ a.veja-mais {
     color: #CB6CE6;
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 2px;
 }
 
@@ -4478,6 +4479,11 @@ a.highlight {
     #bio-star {
         position: absolute;
         right: -1.5em;
+    }
+
+
+    #bio-rating{
+        justify-content: center;
     }
 
     #bio-dropdown {

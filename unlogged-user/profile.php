@@ -122,7 +122,7 @@ if (isset($_GET['user'])) {
                             </div>
                             <div id="bio-dropdown">
                                 <div class="dropdown-start dropdown">
-                                    <button id="options-profile" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="options-button" id="options-bio"  type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-start dropdown-sobe">
@@ -151,10 +151,7 @@ if (isset($_GET['user'])) {
                             </div>
                             <div id="bio-desc"><?php echo $dados['bioNegocioVendedora'] ?></div>
                             <div id="bio-follow-share">
-                                <a type="button" class="button bio-option">
-                                    Compartilhar
-                                    <i class="bi bi-share-fill"></i>
-                                </a>
+                               
                             </div>
                         </div>
                     </div>

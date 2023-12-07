@@ -80,7 +80,7 @@ $dados = daoVendedora::consultarPorId($_SESSION['id']);
                                 <div class="input">
                                     <label class="form-label" for="tipo-new">Tipo</label>
                                     <div class="input-wrapper">
-                                        <input type="text" disabled value="<?php echo $anuncio['tipoAnuncio'] == 1 ? "Serviço" : "Anúncio" ?>">
+                                        <input type="text" disabled value="<?php echo $anuncio['tipoAnuncio'] == 1 ? "Serviço" : "Produto" ?>">
                                     </div>
                                 </div>
                                 <div class="input">
