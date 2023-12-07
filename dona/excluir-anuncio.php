@@ -1,22 +1,21 @@
 <?php
 
-    require_once 'global.php';
+require_once 'global.php';
 
-    header("Location: index.php");
+header("Location: index.php");
 
-    session_start();
+session_start();
 
-    $anuncio = new Anuncio();
-    $anuncio->setIdAnuncio($_GET['a']);
+$anuncio = new Anuncio();
+$anuncio->setIdAnuncio($_GET['a']);
 
-    $encomendas = daoPedidoProduto::listarPedidosAnuncio($_GET['a']);
+daoPedidoProduto::deletarPorAnuncio($_GET['a']);
+daoPedidoServico::deletarPorAnuncio($_GET['a']);
+daoAnuncioSubCategoria::deletarPorAnuncio($_GET['a']);
+daoAvaliacao::deletarPorAnuncio($_GET['a']);
+daoEntradaProduto::deletarPorAnuncio($_GET['a']);
+daoSaidaProduto::deletarPorAnuncio($_GET['a']);
+daoNotifcVendedora::deletarPorAnuncio($_GET['a']);
+daoNotifcCliente::deletarPorAnuncio($_GET['a']);
 
-    foreach($encomendas as $e){
-        $encomenda = new PedidoProduto;
-        $encomenda->setIdPedidoProduto($e['idPedidoProduto']);
-
-        daoPedidoProduto::deletar($encomenda);
-    }
-
-    daoAnuncio::deletar($anuncio);
-?>
+daoAnuncio::deletar($anuncio);

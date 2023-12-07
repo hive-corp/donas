@@ -26,10 +26,23 @@ class daoAvaliacao
     {
         $connection = Conexao::conectar();
 
-        $queryInsert = "DELETE tbAvaliacao WHERE idAvaliacao = ?";
+        $queryInsert = "DELETE FROM tbAvaliacao WHERE idAvaliacao = ?";
 
         $prepareStatement = $connection->prepare($queryInsert);
         $prepareStatement->bindvalue(1, $Avaliacao->getIdAvaliacao());
+
+        $prepareStatement->execute();
+    }
+
+    public static function deletarPorAnuncio($id)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "DELETE FROM tbAvaliacao WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $id);
 
         $prepareStatement->execute();
     }

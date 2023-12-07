@@ -36,6 +36,19 @@ class daoPedidoServico
         $prepareStatement->execute();
     }
 
+    public static function deletarPorAnuncio($id)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "DELETE FROM tbPedidoServico WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $id);
+
+        $prepareStatement->execute();
+    }
+
     public static function editar($PedidoServico)
     {
         $connection = Conexao::conectar();

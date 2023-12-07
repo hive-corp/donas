@@ -32,6 +32,19 @@ class daoNotifcVendedora
         $prepareStatement->execute();
     }
 
+    public static function deletarPorAnuncio($id)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "DELETE FROM tbNotifcVendedora WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $id);
+
+        $prepareStatement->execute();
+    }
+
     public static function editar($NotifcVendedora)
     {
         $connection = Conexao::conectar();

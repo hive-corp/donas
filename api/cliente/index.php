@@ -86,25 +86,6 @@ switch ($method) {
         $notific = new NotifcCliente();
         $notific->setCliente($cliente);
 
-        $denuncia = new Denuncia();
-        $denuncia->setIdDenuncia(null);
-
-        $notific->setDenuncia($denuncia);
-
-        $anuncio = new Anuncio;
-        $anuncio->setIdAnuncio(null);
-
-
-        $pedido = new PedidoProduto;
-        $pedido->setIdPedidoProduto(null);
-
-        $notific->setPedidoProduto($pedido);
-
-        $servico = new PedidoServico;
-        $servico->setIdPedidoServico(null);
-
-        $notific->setPedidoServico($servico);
-
         $notific->setTipoNotificacao(0);
         $notific->setStatusNotificacao(0);
 

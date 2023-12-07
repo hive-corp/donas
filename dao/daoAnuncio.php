@@ -216,13 +216,14 @@ class daoAnuncio
     {
         $connection = Conexao::conectar();
 
-        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
-                            INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
-                            INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
-                            INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
-                            WHERE tbVendedora.idVendedora = ?
-                            ORDER BY qtd DESC
-                            LIMIT 1');
+        $stmt = $connection->prepare('SELECT COUNT(idPedidoProduto) as qtd, tbPedidoProduto.statusPedidoProduto, tbAnuncio.*, nomeCategoria, nomeNegocioVendedora FROM tbAnuncio
+        INNER JOIN tbPedidoProduto ON tbPedidoProduto.idAnuncio = tbAnuncio.idAnuncio
+        INNER JOIN tbVendedora ON tbVendedora.idVendedora = tbAnuncio.idVendedora
+        INNER JOIN tbCategoria ON tbCategoria.idCategoria = tbVendedora.idCategoria
+        WHERE tbPedidoProduto.statusPedidoProduto = 4 AND tbAnuncio.idVendedora = ?
+        GROUP BY tbAnuncio.nomeAnuncio
+        ORDER BY qtd DESC
+      ');
 
         $stmt->bindValue(1, $id);
         $stmt->execute();
@@ -289,29 +290,29 @@ class daoAnuncio
 
 
         $stmt = $connection->prepare("SELECT 'E' as tipoOperacao, 
-        DATE_FORMAT(tbEntradaProduto.dataEntradaProduto, '%d/%m/%Y') as data,
-        TIME_FORMAT(tbEntradaProduto.dataEntradaProduto, '%H:%i') as hora,
-        tbEntradaProduto.idEntradaProduto, 
-        tbEntradaProduto.idAnuncio, 
-        tbEntradaProduto.qtdEntradaProduto AS qtd
- FROM tbEntradaProduto
- WHERE tbEntradaProduto.idAnuncio = ?
- GROUP BY tipoOperacao, data, hora, tbEntradaProduto.idEntradaProduto, tbEntradaProduto.idAnuncio
- 
- UNION ALL
- 
- SELECT 'S' as tipoOperacao, 
-        DATE_FORMAT(tbSaidaProduto.dataSaidaProduto, '%d/%m/%Y') as data,
-        TIME_FORMAT(tbSaidaProduto.dataSaidaProduto, '%H:%i') as hora,
-        tbSaidaProduto.idSaidaProduto, 
-        tbSaidaProduto.idAnuncio, 
-        tbSaidaProduto.qtdSaidaProduto AS qtd
- FROM tbSaidaProduto
- WHERE tbSaidaProduto.idAnuncio = ?
- GROUP BY tipoOperacao, data, hora, tbSaidaProduto.idSaidaProduto, tbSaidaProduto.idAnuncio
- 
- ORDER BY data DESC, hora DESC
- LIMIT 6;");
+                                                DATE_FORMAT(tbEntradaProduto.dataEntradaProduto, '%d/%m/%Y') as data,
+                                                TIME_FORMAT(tbEntradaProduto.dataEntradaProduto, '%H:%i') as hora,
+                                                tbEntradaProduto.idEntradaProduto, 
+                                                tbEntradaProduto.idAnuncio, 
+                                                tbEntradaProduto.qtdEntradaProduto AS qtd
+                                        FROM tbEntradaProduto
+                                        WHERE tbEntradaProduto.idAnuncio = ?
+                                        GROUP BY tipoOperacao, data, hora, tbEntradaProduto.idEntradaProduto, tbEntradaProduto.idAnuncio
+                                        
+                                        UNION ALL
+                                        
+                                        SELECT 'S' as tipoOperacao, 
+                                                DATE_FORMAT(tbSaidaProduto.dataSaidaProduto, '%d/%m/%Y') as data,
+                                                TIME_FORMAT(tbSaidaProduto.dataSaidaProduto, '%H:%i') as hora,
+                                                tbSaidaProduto.idSaidaProduto, 
+                                                tbSaidaProduto.idAnuncio, 
+                                                tbSaidaProduto.qtdSaidaProduto AS qtd
+                                        FROM tbSaidaProduto
+                                        WHERE tbSaidaProduto.idAnuncio = ?
+                                        GROUP BY tipoOperacao, data, hora, tbSaidaProduto.idSaidaProduto, tbSaidaProduto.idAnuncio
+                                        
+                                        ORDER BY data DESC
+                                        LIMIT 6;");
 
 $stmt->bindValue(1, $id);
 $stmt->bindValue(2, $id);

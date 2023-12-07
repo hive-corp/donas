@@ -68,7 +68,7 @@ if (isset($_FILES["foto"]) && !empty($_FILES["foto"]["name"])) {
 
 $AnuncioSubCategoria = json_decode($_POST['AnuncioSubCategoria']);
 
-daoAnuncioSubCategoria::deletarPorAnuncio($_SESSION['id']);
+daoAnuncioSubCategoria::deletarPorAnuncio($_GET['a']);
 
 $cliente = new Cliente();
 $cliente->setIdCliente($_SESSION['id']);

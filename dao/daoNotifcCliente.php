@@ -35,6 +35,19 @@ class daoNotifcCliente
         $prepareStatement->execute();
     }
 
+    public static function deletarPorAnuncio($id)
+    {
+        $connection = Conexao::conectar();
+
+        $queryInsert = "DELETE FROM tbNotifcCliente WHERE idAnuncio = ?";
+
+        $prepareStatement = $connection->prepare($queryInsert);
+
+        $prepareStatement->bindValue(1, $id);
+
+        $prepareStatement->execute();
+    }
+
     public static function editar($NotifcCliente)
     {
         $connection = Conexao::conectar();
